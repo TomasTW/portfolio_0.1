@@ -33,34 +33,44 @@
   --transition-smooth: all 0.35s cubic-bezier(0.25, 0.8, 0.25, 1);
   --transition-elastic: all 0.6s cubic-bezier(0.175, 0.885, 0.32, 1.275);
 
-  /* Typography Design Tokens */
+  /* Typography Design Tokens (Based on 14px Base Value, 1.618 Scale) */
+  --font-size-h1: clamp(64px, 12vw, 251px);           /* H1: 251px / 17.929rem */
+  --font-size-h2: clamp(48px, 8vw, 155px);            /* H2: 155px / 11.071rem */
+  --font-size-h3: clamp(32px, 5vw, 96px);             /* H3: 96px / 6.857rem */
+  --font-size-h4: clamp(24px, 3vw, 59px);             /* H4: 59px / 4.214rem */
+  --font-size-body1: clamp(18px, 2vw, 37px);          /* body1: 37px / 2.643rem */
+  --font-size-body2: clamp(14px, 1.2vw, 23px);        /* body2: 23px / 1.643rem */
+  --font-size-body3: 14px;                            /* body3 / button: 14px / 1.000rem */
+  --font-size-p-spec: 9px;                            /* P: 9px / 0.643rem */
+  --font-size-caption-spec: 5px;                      /* caption: 5px / 0.357rem */
+
   --font-family-title-head1: "Poppins";
-  --font-size-title-head1: clamp(44px, 6vw + 1rem, 95px);
+  --font-size-title-head1: var(--font-size-h1);
   --font-weight-title-head1: 900;
   --font-line-height-title-head1: 1.05em;
 
   --font-family-title-3xlarge: "Poppins";
-  --font-size-title-3xlarge: clamp(32px, 4vw + 1rem, 60px);
+  --font-size-title-3xlarge: var(--font-size-h2);
   --font-weight-title-3xlarge: 900;
   --font-line-height-title-3xlarge: 1.1em;
 
   --font-family-title-2xlargle: "Poppins";
-  --font-size-title-2xlargle: clamp(24px, 2.5vw + 0.5rem, 36px);
+  --font-size-title-2xlargle: var(--font-size-h3);
   --font-weight-title-2xlargle: 700;
   --font-line-height-title-2xlargle: 1.15em;
 
   --font-family-title-medium: "Poppins";
-  --font-size-title-medium: clamp(18px, 1.5vw + 0.5rem, 24px);
+  --font-size-title-medium: var(--font-size-h4);
   --font-weight-title-medium: 700;
   --font-line-height-title-medium: 1.2em;
 
   --font-family-body-large: "DM Sans";
-  --font-size-body-large: 14px;
+  --font-size-body-large: var(--font-size-body3);
   --font-weight-body-large: 700;
   --font-line-height-body-large: 1.25em;
 
-  --font-size-body-small: 8px;
-  --font-size-caption: 6px;
+  --font-size-body-small: var(--font-size-p-spec);
+  --font-size-caption: var(--font-size-caption-spec);
 
 }
 
