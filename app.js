@@ -60,6 +60,17 @@
         // Clamp to DURATION_S - 0.05s to prevent -3.0s % 3.0s wrap-around back to frame 0
         const seekTime = Math.min(DURATION_S - 0.05, progress * DURATION_S);
         seekTo(seekTime);
+
+        // Trigger about-card reveal at 2.90s of the hero animation scroll progress
+        const aboutCard = document.querySelector('.about-card');
+        if (aboutCard) {
+          const currentSeconds = progress * DURATION_S;
+          if (currentSeconds >= 2.90) {
+            aboutCard.classList.add('is-visible');
+          } else {
+            aboutCard.classList.remove('is-visible');
+          }
+        }
       });
     }
 
@@ -303,7 +314,7 @@ document.addEventListener('DOMContentLoaded', () => {
   // ==========================================================================
   // 7. SCROLL REVEAL — staggered IntersectionObserver
   // ==========================================================================
-  const revealElements = document.querySelectorAll('.reveal-up, .reveal-right, .about-content, .about-card, .works-card, .contact-box');
+  const revealElements = document.querySelectorAll('.reveal-up, .reveal-right, .about-content, .works-card, .contact-box');
 
   const revealObserver = new IntersectionObserver((entries) => {
     entries.forEach(entry => {
