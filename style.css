@@ -450,34 +450,37 @@ section {
 
 .about-sticky {
   position: sticky;
-  top: 0;
-  height: 100vh;
-  width: 100%;
-  display: grid;
-  grid-template-columns: repeat(12, 1fr);
-  column-gap: 32px;
-  /* 12 column gutter is 32px */
-  padding: 40px 32px;
-  /* 32px margin left/right */
-  box-sizing: border-box;
-  align-items: center;
-  max-width: 1504px;
-  /* 1440px card max-width + 64px margins */
+  top: 160px;
+  height: calc(100vh - 320px);
+  width: calc(100% - 320px);
+  max-width: 1120px;
   margin: 0 auto;
+  box-sizing: border-box;
 }
 
 .about-card {
-  grid-column: 2 / 12;
-  /* Starts at column 2, ends at column 12 (covers 10 columns) */
   width: 100%;
+  height: 100%;
   border: 2px solid var(--color-bg-surface-secondary-default);
   border-radius: 0 !important;
   background-color: var(--color-bg-surface-primary-default);
   display: flex;
   flex-direction: column;
-  overflow: visible;
-  /* Prevent arrow buttons from being cut off */
+  overflow-y: auto;
   margin: 0;
+  box-sizing: border-box;
+}
+
+.about-card::-webkit-scrollbar,
+.works-card::-webkit-scrollbar,
+.contact-box::-webkit-scrollbar {
+  width: 6px;
+}
+.about-card::-webkit-scrollbar-thumb,
+.works-card::-webkit-scrollbar-thumb,
+.contact-box::-webkit-scrollbar-thumb {
+  background-color: var(--color-bg-surface-secondary-default);
+  border-radius: 3px;
 }
 
 /* Header Banner with Yellow Highlight Box */
@@ -727,30 +730,25 @@ section {
 /* --- Responsive Breakpoints --- */
 @media (max-width: 1024px) and (min-width: 769px) {
 
-  .about-sticky,
-  .works-sticky,
-  .contact-sticky {
-    display: grid !important;
-    grid-template-columns: repeat(8, 1fr) !important;
-    /* 8 columns on tablet */
-    column-gap: 16px !important;
-    /* Tablet gutter is 16px */
-    padding: 40px 32px !important;
-    /* Tablet margin is 32px */
-    height: auto !important;
-    position: relative !important;
-  }
+    .about-sticky,
+    .works-sticky,
+    .contact-sticky {
+      position: sticky !important;
+      top: 96px !important;
+      height: calc(100vh - 192px) !important;
+      width: calc(100% - 192px) !important;
+      max-width: none !important;
+      margin: 0 auto !important;
+      display: block !important;
+      padding: 0 !important;
+    }
 
-  .contact-sticky {
-    padding: 64px 32px !important;
-  }
-
-  .about-card,
-  .works-card,
-  .contact-box {
-    grid-column: 2 / 8 !important;
-    /* Spans 6 columns, leaves 1 column margin on each side */
-  }
+    .about-card,
+    .works-card,
+    .contact-box {
+      width: 100% !important;
+      height: 100% !important;
+    }
 
   .work-row-grid {
     grid-template-columns: repeat(8, 1fr);
@@ -793,30 +791,25 @@ section {
 
 @media (max-width: 768px) {
 
-  .about-sticky,
-  .works-sticky,
-  .contact-sticky {
-    display: grid !important;
-    grid-template-columns: repeat(4, 1fr) !important;
-    /* 4 columns on phone */
-    column-gap: 8px !important;
-    /* Phone gutter is 8px */
-    padding: 20px 16px !important;
-    /* Phone margin is 16px */
-    height: auto !important;
-    position: relative !important;
-  }
+    .about-sticky,
+    .works-sticky,
+    .contact-sticky {
+      position: sticky !important;
+      top: 48px !important;
+      height: calc(100vh - 96px) !important;
+      width: calc(100% - 96px) !important;
+      max-width: none !important;
+      margin: 0 auto !important;
+      display: block !important;
+      padding: 0 !important;
+    }
 
-  .contact-sticky {
-    padding: 40px 16px !important;
-  }
-
-  .about-card,
-  .works-card,
-  .contact-box {
-    grid-column: 1 / 5 !important;
-    /* Spans all 4 columns */
-  }
+    .about-card,
+    .works-card,
+    .contact-box {
+      width: 100% !important;
+      height: 100% !important;
+    }
 
   .about-header {
     padding: 28px 20px;
@@ -1926,6 +1919,7 @@ footer {
   color: var(--color-text-primary-default);
   box-sizing: border-box;
   z-index: 5;
+  height: 160vh;
 }
 
 .contact .method-text p {
@@ -1945,36 +1939,22 @@ footer {
 
 .works-sticky {
   position: sticky;
-  top: 0;
-  height: 100vh;
-  width: 100%;
-  display: grid;
-  grid-template-columns: repeat(12, 1fr);
-  column-gap: 32px;
-  /* 12 column gutter is 32px */
-  padding: 40px 32px;
-  /* 32px margin left/right */
-  box-sizing: border-box;
-  align-items: center;
-  max-width: 1504px;
-  /* 1440px card max-width + 64px margins */
+  top: 160px;
+  height: calc(100vh - 320px);
+  width: calc(100% - 320px);
+  max-width: 1120px;
   margin: 0 auto;
+  box-sizing: border-box;
 }
 
 .contact-sticky {
-  position: relative;
-  top: 0;
-  display: grid;
-  grid-template-columns: repeat(12, 1fr);
-  column-gap: 32px;
-  /* 12 column gutter is 32px */
-  padding: 80px 32px 120px 32px;
-  /* 32px margin left/right */
-  box-sizing: border-box;
-  width: 100%;
-  max-width: 1504px;
-  /* 1440px card max-width + 64px margins */
+  position: sticky;
+  top: 160px;
+  height: calc(100vh - 320px);
+  width: calc(100% - 320px);
+  max-width: 1120px;
   margin: 0 auto;
+  box-sizing: border-box;
 }
 
 /* Main bordered card container */
@@ -1992,31 +1972,31 @@ footer {
 }
 
 .contact-box {
-  grid-column: 2 / 12;
   width: 100%;
+  height: 100%;
   border: 2px solid var(--color-bg-surface-secondary-default);
   border-radius: 0 !important;
   background-color: var(--color-bg-surface-primary-default);
   display: flex;
   flex-direction: column;
-  overflow: visible;
-  /* To allow bottom logo accent overflow if needed */
+  overflow-y: auto;
   position: relative;
   margin: 0;
+  box-sizing: border-box;
 }
 
 .works-card {
-  grid-column: 2 / 12;
   width: 100%;
+  height: 100%;
   border: 2px solid var(--color-bg-surface-secondary-default);
   border-radius: 0 !important;
   background-color: var(--color-bg-surface-primary-default);
   display: flex;
   flex-direction: column;
-  overflow: visible;
-  /* Prevent arrow cutoff */
+  overflow-y: auto;
   margin: 0;
   position: relative;
+  box-sizing: border-box;
 }
 
 /* --- Shared Header --------------------------------------------------- */
