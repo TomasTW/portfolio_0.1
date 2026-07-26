@@ -469,8 +469,15 @@ section {
   background-color: var(--color-bg-surface-primary-default);
   display: flex;
   flex-direction: column;
+  overflow-x: hidden;
   overflow-y: auto;
+  -ms-overflow-style: none;  /* IE and Edge */
+  scrollbar-width: none;  /* Firefox */
   margin: 0;
+}
+
+.about-card::-webkit-scrollbar {
+  display: none;
 }
 
 /* Header Banner with Yellow Highlight Box */
@@ -1950,9 +1957,17 @@ footer {
   background-color: var(--color-bg-surface-primary-default);
   display: flex;
   flex-direction: column;
+  overflow-x: hidden;
   overflow-y: auto;
+  -ms-overflow-style: none;  /* IE and Edge */
+  scrollbar-width: none;  /* Firefox */
   margin: 0;
   position: relative;
+}
+
+.works-card::-webkit-scrollbar,
+.contact-box::-webkit-scrollbar {
+  display: none;
 }
 
 /* --- Shared Header --------------------------------------------------- */
