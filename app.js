@@ -614,14 +614,13 @@ document.addEventListener('DOMContentLoaded', () => {
       });
     });
 
-    // Make both the image and the EXPLORE button clickable to open the corresponding project modal
     slides.forEach(slide => {
       const clickables = slide.querySelectorAll('.works-image-wrapper, .works-explore-btn');
       clickables.forEach(elem => {
         elem.addEventListener('click', () => {
-          const index = parseInt(slide.getAttribute('data-index') || '0', 10);
-          const modalIds = ['modal-nzxt', 'modal-mitsukoshi', 'modal-liho', 'modal-drawings'];
-          const targetModal = document.getElementById(modalIds[index]);
+          const exploreBtn = slide.querySelector('.works-explore-btn');
+          const modalId = exploreBtn ? exploreBtn.getAttribute('data-modal') : null;
+          const targetModal = modalId ? document.getElementById(modalId) : null;
           if (targetModal) {
             targetModal.classList.add('open');
             document.body.style.overflow = 'hidden';
