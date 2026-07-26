@@ -303,7 +303,7 @@ document.addEventListener('DOMContentLoaded', () => {
   // ==========================================================================
   // 7. SCROLL REVEAL — staggered IntersectionObserver
   // ==========================================================================
-  const revealElements = document.querySelectorAll('.reveal-up, .reveal-right, .about-content');
+  const revealElements = document.querySelectorAll('.reveal-up, .reveal-right, .about-content, .about-card, .works-card, .contact-box');
 
   const revealObserver = new IntersectionObserver((entries) => {
     entries.forEach(entry => {

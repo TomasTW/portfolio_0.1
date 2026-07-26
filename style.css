@@ -479,6 +479,14 @@ section {
   overflow-y: auto;
   overflow-x: hidden;
   margin: 0;
+  opacity: 0;
+  transform: scale(1.15);
+  transition: opacity 1.2s cubic-bezier(0.16, 1, 0.3, 1), transform 1.2s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.about-card.is-visible {
+  opacity: 1;
+  transform: scale(1);
 }
 
 /* Header Banner with Yellow Highlight Box */
@@ -1964,6 +1972,15 @@ footer {
   overflow-x: hidden;
   margin: 0;
   position: relative;
+  opacity: 0;
+  transform: scale(1.15);
+  transition: opacity 1.2s cubic-bezier(0.16, 1, 0.3, 1), transform 1.2s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.works-card.is-visible,
+.contact-box.is-visible {
+  opacity: 1;
+  transform: scale(1);
 }
 
 /* --- Shared Header --------------------------------------------------- */
