@@ -90,16 +90,14 @@ html {
 body {
   position: relative;
   overflow-x: clip;
-  background-color: var(--color-bg-surface-primary-default);
-  min-height: 100vh;
-  line-height: 1.6;
-  margin: 0 !important;
-  padding: 0 !important;
   background-image: url('hero_bg.png');
   background-size: cover;
   background-position: center;
   background-attachment: fixed;
-  background-repeat: no-repeat;
+  min-height: 100vh;
+  line-height: 1.6;
+  margin: 0 !important;
+  padding: 0 !important;
 }
 
 h1 {
@@ -352,11 +350,11 @@ section {
   height: 600vh;
   padding: 32px 0 !important; /* Margin frame top/bottom */
   position: relative;
-  background-color: transparent;
+  background: transparent;
 }
 
 .hero-canvas-sticky {
-  position: sticky;
+  position: fixed;
   top: 32px; /* Margin frame top */
   left: 32px; /* Margin frame left */
   width: calc(100% - 64px);
@@ -403,6 +401,7 @@ section {
   }
 
   .hero-canvas-sticky {
+    position: fixed !important; /* Force fixed to stay as background */
     top: 32px !important;
     left: 32px !important;
     width: calc(100% - 64px) !important;
@@ -425,6 +424,7 @@ section {
   }
 
   .hero-canvas-sticky {
+    position: fixed !important; /* Force fixed to stay as background */
     top: 16px !important;
     left: 16px !important;
     width: calc(100% - 32px) !important;
@@ -445,6 +445,7 @@ section {
   position: sticky;
   background-color: transparent;
   color: transparent;
+  z-index: 5;
 }
 
 .about-sticky {
@@ -1092,6 +1093,7 @@ section {
   position: relative;
   background-color: transparent;
   color: var(--color-text-primary-default);
+  z-index: 5;
 }
 
 .section-header {
@@ -1917,6 +1919,7 @@ footer {
   background-color: transparent;
   color: var(--color-text-primary-default);
   box-sizing: border-box;
+  z-index: 5;
 }
 
 .contact .method-text p {
