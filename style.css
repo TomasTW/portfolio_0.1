@@ -575,8 +575,8 @@ section {
 .skills-slider-track {
   position: relative;
   width: 100%;
-  height: 220px;
-  /* Centered layout height to avoid absolute positioning collapse */
+  height: 280px;
+  /* Accommodates both gauge and description text */
 }
 
 .skill-slide {
@@ -660,8 +660,14 @@ section {
 }
 
 .skill-slide-info p {
-  display: none;
-  /* Hidden to match the content layout of the mockup image */
+  font-family: var(--font-family-body-large), sans-serif;
+  font-size: var(--font-size-body-large);
+  font-weight: 500;
+  line-height: 1.5;
+  color: var(--color-text-secondary-default);
+  margin-top: 8px;
+  text-align: center;
+  max-width: 440px;
 }
 
 /* Pagination Dots - Centered under slide */
