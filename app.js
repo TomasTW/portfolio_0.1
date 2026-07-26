@@ -276,6 +276,7 @@ document.addEventListener('DOMContentLoaded', () => {
       if (targetModal) {
         targetModal.classList.add('open');
         document.body.style.overflow = 'hidden'; // Lock background scroll
+        document.documentElement.style.overflow = 'hidden';
       }
     });
   });
@@ -283,6 +284,7 @@ document.addEventListener('DOMContentLoaded', () => {
   const closeModal = (modal) => {
     modal.classList.remove('open');
     document.body.style.overflow = '';
+    document.documentElement.style.overflow = '';
   };
 
   modals.forEach(modal => {
@@ -624,6 +626,7 @@ document.addEventListener('DOMContentLoaded', () => {
           if (targetModal) {
             targetModal.classList.add('open');
             document.body.style.overflow = 'hidden';
+            document.documentElement.style.overflow = 'hidden';
           }
         });
       });

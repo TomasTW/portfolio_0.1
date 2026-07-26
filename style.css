@@ -1299,6 +1299,7 @@ section {
   opacity: 0;
   pointer-events: none;
   transition: var(--transition-smooth);
+  overscroll-behavior: contain;
 }
 
 .project-modal.open {
@@ -1318,6 +1319,7 @@ section {
   box-shadow: var(--shadow-lg), 0 0 50px #FEBF241A;
   transform: scale(0.9);
   transition: var(--transition-elastic);
+  overscroll-behavior: contain;
   -ms-overflow-style: none;
   /* IE and Edge */
   scrollbar-width: none;
