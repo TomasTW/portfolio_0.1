@@ -450,17 +450,21 @@ section {
 
 .about-sticky {
   position: sticky;
-  top: 160px;
-  height: calc(100vh - 320px);
-  width: calc(100% - 320px);
-  max-width: 1120px;
-  margin: 0 auto;
+  top: 0;
+  height: 100vh;
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
   box-sizing: border-box;
+  padding: 0 !important;
+  margin: 0;
 }
 
 .about-card {
-  width: 100%;
-  height: 100%;
+  width: calc(100% - 256px);
+  height: calc(100vh - 256px);
+  box-sizing: border-box;
   border: 2px solid var(--color-bg-surface-secondary-default);
   border-radius: 0 !important;
   background-color: var(--color-bg-surface-primary-default);
@@ -468,19 +472,6 @@ section {
   flex-direction: column;
   overflow-y: auto;
   margin: 0;
-  box-sizing: border-box;
-}
-
-.about-card::-webkit-scrollbar,
-.works-card::-webkit-scrollbar,
-.contact-box::-webkit-scrollbar {
-  width: 6px;
-}
-.about-card::-webkit-scrollbar-thumb,
-.works-card::-webkit-scrollbar-thumb,
-.contact-box::-webkit-scrollbar-thumb {
-  background-color: var(--color-bg-surface-secondary-default);
-  border-radius: 3px;
 }
 
 /* Header Banner with Yellow Highlight Box */
@@ -730,25 +721,25 @@ section {
 /* --- Responsive Breakpoints --- */
 @media (max-width: 1024px) and (min-width: 769px) {
 
-    .about-sticky,
-    .works-sticky,
-    .contact-sticky {
-      position: sticky !important;
-      top: 96px !important;
-      height: calc(100vh - 192px) !important;
-      width: calc(100% - 192px) !important;
-      max-width: none !important;
-      margin: 0 auto !important;
-      display: block !important;
-      padding: 0 !important;
-    }
+  .about-sticky,
+  .works-sticky,
+  .contact-sticky {
+    position: sticky !important;
+    top: 0 !important;
+    height: 100vh !important;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    padding: 0 !important;
+    margin: 0 !important;
+  }
 
-    .about-card,
-    .works-card,
-    .contact-box {
-      width: 100% !important;
-      height: 100% !important;
-    }
+  .about-card,
+  .works-card,
+  .contact-box {
+    width: calc(100% - 128px) !important;
+    height: calc(100vh - 128px) !important;
+  }
 
   .work-row-grid {
     grid-template-columns: repeat(8, 1fr);
@@ -791,25 +782,25 @@ section {
 
 @media (max-width: 768px) {
 
-    .about-sticky,
-    .works-sticky,
-    .contact-sticky {
-      position: sticky !important;
-      top: 48px !important;
-      height: calc(100vh - 96px) !important;
-      width: calc(100% - 96px) !important;
-      max-width: none !important;
-      margin: 0 auto !important;
-      display: block !important;
-      padding: 0 !important;
-    }
+  .about-sticky,
+  .works-sticky,
+  .contact-sticky {
+    position: sticky !important;
+    top: 0 !important;
+    height: 100vh !important;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    padding: 0 !important;
+    margin: 0 !important;
+  }
 
-    .about-card,
-    .works-card,
-    .contact-box {
-      width: 100% !important;
-      height: 100% !important;
-    }
+  .about-card,
+  .works-card,
+  .contact-box {
+    width: calc(100% - 64px) !important;
+    height: calc(100vh - 64px) !important;
+  }
 
   .about-header {
     padding: 28px 20px;
@@ -1913,13 +1904,13 @@ footer {
 }
 
 .contact {
+  height: 100vh;
   padding: 0;
   position: relative;
   background-color: transparent;
   color: var(--color-text-primary-default);
   box-sizing: border-box;
   z-index: 5;
-  height: 160vh;
 }
 
 .contact .method-text p {
@@ -1937,57 +1928,25 @@ footer {
    SECTION CARD LAYOUT  (About · Works · Contact)
    ===================================================================== */
 
-.works-sticky {
-  position: sticky;
-  top: 160px;
-  height: calc(100vh - 320px);
-  width: calc(100% - 320px);
-  max-width: 1120px;
-  margin: 0 auto;
-  box-sizing: border-box;
-}
-
+.works-sticky,
 .contact-sticky {
   position: sticky;
-  top: 160px;
-  height: calc(100vh - 320px);
-  width: calc(100% - 320px);
-  max-width: 1120px;
-  margin: 0 auto;
-  box-sizing: border-box;
-}
-
-/* Main bordered card container */
-.about-card {
-  grid-column: 2 / 12;
+  top: 0;
+  height: 100vh;
   width: 100%;
-  border: 2px solid var(--color-bg-surface-secondary-default);
-  border-radius: var(--radius-sm);
-  background-color: var(--color-bg-surface-primary-default);
   display: flex;
-  flex-direction: column;
-  overflow: visible;
-  /* Prevent arrow buttons from being cut off */
+  align-items: center;
+  justify-content: center;
+  box-sizing: border-box;
+  padding: 0 !important;
   margin: 0;
 }
 
+.works-card,
 .contact-box {
-  width: 100%;
-  height: 100%;
-  border: 2px solid var(--color-bg-surface-secondary-default);
-  border-radius: 0 !important;
-  background-color: var(--color-bg-surface-primary-default);
-  display: flex;
-  flex-direction: column;
-  overflow-y: auto;
-  position: relative;
-  margin: 0;
+  width: calc(100% - 256px);
+  height: calc(100vh - 256px);
   box-sizing: border-box;
-}
-
-.works-card {
-  width: 100%;
-  height: 100%;
   border: 2px solid var(--color-bg-surface-secondary-default);
   border-radius: 0 !important;
   background-color: var(--color-bg-surface-primary-default);
@@ -1996,7 +1955,6 @@ footer {
   overflow-y: auto;
   margin: 0;
   position: relative;
-  box-sizing: border-box;
 }
 
 /* --- Shared Header --------------------------------------------------- */
