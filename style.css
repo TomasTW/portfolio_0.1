@@ -95,6 +95,11 @@ body {
   line-height: 1.6;
   margin: 0 !important;
   padding: 0 !important;
+  background-image: url('hero_bg.png');
+  background-size: cover;
+  background-position: center;
+  background-attachment: fixed;
+  background-repeat: no-repeat;
 }
 
 h1 {
@@ -347,20 +352,7 @@ section {
   height: 600vh;
   padding: 32px 0 !important; /* Margin frame top/bottom */
   position: relative;
-  background-color: var(--color-bg-surface-primary-default); /* Matches other sections' background */
-}
-
-.hero-canvas-section::before {
-  content: "";
-  position: absolute;
-  inset: 0;
-  background-image: url('hero_bg.png');
-  background-size: cover;
-  background-position: center;
-  opacity: var(--hero-bg-opacity, 1);
-  pointer-events: none;
-  z-index: 0;
-  transition: opacity 0.1s ease-out; /* Smooth transition */
+  background-color: transparent;
 }
 
 .hero-canvas-sticky {
@@ -1098,7 +1090,7 @@ section {
 .works {
   height: 300vh;
   position: relative;
-  background-color: var(--color-bg-surface-primary-default);
+  background-color: transparent;
   color: var(--color-text-primary-default);
 }
 
@@ -1922,7 +1914,7 @@ footer {
 .contact {
   padding: 0;
   position: relative;
-  background-color: var(--color-bg-surface-primary-default);
+  background-color: transparent;
   color: var(--color-text-primary-default);
   box-sizing: border-box;
 }
