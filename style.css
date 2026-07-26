@@ -349,15 +349,18 @@ section {
 .hero-canvas-section {
   /* Tall enough to map the full scroll distance for 168 frames */
   height: 600vh;
-  padding: 32px 0 !important; /* Margin frame top/bottom */
+  padding: 32px 0 !important;
+  /* Margin frame top/bottom */
   position: relative;
   background: transparent;
 }
 
 .hero-canvas-sticky {
   position: fixed;
-  top: 32px; /* Margin frame top */
-  left: 32px; /* Margin frame left */
+  top: 32px;
+  /* Margin frame top */
+  left: 32px;
+  /* Margin frame left */
   width: calc(100% - 64px);
   height: calc(100vh - 64px);
   overflow: hidden;
@@ -402,7 +405,8 @@ section {
   }
 
   .hero-canvas-sticky {
-    position: fixed !important; /* Force fixed to stay as background */
+    position: fixed !important;
+    /* Force fixed to stay as background */
     top: 32px !important;
     left: 32px !important;
     width: calc(100% - 64px) !important;
@@ -421,11 +425,13 @@ section {
 @media (max-width: 767px) {
   .hero-canvas-section {
     height: 500vh;
-    padding: 16px 0 !important; /* 16px margins on phone */
+    padding: 16px 0 !important;
+    /* 16px margins on phone */
   }
 
   .hero-canvas-sticky {
-    position: fixed !important; /* Force fixed to stay as background */
+    position: fixed !important;
+    /* Force fixed to stay as background */
     top: 16px !important;
     left: 16px !important;
     width: calc(100% - 32px) !important;
@@ -467,7 +473,7 @@ section {
   height: calc(100vh - 256px);
   box-sizing: border-box;
   border-radius: 0 !important;
-  background-color: var(--color-bg-surface-primary-default);
+  background-color: transparent;
   display: flex;
   flex-direction: column;
   overflow-y: auto;
@@ -1949,7 +1955,7 @@ footer {
   height: calc(100vh - 256px);
   box-sizing: border-box;
   border-radius: 0 !important;
-  background-color: var(--color-bg-surface-primary-default);
+  background-color: transparent;
   display: flex;
   flex-direction: column;
   overflow-y: auto;
@@ -1969,7 +1975,7 @@ footer {
   align-items: center;
   justify-content: flex-start;
   box-sizing: border-box;
-  background-color: var(--color-bg-surface-primary-default);
+  background-color: none;
 }
 
 .section-card-h1 {
