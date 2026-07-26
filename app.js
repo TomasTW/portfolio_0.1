@@ -57,8 +57,8 @@
         const scrolled = Math.max(0, window.scrollY - sectionTop);
         const progress = sectionHeight > 0 ? Math.min(1, scrolled / sectionHeight) : 0;
 
-        // Clamp to DURATION_S - 0.001s to prevent -3.0s % 3.0s wrap-around back to frame 0
-        const seekTime = Math.min(DURATION_S - 0.001, progress * DURATION_S);
+        // Clamp to DURATION_S - 0.05s to prevent -3.0s % 3.0s wrap-around back to frame 0
+        const seekTime = Math.min(DURATION_S - 0.05, progress * DURATION_S);
         seekTo(seekTime);
       });
     }
