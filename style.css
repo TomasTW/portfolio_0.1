@@ -2419,7 +2419,7 @@ footer {
   flex-direction: row;
   width: 100%;
   position: relative;
-  background-color: var(--color-bg-surface-primary-default);
+  background-color: transparent;
   box-sizing: border-box;
 }
 
