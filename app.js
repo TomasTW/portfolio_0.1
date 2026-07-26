@@ -60,6 +60,9 @@
         // Clamp to DURATION_S - 0.05s to prevent -3.0s % 3.0s wrap-around back to frame 0
         const seekTime = Math.min(DURATION_S - 0.05, progress * DURATION_S);
         seekTo(seekTime);
+
+        // Fade out the cloud background image as user scrolls down
+        section.style.setProperty('--hero-bg-opacity', (1 - progress).toFixed(3));
       });
     }
 
