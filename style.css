@@ -465,7 +465,6 @@ section {
   width: calc(100% - 256px);
   height: calc(100vh - 256px);
   box-sizing: border-box;
-  border: 2px solid var(--color-bg-surface-secondary-default);
   border-radius: 0 !important;
   background-color: var(--color-bg-surface-primary-default);
   display: flex;
@@ -1947,7 +1946,6 @@ footer {
   width: calc(100% - 256px);
   height: calc(100vh - 256px);
   box-sizing: border-box;
-  border: 2px solid var(--color-bg-surface-secondary-default);
   border-radius: 0 !important;
   background-color: var(--color-bg-surface-primary-default);
   display: flex;
