@@ -2187,27 +2187,9 @@
           </div>
         </div>
 
-        <!-- Lower Half: 12-Column Grid Split (4-Col Bio / 8-Col Skills) -->
+        <!-- Lower Half: Full Width Interactive Skill Slider -->
         <div class="about-grid-split">
-
-          <!-- Left Column (4 of 12 Columns): Tool Icons + Bio -->
-          <div class="about-left-col">
-            <div class="skill-icons-row">
-              <img src="icons/skill-icons_illustrator.svg" alt="Adobe Illustrator" class="skill-icon">
-              <img src="icons/skill-icons_photoshop.svg" alt="Adobe Photoshop" class="skill-icon">
-              <img src="icons/skill-icons_ndesign.svg" alt="Adobe InDesign" class="skill-icon">
-              <img src="icons/skill-icons_figma-dark.svg" alt="Figma" class="skill-icon">
-              <img src="icons/skill-icons_figma-dark-1.svg" alt="Gemini" class="skill-icon">
-              <img src="icons/skill-icons_slack.svg" alt="Slack" class="skill-icon">
-              <img src="icons/skill-icons_framer.svg" alt="Framer" class="skill-icon">
-            </div>
-            <p class="about-bio-text">With 8+ years of experience in visual design, I specialize in bridging visual communication with user-centric interfaces. I craft design systems, branding, and conversion-focused campaign visuals that align business goals with exceptional user experiences.</p>
-          </div>
-
-          <!-- Vertical Column Divider -->
-          <div class="about-col-divider"></div>
-
-          <!-- Right Column (8 of 12 Columns): Interactive Skill Slider -->
+          <!-- Right Column: Interactive Skill Slider -->
           <div class="about-right-col">
             <!-- Navigation Arrow Left -->
             <button class="about-nav-btn prev-btn" id="about-prev-btn" aria-label="Previous Skill">
@@ -2935,48 +2917,65 @@
         <div class="contact-grid-split">
           <!-- Left Column: Links list + Copyright -->
           <div class="contact-left-col">
-            <div class="contact-links-list">
-              <!-- LinkedIn -->
-              <a href="https://www.linkedin.com/in/chung-yi-chen" target="_blank" rel="noopener"
-                class="contact-link-item">
-                <div class="contact-link-icon-box">in</div>
-                <span class="contact-link-label">linkedin</span>
-              </a>
-              <!-- Behance -->
-              <a href="https://www.behance.net/tomaschen1994tw" target="_blank" rel="noopener"
-                class="contact-link-item">
-                <div class="contact-link-icon-box">Bē</div>
-                <span class="contact-link-label">behance</span>
-              </a>
-              <!-- Email -->
-              <a href="mailto:tomaschen1994@gmail.com" class="contact-link-item" id="copy-email-btn">
-                <div class="contact-link-icon-box">
-                  <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2.5"
-                    stroke-linecap="round" stroke-linejoin="round">
-                    <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path>
-                    <polyline points="22,6 12,13 2,6"></polyline>
-                  </svg>
-                </div>
-                <span class="contact-link-label">Email</span>
-              </a>
-              <!-- CV -->
-              <a href="CV.pdf" download="Chung_Yi_Chen_CV.pdf" target="_blank" rel="noopener" class="contact-link-item">
-                <div class="contact-link-icon-box">
-                  <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2.5"
-                    stroke-linecap="round" stroke-linejoin="round">
-                    <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
-                    <polyline points="7 10 12 15 17 10"></polyline>
-                    <line x1="12" y1="15" x2="12" y2="3"></line>
-                  </svg>
-                </div>
-                <span class="contact-link-label">CV</span>
-              </a>
+            <!-- Bio & Tool Icons (Moved from About Section) -->
+            <div class="contact-bio-group">
+              <p class="about-bio-text" style="margin-bottom: 24px; max-width: 100%;">With 8+ years of experience in visual design, I specialize in bridging visual communication with user-centric interfaces. I craft design systems, branding, and conversion-focused campaign visuals that align business goals with exceptional user experiences.</p>
+              
+              <div class="skill-icons-row" style="margin-bottom: 32px;">
+                <img src="icons/skill-icons_illustrator.svg" alt="Adobe Illustrator" class="skill-icon">
+                <img src="icons/skill-icons_photoshop.svg" alt="Adobe Photoshop" class="skill-icon">
+                <img src="icons/skill-icons_ndesign.svg" alt="Adobe InDesign" class="skill-icon">
+                <img src="icons/skill-icons_figma-dark.svg" alt="Figma" class="skill-icon">
+                <img src="icons/skill-icons_figma-dark-1.svg" alt="Gemini" class="skill-icon">
+                <img src="icons/skill-icons_slack.svg" alt="Slack" class="skill-icon">
+                <img src="icons/skill-icons_framer.svg" alt="Framer" class="skill-icon">
+              </div>
             </div>
 
-            <!-- Copyright footer inside left column -->
-            <p class="contact-copy-text">
-              &copy; 2026 tomaschen &amp; antigravity. designed with a different model.
-            </p>
+            <div class="contact-links-group">
+              <div class="contact-links-list">
+                <!-- LinkedIn -->
+                <a href="https://www.linkedin.com/in/chung-yi-chen" target="_blank" rel="noopener"
+                  class="contact-link-item">
+                  <div class="contact-link-icon-box">in</div>
+                  <span class="contact-link-label">linkedin</span>
+                </a>
+                <!-- Behance -->
+                <a href="https://www.behance.net/tomaschen1994tw" target="_blank" rel="noopener"
+                  class="contact-link-item">
+                  <div class="contact-link-icon-box">Bē</div>
+                  <span class="contact-link-label">behance</span>
+                </a>
+                <!-- Email -->
+                <a href="mailto:tomaschen1994@gmail.com" class="contact-link-item" id="copy-email-btn">
+                  <div class="contact-link-icon-box">
+                    <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2.5"
+                      stroke-linecap="round" stroke-linejoin="round">
+                      <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path>
+                      <polyline points="22,6 12,13 2,6"></polyline>
+                    </svg>
+                  </div>
+                  <span class="contact-link-label">Email</span>
+                </a>
+                <!-- CV -->
+                <a href="CV.pdf" download="Chung_Yi_Chen_CV.pdf" target="_blank" rel="noopener" class="contact-link-item">
+                  <div class="contact-link-icon-box">
+                    <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2.5"
+                      stroke-linecap="round" stroke-linejoin="round">
+                      <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
+                      <polyline points="7 10 12 15 17 10"></polyline>
+                      <line x1="12" y1="15" x2="12" y2="3"></line>
+                    </svg>
+                  </div>
+                  <span class="contact-link-label">CV</span>
+                </a>
+              </div>
+
+              <!-- Copyright footer inside left column -->
+              <p class="contact-copy-text" style="margin-top: 24px;">
+                &copy; 2026 tomaschen &amp; antigravity. designed with a different model.
+              </p>
+            </div>
           </div>
 
           <!-- Vertical Column Divider Line -->

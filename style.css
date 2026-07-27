@@ -616,17 +616,10 @@ section {
   max-width: 340px;
 }
 
-/* Vertical 2px Column Divider Line */
-.about-col-divider {
-  width: 2px;
-  background-color: var(--color-bg-surface-secondary-default);
-  flex-shrink: 0;
-}
-
-/* Right Column: Interactive Skill Slider (50% Split & Vertically/Horizontally Centered) */
+/* Right Column: Interactive Skill Slider (Full Width) */
 .about-right-col {
-  flex: 0 0 50%;
-  width: 50%;
+  flex: 0 0 100%;
+  width: 100%;
   padding: 48px 44px;
   display: flex;
   flex-direction: column;
@@ -2506,8 +2499,22 @@ footer {
   flex-direction: column;
   justify-content: space-between;
   box-sizing: border-box;
-  min-height: 380px;
-  /* Comfortably hold links + footer */
+  min-height: 480px;
+  /* Comfortably hold bio, icons, links + footer */
+}
+
+.contact-bio-group {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  width: 100%;
+}
+
+.contact-links-group {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  width: 100%;
 }
 
 .contact-right-col {
