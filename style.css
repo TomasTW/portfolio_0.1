@@ -2601,7 +2601,7 @@ footer {
   right: 40px;
   height: auto;
   /* Hugs the vertical image height */
-  background-color: var(--color-bg-surface-primary-default);
+  background-color: transparent;
   border: 0px solid var(--color-bg-surface-secondary-default);
   border-top-left-radius: 360px;
   border-top-right-radius: 360px;
@@ -2617,7 +2617,7 @@ footer {
   height: auto;
   /* Scaled proportionally without cropping */
   display: block;
-  mix-blend-mode: normal;
+  mix-blend-mode: screen;
 }
 
 .contact-box .logo-accent-box {
