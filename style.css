@@ -367,9 +367,9 @@ section {
   align-items: center;
   gap: 10px;
   padding: 14px 28px;
-  font-family: var(--font-head);
-  font-weight: 600;
-  font-size: 0.95rem;
+  font-family: var(--font-family-body-medium);
+  font-weight: var(--font-weight-body-medium);
+  font-size: var(--font-size-body-medium);
   text-decoration: none;
   border-radius: var(--radius-full);
   transition: var(--transition-elastic);
@@ -1105,7 +1105,9 @@ section {
 }
 
 .skill-card p {
-  font-size: 14px;
+  font-family: var(--font-family-body-medium);
+  font-weight: var(--font-weight-body-medium);
+  font-size: var(--font-size-body-medium);
   margin: 0px;
   color: var(--color-text-secondary-default);
   line-height: 1.5;
@@ -1122,7 +1124,8 @@ section {
 }
 
 .skill-tags span {
-  font-size: 0.65rem;
+  font-family: var(--font-family-body-small);
+  font-size: var(--font-size-body-small);
   color: var(--color-text-primary-active);
   background: #FEBF240D;
   border: 1px solid #FEBF241F;
@@ -1302,10 +1305,10 @@ section {
 .skills-list-item {
   display: inline-block;
   margin-right: 12px;
-  font-size: 0.82rem;
-  font-weight: var(--font-weight-body-large);
+  font-family: var(--font-family-body-medium);
+  font-weight: var(--font-weight-body-medium);
+  font-size: var(--font-size-body-medium);
   color: var(--color-text-secondary-default);
-  font-family: var(--font-body);
 }
 
 .skills-list-item:not(:last-child)::after {
@@ -1581,8 +1584,10 @@ section {
 .contact-card p {
   color: var(--color-text-secondary-default);
   margin-bottom: 35px;
-  font-size: 1rem;
-  line-height: 1.6;
+  font-family: var(--font-family-body-medium);
+  font-weight: var(--font-weight-body-medium);
+  font-size: var(--font-size-body-medium);
+  line-height: var(--font-line-height-body-medium);
 }
 
 .contact-methods {
@@ -1637,9 +1642,9 @@ section {
 }
 
 .method-text h4 {
-  font-family: var(--font-head);
-  font-size: 0.88rem;
-  font-weight: 700;
+  font-family: var(--font-family-body-medium);
+  font-weight: var(--font-weight-body-medium);
+  font-size: var(--font-size-body-medium);
   color: var(--color-text-primary-default);
   text-transform: uppercase;
   letter-spacing: 0.8px;
@@ -1650,7 +1655,9 @@ section {
 }
 
 .method-text p {
-  font-size: 0.92rem;
+  font-family: var(--font-family-body-medium);
+  font-weight: var(--font-weight-body-medium);
+  font-size: var(--font-size-body-medium);
   color: var(--color-text-secondary-default);
   margin-bottom: 0 !important;
   font-weight: 500;
@@ -1664,9 +1671,9 @@ section {
   background: rgba(12, 13, 15, 0.95);
   border: 1px solid rgba(254, 191, 36, 0.3);
   color: var(--color-text-primary-default);
-  font-family: var(--font-head);
-  font-weight: 600;
-  font-size: 0.88rem;
+  font-family: var(--font-family-body-medium);
+  font-weight: var(--font-weight-body-medium);
+  font-size: var(--font-size-body-medium);
   border-radius: var(--radius-md);
   box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5), var(--shadow-neon);
   z-index: 9999;
@@ -1699,7 +1706,9 @@ footer {
 }
 
 .footer-copy {
-  font-size: 0.9rem;
+  font-family: var(--font-family-body-medium);
+  font-weight: var(--font-weight-body-medium);
+  font-size: var(--font-size-body-medium);
   color: var(--color-text-secondary-default);
 }
 
@@ -2576,19 +2585,19 @@ footer {
 }
 
 .contact-link-label {
-  font-family: var(--font-head);
-  font-size: 18px;
-  font-weight: 800;
+  font-family: var(--font-family-body-medium);
+  font-size: var(--font-size-body-medium);
+  font-weight: var(--font-weight-body-medium);
   color: var(--color-bg-surface-secondary-default);
   text-transform: lowercase;
 }
 
 /* Copy text inside card */
 .contact-copy-text {
-  font-family: var(--font-body);
-  font-size: 11px;
-  font-weight: 700;
-  line-height: 1.5;
+  font-family: var(--font-family-body-small);
+  font-size: var(--font-size-body-small);
+  font-weight: var(--font-weight-body-small);
+  line-height: var(--font-line-height-body-small);
   color: var(--color-text-primary-default);
   margin: 40px 0 0 0;
 }
