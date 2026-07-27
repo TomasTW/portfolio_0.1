@@ -533,7 +533,7 @@ section {
   background-color: transparent;
   display: flex;
   flex-direction: column;
-  overflow-y: auto;
+  overflow-y: hidden;
   overflow-x: hidden;
   margin: 0;
   opacity: 0;
@@ -2018,7 +2018,7 @@ footer {
   background-color: transparent;
   display: flex;
   flex-direction: column;
-  overflow-y: auto;
+  overflow-y: hidden;
   overflow-x: hidden;
   margin: 0;
   position: relative;
