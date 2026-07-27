@@ -61,11 +61,11 @@
         const seekTime = Math.min(DURATION_S - 0.05, progress * DURATION_S);
         seekTo(seekTime);
 
-        // Trigger about-card reveal at 2.90s of the hero animation scroll progress
+        // Trigger about-card reveal at 2.50s of the hero animation scroll progress
         const aboutCard = document.querySelector('.about-card');
         if (aboutCard) {
           const currentSeconds = progress * DURATION_S;
-          if (currentSeconds >= 2.90) {
+          if (currentSeconds >= 2.50) {
             aboutCard.classList.add('is-visible');
           } else {
             aboutCard.classList.remove('is-visible');
