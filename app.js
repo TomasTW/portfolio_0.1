@@ -60,6 +60,16 @@
         // Clamp to DURATION_S - 0.05s to prevent -3.0s % 3.0s wrap-around back to frame 0
         const seekTime = Math.min(DURATION_S - 0.05, progress * DURATION_S);
         seekTo(seekTime);
+
+        // Drive About section graphic layer (SVG + icons) opacity from hero 2.0s → 3.0s
+        const aboutCard = document.querySelector('.about-card');
+        if (aboutCard) {
+          // Only fade in; About's own handler owns the exit fade-out
+          const t = Math.max(0, Math.min(1, (seekTime - 2.0) / 1.0));
+          // ease-out quad: snappy start, gentle arrival
+          const layerIn = 1 - Math.pow(1 - t, 2);
+          aboutCard.style.setProperty('--about-layer-opacity', layerIn.toFixed(4));
+        }
       });
     }
 
@@ -679,13 +689,17 @@ document.addEventListener('DOMContentLoaded', () => {
       // Footer (right slide): mirrors header exactly
       // Hold:                           0.50 → 0.72
 
-      // Graphic layer opacity
-      const layerOpacity = p < 0.15
-        ? easeInOut(mapRange(p, 0, 0.15, 0, 1))
-        : p > 0.80
-          ? 1 - easeInOut(mapRange(p, 0.80, 1.0, 0, 1))
-          : 1;
-
+      // Graphic layer opacity:
+      // Enter is driven by hero scroll (2.0s→3.0s) — we do NOT override it here.
+      // We only handle the exit fade-out (p > 0.80) and a fallback for
+      // users who jump directly to the About section (p > 0 but hero never ran).
+      if (p > 0.80) {
+        const layerOut = 1 - easeInOut(mapRange(p, 0.80, 1.0, 0, 1));
+        card.style.setProperty('--about-layer-opacity', layerOut.toFixed(4));
+      } else if (p > 0.02) {
+        // Fallback: ensure layer is visible if user scrolled directly to About
+        card.style.setProperty('--about-layer-opacity', '1');
+      }
       // Header: -110vw → 0vw (enter 0.05→0.50), then 0vw → +110vw (exit 0.72→1.0)
       const headerXvw = p < 0.05
         ? -110
@@ -715,11 +729,11 @@ document.addEventListener('DOMContentLoaded', () => {
       const footerOpacity = headerOpacity; // mirrors header
 
       // ── Write CSS vars (vw units = viewport-safe on all screen sizes) ─────
-      card.style.setProperty('--about-layer-opacity',  layerOpacity.toFixed(4));
       card.style.setProperty('--about-header-x',       `${headerXvw.toFixed(2)}vw`);
       card.style.setProperty('--about-header-opacity', headerOpacity.toFixed(4));
       card.style.setProperty('--about-footer-x',       `${footerXvw.toFixed(2)}vw`);
       card.style.setProperty('--about-footer-opacity', footerOpacity.toFixed(4));
+      // Note: --about-layer-opacity is written above (exit) or by hero handler (enter)
     }
 
     function onScroll() {
