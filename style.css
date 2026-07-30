@@ -505,6 +505,14 @@ section {
   align-items: center;
   justify-content: center;
   box-sizing: border-box;
+  padding: 0 !important;
+  margin: 0;
+}
+
+.about-card {
+  width: calc(100% - 128px);
+  height: calc(100vh - 128px);
+  box-sizing: border-box;
   border-radius: 0 !important;
   background-color: transparent;
   display: flex;
