@@ -671,9 +671,22 @@ document.addEventListener('DOMContentLoaded', () => {
       const handCenterX = handRect.left + handRect.width / 2;
       const handCenterY = handRect.top + handRect.height / 2;
 
-      const footerRect = footer.getBoundingClientRect();
-      const footerCenterX = footerRect.left + footerRect.width / 2;
-      const footerCenterY = footerRect.top + footerRect.height / 2;
+      // Find the actual category text items to calculate the center of the list text block
+      const items = Array.from(footer.querySelectorAll('.category-item'));
+      if (items.length === 0) return;
+
+      const lefts = items.map(i => i.getBoundingClientRect().left);
+      const rights = items.map(i => i.getBoundingClientRect().right);
+      const tops = items.map(i => i.getBoundingClientRect().top);
+      const bottoms = items.map(i => i.getBoundingClientRect().bottom);
+
+      const minLeft = Math.min(...lefts);
+      const maxRight = Math.max(...rights);
+      const minTop = Math.min(...tops);
+      const maxBottom = Math.max(...bottoms);
+
+      const footerCenterX = (minLeft + maxRight) / 2;
+      const footerCenterY = (minTop + maxBottom) / 2;
 
       const dx = footerCenterX - handCenterX;
       const dy = footerCenterY - handCenterY;
