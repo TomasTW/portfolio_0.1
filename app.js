@@ -660,6 +660,48 @@ document.addEventListener('DOMContentLoaded', () => {
     onScroll();
   })();
 
+  // Helper to scroll smoothly to a target Y position over a custom duration
+  function animateScrollTo(targetY, durationMs) {
+    const startY = window.scrollY;
+    const difference = targetY - startY;
+    const startTime = performance.now();
+    let userInterrupted = false;
+
+    const onUserInteraction = () => {
+      userInterrupted = true;
+      cleanup();
+    };
+
+    const cleanup = () => {
+      window.removeEventListener('wheel', onUserInteraction);
+      window.removeEventListener('touchmove', onUserInteraction);
+      window.removeEventListener('keydown', onUserInteraction);
+    };
+
+    window.addEventListener('wheel', onUserInteraction, { passive: true });
+    window.addEventListener('touchmove', onUserInteraction, { passive: true });
+    window.addEventListener('keydown', onUserInteraction, { passive: true });
+
+    function step(currentTime) {
+      if (userInterrupted) return;
+
+      const elapsed = currentTime - startTime;
+      const progress = Math.min(elapsed / durationMs, 1);
+      // Ease out cubic
+      const easedProgress = 1 - Math.pow(1 - progress, 3);
+
+      window.scrollTo(0, startY + difference * easedProgress);
+
+      if (progress < 1) {
+        requestAnimationFrame(step);
+      } else {
+        cleanup();
+      }
+    }
+
+    requestAnimationFrame(step);
+  }
+
   // Auto-scroll from hero to about section on load
   window.addEventListener('load', () => {
     if (window.scrollY === 0) {
@@ -676,44 +718,16 @@ document.addEventListener('DOMContentLoaded', () => {
       window.addEventListener('keydown', cancelAutoScroll, { passive: true });
 
       setTimeout(() => {
-        if (userScrolled || window.scrollY !== 0) {
-          window.removeEventListener('wheel', cancelAutoScroll);
-          window.removeEventListener('touchmove', cancelAutoScroll);
-          window.removeEventListener('keydown', cancelAutoScroll);
-          return;
-        }
-
-        const aboutSection = document.getElementById('about');
-        if (aboutSection) {
-          const targetY = aboutSection.getBoundingClientRect().top + window.scrollY;
-          const startY = window.scrollY;
-          const difference = targetY - startY;
-          const duration = 2000; // exactly 2 seconds
-          const startTime = performance.now();
-
-          function step(currentTime) {
-            if (userScrolled) {
-              window.removeEventListener('wheel', cancelAutoScroll);
-              window.removeEventListener('touchmove', cancelAutoScroll);
-              window.removeEventListener('keydown', cancelAutoScroll);
-              return;
-            }
-            const elapsed = currentTime - startTime;
-            const progress = Math.min(elapsed / duration, 1);
-            
-            // Easing: easeOutCubic (starts fast, slows down smoothly)
-            const ease = 1 - Math.pow(1 - progress, 3);
-            window.scrollTo(0, startY + difference * ease);
-
-            if (progress < 1) {
-              requestAnimationFrame(step);
-            } else {
-              window.removeEventListener('wheel', cancelAutoScroll);
-              window.removeEventListener('touchmove', cancelAutoScroll);
-              window.removeEventListener('keydown', cancelAutoScroll);
-            }
+        window.removeEventListener('wheel', cancelAutoScroll);
+        window.removeEventListener('touchmove', cancelAutoScroll);
+        window.removeEventListener('keydown', cancelAutoScroll);
+        
+        if (!userScrolled && window.scrollY === 0) {
+          const aboutSection = document.getElementById('about');
+          if (aboutSection) {
+            const targetY = aboutSection.getBoundingClientRect().top + window.scrollY;
+            animateScrollTo(targetY, 3000); // 3 seconds duration
           }
-          requestAnimationFrame(step);
         }
       }, 1500); // 1.5 seconds delay
     }
