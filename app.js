@@ -676,19 +676,44 @@ document.addEventListener('DOMContentLoaded', () => {
       window.addEventListener('keydown', cancelAutoScroll, { passive: true });
 
       setTimeout(() => {
-        window.removeEventListener('wheel', cancelAutoScroll);
-        window.removeEventListener('touchmove', cancelAutoScroll);
-        window.removeEventListener('keydown', cancelAutoScroll);
-        
-        if (!userScrolled && window.scrollY === 0) {
-          const aboutSection = document.getElementById('about');
-          if (aboutSection) {
-            const targetY = aboutSection.getBoundingClientRect().top + window.scrollY;
-            window.scrollTo({
-              top: targetY,
-              behavior: 'smooth'
-            });
+        if (userScrolled || window.scrollY !== 0) {
+          window.removeEventListener('wheel', cancelAutoScroll);
+          window.removeEventListener('touchmove', cancelAutoScroll);
+          window.removeEventListener('keydown', cancelAutoScroll);
+          return;
+        }
+
+        const aboutSection = document.getElementById('about');
+        if (aboutSection) {
+          const targetY = aboutSection.getBoundingClientRect().top + window.scrollY;
+          const startY = window.scrollY;
+          const difference = targetY - startY;
+          const duration = 2000; // exactly 2 seconds
+          const startTime = performance.now();
+
+          function step(currentTime) {
+            if (userScrolled) {
+              window.removeEventListener('wheel', cancelAutoScroll);
+              window.removeEventListener('touchmove', cancelAutoScroll);
+              window.removeEventListener('keydown', cancelAutoScroll);
+              return;
+            }
+            const elapsed = currentTime - startTime;
+            const progress = Math.min(elapsed / duration, 1);
+            
+            // Easing: easeOutCubic (starts fast, slows down smoothly)
+            const ease = 1 - Math.pow(1 - progress, 3);
+            window.scrollTo(0, startY + difference * ease);
+
+            if (progress < 1) {
+              requestAnimationFrame(step);
+            } else {
+              window.removeEventListener('wheel', cancelAutoScroll);
+              window.removeEventListener('touchmove', cancelAutoScroll);
+              window.removeEventListener('keydown', cancelAutoScroll);
+            }
           }
+          requestAnimationFrame(step);
         }
       }, 1500); // 1.5 seconds delay
     }
