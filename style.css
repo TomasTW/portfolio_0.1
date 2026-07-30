@@ -540,10 +540,10 @@ section {
 }
 
 .about-headline {
-  font-family: var(--font-family-title-3xl-family), sans-serif;
-  font-size: var(--font-size-title-3xl-size);
-  font-weight: var(--font-weight-title-3xl-weight);
-  line-height: var(--font-line-height-title-3xl-line-height);
+  font-family: var(--typography-title-3xl-family), sans-serif;
+  font-size: var(--typography-title-3xl-size);
+  font-weight: var(--typography-title-3xl-weight);
+  line-height: var(--typography-title-3xl-line-height);
   letter-spacing: -1.5px;
   color: var(--color-text-primary-default);
   margin: 0;
