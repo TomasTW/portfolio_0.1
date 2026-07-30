@@ -36,39 +36,39 @@
   /* =====================================================================
      TYPOGRAPHY SYSTEM (Modular 14px base, 1.618 scale)
      ===================================================================== */
-  /* title-3xl (H1: 251px / 17.929rem) */
+  /* title-3xl (H1: 155px / 11.071rem) */
   --typography-title-3xl-family: "Poppins", sans-serif;
-  --typography-title-3xl-size: clamp(64px, 12vw, 251px);
+  --typography-title-3xl-size: clamp(48px, 8vw, 155px);
   --typography-title-3xl-weight: 900;
   --typography-title-3xl-line-height: 1.05;
 
-  /* title-2xl (H2: 155px / 11.071rem) */
+  /* title-2xl (H2: 96px / 6.857rem) */
   --typography-title-2xl-family: "Poppins", sans-serif;
-  --typography-title-2xl-size: clamp(48px, 8vw, 155px);
+  --typography-title-2xl-size: clamp(32px, 5vw, 96px);
   --typography-title-2xl-weight: 900;
   --typography-title-2xl-line-height: 1.1;
 
-  /* title-xl (H3: 96px / 6.857rem) */
+  /* title-xl (H3: 59px / 4.214rem) */
   --typography-title-xl-family: "Poppins", sans-serif;
-  --typography-title-xl-size: clamp(32px, 5vw, 96px);
+  --typography-title-xl-size: clamp(24px, 3vw, 59px);
   --typography-title-xl-weight: 700;
   --typography-title-xl-line-height: 1.15;
 
-  /* title-lg (H4: 59px / 4.214rem) */
+  /* title-lg (H4: 37px / 2.643rem) */
   --typography-title-lg-family: "Poppins", sans-serif;
-  --typography-title-lg-size: clamp(24px, 3vw, 59px);
+  --typography-title-lg-size: clamp(18px, 2vw, 37px);
   --typography-title-lg-weight: 700;
   --typography-title-lg-line-height: 1.2;
 
-  /* body-xl (body1: 37px / 2.643rem) */
+  /* body-xl (body1: 23px / 1.643rem) */
   --typography-body-xl-family: "DM Sans", sans-serif;
-  --typography-body-xl-size: clamp(18px, 2vw, 37px);
+  --typography-body-xl-size: clamp(14px, 1.2vw, 23px);
   --typography-body-xl-weight: 700;
   --typography-body-xl-line-height: 1.25;
 
-  /* body-lg (body2: 23px / 1.643rem) */
+  /* body-lg (body2: 18px / 1.286rem) */
   --typography-body-lg-family: "DM Sans", sans-serif;
-  --typography-body-lg-size: clamp(14px, 1.2vw, 23px);
+  --typography-body-lg-size: clamp(14px, 1vw, 18px);
   --typography-body-lg-weight: 700;
   --typography-body-lg-line-height: 1.25;
 
