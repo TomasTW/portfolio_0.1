@@ -660,78 +660,53 @@ document.addEventListener('DOMContentLoaded', () => {
     onScroll();
   })();
 
-  // Helper to scroll smoothly to a target Y position over a custom duration
-  function animateScrollTo(targetY, durationMs) {
-    const startY = window.scrollY;
-    const difference = targetY - startY;
-    const startTime = performance.now();
-    let userInterrupted = false;
+  // --- About Hand Auto-Rotation Module (Point to categories footer center) ---
+  (function initAboutHandRotation() {
+    const hand = document.querySelector('.about-hand-graphic');
+    const footer = document.querySelector('.about-categories-footer');
+    if (!hand || !footer) return;
 
-    const onUserInteraction = () => {
-      userInterrupted = true;
-      cleanup();
-    };
+    function adjustRotation() {
+      const handRect = hand.getBoundingClientRect();
+      const handCenterX = handRect.left + handRect.width / 2;
+      const handCenterY = handRect.top + handRect.height / 2;
 
-    const cleanup = () => {
-      window.removeEventListener('wheel', onUserInteraction);
-      window.removeEventListener('touchmove', onUserInteraction);
-      window.removeEventListener('keydown', onUserInteraction);
-    };
+      const footerRect = footer.getBoundingClientRect();
+      const footerCenterX = footerRect.left + footerRect.width / 2;
+      const footerCenterY = footerRect.top + footerRect.height / 2;
 
-    window.addEventListener('wheel', onUserInteraction, { passive: true });
-    window.addEventListener('touchmove', onUserInteraction, { passive: true });
-    window.addEventListener('keydown', onUserInteraction, { passive: true });
-
-    function step(currentTime) {
-      if (userInterrupted) return;
-
-      const elapsed = currentTime - startTime;
-      const progress = Math.min(elapsed / durationMs, 1);
-      // Ease out cubic
-      const easedProgress = 1 - Math.pow(1 - progress, 3);
-
-      window.scrollTo(0, startY + difference * easedProgress);
-
-      if (progress < 1) {
-        requestAnimationFrame(step);
-      } else {
-        cleanup();
-      }
-    }
-
-    requestAnimationFrame(step);
-  }
-
-  // Auto-scroll from hero to about section on load
-  window.addEventListener('load', () => {
-    if (window.scrollY === 0) {
-      let userScrolled = false;
-      const cancelAutoScroll = () => {
-        userScrolled = true;
-        window.removeEventListener('wheel', cancelAutoScroll);
-        window.removeEventListener('touchmove', cancelAutoScroll);
-        window.removeEventListener('keydown', cancelAutoScroll);
-      };
+      const dx = footerCenterX - handCenterX;
+      const dy = footerCenterY - handCenterY;
       
-      window.addEventListener('wheel', cancelAutoScroll, { passive: true });
-      window.addEventListener('touchmove', cancelAutoScroll, { passive: true });
-      window.addEventListener('keydown', cancelAutoScroll, { passive: true });
+      const angleRad = Math.atan2(dy, dx);
+      const angleDeg = angleRad * (180 / Math.PI);
 
-      setTimeout(() => {
-        window.removeEventListener('wheel', cancelAutoScroll);
-        window.removeEventListener('touchmove', cancelAutoScroll);
-        window.removeEventListener('keydown', cancelAutoScroll);
-        
-        if (!userScrolled && window.scrollY === 0) {
-          const aboutSection = document.getElementById('about');
-          if (aboutSection) {
-            const targetY = aboutSection.getBoundingClientRect().top + window.scrollY;
-            animateScrollTo(targetY, 3000); // 3 seconds duration
-          }
-        }
-      }, 1500); // 1.5 seconds delay
+      // Subtract 90 degrees since natural pointer faces straight down
+      const rotation = angleDeg - 90;
+      hand.style.transform = `rotate(${rotation}deg)`;
     }
-  });
+
+    window.addEventListener('resize', adjustRotation);
+    window.addEventListener('scroll', adjustRotation, { passive: true });
+    
+    // Layout settlements
+    setTimeout(adjustRotation, 100);
+    setTimeout(adjustRotation, 500);
+    setTimeout(adjustRotation, 1000);
+
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          adjustRotation();
+        }
+      });
+    }, { threshold: 0.1 });
+
+    const aboutCard = document.querySelector('.about-card');
+    if (aboutCard) {
+      observer.observe(aboutCard);
+    }
+  })();
 
 });
 

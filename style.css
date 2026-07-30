@@ -548,11 +548,11 @@ section {
   color: var(--color-text-primary-default);
   margin: 0;
 }
-/* Main Content: Sidebar tool icons + Center Hand Graphic */
 .about-content-area {
   display: flex;
   flex-direction: row;
   align-items: center;
+  justify-content: center;
   flex-grow: 1;
   position: relative;
   width: 100%;
@@ -561,13 +561,15 @@ section {
 }
 
 .about-tools-sidebar {
+  position: absolute;
+  left: 40px;
+  top: 50%;
+  transform: translateY(-50%);
   display: flex;
   flex-direction: column;
   gap: 20px;
   align-items: center;
   justify-content: center;
-  width: 50px;
-  flex-shrink: 0;
   z-index: 10;
 }
 
@@ -586,18 +588,23 @@ section {
   display: flex;
   align-items: center;
   justify-content: center;
-  flex-grow: 1;
-  width: calc(100% - 50px);
-  height: 100%;
+  width: 320px;
+  height: 320px;
+  border-radius: var(--radius-full);
+  border: 2px solid var(--color-border-primary-default);
+  margin: 0 auto;
   position: relative;
+  background-color: transparent;
+  flex-shrink: 0;
 }
 
 .about-hand-graphic {
-  max-width: 100%;
-  max-height: 480px;
+  max-width: 90%;
+  max-height: 90%;
   object-fit: contain;
   mix-blend-mode: screen;
-  transition: transform 0.5s ease;
+  transform-origin: center center;
+  transition: transform 0.5s ease-out;
 }
 
 /* Footer Category Links */
@@ -674,8 +681,9 @@ section {
     padding: 0 32px;
   }
 
-  .about-hand-graphic {
-    max-height: 400px;
+  .about-graphic-container {
+    width: 280px;
+    height: 280px;
   }
 
   .about-categories-footer {
@@ -721,12 +729,26 @@ section {
   }
 
   .about-content-area {
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
     padding: 0 20px;
-    gap: 16px;
+    gap: 12px;
   }
 
-  .about-hand-graphic {
-    max-height: 320px;
+  .about-tools-sidebar {
+    position: static;
+    transform: none;
+    flex-direction: row;
+    gap: 16px;
+    margin: 16px 0 0 0;
+    justify-content: center;
+    width: 100%;
+  }
+
+  .about-graphic-container {
+    width: 240px;
+    height: 240px;
   }
 
   .about-categories-footer {
