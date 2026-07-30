@@ -60,17 +60,6 @@
         // Clamp to DURATION_S - 0.05s to prevent -3.0s % 3.0s wrap-around back to frame 0
         const seekTime = Math.min(DURATION_S - 0.05, progress * DURATION_S);
         seekTo(seekTime);
-
-        // Trigger about-card reveal at 2.0s of the hero animation scroll progress
-        const aboutCard = document.querySelector('.about-card');
-        if (aboutCard) {
-          const currentSeconds = progress * DURATION_S;
-          if (currentSeconds >= 2.0) {
-            aboutCard.classList.add('is-visible');
-          } else {
-            aboutCard.classList.remove('is-visible');
-          }
-        }
       });
     }
 
@@ -658,6 +647,87 @@ document.addEventListener('DOMContentLoaded', () => {
 
     window.addEventListener('scroll', onScroll, { passive: true });
     onScroll();
+  })();
+
+  // --- About Section: Scroll-Scrubbed Reveal & Exit ---
+  (function initAboutScrollReveal() {
+    const section   = document.getElementById('about');
+    const card      = document.querySelector('.about-card');
+    if (!section || !card) return;
+
+    // Easing helpers — ease-out cubic
+    function easeOut(t) { return 1 - Math.pow(1 - t, 3); }
+
+    // Map a value from [inMin,inMax] → [outMin,outMax], clamped
+    function mapRange(val, inMin, inMax, outMin, outMax) {
+      const t = Math.max(0, Math.min(1, (val - inMin) / (inMax - inMin)));
+      return outMin + t * (outMax - outMin);
+    }
+
+    let rafId = null;
+
+    function update() {
+      rafId = null;
+      const sectionTop    = section.getBoundingClientRect().top + window.scrollY;
+      const scrollHeight  = section.offsetHeight - window.innerHeight; // 300vh - 1vh = 200vh of scrub
+      const scrolled      = Math.max(0, window.scrollY - sectionTop);
+      const p             = scrollHeight > 0 ? Math.min(1, scrolled / scrollHeight) : 0;
+
+      // ── Phase boundaries ──────────────────────────────────────────────────
+      // Enter:  0.00 → 0.35  (layer fades first, then header+footer slide in)
+      // Hold:   0.35 → 0.65
+      // Exit:   0.65 → 1.00  (header slides right out, footer slides left out, layer fades)
+
+      // Graphic layer opacity: enter 0→1 in first 20%, exit 80%→1 fade out
+      const layerOpacity = p < 0.20
+        ? easeOut(mapRange(p, 0, 0.20, 0, 1))
+        : p > 0.80
+          ? 1 - easeOut(mapRange(p, 0.80, 1.0, 0, 1))
+          : 1;
+
+      // Header: slides from -110% → 0% between p=0.10→0.35, then slides to +110% between p=0.65→1.0
+      const headerX = p < 0.10
+        ? -110
+        : p < 0.35
+          ? -110 + easeOut(mapRange(p, 0.10, 0.35, 0, 1)) * 110
+          : p < 0.65
+            ? 0
+            : easeOut(mapRange(p, 0.65, 1.0, 0, 1)) * 110;
+
+      const headerOpacity = p < 0.10
+        ? 0
+        : p < 0.35
+          ? easeOut(mapRange(p, 0.10, 0.35, 0, 1))
+          : p < 0.65
+            ? 1
+            : 1 - easeOut(mapRange(p, 0.65, 1.0, 0, 1));
+
+      // Footer: slides from +110% → 0% between p=0.10→0.35, then slides to -110% between p=0.65→1.0
+      const footerX = p < 0.10
+        ? 110
+        : p < 0.35
+          ? 110 - easeOut(mapRange(p, 0.10, 0.35, 0, 1)) * 110
+          : p < 0.65
+            ? 0
+            : -(easeOut(mapRange(p, 0.65, 1.0, 0, 1)) * 110);
+
+      const footerOpacity = headerOpacity; // mirrors header opacity
+
+      // ── Write CSS vars to the card ────────────────────────────────────────
+      card.style.setProperty('--about-layer-opacity',   layerOpacity.toFixed(4));
+      card.style.setProperty('--about-header-x',        `${headerX.toFixed(2)}%`);
+      card.style.setProperty('--about-header-opacity',  headerOpacity.toFixed(4));
+      card.style.setProperty('--about-footer-x',        `${footerX.toFixed(2)}%`);
+      card.style.setProperty('--about-footer-opacity',  footerOpacity.toFixed(4));
+    }
+
+    function onScroll() {
+      if (!rafId) rafId = requestAnimationFrame(update);
+    }
+
+    window.addEventListener('scroll', onScroll, { passive: true });
+    // Run once on load to set initial state
+    update();
   })();
 
   // --- About Hand Auto-Rotation Module (Point to categories footer center) ---

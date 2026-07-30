@@ -491,7 +491,7 @@ section {
    ABOUT SECTION — Exact Reference Frame Layout & Interactive Skill Slider
    ========================================================================== */
 .about {
-  height: 100vh;
+  height: 300vh;
   position: relative;
   background-color: transparent;
   color: transparent;
@@ -499,6 +499,8 @@ section {
 }
 
 .about-sticky {
+  position: sticky;
+  top: 0;
   height: 100vh;
   width: 100%;
   display: flex;
@@ -520,23 +522,39 @@ section {
   justify-content: space-between;
   align-items: stretch;
   margin: 0;
-  opacity: 0;
-  transform: scale(1.15);
-  transition: opacity 1.2s cubic-bezier(0.16, 1, 0.3, 1), transform 1.2s cubic-bezier(0.16, 1, 0.3, 1);
+  opacity: 1;
   position: relative;
   overflow: hidden;
 }
 
-.about-card.is-visible {
-  opacity: 1;
-  transform: scale(1);
+/* ---------------------------------------------------------------
+   About Section: Scroll-scrubbed layer animation handles.
+   JS writes --about-* CSS vars on each scroll tick.
+   will-change: transform ensures GPU compositing.
+--------------------------------------------------------------- */
+
+/* Graphic layer (hand SVG + tool icons) — fades in first */
+.about-graphic-layer {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+  flex-grow: 1;
+  width: 100%;
+  height: 100%;
+  position: relative;
+  opacity: var(--about-layer-opacity, 0);
+  will-change: opacity;
 }
 
-/* Header Banner */
+/* Header Banner — slides in from left */
 .about-header {
   padding: 40px;
   background-color: transparent;
   text-align: left;
+  transform: translateX(var(--about-header-x, -110%));
+  opacity: var(--about-header-opacity, 0);
+  will-change: transform, opacity;
 }
 
 .about-headline {
@@ -606,7 +624,7 @@ section {
   transition: transform 0.5s ease-out;
 }
 
-/* Footer Category Links */
+/* Footer Category Links — slides in from right */
 .about-categories-footer {
   display: flex;
   flex-direction: row;
@@ -617,6 +635,9 @@ section {
   box-sizing: border-box;
   width: 100%;
   flex-wrap: wrap;
+  transform: translateX(var(--about-footer-x, 110%));
+  opacity: var(--about-footer-opacity, 0);
+  will-change: transform, opacity;
 }
 
 .category-item {
