@@ -660,6 +660,40 @@ document.addEventListener('DOMContentLoaded', () => {
     onScroll();
   })();
 
+  // Auto-scroll from hero to about section on load
+  window.addEventListener('load', () => {
+    if (window.scrollY === 0) {
+      let userScrolled = false;
+      const cancelAutoScroll = () => {
+        userScrolled = true;
+        window.removeEventListener('wheel', cancelAutoScroll);
+        window.removeEventListener('touchmove', cancelAutoScroll);
+        window.removeEventListener('keydown', cancelAutoScroll);
+      };
+      
+      window.addEventListener('wheel', cancelAutoScroll, { passive: true });
+      window.addEventListener('touchmove', cancelAutoScroll, { passive: true });
+      window.addEventListener('keydown', cancelAutoScroll, { passive: true });
+
+      setTimeout(() => {
+        window.removeEventListener('wheel', cancelAutoScroll);
+        window.removeEventListener('touchmove', cancelAutoScroll);
+        window.removeEventListener('keydown', cancelAutoScroll);
+        
+        if (!userScrolled && window.scrollY === 0) {
+          const aboutSection = document.getElementById('about');
+          if (aboutSection) {
+            const targetY = aboutSection.getBoundingClientRect().top + window.scrollY;
+            window.scrollTo({
+              top: targetY,
+              behavior: 'smooth'
+            });
+          }
+        }
+      }, 1500); // 1.5 seconds delay
+    }
+  });
+
 });
 
 
