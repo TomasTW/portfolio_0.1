@@ -2171,102 +2171,43 @@
     <div class="about-sticky">
       <div class="about-card">
 
-        <!-- Top Headline Banner with Yellow Highlight -->
+        <!-- Top Headline Banner -->
         <div class="about-header">
-          <h1 class="about-headline">Visual Designer &amp; UI / UX Researcher</h1>
+          <h1 class="about-headline">Visual Designer</h1>
         </div>
 
-        <!-- Section divider with center logo accent -->
-        <div class="section-divider">
-          <div class="logo-accent-box">
-            <svg class="logo-accent-icon" viewBox="0 0 72 82" fill="var(--color-bg-surface-secondary-default)"
-              xmlns="http://www.w3.org/2000/svg">
-              <path
-                d="M19.5 62.9824C10.5 66.7862 9.5 76.0834 7.5 82H0C5 60.0241 15 15.3117 15 12.2689C15 9.22612 13.5 9.73325 6 16.0722L0 11.0009C9 2.12607 24 -4.2129 42 3.39391C57.0002 9.73299 69 2.12598 72 0.858138C70.5 3.39381 60.1367 11.3849 52.5 13.5365C43.5 16.0722 46.5 24.9471 48 33.8219C49.5 42.6968 51.4917 52.1403 43.5 56.6432C34.5 61.7144 26.341 60.0912 19.5 62.9824Z" />
-            </svg>
+        <!-- Main Content Area: Icons Column + Hand Graphic -->
+        <div class="about-content-area">
+          <!-- Left Column: Tool Icons -->
+          <div class="about-tools-sidebar">
+            <img src="icons/skill-icons_illustrator.svg" alt="Adobe Illustrator" class="about-tool-icon">
+            <img src="icons/skill-icons_photoshop.svg" alt="Adobe Photoshop" class="about-tool-icon">
+            <img src="icons/skill-icons_ndesign.svg" alt="Adobe InDesign" class="about-tool-icon">
+            <img src="icons/skill-icons_figma-dark.svg" alt="Figma" class="about-tool-icon">
+            <img src="icons/skill-icons_figma-dark-1.svg" alt="Gemini" class="about-tool-icon">
+            <img src="icons/skill-icons_slack.svg" alt="Slack" class="about-tool-icon">
+            <img src="icons/skill-icons_framer.svg" alt="Framer" class="about-tool-icon">
+          </div>
+
+          <!-- Center Hand Graphic -->
+          <div class="about-graphic-container">
+            <img src="about_graphic.svg" alt="What I Do pointing hand graphic" class="about-hand-graphic">
           </div>
         </div>
 
-        <!-- Lower Half: Full Width Interactive Skill Slider -->
-        <div class="about-grid-split">
-          <!-- Right Column: Interactive Skill Slider -->
-          <div class="about-right-col">
-            <!-- Navigation Arrow Left -->
-            <button class="about-nav-btn prev-btn" id="about-prev-btn" aria-label="Previous Skill">
-              <svg class="works-arrow-icon" viewBox="0 0 24 24">
-                <polygon points="16,6 6,12 16,18" />
-              </svg>
-            </button>
-            <div class="skills-slider-track">
-              <!-- Slide 1: UI / UX Design -->
-              <div class="skill-slide active" data-index="0">
-                <div class="skill-slide-layout">
-                  <div class="skill-slide-info">
-                    <h4>UI / UX Design</h4>
-                    <p>Wireframing, user journeys, interactive high-fidelity prototyping, and designing intuitive interfaces focused on accessibility and conversion metrics.</p>
-                  </div>
-                </div>
-              </div>
+        <!-- Bottom Categories Footer -->
+        <div class="about-categories-footer">
+          <span class="category-item">Graphic &amp; Branding</span>
+          <span class="category-divider">|</span>
+          <span class="category-item">Visual Communication</span>
+          <span class="category-divider">|</span>
+          <span class="category-item">Marketing &amp; Ads</span>
+          <span class="category-divider">|</span>
+          <span class="category-item">Layout &amp; Typography</span>
+          <span class="category-divider">|</span>
+          <span class="category-item">UI/UX Design</span>
+        </div>
 
-              <!-- Slide 2: Graphic & Branding -->
-              <div class="skill-slide" data-index="1">
-                <div class="skill-slide-layout">
-                  <div class="skill-slide-info">
-                    <h4>Graphic &amp; Branding</h4>
-                    <p>Developing brand identity systems, custom vector illustrations, and cohesive visual languages that elevate brand value.</p>
-                  </div>
-                </div>
-              </div>
-
-              <!-- Slide 3: Layout & Typography -->
-              <div class="skill-slide" data-index="2">
-                <div class="skill-slide-layout">
-                  <div class="skill-slide-info">
-                    <h4>Layout &amp; Typography</h4>
-                    <p>Designing clean layout systems for print media, retail catalogs, and packaging templates with strict typographic hierarchy.</p>
-                  </div>
-                </div>
-              </div>
-
-              <!-- Slide 4: Marketing & Ads -->
-              <div class="skill-slide" data-index="3">
-                <div class="skill-slide-layout">
-                  <div class="skill-slide-info">
-                    <h4>Marketing &amp; Ads</h4>
-                    <p>Crafting high-converting digital campaigns, seasonal promotional graphics, and visual assets to drive user engagement.</p>
-                  </div>
-                </div>
-              </div>
-
-              <!-- Slide 5: Visual Communication -->
-              <div class="skill-slide" data-index="4">
-                <div class="skill-slide-layout">
-                  <div class="skill-slide-info">
-                    <h4>Visual Communication</h4>
-                    <p>Translating complex brand ideas and narratives into compelling graphic assets and user-centered design solutions.</p>
-                  </div>
-                </div>
-              </div>
-            </div>
-
-            <!-- Pagination Dots -->
-            <div class="skills-pagination">
-              <span class="pagination-dot active" data-index="0"></span>
-              <span class="pagination-dot" data-index="1"></span>
-              <span class="pagination-dot" data-index="2"></span>
-              <span class="pagination-dot" data-index="3"></span>
-              <span class="pagination-dot" data-index="4"></span>
-            </div>
-
-            <!-- Navigation Arrow Right -->
-            <button class="about-nav-btn next-btn" id="about-next-btn" aria-label="Next Skill">
-              <svg class="works-arrow-icon" viewBox="0 0 24 24">
-                <polygon points="8,6 18,12 8,18" />
-              </svg>
-            </button>
-          </div>
-
-        </div><!-- /.about-grid-split -->
       </div><!-- /.about-card -->
     </div><!-- /.about-sticky -->
   </section>
@@ -2423,10 +2364,14 @@
                     <div class="works-key-contributions">
                       <h4>Key Contributions:</h4>
                       <ul>
-                        <li>Created orderly previews and listings of recent exhibitions to help users quickly view schedules.</li>
-                        <li>Designed a clear and accessible online ticket checkout integration to encourage conversions.</li>
-                        <li>Utilized chat-shaped exhibition cards to present collections and works at the top of detail views for clarity.</li>
-                        <li>Engineered accessibility-focused previews with modern motion interaction designs to enhance engagement.</li>
+                        <li>Created orderly previews and listings of recent exhibitions to help users quickly view
+                          schedules.</li>
+                        <li>Designed a clear and accessible online ticket checkout integration to encourage conversions.
+                        </li>
+                        <li>Utilized chat-shaped exhibition cards to present collections and works at the top of detail
+                          views for clarity.</li>
+                        <li>Engineered accessibility-focused previews with modern motion interaction designs to enhance
+                          engagement.</li>
                       </ul>
                     </div>
                     <div class="works-tags">
@@ -2475,7 +2420,8 @@
                       <h4>Key Contributions:</h4>
                       <ul>
                         <li>Created structural box layout templates and visual wrapping labels.</li>
-                        <li>Developed custom hand-drawn vector assets and patterns representing warmth and hospitality.</li>
+                        <li>Developed custom hand-drawn vector assets and patterns representing warmth and hospitality.
+                        </li>
                         <li>Designed typography systems and promotional materials for local Taiwanese products.</li>
                       </ul>
                     </div>
@@ -2731,7 +2677,9 @@
         </div>
         <h3 class="modal-title">Gallery APP</h3>
         <p class="modal-description">
-          <strong>Project Overview:</strong> An art gallery application designed to increase gallery attendance by providing exhibition previews and schedules on the app to attract more visitors, helping users quickly understand exhibition content and buy tickets online.
+          <strong>Project Overview:</strong> An art gallery application designed to increase gallery attendance by
+          providing exhibition previews and schedules on the app to attract more visitors, helping users quickly
+          understand exhibition content and buy tickets online.
         </p>
         <div class="modal-details-box">
           <div class="contributions-section">
@@ -2739,7 +2687,8 @@
             <p>
               1. Created orderly previews and listings of recent exhibitions to help users quickly view schedules.<br>
               2. Designed a clear and accessible online ticket checkout integration to encourage conversions.<br>
-              3. Utilized chat-shaped exhibition cards to present collections and works at the top of detail views for clarity.<br>
+              3. Utilized chat-shaped exhibition cards to present collections and works at the top of detail views for
+              clarity.<br>
               4. Engineered accessibility-focused previews with modern motion interaction designs to enhance engagement.
             </p>
           </div>
@@ -2919,8 +2868,11 @@
           <div class="contact-left-col">
             <!-- Bio & Tool Icons (Moved from About Section) -->
             <div class="contact-bio-group">
-              <p class="about-bio-text" style="margin-bottom: 24px; max-width: 100%;">With 8+ years of experience in visual design, I specialize in bridging visual communication with user-centric interfaces. I craft design systems, branding, and conversion-focused campaign visuals that align business goals with exceptional user experiences.</p>
-              
+              <p class="about-bio-text" style="margin-bottom: 24px; max-width: 100%;">With 8+ years of experience in
+                visual design, I specialize in bridging visual communication with user-centric interfaces. I craft
+                design systems, branding, and conversion-focused campaign visuals that align business goals with
+                exceptional user experiences.</p>
+
               <div class="skill-icons-row" style="margin-bottom: 32px;">
                 <img src="icons/skill-icons_illustrator.svg" alt="Adobe Illustrator" class="skill-icon">
                 <img src="icons/skill-icons_photoshop.svg" alt="Adobe Photoshop" class="skill-icon">
@@ -2958,7 +2910,8 @@
                   <span class="contact-link-label">Email</span>
                 </a>
                 <!-- CV -->
-                <a href="CV.pdf" download="Chung_Yi_Chen_CV.pdf" target="_blank" rel="noopener" class="contact-link-item">
+                <a href="CV.pdf" download="Chung_Yi_Chen_CV.pdf" target="_blank" rel="noopener"
+                  class="contact-link-item">
                   <div class="contact-link-icon-box">
                     <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2.5"
                       stroke-linecap="round" stroke-linejoin="round">

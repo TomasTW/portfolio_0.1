@@ -151,7 +151,7 @@ body {
   background-size: cover;
   background-position: center;
   background-attachment: fixed;
-  min-height: 100vh;
+  min-height: 100dvh;
   line-height: 1.6;
   margin: 0 !important;
   padding: 0 !important;
@@ -192,28 +192,14 @@ p {
   font-weight: var(--font-weight-body-large);
 }
 
-
-
-/* Custom Scrollbar */
-::-webkit-scrollbar {
-  width: 0px;
-  height: 0px;
+p {
+  font-family: var(--font-family-body-), sans-serif;
+  font-size: var(--font-size-body-large);
+  line-height: var(--font-line-height-body-large);
+  font-weight: var(--font-weight-body-large);
 }
 
-::-webkit-scrollbar-track {
-  background: var(--color-bg-surface-secondary-default);
-}
 
-::-webkit-scrollbar-thumb {
-  background: #F1F1F126;
-  border-radius: var(--radius-full);
-  border: 2px solid var(--color-bg-surface-secondary-default);
-  transition: var(--transition-smooth);
-}
-
-::-webkit-scrollbar-thumb:hover {
-  background: var(--color-bg-surface-primary-default);
-}
 
 /* ==========================================================================
    DYNAMIC BACKGROUND UTILITIES & GLOWS
@@ -505,40 +491,32 @@ section {
    ABOUT SECTION — Exact Reference Frame Layout & Interactive Skill Slider
    ========================================================================== */
 .about {
-  height: 300vh;
-  position: sticky;
+  height: 100vh;
+  position: relative;
   background-color: transparent;
   color: transparent;
   z-index: 5;
 }
 
 .about-sticky {
-  position: sticky;
-  top: 0;
   height: 100vh;
   width: 100%;
   display: flex;
   align-items: center;
   justify-content: center;
   box-sizing: border-box;
-  padding: 0 !important;
-  margin: 0;
-}
-
-.about-card {
-  width: calc(100% - 256px);
-  height: calc(100vh - 256px);
-  box-sizing: border-box;
   border-radius: 0 !important;
   background-color: transparent;
   display: flex;
   flex-direction: column;
-  overflow-y: hidden;
-  overflow-x: hidden;
+  justify-content: space-between;
+  align-items: stretch;
   margin: 0;
   opacity: 0;
   transform: scale(1.15);
   transition: opacity 1.2s cubic-bezier(0.16, 1, 0.3, 1), transform 1.2s cubic-bezier(0.16, 1, 0.3, 1);
+  position: relative;
+  overflow: hidden;
 }
 
 .about-card.is-visible {
@@ -546,7 +524,7 @@ section {
   transform: scale(1);
 }
 
-/* Header Banner with Yellow Highlight Box */
+/* Header Banner */
 .about-header {
   padding: 40px;
   background-color: transparent;
@@ -554,233 +532,92 @@ section {
 }
 
 .about-headline {
-  font-family: var(--font-family-title-3xlarge), sans-serif;
-  font-size: var(--font-size-title-3xlarge);
-  font-weight: var(--font-weight-title-3xlarge);
-  line-height: var(--font-line-height-title-3xlarge);
+  font-family: var(--font-family-title-3xl-family), sans-serif;
+  font-size: var(--font-size-title-3xl-size);
+  font-weight: var(--font-weight-title-3xl-weight);
+  line-height: var(--font-line-height-title-3xl-line-height);
   letter-spacing: -1.5px;
   color: var(--color-text-primary-default);
   margin: 0;
 }
-
-.about-highlight-box {
-  background-color: transparent;
-  padding: 6px 20px;
-  display: inline-block;
-  margin: 0;
-}
-
-/* Lower Split Compartments */
-.about-grid-split {
+/* Main Content: Sidebar tool icons + Center Hand Graphic */
+.about-content-area {
   display: flex;
   flex-direction: row;
-  width: 100%;
+  align-items: center;
+  flex-grow: 1;
   position: relative;
-  background-color: transparent;
-}
-
-/* Left Column: Tools + Bio (50% Split) */
-.about-left-col {
-  flex: 0 0 50%;
-  width: 50%;
-  padding: 48px 36px;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  gap: 28px;
+  width: 100%;
+  padding: 0 40px;
   box-sizing: border-box;
 }
 
-.skill-icons-row {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 12px;
-  align-items: center;
-  justify-content: flex-start;
-}
-
-.skill-icon {
-  width: 44px;
-  height: 44px;
-  object-fit: contain;
-  border-radius: var(--radius-sm);
-}
-
-.about-bio-text {
-  font-family: var(--font-family-body-large);
-  font-size: var(--font-size-body-large);
-  font-weight: var(--font-weight-body-large);
-  line-height: var(--font-line-height-body-large);
-  color: var(--color-text-primary-default);
-  margin: 0;
-  max-width: 340px;
-}
-
-/* Right Column: Interactive Skill Slider (Full Width) */
-.about-right-col {
-  flex: 0 0 100%;
-  width: 100%;
-  padding: 48px 44px;
+.about-tools-sidebar {
   display: flex;
   flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  position: relative;
-  overflow: visible;
-  /* Prevent arrows on boundaries from being clipped */
-  box-sizing: border-box;
-}
-
-.skills-slider-track {
-  position: relative;
-  width: 100%;
-  height: 280px;
-  /* Accommodates both gauge and description text */
-}
-
-.skill-slide {
-  position: absolute;
-  inset: 0;
-  opacity: 0;
-  visibility: hidden;
-  pointer-events: none;
-  transform: translateY(12px);
-  transition: opacity 0.3s ease, transform 0.3s ease, visibility 0.3s ease;
-  display: flex;
+  gap: 20px;
   align-items: center;
   justify-content: center;
-}
-
-.skill-slide.active {
-  opacity: 1;
-  visibility: visible;
-  pointer-events: auto;
-  transform: translateY(0);
-}
-
-.skill-slide-layout {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  gap: 16px;
-  width: 100%;
-  text-align: center;
-}
-
-.skill-gauge-wrap {
-  position: relative;
-  width: 140px;
-  height: 140px;
+  width: 50px;
   flex-shrink: 0;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
-
-.skill-gauge-svg {
-  width: 100%;
-  height: 100%;
-  transform: rotate(-90deg);
-}
-
-.skill-gauge-bg {
-  fill: none;
-  stroke: rgba(32, 32, 32, 0.15);
-  stroke-width: 4;
-  /* Thinner circular progress gauge background */
-}
-
-.skill-gauge-progress {
-  fill: none;
-  stroke: var(--color-text-primary-default);
-  stroke-width: 4;
-  /* Thinner circular progress gauge path */
-  stroke-linecap: round;
-  transition: stroke-dashoffset 0.4s ease;
-}
-
-.skill-gauge-text {
-  position: absolute;
-  font-family: var(--font-head);
-  font-size: 30px;
-  font-weight: 900;
-  color: var(--color-text-primary-default);
-  z-index: 5;
-}
-
-.skill-slide-info h4 {
-  font-family: var(--font-family-title-medium), sans-serif;
-  font-size: var(--font-size-title-medium);
-  font-weight: var(--font-weight-title-medium);
-  color: var(--color-text-primary-default);
-  margin: 0;
-  text-align: center;
-}
-
-.skill-slide-info p {
-  font-family: var(--font-family-body-large), sans-serif;
-  font-size: var(--font-size-body-large);
-  font-weight: 500;
-  line-height: 1.5;
-  color: var(--color-text-secondary-default);
-  margin-top: 8px;
-  text-align: center;
-  max-width: 440px;
-}
-
-/* Pagination Dots - Centered under slide */
-.skills-pagination {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  /* Horizontally centered */
-  gap: 12px;
-  margin: 16px 0 0 0;
-  z-index: 5;
-}
-
-.pagination-dot {
-  width: 10px;
-  height: 10px;
-  background-color: rgba(32, 32, 32, 0.25);
-  border-radius: 0;
-  cursor: pointer;
-  transition: background-color 0.2s, transform 0.2s;
-}
-
-.pagination-dot.active,
-.pagination-dot:hover {
-  background-color: var(--color-text-primary-active);
-  transform: scale(1.1);
-}
-
-/* Borderless navigation buttons for About Slider (matching Works style) */
-.about-nav-btn {
-  position: absolute;
-  top: 50%;
-  transform: translateY(-50%);
-  background: var(--color-bg-surface-primary-default);
-  border: none;
-  width: 32px;
-  height: 32px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  cursor: pointer;
   z-index: 10;
-  padding: 0;
-  box-shadow: none;
 }
 
-.about-nav-btn.prev-btn {
-  left: -16px;
-  /* Center of 32px button on the middle 2px divider line */
+.about-tool-icon {
+  width: 24px;
+  height: 24px;
+  object-fit: contain;
+  transition: transform 0.3s ease;
 }
 
-.about-nav-btn.next-btn {
-  right: -16px;
-  /* Center of 32px button on the right 2px card border line */
+.about-tool-icon:hover {
+  transform: scale(1.2);
+}
+
+.about-graphic-container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-grow: 1;
+  width: calc(100% - 50px);
+  height: 100%;
+  position: relative;
+}
+
+.about-hand-graphic {
+  max-width: 100%;
+  max-height: 480px;
+  object-fit: contain;
+  mix-blend-mode: screen;
+  transition: transform 0.5s ease;
+}
+
+/* Footer Category Links */
+.about-categories-footer {
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-end;
+  align-items: center;
+  gap: 16px;
+  padding: 40px;
+  box-sizing: border-box;
+  width: 100%;
+  flex-wrap: wrap;
+}
+
+.category-item {
+  font-family: var(--font-family-body-medium);
+  font-size: var(--font-size-body-medium);
+  font-weight: var(--font-weight-body-medium);
+  color: var(--color-bg-surface-secondary-default);
+  text-transform: capitalize;
+}
+
+.category-divider {
+  font-family: var(--font-family-body-medium);
+  font-size: var(--font-size-body-medium);
+  font-weight: var(--font-weight-body-medium);
+  color: rgba(255, 255, 255, 0.3);
 }
 
 /* --- Responsive Breakpoints --- */
@@ -825,22 +662,16 @@ section {
     padding: 40px 32px;
   }
 
-  .about-left-col {
-    padding: 36px 28px;
+  .about-content-area {
+    padding: 0 32px;
   }
 
-  .about-right-col {
-    padding: 36px 28px;
+  .about-hand-graphic {
+    max-height: 400px;
   }
 
-  .skill-slide-layout {
-    flex-direction: column;
-    align-items: center;
-    text-align: center;
-    gap: 20px;
-  }
-
-  .skills-pagination {
+  .about-categories-footer {
+    padding: 32px;
     justify-content: center;
   }
 }
@@ -868,8 +699,12 @@ section {
   }
 
   .about-header {
-    padding: 28px 20px;
-    text-align: left;
+    padding: 20px;
+    text-align: center;
+  }
+
+  .about-headline {
+    font-size: clamp(32px, 8vw, 48px);
   }
 
   .section-divider-logo {
@@ -877,43 +712,27 @@ section {
     transform: translate(-50%, -50%) !important;
   }
 
-  .about-grid-split {
-    flex-direction: column;
+  .about-content-area {
+    padding: 0 20px;
+    gap: 16px;
   }
 
-  .about-left-col,
-  .about-right-col {
-    width: 100%;
-    flex: 0 0 100%;
-    padding: 32px 20px;
+  .about-hand-graphic {
+    max-height: 320px;
   }
 
-  .about-col-divider {
-    width: 100%;
-    height: 2px;
+  .about-categories-footer {
+    padding: 20px;
+    justify-content: center;
+    gap: 8px 12px;
   }
 
-  .about-bio-box {
-    padding: 28px 20px;
+  .category-item {
+    font-size: 12px;
   }
 
-  .about-skills-slider-box {
-    padding: 28px 20px;
-  }
-
-  .skill-slide-layout {
-    flex-direction: column;
-    align-items: center;
-    text-align: center;
-    gap: 20px;
-  }
-
-  .about-nav-btn.prev-btn {
-    left: 4px;
-  }
-
-  .about-nav-btn.next-btn {
-    right: 4px;
+  .category-divider {
+    font-size: 12px;
   }
 
   .works-slider-body {
