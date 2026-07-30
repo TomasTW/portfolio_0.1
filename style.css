@@ -807,9 +807,9 @@ section {
     gap: 12px;
   }
 
-  /* Graphic layer: stack vertically on mobile (icons below graphic, not beside it) */
+  /* Graphic layer: column-reverse so graphic is on top, icons row below it */
   .about-graphic-layer {
-    flex-direction: column;
+    flex-direction: column-reverse;
     align-items: center;
     justify-content: center;
     gap: 12px;
