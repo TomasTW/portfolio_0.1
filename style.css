@@ -807,25 +807,37 @@ section {
     gap: 12px;
   }
 
+  /* Graphic layer: stack vertically on mobile (icons below graphic, not beside it) */
+  .about-graphic-layer {
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 12px;
+    overflow: hidden;
+  }
+
   .about-tools-sidebar {
     position: static;
     transform: none;
     flex-direction: row;
     gap: 16px;
-    margin: 16px 0 0 0;
+    margin: 0;
     justify-content: center;
     width: 100%;
   }
 
   .about-graphic-container {
-    width: 240px;
-    height: 240px;
+    width: 200px;
+    height: 200px;
+    overflow: hidden; /* prevent hand SVG from spilling outside the circle */
+    flex-shrink: 0;
   }
 
   .about-categories-footer {
     padding: 20px;
-    justify-content: center;
-    gap: 8px 12px;
+    justify-content: flex-end; /* right-aligned on phone */
+    gap: 6px 10px;
+    text-align: right;
   }
 
   .category-item {
