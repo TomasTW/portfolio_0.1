@@ -509,6 +509,7 @@ section {
   box-sizing: border-box;
   padding: 0 !important;
   margin: 0;
+  overflow: hidden; /* clip translateX animations so they never cause horizontal scroll */
 }
 
 .about-card {
@@ -541,18 +542,20 @@ section {
   justify-content: center;
   flex-grow: 1;
   width: 100%;
-  height: 100%;
+  min-height: 0;          /* prevents flex child from overflowing on column layouts */
   position: relative;
   opacity: var(--about-layer-opacity, 0);
   will-change: opacity;
 }
 
-/* Header Banner — slides in from left */
+/* Header Banner — slides in from left.
+   Uses vw units instead of % so the translateX is always relative to
+   viewport width, preventing overflow on narrow screens. */
 .about-header {
   padding: 40px;
   background-color: transparent;
   text-align: left;
-  transform: translateX(var(--about-header-x, -110%));
+  transform: translateX(var(--about-header-x, -110vw));
   opacity: var(--about-header-opacity, 0);
   will-change: transform, opacity;
 }
@@ -624,7 +627,8 @@ section {
   transition: transform 0.5s ease-out;
 }
 
-/* Footer Category Links — slides in from right */
+/* Footer Category Links — slides in from right.
+   Uses vw units so translateX is viewport-relative on all screen sizes. */
 .about-categories-footer {
   display: flex;
   flex-direction: row;
@@ -635,7 +639,7 @@ section {
   box-sizing: border-box;
   width: 100%;
   flex-wrap: wrap;
-  transform: translateX(var(--about-footer-x, 110%));
+  transform: translateX(var(--about-footer-x, 110vw));
   opacity: var(--about-footer-opacity, 0);
   will-change: transform, opacity;
 }

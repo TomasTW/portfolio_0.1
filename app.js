@@ -649,16 +649,16 @@ document.addEventListener('DOMContentLoaded', () => {
     onScroll();
   })();
 
-  // --- About Section: Scroll-Scrubbed Reveal & Exit ---
+  // --- About Section: Scroll-Scrubbed Reveal & Exit (cinematic) ---
   (function initAboutScrollReveal() {
     const section   = document.getElementById('about');
     const card      = document.querySelector('.about-card');
     if (!section || !card) return;
 
-    // Easing helpers — ease-out cubic
-    function easeOut(t) { return 1 - Math.pow(1 - t, 3); }
+    // Smooth ease-in-out cubic — more cinematic than hard ease-out
+    function easeInOut(t) { return t < 0.5 ? 4*t*t*t : 1 - Math.pow(-2*t+2, 3)/2; }
 
-    // Map a value from [inMin,inMax] → [outMin,outMax], clamped
+    // Map [inMin,inMax] → [outMin,outMax], clamped
     function mapRange(val, inMin, inMax, outMin, outMax) {
       const t = Math.max(0, Math.min(1, (val - inMin) / (inMax - inMin)));
       return outMin + t * (outMax - outMin);
@@ -668,57 +668,58 @@ document.addEventListener('DOMContentLoaded', () => {
 
     function update() {
       rafId = null;
-      const sectionTop    = section.getBoundingClientRect().top + window.scrollY;
-      const scrollHeight  = section.offsetHeight - window.innerHeight; // 300vh - 1vh = 200vh of scrub
-      const scrolled      = Math.max(0, window.scrollY - sectionTop);
-      const p             = scrollHeight > 0 ? Math.min(1, scrolled / scrollHeight) : 0;
+      const sectionTop   = section.getBoundingClientRect().top + window.scrollY;
+      const scrollHeight = section.offsetHeight - window.innerHeight; // 300vh - 1vh ≈ 200vh
+      const scrolled     = Math.max(0, window.scrollY - sectionTop);
+      const p            = scrollHeight > 0 ? Math.min(1, scrolled / scrollHeight) : 0;
 
-      // ── Phase boundaries ──────────────────────────────────────────────────
-      // Enter:  0.00 → 0.35  (layer fades first, then header+footer slide in)
-      // Hold:   0.35 → 0.65
-      // Exit:   0.65 → 1.00  (header slides right out, footer slides left out, layer fades)
+      // ── Cinematic phase boundaries ────────────────────────────────────────
+      // Layer (SVG + icons):  fades in  0.00 → 0.15,  fades out 0.80 → 1.00
+      // Header (left slide):  enters    0.05 → 0.50,  exits     0.72 → 1.00
+      // Footer (right slide): mirrors header exactly
+      // Hold:                           0.50 → 0.72
 
-      // Graphic layer opacity: enter 0→1 in first 20%, exit 80%→1 fade out
-      const layerOpacity = p < 0.20
-        ? easeOut(mapRange(p, 0, 0.20, 0, 1))
+      // Graphic layer opacity
+      const layerOpacity = p < 0.15
+        ? easeInOut(mapRange(p, 0, 0.15, 0, 1))
         : p > 0.80
-          ? 1 - easeOut(mapRange(p, 0.80, 1.0, 0, 1))
+          ? 1 - easeInOut(mapRange(p, 0.80, 1.0, 0, 1))
           : 1;
 
-      // Header: slides from -110% → 0% between p=0.10→0.35, then slides to +110% between p=0.65→1.0
-      const headerX = p < 0.10
+      // Header: -110vw → 0vw (enter 0.05→0.50), then 0vw → +110vw (exit 0.72→1.0)
+      const headerXvw = p < 0.05
         ? -110
-        : p < 0.35
-          ? -110 + easeOut(mapRange(p, 0.10, 0.35, 0, 1)) * 110
-          : p < 0.65
+        : p < 0.50
+          ? -110 + easeInOut(mapRange(p, 0.05, 0.50, 0, 1)) * 110
+          : p < 0.72
             ? 0
-            : easeOut(mapRange(p, 0.65, 1.0, 0, 1)) * 110;
+            : easeInOut(mapRange(p, 0.72, 1.0, 0, 1)) * 110;
 
-      const headerOpacity = p < 0.10
+      const headerOpacity = p < 0.05
         ? 0
-        : p < 0.35
-          ? easeOut(mapRange(p, 0.10, 0.35, 0, 1))
-          : p < 0.65
+        : p < 0.50
+          ? easeInOut(mapRange(p, 0.05, 0.50, 0, 1))
+          : p < 0.72
             ? 1
-            : 1 - easeOut(mapRange(p, 0.65, 1.0, 0, 1));
+            : 1 - easeInOut(mapRange(p, 0.72, 1.0, 0, 1));
 
-      // Footer: slides from +110% → 0% between p=0.10→0.35, then slides to -110% between p=0.65→1.0
-      const footerX = p < 0.10
+      // Footer: +110vw → 0vw (enter 0.05→0.50), then 0vw → -110vw (exit 0.72→1.0)
+      const footerXvw = p < 0.05
         ? 110
-        : p < 0.35
-          ? 110 - easeOut(mapRange(p, 0.10, 0.35, 0, 1)) * 110
-          : p < 0.65
+        : p < 0.50
+          ? 110 - easeInOut(mapRange(p, 0.05, 0.50, 0, 1)) * 110
+          : p < 0.72
             ? 0
-            : -(easeOut(mapRange(p, 0.65, 1.0, 0, 1)) * 110);
+            : -(easeInOut(mapRange(p, 0.72, 1.0, 0, 1)) * 110);
 
-      const footerOpacity = headerOpacity; // mirrors header opacity
+      const footerOpacity = headerOpacity; // mirrors header
 
-      // ── Write CSS vars to the card ────────────────────────────────────────
-      card.style.setProperty('--about-layer-opacity',   layerOpacity.toFixed(4));
-      card.style.setProperty('--about-header-x',        `${headerX.toFixed(2)}%`);
-      card.style.setProperty('--about-header-opacity',  headerOpacity.toFixed(4));
-      card.style.setProperty('--about-footer-x',        `${footerX.toFixed(2)}%`);
-      card.style.setProperty('--about-footer-opacity',  footerOpacity.toFixed(4));
+      // ── Write CSS vars (vw units = viewport-safe on all screen sizes) ─────
+      card.style.setProperty('--about-layer-opacity',  layerOpacity.toFixed(4));
+      card.style.setProperty('--about-header-x',       `${headerXvw.toFixed(2)}vw`);
+      card.style.setProperty('--about-header-opacity', headerOpacity.toFixed(4));
+      card.style.setProperty('--about-footer-x',       `${footerXvw.toFixed(2)}vw`);
+      card.style.setProperty('--about-footer-opacity', footerOpacity.toFixed(4));
     }
 
     function onScroll() {
@@ -726,8 +727,7 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     window.addEventListener('scroll', onScroll, { passive: true });
-    // Run once on load to set initial state
-    update();
+    update(); // set initial state on load
   })();
 
   // --- About Hand Auto-Rotation Module (Point to categories footer center) ---
