@@ -591,7 +591,6 @@ section {
   width: 320px;
   height: 320px;
   border-radius: var(--radius-full);
-  border: 2px solid var(--color-border-primary-default);
   margin: 0 auto;
   position: relative;
   background-color: transparent;
