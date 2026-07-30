@@ -739,12 +739,18 @@ document.addEventListener('DOMContentLoaded', () => {
         (entries) => {
           entries.forEach(entry => {
             if (entry.isIntersecting) {
+              // Remove class first to force CSS animation reset (reflow trick)
+              card.classList.remove('mobile-reveal');
+              // eslint-disable-next-line no-unused-expressions
+              void card.offsetWidth; // trigger reflow so browser resets the animation
               card.classList.add('mobile-reveal');
-              observer.disconnect(); // fire only once
+            } else {
+              // Section left viewport — remove so it can re-fire on next entry
+              card.classList.remove('mobile-reveal');
             }
           });
         },
-        { threshold: 0.15 } // trigger when 15% of the card is visible
+        { threshold: 0.12 } // fire when 12% of the card is visible
       );
 
       observer.observe(card);
