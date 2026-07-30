@@ -528,6 +528,22 @@ section {
   overflow: hidden;
 }
 
+/* Mobile/tablet: scale + fade-up reveal via IntersectionObserver class */
+.about-card.mobile-reveal {
+  animation: aboutFadeUp 0.9s cubic-bezier(0.16, 1, 0.3, 1) both;
+}
+
+@keyframes aboutFadeUp {
+  from {
+    opacity: 0;
+    transform: scale(0.93) translateY(48px);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1) translateY(0);
+  }
+}
+
 /* ---------------------------------------------------------------
    About Section: Scroll-scrubbed layer animation handles.
    JS writes --about-* CSS vars on each scroll tick.
@@ -699,10 +715,27 @@ section {
 
   .about-header {
     padding: 40px 32px;
+    /* Reset scroll-scrub slide vars to fully-visible on tablet */
+    --about-header-x: 0vw !important;
+    --about-header-opacity: 1 !important;
   }
 
   .about-content-area {
     padding: 0 32px;
+  }
+
+  /* Reset all scroll-scrub CSS vars so transforms are neutral on tablet */
+  .about-card {
+    --about-layer-opacity: 1 !important;
+    --about-header-x: 0vw !important;
+    --about-header-opacity: 1 !important;
+    --about-footer-x: 0vw !important;
+    --about-footer-opacity: 1 !important;
+  }
+
+  /* Collapse the 300vh scroll-scrub height down to a single viewport on tablet */
+  .about {
+    height: 100vh !important;
   }
 
   .about-graphic-container {
@@ -741,6 +774,20 @@ section {
   .about-header {
     padding: 20px;
     text-align: center;
+  }
+
+  /* Reset scroll-scrub CSS vars to fully-visible on mobile */
+  .about-card {
+    --about-layer-opacity: 1 !important;
+    --about-header-x: 0vw !important;
+    --about-header-opacity: 1 !important;
+    --about-footer-x: 0vw !important;
+    --about-footer-opacity: 1 !important;
+  }
+
+  /* Collapse 300vh scroll height on mobile */
+  .about {
+    height: 100vh !important;
   }
 
   .about-headline {

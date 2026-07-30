@@ -60,16 +60,6 @@
         // Clamp to DURATION_S - 0.05s to prevent -3.0s % 3.0s wrap-around back to frame 0
         const seekTime = Math.min(DURATION_S - 0.05, progress * DURATION_S);
         seekTo(seekTime);
-
-        // Drive About section graphic layer (SVG + icons) opacity from hero 2.0s → 3.0s
-        const aboutCard = document.querySelector('.about-card');
-        if (aboutCard) {
-          // Only fade in; About's own handler owns the exit fade-out
-          const t = Math.max(0, Math.min(1, (seekTime - 2.0) / 1.0));
-          // ease-out quad: snappy start, gentle arrival
-          const layerIn = 1 - Math.pow(1 - t, 2);
-          aboutCard.style.setProperty('--about-layer-opacity', layerIn.toFixed(4));
-        }
       });
     }
 
@@ -659,89 +649,125 @@ document.addEventListener('DOMContentLoaded', () => {
     onScroll();
   })();
 
-  // --- About Section: Scroll-Scrubbed Reveal & Exit (cinematic) ---
+  // --- About Section: Reveal Animation (desktop scroll-scrub / mobile fade-up) ---
   (function initAboutScrollReveal() {
-    const section   = document.getElementById('about');
-    const card      = document.querySelector('.about-card');
+    const section = document.getElementById('about');
+    const card    = document.querySelector('.about-card');
     if (!section || !card) return;
 
-    // Smooth ease-in-out cubic — more cinematic than hard ease-out
+    // ── Helpers ──────────────────────────────────────────────────────────────
     function easeInOut(t) { return t < 0.5 ? 4*t*t*t : 1 - Math.pow(-2*t+2, 3)/2; }
-
-    // Map [inMin,inMax] → [outMin,outMax], clamped
     function mapRange(val, inMin, inMax, outMin, outMax) {
       const t = Math.max(0, Math.min(1, (val - inMin) / (inMax - inMin)));
       return outMin + t * (outMax - outMin);
     }
 
-    let rafId = null;
+    // ── Shared: fully-visible state writer ───────────────────────────────────
+    function setFullyVisible() {
+      card.style.setProperty('--about-layer-opacity',  '1');
+      card.style.setProperty('--about-header-x',       '0vw');
+      card.style.setProperty('--about-header-opacity', '1');
+      card.style.setProperty('--about-footer-x',       '0vw');
+      card.style.setProperty('--about-footer-opacity', '1');
+    }
 
-    function update() {
-      rafId = null;
-      const sectionTop   = section.getBoundingClientRect().top + window.scrollY;
-      const scrollHeight = section.offsetHeight - window.innerHeight; // 300vh - 1vh ≈ 200vh
-      const scrolled     = Math.max(0, window.scrollY - sectionTop);
-      const p            = scrollHeight > 0 ? Math.min(1, scrolled / scrollHeight) : 0;
+    // ── DESKTOP (>1024px): scroll-scrubbed cinematic reveal ──────────────────
+    function initDesktopReveal() {
+      let rafId = null;
 
-      // ── Cinematic phase boundaries ────────────────────────────────────────
-      // Layer (SVG + icons):  fades in  0.00 → 0.15,  fades out 0.80 → 1.00
-      // Header (left slide):  enters    0.05 → 0.50,  exits     0.72 → 1.00
-      // Footer (right slide): mirrors header exactly
-      // Hold:                           0.50 → 0.72
+      function update() {
+        rafId = null;
+        const sectionTop   = section.getBoundingClientRect().top + window.scrollY;
+        const scrollHeight = section.offsetHeight - window.innerHeight;
+        const scrolled     = Math.max(0, window.scrollY - sectionTop);
+        const p            = scrollHeight > 0 ? Math.min(1, scrolled / scrollHeight) : 0;
 
-      // Graphic layer opacity:
-      // Enter is driven by hero scroll (2.0s→3.0s) — we do NOT override it here.
-      // We only handle the exit fade-out (p > 0.80) and a fallback for
-      // users who jump directly to the About section (p > 0 but hero never ran).
-      if (p > 0.80) {
-        const layerOut = 1 - easeInOut(mapRange(p, 0.80, 1.0, 0, 1));
-        card.style.setProperty('--about-layer-opacity', layerOut.toFixed(4));
-      } else if (p > 0.02) {
-        // Fallback: ensure layer is visible if user scrolled directly to About
-        card.style.setProperty('--about-layer-opacity', '1');
+        // Layer (SVG + icons): fades in 0.00→0.15, fades out 0.80→1.00
+        const layerOpacity = p < 0.15
+          ? easeInOut(mapRange(p, 0, 0.15, 0, 1))
+          : p > 0.80
+            ? 1 - easeInOut(mapRange(p, 0.80, 1.0, 0, 1))
+            : 1;
+
+        // Header: -110vw→0vw (enter 0.05→0.50), 0vw→+110vw (exit 0.72→1.0)
+        const headerXvw = p < 0.05
+          ? -110
+          : p < 0.50
+            ? -110 + easeInOut(mapRange(p, 0.05, 0.50, 0, 1)) * 110
+            : p < 0.72
+              ? 0
+              : easeInOut(mapRange(p, 0.72, 1.0, 0, 1)) * 110;
+
+        const headerOpacity = p < 0.05
+          ? 0
+          : p < 0.50
+            ? easeInOut(mapRange(p, 0.05, 0.50, 0, 1))
+            : p < 0.72
+              ? 1
+              : 1 - easeInOut(mapRange(p, 0.72, 1.0, 0, 1));
+
+        // Footer: +110vw→0vw (enter 0.05→0.50), 0vw→-110vw (exit 0.72→1.0)
+        const footerXvw = p < 0.05
+          ? 110
+          : p < 0.50
+            ? 110 - easeInOut(mapRange(p, 0.05, 0.50, 0, 1)) * 110
+            : p < 0.72
+              ? 0
+              : -(easeInOut(mapRange(p, 0.72, 1.0, 0, 1)) * 110);
+
+        card.style.setProperty('--about-layer-opacity',  layerOpacity.toFixed(4));
+        card.style.setProperty('--about-header-x',       `${headerXvw.toFixed(2)}vw`);
+        card.style.setProperty('--about-header-opacity', headerOpacity.toFixed(4));
+        card.style.setProperty('--about-footer-x',       `${footerXvw.toFixed(2)}vw`);
+        card.style.setProperty('--about-footer-opacity', headerOpacity.toFixed(4));
       }
-      // Header: -110vw → 0vw (enter 0.05→0.50), then 0vw → +110vw (exit 0.72→1.0)
-      const headerXvw = p < 0.05
-        ? -110
-        : p < 0.50
-          ? -110 + easeInOut(mapRange(p, 0.05, 0.50, 0, 1)) * 110
-          : p < 0.72
-            ? 0
-            : easeInOut(mapRange(p, 0.72, 1.0, 0, 1)) * 110;
 
-      const headerOpacity = p < 0.05
-        ? 0
-        : p < 0.50
-          ? easeInOut(mapRange(p, 0.05, 0.50, 0, 1))
-          : p < 0.72
-            ? 1
-            : 1 - easeInOut(mapRange(p, 0.72, 1.0, 0, 1));
+      function onScroll() {
+        if (!rafId) rafId = requestAnimationFrame(update);
+      }
 
-      // Footer: +110vw → 0vw (enter 0.05→0.50), then 0vw → -110vw (exit 0.72→1.0)
-      const footerXvw = p < 0.05
-        ? 110
-        : p < 0.50
-          ? 110 - easeInOut(mapRange(p, 0.05, 0.50, 0, 1)) * 110
-          : p < 0.72
-            ? 0
-            : -(easeInOut(mapRange(p, 0.72, 1.0, 0, 1)) * 110);
-
-      const footerOpacity = headerOpacity; // mirrors header
-
-      // ── Write CSS vars (vw units = viewport-safe on all screen sizes) ─────
-      card.style.setProperty('--about-header-x',       `${headerXvw.toFixed(2)}vw`);
-      card.style.setProperty('--about-header-opacity', headerOpacity.toFixed(4));
-      card.style.setProperty('--about-footer-x',       `${footerXvw.toFixed(2)}vw`);
-      card.style.setProperty('--about-footer-opacity', footerOpacity.toFixed(4));
-      // Note: --about-layer-opacity is written above (exit) or by hero handler (enter)
+      window.addEventListener('scroll', onScroll, { passive: true });
+      update();
     }
 
-    function onScroll() {
-      if (!rafId) rafId = requestAnimationFrame(update);
+    // ── TABLET / MOBILE (≤1024px): IntersectionObserver scale+fade-up ────────
+    function initMobileReveal() {
+      // Ensure CSS vars won't interfere — set to fully visible immediately
+      setFullyVisible();
+
+      const observer = new IntersectionObserver(
+        (entries) => {
+          entries.forEach(entry => {
+            if (entry.isIntersecting) {
+              card.classList.add('mobile-reveal');
+              observer.disconnect(); // fire only once
+            }
+          });
+        },
+        { threshold: 0.15 } // trigger when 15% of the card is visible
+      );
+
+      observer.observe(card);
     }
 
-    window.addEventListener('scroll', onScroll, { passive: true });
-    update(); // set initial state on load
+    // ── Branch on viewport width ──────────────────────────────────────────────
+    if (window.innerWidth > 1024) {
+      initDesktopReveal();
+    } else {
+      initMobileReveal();
+    }
+
+    // Re-evaluate on resize (e.g. rotating a tablet)
+    window.addEventListener('resize', () => {
+      if (window.innerWidth > 1024) {
+        card.classList.remove('mobile-reveal');
+      } else {
+        setFullyVisible();
+        if (!card.classList.contains('mobile-reveal')) {
+          card.classList.add('mobile-reveal');
+        }
+      }
+    });
   })();
 
   // --- About Hand Auto-Rotation Module (Point to categories footer center) ---
