@@ -747,13 +747,13 @@ section {
     margin-top: 0 !important; /* cancel desktop overlap on tablet */
   }
 
-  /* Icons sidebar: horizontal row left-aligned above categories on tablet */
+  /* Icons sidebar: horizontal row RIGHT-aligned above categories on tablet */
   .about-tools-sidebar {
     position: static;
     transform: none;
     flex-direction: row;
     gap: 16px;
-    justify-content: flex-start;
+    justify-content: flex-end;
     width: 100%;
     padding: 0 32px 8px 32px;
     box-sizing: border-box;
@@ -766,7 +766,7 @@ section {
 
   .about-categories-footer {
     padding: 32px;
-    justify-content: center;
+    justify-content: flex-end; /* right-aligned on tablet */
   }
 }
 
@@ -845,7 +845,7 @@ section {
     gap: 16px;
     margin: 0;
     padding: 0 20px 8px 20px;
-    justify-content: flex-start;
+    justify-content: flex-end; /* right-aligned on phone */
     width: 100%;
     box-sizing: border-box;
   }
