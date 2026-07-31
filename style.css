@@ -491,7 +491,7 @@ section {
    ABOUT SECTION — Exact Reference Frame Layout & Interactive Skill Slider
    ========================================================================== */
 .about {
-  height: 300vh;
+  height: 300dvh;
   position: relative;
   background-color: transparent;
   color: transparent;
@@ -509,7 +509,8 @@ section {
   box-sizing: border-box;
   padding: 0 !important;
   margin: 0;
-  overflow: hidden; /* clip translateX animations so they never cause horizontal scroll */
+  overflow: hidden;
+  /* clip translateX animations so they never cause horizontal scroll */
 }
 
 .about-card {
@@ -538,6 +539,7 @@ section {
     opacity: 0;
     transform: scale(0.93) translateY(48px);
   }
+
   to {
     opacity: 1;
     transform: scale(1) translateY(0);
@@ -558,7 +560,8 @@ section {
   justify-content: center;
   flex-grow: 1;
   width: 100%;
-  min-height: 0;          /* prevents flex child from overflowing on column layouts */
+  min-height: 0;
+  /* prevents flex child from overflowing on column layouts */
   position: relative;
   opacity: var(--about-layer-opacity, 0);
   will-change: opacity;
@@ -568,7 +571,7 @@ section {
    Uses vw units instead of % so the translateX is always relative to
    viewport width, preventing overflow on narrow screens. */
 .about-header {
-  padding: 40px;
+  padding: 16px 32px;
   background-color: transparent;
   text-align: left;
   transform: translateX(var(--about-header-x, -110vw));
@@ -585,6 +588,7 @@ section {
   color: var(--color-text-primary-default);
   margin: 0;
 }
+
 .about-content-area {
   display: flex;
   flex-direction: row;
@@ -597,6 +601,9 @@ section {
   box-sizing: border-box;
 }
 
+/* Tool Icons sidebar — now a direct child of .about-card.
+   Desktop: absolutely positioned relative to .about-card (which is position:relative).
+   Also participates in the scroll-scrub fade via --about-layer-opacity. */
 .about-tools-sidebar {
   position: absolute;
   left: 40px;
@@ -608,17 +615,15 @@ section {
   align-items: center;
   justify-content: center;
   z-index: 10;
+  opacity: var(--about-layer-opacity, 0);
+  will-change: opacity;
 }
 
 .about-tool-icon {
   width: 24px;
   height: 24px;
   object-fit: contain;
-  transition: transform 0.3s ease;
-}
-
-.about-tool-icon:hover {
-  transform: scale(1.2);
+  /* hover effect removed */
 }
 
 .about-graphic-container {
@@ -651,7 +656,7 @@ section {
   justify-content: flex-end;
   align-items: center;
   gap: 16px;
-  padding: 40px;
+  padding: 16px 32px;
   box-sizing: border-box;
   width: 100%;
   flex-wrap: wrap;
@@ -773,7 +778,8 @@ section {
 
   .about-header {
     padding: 20px 20px 10px 20px;
-    text-align: left; /* match reference: header left-aligned on phone */
+    text-align: left;
+    /* match reference: header left-aligned on phone */
   }
 
   /* Reset scroll-scrub CSS vars to fully-visible on mobile */
@@ -800,42 +806,45 @@ section {
   }
 
   .about-content-area {
-    flex-direction: column; /* normal order: graphic on top, icons below */
+    flex-direction: column;
+    /* normal order: graphic on top, icons below */
     align-items: center;
     justify-content: center;
     padding: 0 20px;
     gap: 12px;
   }
 
-  /* Graphic layer: column-reverse so graphic is on top, icons row below it */
+  /* Graphic layer: simple centered column — sidebar no longer inside */
   .about-graphic-layer {
-    flex-direction: column-reverse;
     align-items: center;
     justify-content: center;
-    gap: 12px;
-    overflow: hidden;
   }
 
+  /* Sidebar is a card-level child on mobile: static row, left-aligned, with card padding */
   .about-tools-sidebar {
     position: static;
     transform: none;
     flex-direction: row;
     gap: 16px;
     margin: 0;
-    justify-content: flex-start; /* left-aligned to match reference image */
+    padding: 0 20px 8px 20px;
+    justify-content: flex-start;
     width: 100%;
+    box-sizing: border-box;
   }
 
   .about-graphic-container {
     width: 200px;
     height: 200px;
-    overflow: hidden; /* prevent hand SVG from spilling outside the circle */
+    overflow: hidden;
+    /* prevent hand SVG from spilling outside the circle */
     flex-shrink: 0;
   }
 
   .about-categories-footer {
     padding: 20px;
-    justify-content: flex-end; /* right-aligned on phone */
+    justify-content: flex-end;
+    /* right-aligned on phone */
     gap: 6px 10px;
     text-align: right;
   }
@@ -1059,9 +1068,9 @@ section {
   font-family: var(--font-family-body-small);
   font-size: var(--font-size-body-small);
   color: var(--color-text-primary-active);
-  background: #FEBF240D;
-  border: 1px solid #FEBF241F;
-  padding: 4px 10px;
+  background: transparent;
+  border: 1px solid none;
+  padding: 8px 16px;
   border-radius: var(--radius-full);
   font-weight: 600;
   letter-spacing: 0.5px;
