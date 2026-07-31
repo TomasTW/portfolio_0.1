@@ -496,6 +496,9 @@ section {
   background-color: transparent;
   color: transparent;
   z-index: 5;
+  /* Desktop: overlap with the last 100vh of hero so About starts appearing
+     when the hero animation hits ~2.0s (scroll progress 2/3). */
+  margin-top: -100vh;
 }
 
 .about-sticky {
@@ -741,6 +744,19 @@ section {
   /* Collapse the 300vh scroll-scrub height down to a single viewport on tablet */
   .about {
     height: 100vh !important;
+    margin-top: 0 !important; /* cancel desktop overlap on tablet */
+  }
+
+  /* Icons sidebar: horizontal row left-aligned above categories on tablet */
+  .about-tools-sidebar {
+    position: static;
+    transform: none;
+    flex-direction: row;
+    gap: 16px;
+    justify-content: flex-start;
+    width: 100%;
+    padding: 0 32px 8px 32px;
+    box-sizing: border-box;
   }
 
   .about-graphic-container {
@@ -794,6 +810,7 @@ section {
   /* Collapse 300vh scroll height on mobile */
   .about {
     height: 100vh !important;
+    margin-top: 0 !important; /* cancel desktop overlap on mobile */
   }
 
   .about-headline {
