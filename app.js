@@ -544,109 +544,46 @@ document.addEventListener('DOMContentLoaded', () => {
     onScroll();
   })();
 
-  // --- Works Slider Navigation Module (Sticky Scroll-Driven & Arrow/Dot Navigation) ---
-  (function initWorksSlider() {
-    const worksSection = document.getElementById('works');
-    const prevBtn = document.getElementById('works-prev-btn');
-    const nextBtn = document.getElementById('works-next-btn');
-    const slides = document.querySelectorAll('.works-slide');
-    const dots = document.querySelectorAll('.works-dot');
-    const activeTitle = document.getElementById('works-active-title');
-    const activeDesc = document.getElementById('works-active-description');
+  // --- Works Mobile Modal Controls (Tablet & Phone) ---
+  (function initWorksMobileModals() {
+    const listItems = document.querySelectorAll('.works-list-item');
+    const modals = document.querySelectorAll('.work-modal');
 
-    if (!worksSection || !slides.length || !dots.length) return;
-
-    let currentIndex = 0;
-
-    function updateSliderState(progress) {
-      const position = progress * (slides.length - 1);
-      const activeIndex = Math.round(position);
-
-      currentIndex = activeIndex;
-
-      slides.forEach((slide, i) => {
-        if (i === currentIndex) {
-          slide.classList.add('active');
-          if (activeTitle) activeTitle.textContent = slide.getAttribute('data-title') || '';
-        } else {
-          slide.classList.remove('active');
+    listItems.forEach(item => {
+      item.addEventListener('click', () => {
+        const modalId = item.getAttribute('data-modal');
+        const targetModal = document.getElementById(modalId);
+        if (targetModal) {
+          targetModal.classList.add('open');
+          document.body.style.overflow = 'hidden';
+          document.documentElement.style.overflow = 'hidden';
         }
-      });
-
-      dots.forEach((dot, i) => {
-        if (i === currentIndex) {
-          dot.classList.add('active');
-        } else {
-          dot.classList.remove('active');
-        }
-      });
-    }
-
-    function scrollByStep(targetIndex) {
-      if (targetIndex < 0) targetIndex = slides.length - 1;
-      if (targetIndex >= slides.length) targetIndex = 0;
-
-      const rect = worksSection.getBoundingClientRect();
-      const absoluteTop = window.scrollY + rect.top;
-      const pinnedDistance = worksSection.offsetHeight - window.innerHeight;
-
-      if (pinnedDistance > 0) {
-        const targetProgress = targetIndex / (slides.length - 1);
-        const targetY = absoluteTop + targetProgress * pinnedDistance;
-        window.scrollTo({ top: targetY, behavior: 'smooth' });
-      } else {
-        updateSliderState(targetIndex / (slides.length - 1));
-      }
-    }
-
-    if (prevBtn) {
-      prevBtn.addEventListener('click', () => {
-        scrollByStep(currentIndex - 1);
-      });
-    }
-    if (nextBtn) {
-      nextBtn.addEventListener('click', () => {
-        scrollByStep(currentIndex + 1);
-      });
-    }
-
-    dots.forEach((dot, i) => {
-      dot.addEventListener('click', () => {
-        scrollByStep(i);
       });
     });
 
-    slides.forEach(slide => {
-      const clickables = slide.querySelectorAll('.works-image-wrapper, .works-explore-btn');
-      clickables.forEach(elem => {
-        elem.addEventListener('click', () => {
-          const exploreBtn = slide.querySelector('.works-explore-btn');
-          const modalId = exploreBtn ? exploreBtn.getAttribute('data-modal') : null;
-          const targetModal = modalId ? document.getElementById(modalId) : null;
-          if (targetModal) {
-            targetModal.classList.add('open');
-            document.body.style.overflow = 'hidden';
-            document.documentElement.style.overflow = 'hidden';
-          }
+    modals.forEach(modal => {
+      const closeBtn = modal.querySelector('.work-modal-close');
+      
+      const closeModal = () => {
+        modal.classList.remove('open');
+        document.body.style.overflow = '';
+        document.documentElement.style.overflow = '';
+      };
+
+      if (closeBtn) {
+        closeBtn.addEventListener('click', (e) => {
+          e.stopPropagation();
+          closeModal();
         });
+      }
+
+      // Close on clicking backdrop
+      modal.addEventListener('click', (e) => {
+        if (e.target === modal) {
+          closeModal();
+        }
       });
     });
-
-    function onScroll() {
-      const rect = worksSection.getBoundingClientRect();
-      const pinnedDistance = worksSection.offsetHeight - window.innerHeight;
-      if (pinnedDistance <= 0) return;
-
-      const scrolledInPin = -rect.top;
-      const progress = Math.max(0, Math.min(1, scrolledInPin / pinnedDistance));
-      updateSliderState(progress);
-    }
-
-    // Initialize slide 0
-    updateSliderState(0);
-
-    window.addEventListener('scroll', onScroll, { passive: true });
-    onScroll();
   })();
 
   // --- About Section: Reveal Animation (desktop scroll-scrub / mobile fade-up) ---

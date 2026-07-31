@@ -687,7 +687,6 @@ section {
 @media (max-width: 1024px) and (min-width: 769px) {
 
   .about-sticky,
-  .works-sticky,
   .contact-sticky {
     position: sticky !important;
     top: 0 !important;
@@ -700,7 +699,6 @@ section {
   }
 
   .about-card,
-  .works-card,
   .contact-box {
     width: calc(100% - 128px) !important;
     height: calc(100vh - 128px) !important;
@@ -744,7 +742,8 @@ section {
   /* Collapse the 300vh scroll-scrub height down to a single viewport on tablet */
   .about {
     height: 100vh !important;
-    margin-top: 0 !important; /* cancel desktop overlap on tablet */
+    margin-top: 0 !important;
+    /* cancel desktop overlap on tablet */
   }
 
   /* Icons sidebar: horizontal row RIGHT-aligned above categories on tablet */
@@ -766,14 +765,14 @@ section {
 
   .about-categories-footer {
     padding: 32px;
-    justify-content: flex-end; /* right-aligned on tablet */
+    justify-content: flex-end;
+    /* right-aligned on tablet */
   }
 }
 
 @media (max-width: 768px) {
 
   .about-sticky,
-  .works-sticky,
   .contact-sticky {
     position: sticky !important;
     top: 0 !important;
@@ -786,7 +785,6 @@ section {
   }
 
   .about-card,
-  .works-card,
   .contact-box {
     width: calc(100% - 64px) !important;
     height: calc(100vh - 64px) !important;
@@ -810,7 +808,8 @@ section {
   /* Collapse 300vh scroll height on mobile */
   .about {
     height: 100vh !important;
-    margin-top: 0 !important; /* cancel desktop overlap on mobile */
+    margin-top: 0 !important;
+    /* cancel desktop overlap on mobile */
   }
 
   .about-headline {
@@ -845,7 +844,8 @@ section {
     gap: 16px;
     margin: 0;
     padding: 0 20px 8px 20px;
-    justify-content: flex-end; /* right-aligned on phone */
+    justify-content: flex-end;
+    /* right-aligned on phone */
     width: 100%;
     box-sizing: border-box;
   }
@@ -874,64 +874,7 @@ section {
     font-size: 12px;
   }
 
-  .works-slider-body {
-    padding: 0 !important;
-    /* Clear padding to align with stacked layout */
-  }
 
-  .works-middle-divider {
-    display: none;
-    /* Hide the vertical middle divider line on mobile */
-  }
-
-  .works-slider-viewport {
-    height: auto !important;
-    /* Allow self-adjusting height for stacked active slide content */
-  }
-
-  .works-slide-layout {
-    flex-direction: column;
-  }
-
-  .works-left-col,
-  .works-right-col {
-    width: 100% !important;
-    flex: 0 0 100% !important;
-  }
-
-  .works-left-col {
-    padding: 32px 20px 48px 20px !important;
-  }
-
-  .works-right-col {
-    padding: 24px 20px !important;
-    gap: 20px !important;
-  }
-
-  .works-explore-wrap {
-    justify-content: flex-end;
-    /* Keep Explore button aligned right */
-  }
-
-  .works-nav-btn.prev-btn {
-    left: 4px !important;
-  }
-
-  .works-nav-btn.next-btn {
-    right: 4px !important;
-  }
-
-  .works-pagination {
-    position: relative !important;
-    left: 50% !important;
-    bottom: auto !important;
-    margin: 16px 0 24px 0 !important;
-    transform: translateX(-50%) !important;
-  }
-
-  .works-header {
-    padding: 28px 20px 16px 20px !important;
-  }
 }
 
 .about-title {
@@ -1105,7 +1048,8 @@ section {
    SELECTED WORKS SECTION
    ========================================================================== */
 .works {
-  height: 300vh;
+  /* 5 cards × 100vh each = 500vh total scroll distance (desktop only) */
+  height: calc(5 * 100vh);
   position: relative;
   background-color: transparent;
   color: var(--color-text-primary-default);
@@ -1742,8 +1686,7 @@ footer {
     height: auto !important;
   }
 
-  .about-sticky,
-  .works-sticky {
+  .about-sticky {
     position: relative !important;
     height: auto !important;
     padding: 0 !important;
@@ -1962,7 +1905,6 @@ footer {
    SECTION CARD LAYOUT  (About · Works · Contact)
    ===================================================================== */
 
-.works-sticky,
 .contact-sticky {
   position: sticky;
   top: 0;
@@ -1976,7 +1918,6 @@ footer {
   margin: 0;
 }
 
-.works-card,
 .contact-box {
   width: calc(100% - 256px);
   height: calc(100vh - 256px);
@@ -1994,7 +1935,6 @@ footer {
   transition: opacity 1.2s cubic-bezier(0.16, 1, 0.3, 1), transform 1.2s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
-.works-card.is-visible,
 .contact-box.is-visible {
   opacity: 1;
   transform: scale(1);
@@ -2141,309 +2081,311 @@ footer {
 }
 
 /* =====================================================================
-   WORKS — Redesigned slider layout matching mockup images
+   WORKS — Stacked sticky cards (desktop) + vertical list (tablet/phone)
    ===================================================================== */
-.works-header {
-  padding: 40px;
+
+/* ── Desktop stack ────────────────────────────────────────────────── */
+
+.works-desktop-stack {
+  display: block; /* visible only on desktop (hidden via media query below) */
 }
 
-.works-description {
-  font-family: var(--font-body);
-  font-size: 13px;
-  font-weight: 700;
-  line-height: 1.6;
-  color: var(--color-text-primary-default);
-  margin-top: 16px;
-  margin-bottom: 0;
-  max-width: 860px;
+/* Each work-item provides 100vh of scrollable distance */
+.work-item {
+  position: sticky;
+  top: 0;
+  height: 100vh;
+  z-index: var(--item-z, 1);      /* CSS custom prop set inline on each item */
+  overflow: hidden;
 }
 
-.works-slider-body {
-  position: relative;
-  width: 100%;
-  padding: 0;
-  /* Clear left/right padding to allow full-width columns */
-  box-sizing: border-box;
+.work-card {
+  height: 100vh;
   display: flex;
   flex-direction: column;
-}
-
-/* Border-overlay navigation arrows */
-.works-nav-btn {
-  position: absolute;
-  top: 50%;
-  transform: translateY(-50%);
-  background: var(--color-bg-surface-primary-default);
-  border: none;
-  width: 32px;
-  height: 32px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  cursor: pointer;
-  z-index: 10;
-  padding: 0;
-  box-shadow: none;
-}
-
-
-.works-nav-btn.prev-btn {
-  left: -16px;
-  /* Center button exactly on the left border of the card */
-}
-
-.works-nav-btn.next-btn {
-  right: -16px;
-  /* Center button exactly on the right border of the card */
-}
-
-.works-arrow-icon {
-  width: 24px;
-  height: 24px;
-  fill: var(--color-bg-surface-secondary-default);
-  transition: fill 0.2s, transform 0.2s;
-}
-
-/* Static vertical card divider for Works Section */
-.works-middle-divider {
-  position: absolute;
-  left: 50%;
-  top: 0;
-  bottom: 0;
-  transform: translateX(-50%);
-  width: 2px;
-  background-color: var(--color-bg-surface-secondary-default);
-  z-index: 4;
-}
-
-/* Viewport and slides */
-.works-slider-viewport {
-  width: 100%;
-  max-width: 100%;
-  /* Spans full card width */
-  height: 480px;
-  /* Sized to fit layout content nicely, matching about aspect ratio */
-  position: relative;
-  overflow: visible;
-  aspect-ratio: auto;
-  /* Remove aspect ratio constraint */
-}
-
-.works-slider-track {
-  position: relative;
-  width: 100%;
-  height: 100%;
-}
-
-.works-slide {
-  position: absolute;
-  inset: 0;
-  opacity: 0;
-  visibility: hidden;
-  pointer-events: none;
-  transition: opacity 0.4s ease;
-  width: 100%;
-  height: 100%;
-}
-
-.works-slide.active {
-  position: relative;
-  opacity: 1;
-  visibility: visible;
-  pointer-events: auto;
-}
-
-/* Works 50/50 slide columns */
-.works-slide-layout {
-  display: flex;
-  width: 100%;
-  height: 100%;
-}
-
-.works-left-col {
-  flex: 0 0 50%;
-  width: 50%;
-  display: flex;
-  justify-content: center;
-  align-items: center;
+  padding: 64px;
   box-sizing: border-box;
-  padding: 40px;
-  /* Unified padding to 40px on all sides */
-}
-
-/* Image wrapper with solid yellow offset shadow matching neo-brutalist style */
-.works-image-wrapper {
-  position: relative;
-  border: 2px solid var(--color-bg-surface-secondary-default);
-  box-shadow: 8px 8px 0 var(--color-bg-surface-tertiary-default);
-  width: 100%;
-  max-width: 380px;
-  aspect-ratio: 4 / 3;
+  background-color: var(--color-bg-surface-primary-default);
   overflow: hidden;
-  cursor: pointer;
-  background-color: #fff;
-  z-index: 2;
-  transition: transform 0.2s ease, box-shadow 0.2s ease;
 }
 
-.works-image-wrapper:hover {
-  transform: translate(-2px, -2px);
-  box-shadow: 10px 10px 0 var(--color-bg-surface-tertiary-default);
+/* Top row: title + hashtags */
+.work-top {
+  flex-shrink: 0;
+  margin-bottom: 24px;
 }
 
-.works-image {
+.work-title {
+  font-family: var(--font-head);
+  font-size: clamp(28px, 3.5vw, 52px);
+  font-weight: 900;
+  letter-spacing: -2px;
+  color: var(--color-text-primary-default);
+  margin: 0 0 8px 0;
+  line-height: 1.05;
+}
+
+.work-hashtags {
+  font-family: var(--font-body);
+  font-size: var(--font-size-body-small);
+  font-weight: 700;
+  color: var(--color-text-secondary-default);
+  margin: 0;
+  letter-spacing: 0.5px;
+}
+
+/* Middle row: image (left) + hand graphic (right) */
+.work-mid {
+  display: flex;
+  flex: 1;
+  gap: 40px;
+  align-items: stretch;
+  min-height: 0;
+  overflow: hidden;
+}
+
+.work-img-wrap {
+  flex: 0 0 55%;
+  overflow: hidden;
+  border: 2px solid var(--color-bg-surface-secondary-default);
+}
+
+.work-img {
   width: 100%;
   height: 100%;
   object-fit: cover;
   display: block;
 }
 
-.works-right-col {
-  flex: 0 0 50%;
-  width: 50%;
-  box-sizing: border-box;
-  padding: 40px;
-  /* Unified padding to 40px on all sides */
+.work-graphic-wrap {
+  flex: 1;
   display: flex;
-  flex-direction: column;
-  justify-content: flex-start;
-  align-items: flex-start;
-  gap: 20px;
+  align-items: center;
+  justify-content: center;
   overflow: hidden;
 }
 
-/* Contributions Section */
-.works-key-contributions {
+.works-hand-svg {
   width: 100%;
+  height: 100%;
+  object-fit: contain;
+  display: block;
 }
 
-.works-key-contributions h4 {
-  font-family: var(--font-head);
-  font-size: var(--font-size-body-large);
-  font-weight: 800;
-  color: var(--color-text-secondary-default);
-  text-transform: uppercase;
-  letter-spacing: 1px;
+/* Bottom row: divider + bullet points */
+.work-bottom {
+  flex-shrink: 0;
+  margin-top: 24px;
+}
+
+.work-rule {
+  border: none;
+  border-top: 2px solid var(--color-bg-surface-secondary-default);
+  margin: 0 0 16px 0;
+}
+
+.work-bullets {
+  list-style: disc;
+  padding-left: 20px;
   margin: 0;
-}
-
-.works-key-contributions ul {
-  font-family: var(--font-body);
-  font-size: var(--font-size-body-large);
-  font-weight: 700;
-  line-height: 1.6;
-  color: var(--color-text-primary-default);
-  margin: 0;
-  padding: 0;
-  list-style: none;
-}
-
-.works-key-contributions ul li {
-  margin-bottom: 12px;
-  padding: 0;
-  margin: 0;
-  text-indent: 0;
-}
-
-/* Works tags wrap */
-.works-tags {
   display: flex;
   flex-wrap: wrap;
-  gap: 8px;
-  width: 100%;
+  gap: 6px 40px;
 }
 
-.works-tags .tag {
-  background: var(--color-bg-surface-secondary-default);
-  color: var(--color-bg-surface-primary-default);
-  padding: 6px 16px;
-  border-radius: 100px;
+.work-bullets li {
   font-family: var(--font-body);
-  font-size: var(--font-size-body-small);
-  font-weight: var(--font-weight-body-large);
-}
-
-/* Metadata Grid */
-.works-meta-grid {
-  display: grid;
-  grid-template-columns: repeat(2, 1fr);
-  gap: 20px 16px;
-  width: 100%;
-}
-
-.works-meta-col h4 {
-  font-family: var(--font-head);
   font-size: var(--font-size-body-medium);
-  font-weight: 800;
-  color: var(--color-text-secondary-default);
-  text-transform: uppercase;
-  letter-spacing: 1px;
-  margin: 0;
-}
-
-.works-meta-col p {
-  font-family: var(--font-body);
-  font-size: var(--font-size-body-large);
   font-weight: 700;
   color: var(--color-text-primary-default);
+  line-height: 1.5;
+  flex: 1 1 280px;
+}
+
+/* ── Mobile / tablet list ─────────────────────────────────────────── */
+
+.works-mobile-list {
+  display: none;  /* shown only on ≤1024px via media query */
+  flex-direction: column;
+  padding: 0 32px;
+  box-sizing: border-box;
+}
+
+.works-list-item {
+  padding: 28px 0;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.15);
+  cursor: pointer;
+  transition: opacity 0.2s;
+}
+
+.works-list-item:hover {
+  opacity: 0.7;
+}
+
+.works-list-title {
+  font-family: var(--font-head);
+  font-size: clamp(22px, 5vw, 36px);
+  font-weight: 900;
+  letter-spacing: -1px;
+  color: var(--color-text-primary-default);
+  margin: 0 0 6px 0;
+  line-height: 1.1;
+}
+
+.works-list-tags {
+  font-family: var(--font-body);
+  font-size: var(--font-size-body-small);
+  font-weight: 700;
+  color: var(--color-text-secondary-default);
   margin: 0;
 }
 
-/* EXPLORE trigger wrapping */
-.works-explore-wrap {
-  width: 100%;
+/* "The Works" hand at the foot of the list */
+.works-list-hand {
   display: flex;
-  justify-content: flex-end;
-  margin-top: auto;
-  /* Push to the bottom */
+  justify-content: center;
+  padding: 56px 0 32px;
 }
 
-.works-explore-btn {
+.works-list-hand .works-hand-svg {
+  width: 60%;
+  max-width: 320px;
+  height: auto;
+  object-fit: contain;
+}
+
+/* ── Responsive: show list, hide stack ───────────────────────────── */
+
+@media (max-width: 1024px) {
+  /* Show the mobile list */
+  .works-mobile-list {
+    display: flex;
+  }
+  /* Hide the desktop stack */
+  .works-desktop-stack {
+    display: none;
+  }
+  /* Works section no longer needs sticky-stack height */
+  .works {
+    height: auto !important;
+    min-height: 100vh;
+  }
+}
+
+@media (max-width: 768px) {
+  .works-mobile-list {
+    padding: 0 20px;
+  }
+  .works-list-title {
+    font-size: clamp(20px, 6vw, 28px);
+  }
+}
+
+/* ── Modal (opens on tap of list item) ───────────────────────────── */
+
+.work-modal {
+  position: fixed;
+  inset: 0;
+  z-index: 9100;
+  background: rgba(0, 0, 0, 0.92);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.35s ease;
+  padding: 24px;
+  box-sizing: border-box;
+}
+
+.work-modal.open {
+  opacity: 1;
+  pointer-events: all;
+}
+
+.work-modal-inner {
+  position: relative;
+  width: 100%;
+  max-width: 680px;
+  max-height: 90vh;
+  overflow-y: auto;
+  background: var(--color-bg-surface-primary-default);
+  border: 2px solid var(--color-bg-surface-secondary-default);
+  padding: 32px;
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.work-modal-close {
+  position: absolute;
+  top: 16px;
+  right: 16px;
   background: none;
   border: none;
-  font-family: var(--font-head);
-  font-size: 13px;
-  font-weight: 900;
   color: var(--color-text-primary-default);
+  font-size: 28px;
+  line-height: 1;
   cursor: pointer;
-  display: inline-flex;
-  align-items: center;
-  gap: 6px;
   padding: 0;
-  transition: transform 0.2s;
-  text-transform: uppercase;
-  letter-spacing: 1.5px;
-}
-
-.works-explore-btn:hover {
-  transform: translateX(4px);
-}
-
-/* Square Pagination Dots - aligned under the left column */
-.works-pagination {
-  position: absolute;
-  left: 25%;
-  bottom: 20px;
-  /* Placed exactly 20px below the image wrapper */
-  transform: translateX(-50%);
+  width: 32px;
+  height: 32px;
   display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.work-modal-img {
+  width: 100%;
+  aspect-ratio: 4/3;
+  object-fit: cover;
+  display: block;
+  border: 1px solid var(--color-bg-surface-secondary-default);
+}
+
+.work-modal-body {
+  display: flex;
+  flex-direction: column;
   gap: 12px;
-  z-index: 5;
 }
 
-.works-dot {
-  width: 10px;
-  height: 10px;
-  background-color: rgba(32, 32, 32, 0.25);
-  cursor: pointer;
-  transition: background-color 0.2s, transform 0.2s;
+.work-modal-body h2 {
+  font-family: var(--font-head);
+  font-size: clamp(20px, 4vw, 28px);
+  font-weight: 900;
+  letter-spacing: -1px;
+  color: var(--color-text-primary-default);
+  margin: 0;
 }
 
-.works-dot.active,
-.works-dot:hover {
-  background-color: var(--color-text-primary-active);
-  transform: scale(1.1);
+.work-modal-tags {
+  font-family: var(--font-body);
+  font-size: var(--font-size-body-small);
+  font-weight: 700;
+  color: var(--color-text-secondary-default);
+  margin: 0;
 }
+
+.work-modal-body ul {
+  list-style: disc;
+  padding-left: 20px;
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.work-modal-body ul li {
+  font-family: var(--font-body);
+  font-size: var(--font-size-body-medium);
+  font-weight: 700;
+  color: var(--color-text-primary-default);
+  line-height: 1.5;
+}
+
+
+
 
 /* =====================================================================
    CONTACT — split grid layout & elements

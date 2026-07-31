@@ -2216,633 +2216,273 @@
   </section>
 
 
+
   <!-- SELECTED WORKS SECTION -->
   <section id="works" class="works">
-    <div class="works-sticky">
-      <div class="works-card">
 
-        <!-- Header (updated dynamically by JS) -->
-        <div class="works-header about-header">
-          <h1 class="works-headline about-headline" id="works-active-title">Selected Works</h1>
-        </div>
+    <!-- ════════════════════════════════════════════════════════════════
+         DESKTOP (>1024px): Stacked sticky cards.
+         Each .work-item = 100vh scroll distance. Increasing --item-z
+         means each new card layers on top, creating the push-up effect.
+         ════════════════════════════════════════════════════════════════ -->
+    <div class="works-desktop-stack">
 
-        <!-- Segment divider -->
-        <div class="section-divider">
-          <div class="logo-accent-box">
-            <svg class="logo-accent-icon" viewBox="0 0 72 82" fill="var(--color-bg-surface-secondary-default)"
-              xmlns="http://www.w3.org/2000/svg">
-              <path
-                d="M19.5 62.9824C10.5 66.7862 9.5 76.0834 7.5 82H0C5 60.0241 15 15.3117 15 12.2689C15 9.22612 13.5 9.73325 6 16.0722L0 11.0009C9 2.12607 24 -4.2129 42 3.39391C57.0002 9.73299 69 2.12598 72 0.858138C70.5 3.39381 60.1367 11.3849 52.5 13.5365C43.5 16.0722 46.5 24.9471 48 33.8219C49.5 42.6968 51.4917 52.1403 43.5 56.6432C34.5 61.7144 26.341 60.0912 19.5 62.9824Z" />
-            </svg>
+      <!-- Card 1: NZXT -->
+      <div class="work-item" style="--item-z:1">
+        <div class="work-card">
+          <div class="work-top">
+            <h2 class="work-title">NZXT Marketing &amp; Visual Design</h2>
+            <p class="work-hashtags">#Packaging #Branding #Hardware #Layout</p>
           </div>
-        </div>
-
-        <!-- Slider Lower Body -->
-        <div class="works-slider-body">
-          <!-- Navigation Arrow Left -->
-          <button class="works-nav-btn prev-btn" id="works-prev-btn" aria-label="Previous Work">
-            <svg class="works-arrow-icon" viewBox="0 0 24 24">
-              <polygon points="16,6 6,12 16,18" />
-            </svg>
-          </button>
-
-          <!-- Static Vertical Column Divider -->
-          <div class="about-col-divider works-middle-divider"></div>
-
-          <!-- Slide Viewport -->
-          <div class="works-slider-viewport">
-            <div class="works-slider-track" id="works-slider-track">
-              <!-- Slide 1: NZXT -->
-              <div class="works-slide active" data-index="0" data-title="NZXT Marketing &amp; Visual Design">
-                <div class="works-slide-layout">
-                  <!-- Left Column: Image Wrapper -->
-                  <div class="works-left-col">
-                    <div class="works-image-wrapper">
-                      <img src="works/works ver.02.jpg" alt="NZXT Campaign &amp; Packaging" class="works-image">
-                    </div>
-                  </div>
-                  <!-- Right Column: Details -->
-                  <div class="works-right-col">
-                    <div class="works-key-contributions">
-                      <h4>Key Contributions:</h4>
-                      <ul>
-                        <li>Developed vector layouts for hardware component packaging.</li>
-                        <li>Structured global marketing promotional banners and social media campaign visuals.</li>
-                        <li>Collaborated on typography systems ensuring consistent visual brand identity across digital
-                          and physical mediums.</li>
-                      </ul>
-                    </div>
-                    <div class="works-tags">
-                      <span class="tag">#Packaging</span>
-                      <span class="tag">#Branding</span>
-                      <span class="tag">#Hardware</span>
-                      <span class="tag">#Layout</span>
-                    </div>
-                    <div class="works-meta-grid">
-                      <div class="works-meta-col">
-                        <h4>Role</h4>
-                        <p>Graphic Designer</p>
-                      </div>
-                      <div class="works-meta-col">
-                        <h4>Timeline</h4>
-                        <p>2024-2026</p>
-                      </div>
-                      <div class="works-meta-col">
-                        <h4>Deliverables</h4>
-                        <p>Package Templates, Marketing Assets, Social Graphics</p>
-                      </div>
-                      <div class="works-meta-col">
-                        <h4>Software</h4>
-                        <p>Illustrator, Photoshop, Figma</p>
-                      </div>
-                    </div>
-                    <div class="works-explore-wrap">
-                      <button class="works-explore-btn" data-modal="modal-nzxt">EXPLORE &rarr;</button>
-                    </div>
-                  </div>
-                </div>
-              </div>
-
-              <!-- Slide 2: Mitsukoshi -->
-              <div class="works-slide" data-index="1" data-title="Shin Kong Mitsukoshi Visual Promotions">
-                <div class="works-slide-layout">
-                  <!-- Left Column: Image Wrapper -->
-                  <div class="works-left-col">
-                    <div class="works-image-wrapper">
-                      <img src="works/works ver.01.jpg" alt="Mitsukoshi Visual Promotions" class="works-image">
-                    </div>
-                  </div>
-                  <!-- Right Column: Details -->
-                  <div class="works-right-col">
-                    <div class="works-key-contributions">
-                      <h4>Key Contributions:</h4>
-                      <ul>
-                        <li>Designed and produced high-fidelity campaign posters and print flyers.</li>
-                        <li>Created high-converting online promotional graphics and website event slides.</li>
-                        <li>Engineered visual layout grids for print catalogs and booklets.</li>
-                      </ul>
-                    </div>
-                    <div class="works-tags">
-                      <span class="tag">#Poster</span>
-                      <span class="tag">#Flyer</span>
-                      <span class="tag">#VisualCampaign</span>
-                      <span class="tag">#Marketing</span>
-                    </div>
-                    <div class="works-meta-grid">
-                      <div class="works-meta-col">
-                        <h4>Role</h4>
-                        <p>Graphic Designer</p>
-                      </div>
-                      <div class="works-meta-col">
-                        <h4>Timeline</h4>
-                        <p>2022-2024</p>
-                      </div>
-                      <div class="works-meta-col">
-                        <h4>Deliverables</h4>
-                        <p>Posters, Promotional Flyers, Digital Banners</p>
-                      </div>
-                      <div class="works-meta-col">
-                        <h4>Software</h4>
-                        <p>Photoshop, Illustrator, InDesign</p>
-                      </div>
-                    </div>
-                    <div class="works-explore-wrap">
-                      <button class="works-explore-btn" data-modal="modal-mitsukoshi">EXPLORE &rarr;</button>
-                    </div>
-                  </div>
-                </div>
-              </div>
-
-              <!-- Slide 3: Gallery APP -->
-              <div class="works-slide" data-index="2" data-title="Gallery APP Preview &amp; Ticketing">
-                <div class="works-slide-layout">
-                  <!-- Left Column: Image Wrapper -->
-                  <div class="works-left-col">
-                    <div class="works-image-wrapper">
-                      <img src="works/gallery_app.jpg" alt="Gallery APP" class="works-image">
-                    </div>
-                  </div>
-                  <!-- Right Column: Details -->
-                  <div class="works-right-col">
-                    <div class="works-key-contributions">
-                      <h4>Key Contributions:</h4>
-                      <ul>
-                        <li>Created orderly previews and listings of recent exhibitions to help users quickly view
-                          schedules.</li>
-                        <li>Designed a clear and accessible online ticket checkout integration to encourage conversions.
-                        </li>
-                        <li>Utilized chat-shaped exhibition cards to present collections and works at the top of detail
-                          views for clarity.</li>
-                        <li>Engineered accessibility-focused previews with modern motion interaction designs to enhance
-                          engagement.</li>
-                      </ul>
-                    </div>
-                    <div class="works-tags">
-                      <span class="tag">#UI/UX</span>
-                      <span class="tag">#MobileApp</span>
-                      <span class="tag">#Figma</span>
-                      <span class="tag">#Interaction</span>
-                    </div>
-                    <div class="works-meta-grid">
-                      <div class="works-meta-col">
-                        <h4>Role</h4>
-                        <p>UX/UI Designer &amp; Researcher</p>
-                      </div>
-                      <div class="works-meta-col">
-                        <h4>Timeline</h4>
-                        <p>2024</p>
-                      </div>
-                      <div class="works-meta-col">
-                        <h4>Deliverables</h4>
-                        <p>Wireframes, Low/High Fidelity Prototypes, Mockups, Design System</p>
-                      </div>
-                      <div class="works-meta-col">
-                        <h4>Software</h4>
-                        <p>Figma, Illustrator</p>
-                      </div>
-                    </div>
-                    <div class="works-explore-wrap">
-                      <button class="works-explore-btn" data-modal="modal-gallery">EXPLORE &rarr;</button>
-                    </div>
-                  </div>
-                </div>
-              </div>
-
-              <!-- Slide 4: Li Ho -->
-              <div class="works-slide" data-index="3" data-title="Li Ho Branding &amp; Packaging">
-                <div class="works-slide-layout">
-                  <!-- Left Column: Image Wrapper -->
-                  <div class="works-left-col">
-                    <div class="works-image-wrapper">
-                      <img src="works/liho.jpg" alt="Li Ho Branding &amp; Packaging" class="works-image">
-                    </div>
-                  </div>
-                  <!-- Right Column: Details -->
-                  <div class="works-right-col">
-                    <div class="works-key-contributions">
-                      <h4>Key Contributions:</h4>
-                      <ul>
-                        <li>Created structural box layout templates and visual wrapping labels.</li>
-                        <li>Developed custom hand-drawn vector assets and patterns representing warmth and hospitality.
-                        </li>
-                        <li>Designed typography systems and promotional materials for local Taiwanese products.</li>
-                      </ul>
-                    </div>
-                    <div class="works-tags">
-                      <span class="tag">#Packaging</span>
-                      <span class="tag">#Branding</span>
-                      <span class="tag">#GraphicDesign</span>
-                      <span class="tag">#Identity</span>
-                    </div>
-                    <div class="works-meta-grid">
-                      <div class="works-meta-col">
-                        <h5>Role</h5>
-                        <p>Branding &amp; Packaging Designer</p>
-                      </div>
-                      <div class="works-meta-col">
-                        <h5>Timeline</h5>
-                        <p>2012-2016</p>
-                      </div>
-                      <div class="works-meta-col">
-                        <h5>Deliverables</h5>
-                        <p>Gift Box Packaging, Visual Identity, Vector Assets</p>
-                      </div>
-                      <div class="works-meta-col">
-                        <h5>Software</h5>
-                        <p>Illustrator, Photoshop, InDesign</p>
-                      </div>
-                    </div>
-                    <div class="works-explore-wrap">
-                      <button class="works-explore-btn" data-modal="modal-liho">EXPLORE &rarr;</button>
-                    </div>
-                  </div>
-                </div>
-              </div>
-
-              <!-- Slide 5: Movie Sketches -->
-              <div class="works-slide" data-index="4" data-title="Movie Sketches Sketchbook">
-                <div class="works-slide-layout">
-                  <!-- Left Column: Image Wrapper -->
-                  <div class="works-left-col">
-                    <div class="works-image-wrapper">
-                      <img src="works/drawings.jpg" alt="Movie Sketches Sketchbook" class="works-image">
-                    </div>
-                  </div>
-                  <!-- Right Column: Details -->
-                  <div class="works-right-col">
-                    <div class="works-key-contributions">
-                      <h4>Key Contributions:</h4>
-                      <ul>
-                        <li>Created 10+ physical cardboard paintings depicting classic cinematic frames.</li>
-                        <li>Explored color lighting and composition styles of world-class directors.</li>
-                        <li>Digitized and cataloged the collection for portfolio showcases.</li>
-                      </ul>
-                    </div>
-                    <div class="works-tags">
-                      <span class="tag">#Drawing</span>
-                      <span class="tag">#FineArt</span>
-                      <span class="tag">#Procreate</span>
-                    </div>
-                    <div class="works-meta-grid">
-                      <div class="works-meta-col">
-                        <h5>Role</h5>
-                        <p>Fine Artist &amp; Illustrator</p>
-                      </div>
-                      <div class="works-meta-col">
-                        <h5>Timeline</h5>
-                        <p>Hobby</p>
-                      </div>
-                      <div class="works-meta-col">
-                        <h5>Deliverables</h5>
-                        <p>Digital Paintings, Hand-painted Cardboards</p>
-                      </div>
-                      <div class="works-meta-col">
-                        <h5>Medium</h5>
-                        <p>Cardboard, iPad, Marker</p>
-                      </div>
-                    </div>
-                    <div class="works-explore-wrap">
-                      <button class="works-explore-btn" data-modal="modal-drawings">EXPLORE &rarr;</button>
-                    </div>
-                  </div>
-                </div>
-              </div>
+          <div class="work-mid">
+            <div class="work-img-wrap">
+              <img src="works/works ver.02.jpg" alt="NZXT Campaign" class="work-img">
+            </div>
+            <div class="work-graphic-wrap">
+              <img src="works_graphic.svg" alt="The Works" class="works-hand-svg">
             </div>
           </div>
-
-          <!-- Navigation Arrow Right -->
-          <button class="works-nav-btn next-btn" id="works-next-btn" aria-label="Next Work">
-            <svg class="works-arrow-icon" viewBox="0 0 24 24">
-              <polygon points="8,6 18,12 8,18" />
-            </svg>
-          </button>
-
-          <!-- Square Pagination Dots -->
-          <div class="works-pagination" id="works-pagination">
-            <span class="works-dot active" data-index="0"></span>
-            <span class="works-dot" data-index="1"></span>
-            <span class="works-dot" data-index="2"></span>
-            <span class="works-dot" data-index="3"></span>
-            <span class="works-dot" data-index="4"></span>
+          <div class="work-bottom">
+            <hr class="work-rule">
+            <ul class="work-bullets">
+              <li>Developed vector layouts for hardware component packaging.</li>
+              <li>Structured global marketing promotional banners and social media campaign visuals.</li>
+              <li>Collaborated on typography systems ensuring consistent visual brand identity across digital and physical mediums.</li>
+            </ul>
           </div>
         </div>
+      </div>
 
-      </div><!-- /.works-card -->
-    </div><!-- /.works-sticky -->
+      <!-- Card 2: Mitsukoshi -->
+      <div class="work-item" style="--item-z:2">
+        <div class="work-card">
+          <div class="work-top">
+            <h2 class="work-title">Shin Kong Mitsukoshi Visual Promotions</h2>
+            <p class="work-hashtags">#Poster #Flyer #VisualCampaign #Marketing</p>
+          </div>
+          <div class="work-mid">
+            <div class="work-img-wrap">
+              <img src="works/works ver.01.jpg" alt="Mitsukoshi Visual Promotions" class="work-img">
+            </div>
+            <div class="work-graphic-wrap">
+              <img src="works_graphic.svg" alt="The Works" class="works-hand-svg">
+            </div>
+          </div>
+          <div class="work-bottom">
+            <hr class="work-rule">
+            <ul class="work-bullets">
+              <li>Designed and produced high-fidelity campaign posters and print flyers.</li>
+              <li>Created high-converting online promotional graphics and website event slides.</li>
+              <li>Engineered visual layout grids for print catalogs and booklets.</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+
+      <!-- Card 3: Gallery App -->
+      <div class="work-item" style="--item-z:3">
+        <div class="work-card">
+          <div class="work-top">
+            <h2 class="work-title">Gallery APP Preview &amp; Ticketing</h2>
+            <p class="work-hashtags">#UI/UX #MobileApp #Figma #Interaction</p>
+          </div>
+          <div class="work-mid">
+            <div class="work-img-wrap">
+              <img src="works/gallery_app.jpg" alt="Gallery App" class="work-img">
+            </div>
+            <div class="work-graphic-wrap">
+              <img src="works_graphic.svg" alt="The Works" class="works-hand-svg">
+            </div>
+          </div>
+          <div class="work-bottom">
+            <hr class="work-rule">
+            <ul class="work-bullets">
+              <li>Created orderly previews and listings of recent exhibitions to help users quickly view schedules.</li>
+              <li>Designed a clear and accessible online ticket checkout integration to encourage conversions.</li>
+              <li>Utilized chat-shaped exhibition cards to present collections at the top of detail views for clarity.</li>
+              <li>Engineered accessibility-focused previews with modern motion interaction designs to enhance engagement.</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+
+      <!-- Card 4: Li Ho -->
+      <div class="work-item" style="--item-z:4">
+        <div class="work-card">
+          <div class="work-top">
+            <h2 class="work-title">Li Ho Branding &amp; Packaging</h2>
+            <p class="work-hashtags">#Packaging #Branding #GraphicDesign #Identity</p>
+          </div>
+          <div class="work-mid">
+            <div class="work-img-wrap">
+              <img src="works/liho.jpg" alt="Li Ho Branding" class="work-img">
+            </div>
+            <div class="work-graphic-wrap">
+              <img src="works_graphic.svg" alt="The Works" class="works-hand-svg">
+            </div>
+          </div>
+          <div class="work-bottom">
+            <hr class="work-rule">
+            <ul class="work-bullets">
+              <li>Created structural box layout templates and visual wrapping labels.</li>
+              <li>Developed custom hand-drawn vector assets and patterns representing warmth and hospitality.</li>
+              <li>Designed typography systems and promotional materials for local Taiwanese products.</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+
+      <!-- Card 5: Movie Sketches -->
+      <div class="work-item" style="--item-z:5">
+        <div class="work-card">
+          <div class="work-top">
+            <h2 class="work-title">Movie Sketches Sketchbook</h2>
+            <p class="work-hashtags">#Drawing #FineArt #Procreate</p>
+          </div>
+          <div class="work-mid">
+            <div class="work-img-wrap">
+              <img src="works/drawings.jpg" alt="Movie Sketches" class="work-img">
+            </div>
+            <div class="work-graphic-wrap">
+              <img src="works_graphic.svg" alt="The Works" class="works-hand-svg">
+            </div>
+          </div>
+          <div class="work-bottom">
+            <hr class="work-rule">
+            <ul class="work-bullets">
+              <li>Created 10+ physical cardboard paintings depicting classic cinematic frames.</li>
+              <li>Explored color lighting and composition styles of world-class directors.</li>
+              <li>Digitized and cataloged the collection for portfolio showcases.</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+
+    </div><!-- /.works-desktop-stack -->
+
+
+    <!-- ════════════════════════════════════════════════════════════════
+         TABLET & PHONE (<=1024px): Vertical scrollable list.
+         Tap any item to open matching modal.
+         ════════════════════════════════════════════════════════════════ -->
+    <div class="works-mobile-list">
+
+      <div class="works-list-item" data-modal="modal-nzxt">
+        <h2 class="works-list-title">NZXT Marketing &amp; Visual Design</h2>
+        <p class="works-list-tags">#Packaging #Branding #Hardware #Layout</p>
+      </div>
+      <div class="works-list-item" data-modal="modal-mitsukoshi">
+        <h2 class="works-list-title">Shin Kong Mitsukoshi Visual Promotions</h2>
+        <p class="works-list-tags">#Poster #Flyer #VisualCampaign #Marketing</p>
+      </div>
+      <div class="works-list-item" data-modal="modal-gallery">
+        <h2 class="works-list-title">Gallery APP Preview &amp; Ticketing</h2>
+        <p class="works-list-tags">#UI/UX #MobileApp #Figma #Interaction</p>
+      </div>
+      <div class="works-list-item" data-modal="modal-liho">
+        <h2 class="works-list-title">Li Ho Branding &amp; Packaging</h2>
+        <p class="works-list-tags">#Packaging #Branding #GraphicDesign #Identity</p>
+      </div>
+      <div class="works-list-item" data-modal="modal-drawings">
+        <h2 class="works-list-title">Movie Sketches Sketchbook</h2>
+        <p class="works-list-tags">#Drawing #FineArt #Procreate</p>
+      </div>
+
+      <!-- "The Works" hand anchors the bottom of the list -->
+      <div class="works-list-hand">
+        <img src="works_graphic.svg" alt="The Works" class="works-hand-svg">
+      </div>
+
+    </div><!-- /.works-mobile-list -->
+
+
+    <!-- ════════════════════════════════════════════════════════════════
+         MODALS — opened by tapping list items on tablet/phone
+         ════════════════════════════════════════════════════════════════ -->
+
+    <div class="work-modal" id="modal-nzxt" role="dialog" aria-modal="true">
+      <div class="work-modal-inner">
+        <button class="work-modal-close" aria-label="Close">&times;</button>
+        <img src="works/works ver.02.jpg" alt="NZXT Campaign" class="work-modal-img">
+        <div class="work-modal-body">
+          <h2>NZXT Marketing &amp; Visual Design</h2>
+          <p class="work-modal-tags">#Packaging #Branding #Hardware #Layout</p>
+          <ul>
+            <li>Developed vector layouts for hardware component packaging.</li>
+            <li>Structured global marketing promotional banners and social media campaign visuals.</li>
+            <li>Collaborated on typography systems ensuring consistent visual brand identity across digital and physical mediums.</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <div class="work-modal" id="modal-mitsukoshi" role="dialog" aria-modal="true">
+      <div class="work-modal-inner">
+        <button class="work-modal-close" aria-label="Close">&times;</button>
+        <img src="works/works ver.01.jpg" alt="Mitsukoshi" class="work-modal-img">
+        <div class="work-modal-body">
+          <h2>Shin Kong Mitsukoshi Visual Promotions</h2>
+          <p class="work-modal-tags">#Poster #Flyer #VisualCampaign #Marketing</p>
+          <ul>
+            <li>Designed and produced high-fidelity campaign posters and print flyers.</li>
+            <li>Created high-converting online promotional graphics and website event slides.</li>
+            <li>Engineered visual layout grids for print catalogs and booklets.</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <div class="work-modal" id="modal-gallery" role="dialog" aria-modal="true">
+      <div class="work-modal-inner">
+        <button class="work-modal-close" aria-label="Close">&times;</button>
+        <img src="works/gallery_app.jpg" alt="Gallery App" class="work-modal-img">
+        <div class="work-modal-body">
+          <h2>Gallery APP Preview &amp; Ticketing</h2>
+          <p class="work-modal-tags">#UI/UX #MobileApp #Figma #Interaction</p>
+          <ul>
+            <li>Created orderly previews and listings of recent exhibitions to help users quickly view schedules.</li>
+            <li>Designed a clear and accessible online ticket checkout integration to encourage conversions.</li>
+            <li>Utilized chat-shaped exhibition cards to present collections at the top of detail views for clarity.</li>
+            <li>Engineered accessibility-focused previews with modern motion interaction designs to enhance engagement.</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <div class="work-modal" id="modal-liho" role="dialog" aria-modal="true">
+      <div class="work-modal-inner">
+        <button class="work-modal-close" aria-label="Close">&times;</button>
+        <img src="works/liho.jpg" alt="Li Ho Branding" class="work-modal-img">
+        <div class="work-modal-body">
+          <h2>Li Ho Branding &amp; Packaging</h2>
+          <p class="work-modal-tags">#Packaging #Branding #GraphicDesign #Identity</p>
+          <ul>
+            <li>Created structural box layout templates and visual wrapping labels.</li>
+            <li>Developed custom hand-drawn vector assets and patterns representing warmth and hospitality.</li>
+            <li>Designed typography systems and promotional materials for local Taiwanese products.</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <div class="work-modal" id="modal-drawings" role="dialog" aria-modal="true">
+      <div class="work-modal-inner">
+        <button class="work-modal-close" aria-label="Close">&times;</button>
+        <img src="works/drawings.jpg" alt="Movie Sketches" class="work-modal-img">
+        <div class="work-modal-body">
+          <h2>Movie Sketches Sketchbook</h2>
+          <p class="work-modal-tags">#Drawing #FineArt #Procreate</p>
+          <ul>
+            <li>Created 10+ physical cardboard paintings depicting classic cinematic frames.</li>
+            <li>Explored color lighting and composition styles of world-class directors.</li>
+            <li>Digitized and cataloged the collection for portfolio showcases.</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
   </section>
 
-
-
-
-
-
-
-  <!-- NZXT Modal -->
-  <div class="project-modal" id="modal-nzxt">
-    <div class="modal-content">
-      <button class="modal-close" aria-label="Close Modal">
-        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
-        </svg>
-      </button>
-      <div class="modal-banner">
-        <img src="works/works ver.02.jpg" alt="NZXT Campaign & Packaging">
-      </div>
-      <div class="modal-body">
-        <div class="modal-tags">
-          <span class="tag">#Packaging</span>
-          <span class="tag">#Branding</span>
-          <span class="tag">#Hardware</span>
-          <span class="tag">#Layout</span>
-        </div>
-        <h3 class="modal-title">NZXT Campaign &amp; Packaging</h3>
-        <p class="modal-description">
-          <strong>Project Overview:</strong> Designed global marketing promotional assets, vector layout grids, and
-          retail package templates for NZXT hardware systems. Developed print-ready structural layouts and digital
-          promotional materials matching NZXT's minimalist gaming brand aesthetic.
-        </p>
-        <div class="modal-details-box">
-          <div class="contributions-section">
-            <h4>Key Contributions:</h4>
-            <p>
-              1. Developed vector layouts for hardware component packaging.<br>
-              2. Structured global marketing promotional banners and social media campaign visuals.<br>
-              3. Collaborated on typography systems ensuring consistent visual brand identity across digital and
-              physical mediums.
-            </p>
-          </div>
-          <div class="modal-meta-grid">
-            <div class="meta-col">
-              <h5>Role</h5>
-              <p>Graphic Designer</p>
-            </div>
-            <div class="meta-col">
-              <h5>Timeline</h5>
-              <p>2024-2026</p>
-            </div>
-            <div class="meta-col">
-              <h5>Deliverables</h5>
-              <p>Package Templates, Marketing Assets, Social Graphics</p>
-            </div>
-            <div class="meta-col">
-              <h5>Software</h5>
-              <p>Illustrator, Photoshop, Figma</p>
-            </div>
-          </div>
-        </div>
-        <div class="modal-actions">
-          <a href="https://www.behance.net/gallery/248131423/works_vol02" class="btn btn-primary" target="_blank"
-            rel="noopener">View</a>
-          <button class="btn btn-secondary modal-close-btn">Close</button>
-        </div>
-      </div>
-    </div>
-  </div>
-
-  <!-- Mitsukoshi Modal -->
-  <div class="project-modal" id="modal-mitsukoshi">
-    <div class="modal-content">
-      <button class="modal-close" aria-label="Close Modal">
-        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
-        </svg>
-      </button>
-      <div class="modal-banner">
-        <img src="works/works ver.01.jpg" alt="Shin Kong Mitsukoshi Visual Promotions">
-      </div>
-      <div class="modal-body">
-        <div class="modal-tags">
-          <span class="tag">#Poster</span>
-          <span class="tag">#Flyer</span>
-          <span class="tag">#VisualCampaign</span>
-          <span class="tag">#Marketing</span>
-        </div>
-        <h3 class="modal-title">Shin Kong Mitsukoshi Visual Promotions</h3>
-        <p class="modal-description">
-          <strong>Project Overview:</strong> Crafted printed posters, flyers, online promotional images, and
-          marketing-related activities for Shin Kong Mitsukoshi Department Store. Managed complete layout systems for
-          seasonal retail sales campaigns, event spaces, and catalog guides.
-        </p>
-        <div class="modal-details-box">
-          <div class="contributions-section">
-            <h4>Key Contributions:</h4>
-            <p>
-              1. Designed and produced high-fidelity campaign posters and print flyers.<br>
-              2. Created high-converting online promotional graphics and website event slides.<br>
-              3. Engineered visual layout grids for print catalogs and booklets.
-            </p>
-          </div>
-          <div class="modal-meta-grid">
-            <div class="meta-col">
-              <h5>Role</h5>
-              <p>Graphic Designer</p>
-            </div>
-            <div class="meta-col">
-              <h5>Timeline</h5>
-              <p>2022-2024</p>
-            </div>
-            <div class="meta-col">
-              <h5>Deliverables</h5>
-              <p>Posters, Promotional Flyers, Digital Banners</p>
-            </div>
-            <div class="meta-col">
-              <h5>Software</h5>
-              <p>Photoshop, Illustrator, InDesign</p>
-            </div>
-          </div>
-        </div>
-        <div class="modal-actions">
-          <a href="https://www.behance.net/gallery/205143299/works_vol01" class="btn btn-primary" target="_blank"
-            rel="noopener">View</a>
-          <button class="btn btn-secondary modal-close-btn">Close</button>
-        </div>
-      </div>
-    </div>
-  </div>
-
-  <!-- Gallery App Modal -->
-  <div class="project-modal" id="modal-gallery">
-    <div class="modal-content">
-      <button class="modal-close" aria-label="Close Modal">
-        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
-        </svg>
-      </button>
-      <div class="modal-banner">
-        <img src="works/gallery_app.jpg" alt="Gallery APP">
-      </div>
-      <div class="modal-body">
-        <div class="modal-tags">
-          <span class="tag">#UI/UX</span>
-          <span class="tag">#MobileApp</span>
-          <span class="tag">#Figma</span>
-          <span class="tag">#Interaction</span>
-        </div>
-        <h3 class="modal-title">Gallery APP</h3>
-        <p class="modal-description">
-          <strong>Project Overview:</strong> An art gallery application designed to increase gallery attendance by
-          providing exhibition previews and schedules on the app to attract more visitors, helping users quickly
-          understand exhibition content and buy tickets online.
-        </p>
-        <div class="modal-details-box">
-          <div class="contributions-section">
-            <h4>Key Contributions:</h4>
-            <p>
-              1. Created orderly previews and listings of recent exhibitions to help users quickly view schedules.<br>
-              2. Designed a clear and accessible online ticket checkout integration to encourage conversions.<br>
-              3. Utilized chat-shaped exhibition cards to present collections and works at the top of detail views for
-              clarity.<br>
-              4. Engineered accessibility-focused previews with modern motion interaction designs to enhance engagement.
-            </p>
-          </div>
-          <div class="modal-meta-grid">
-            <div class="meta-col">
-              <h5>Role</h5>
-              <p>UX/UI Designer &amp; Researcher</p>
-            </div>
-            <div class="meta-col">
-              <h5>Timeline</h5>
-              <p>2024</p>
-            </div>
-            <div class="meta-col">
-              <h5>Deliverables</h5>
-              <p>Wireframes, Low/High Fidelity Prototypes, Mockups, Design System</p>
-            </div>
-            <div class="meta-col">
-              <h5>Software</h5>
-              <p>Figma, Illustrator</p>
-            </div>
-          </div>
-        </div>
-        <div class="modal-actions">
-          <a href="https://www.behance.net/gallery/205927941/Gallery-APP" class="btn btn-primary" target="_blank"
-            rel="noopener">View</a>
-          <button class="btn btn-secondary modal-close-btn">Close</button>
-        </div>
-      </div>
-    </div>
-  </div>
-
-  <!-- Li Ho Modal -->
-  <div class="project-modal" id="modal-liho">
-    <div class="modal-content">
-      <button class="modal-close" aria-label="Close Modal">
-        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
-        </svg>
-      </button>
-      <div class="modal-banner">
-        <img src="works/liho.jpg" alt="Li Ho Branding & Packaging">
-      </div>
-      <div class="modal-body">
-        <div class="modal-tags">
-          <span class="tag">#Packaging</span>
-          <span class="tag">#Branding</span>
-          <span class="tag">#GraphicDesign</span>
-          <span class="tag">#Identity</span>
-        </div>
-        <h3 class="modal-title">Li Ho Branding &amp; Packaging</h3>
-        <p class="modal-description">
-          <strong>Project Overview:</strong> Designed the "Li Ho" (Taiwanese friendly greeting meaning "Hello") brand
-          identity and specialty gift box packaging. Developed a cohesive branding system combining traditional elements
-          of Taiwanese culture with modern design typography and packaging structures.
-        </p>
-        <div class="modal-details-box">
-          <div class="contributions-section">
-            <h4>Key Contributions:</h4>
-            <p>
-              1. Created structural box layout templates and visual wrapping labels.<br>
-              2. Developed custom hand-drawn vector assets and patterns representing warmth and hospitality.<br>
-              3. Designed typography systems and promotional materials for local Taiwanese products.
-            </p>
-          </div>
-          <div class="modal-meta-grid">
-            <div class="meta-col">
-              <h5>Role</h5>
-              <p>Branding &amp; Packaging Designer</p>
-            </div>
-            <div class="meta-col">
-              <h5>Timeline</h5>
-              <p>2012-2016</p>
-            </div>
-            <div class="meta-col">
-              <h5>Deliverables</h5>
-              <p>Gift Box Packaging, Visual Identity, Vector Assets</p>
-            </div>
-            <div class="meta-col">
-              <h5>Software</h5>
-              <p>Illustrator, Photoshop, InDesign</p>
-            </div>
-          </div>
-        </div>
-        <div class="modal-actions">
-          <a href="https://www.behance.net/gallery/205141491/Li-Ho" class="btn btn-primary" target="_blank"
-            rel="noopener">View</a>
-          <button class="btn btn-secondary modal-close-btn">Close</button>
-        </div>
-      </div>
-    </div>
-  </div>
-
-  <!-- Drawings Modal -->
-  <div class="project-modal" id="modal-drawings">
-    <div class="modal-content">
-      <button class="modal-close" aria-label="Close Modal">
-        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
-        </svg>
-      </button>
-      <div class="modal-banner">
-        <img src="works/drawings.jpg" alt="Movie Sketches Sketchbook">
-      </div>
-      <div class="modal-body">
-        <div class="modal-tags">
-          <span class="tag">#Drawing</span>
-          <span class="tag">#FineArt</span>
-          <span class="tag">#procreate</span>
-        </div>
-        <h3 class="modal-title">Movie Sketches Sketchbook</h3>
-        <p class="modal-description">
-          <strong>Project Overview:</strong> Traditional hand-painted drawings on 10x10cm cardboards, capturing fleeting
-          visual snapshots and global movie scenes. Blending color palettes and layout composition of classic films into
-          compact, detailed cardboard art.
-        </p>
-        <div class="modal-details-box">
-          <div class="contributions-section">
-            <h4>Key Contributions:</h4>
-            <p>
-              1. Created 10+ physical cardboard paintings depicting classic cinematic frames.<br>
-              2. Explored color lighting and composition styles of world-class directors.<br>
-              3. Digitized and cataloged the collection for portfolio showcases.
-            </p>
-          </div>
-          <div class="modal-meta-grid">
-            <div class="meta-col">
-              <h5>Role</h5>
-              <p>Fine Artist &amp; Illustrator</p>
-            </div>
-            <div class="meta-col">
-              <h5>Timeline</h5>
-              <p>Hobby</p>
-            </div>
-            <div class="meta-col">
-              <h5>Deliverables</h5>
-              <p>Digital Paintings, Hand-painted Cardboards</p>
-            </div>
-            <div class="meta-col">
-              <h5>Medium</h5>
-              <p>Cardboard, iPad, Marker</p>
-            </div>
-          </div>
-        </div>
-        <div class="modal-actions">
-          <a href="https://www.behance.net/gallery/206261361/Drawings" class="btn btn-primary" target="_blank"
-            rel="noopener">View</a>
-          <button class="btn btn-secondary modal-close-btn">Close</button>
-        </div>
-      </div>
-    </div>
-  </div>
 
   <!-- CONTACT SECTION -->
   <section class="contact" id="contact">
