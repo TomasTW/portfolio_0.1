@@ -2107,12 +2107,16 @@ footer {
   box-sizing: border-box;
   background-color: var(--color-bg-surface-primary-default);
   overflow: hidden;
+  opacity: var(--card-opacity, 1);
+  transform: translateY(var(--card-translate-y, 0));
 }
 
 /* Top row: title + hashtags */
 .work-top {
   flex-shrink: 0;
   margin-bottom: 24px;
+  opacity: var(--text-opacity, 1);
+  transform: translateY(var(--text-translate-y, 0));
 }
 
 .work-title {
@@ -2155,6 +2159,8 @@ footer {
   height: 100%;
   object-fit: cover;
   display: block;
+  transform: scale(var(--img-scale, 1)) translateY(var(--img-translate-y, 0));
+  transform-origin: center center;
 }
 
 .work-graphic-wrap {
@@ -2176,6 +2182,8 @@ footer {
 .work-bottom {
   flex-shrink: 0;
   margin-top: 24px;
+  opacity: var(--text-opacity, 1);
+  transform: translateY(var(--text-translate-y, 0));
 }
 
 .work-rule {
