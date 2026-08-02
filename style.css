@@ -681,7 +681,7 @@ section {
   display: flex;
   justify-content: space-between;
   align-items: flex-end;
-  gap: 40px;
+  gap: 32px;
   width: 100%;
 }
 
@@ -2736,7 +2736,8 @@ footer {
     opacity: 0;
     pointer-events: none;
     z-index: 9999;
-    width: calc(100% - 48px); /* responsive width */
+    width: calc(100% - 48px);
+    /* responsive width */
     max-width: 340px;
     transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.4s ease;
   }
@@ -2811,15 +2812,18 @@ footer {
   .mobile-nav-dropdown {
     display: none;
     flex-direction: column;
-    width: 100%; /* match closed bar width */
+    width: 100%;
+    /* match closed bar width */
     min-width: 200px;
     border: 1px solid #FFFFFF;
-    border-bottom: none; /* connects visually to closed bar */
+    border-bottom: none;
+    /* connects visually to closed bar */
     background: #202020;
     z-index: 10000;
     box-sizing: border-box;
     position: absolute;
-    bottom: 100%; /* anchored above the mobile-navbar element */
+    bottom: 100%;
+    /* anchored above the mobile-navbar element */
     left: 0;
     right: 0;
   }
@@ -2839,14 +2843,14 @@ footer {
     text-align: right;
     color: #FFFFFF;
     text-decoration: none;
-    font-family: var(--font-family-body-medium);
-    font-size: var(--font-size-body-medium);
-    font-weight: var(--font-weight-body-medium);
-    line-height: var(--font-line-height-body-medium);
-    border-bottom: 1px solid #FFFFFF;
+    font-family: var(--font-head);
+    font-size: 16px;
+    font-weight: 900;
     letter-spacing: 0.5px;
+    border-bottom: 1px solid #FFFFFF;
     transition: color 0.2s;
     box-sizing: border-box;
+    text-transform: lowercase;
   }
 
   .mobile-dropdown-link:hover,
@@ -2913,7 +2917,8 @@ footer {
    Hidden in Hero section, appears when scrolling into About/Works/Contact
    ========================================================================== */
 .desktop-navbar {
-  display: none; /* hidden on mobile */
+  display: none;
+  /* hidden on mobile */
   position: fixed;
   bottom: 0;
   left: 0;
@@ -2936,15 +2941,16 @@ footer {
   justify-content: space-between;
   align-items: stretch;
   width: 100%;
+  max-width: 100%;
   background: #202020;
-  border-top: 1px solid #FFFFFF;
+  border-top: 1px solid rgba(255, 255, 255, 0.3);
   box-sizing: border-box;
+  padding: 0;
 }
 
 .desktop-nav-link {
   flex: 1;
   padding: 14px 32px;
-  text-align: center;
   color: #FFFFFF;
   text-decoration: none;
   font-family: var(--font-family-body-medium);
@@ -2952,13 +2958,26 @@ footer {
   font-weight: var(--font-weight-body-medium);
   line-height: var(--font-line-height-body-medium);
   letter-spacing: 0.5px;
-  border-right: 1px solid rgba(255, 255, 255, 0.2);
-  transition: color 0.2s, background 0.2s;
+  transition: color 0.2s;
   box-sizing: border-box;
+  display: flex;
+  align-items: center;
 }
 
-.desktop-nav-link:last-child {
-  border-right: none;
+/* About: left, Works: center, Contact: right */
+.desktop-nav-link:nth-child(1) {
+  justify-content: flex-start;
+  text-align: left;
+}
+
+.desktop-nav-link:nth-child(2) {
+  justify-content: center;
+  text-align: center;
+}
+
+.desktop-nav-link:nth-child(3) {
+  justify-content: flex-end;
+  text-align: right;
 }
 
 .desktop-nav-link:hover {

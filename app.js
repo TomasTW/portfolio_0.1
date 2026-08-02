@@ -815,8 +815,8 @@ document.addEventListener('DOMContentLoaded', () => {
       }
     });
 
-    // Bind smooth scrolling for all nav links (mobile dropdown, desktop bar, about card inline)
-    const navLinks = document.querySelectorAll('.about-nav-link, .mobile-dropdown-link, .desktop-nav-link');
+    // Bind smooth scrolling for all nav links (mobile dropdown, desktop bar)
+    const navLinks = document.querySelectorAll('.mobile-dropdown-link, .desktop-nav-link');
     navLinks.forEach(link => {
       link.addEventListener('click', (e) => {
         e.preventDefault();
