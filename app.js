@@ -586,82 +586,6 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   })();
 
-  // --- Works Desktop Scroll-Driven Transitions (Stacked Card Effect) ---
-  (function initWorksScrollTransitions() {
-    const worksSection = document.getElementById('works');
-    const items = document.querySelectorAll('.work-item');
-    if (!worksSection || !items.length) return;
-
-    function handleScroll() {
-      if (window.innerWidth <= 1024) {
-        items.forEach(item => {
-          const card = item.querySelector('.work-card');
-          if (card) {
-            card.style.removeProperty('--card-opacity');
-            card.style.removeProperty('--card-translate-y');
-          }
-          const img = item.querySelector('.work-img');
-          if (img) {
-            img.style.removeProperty('--img-scale');
-            img.style.removeProperty('--img-translate-y');
-          }
-          const top = item.querySelector('.work-top');
-          if (top) {
-            top.style.removeProperty('--text-opacity');
-            top.style.removeProperty('--text-translate-y');
-          }
-          const bottom = item.querySelector('.work-bottom');
-          if (bottom) {
-            bottom.style.removeProperty('--text-opacity');
-            bottom.style.removeProperty('--text-translate-y');
-          }
-        });
-        return;
-      }
-
-      const viewportHeight = window.innerHeight;
-
-      items.forEach(item => {
-        const rect = item.getBoundingClientRect();
-        
-        // Calculate entrance progress from 0 (at bottom) to 1 (stuck at top)
-        const progress = Math.max(0, Math.min(1, 1 - (rect.top / viewportHeight)));
-
-        const card = item.querySelector('.work-card');
-        const img = item.querySelector('.work-img');
-        const top = item.querySelector('.work-top');
-        const bottom = item.querySelector('.work-bottom');
-
-        if (card) {
-          card.style.setProperty('--card-opacity', progress);
-          const cardTranslateY = 50 * (1 - progress);
-          card.style.setProperty('--card-translate-y', `${cardTranslateY}px`);
-        }
-
-        if (img) {
-          const scale = 1.15 - (0.15 * progress);
-          const imgTranslateY = 60 * (1 - progress);
-          img.style.setProperty('--img-scale', scale);
-          img.style.setProperty('--img-translate-y', `${imgTranslateY}px`);
-        }
-
-        if (top) {
-          top.style.setProperty('--text-opacity', progress);
-          top.style.setProperty('--text-translate-y', `${30 * (1 - progress)}px`);
-        }
-
-        if (bottom) {
-          bottom.style.setProperty('--text-opacity', progress);
-          bottom.style.setProperty('--text-translate-y', `${30 * (1 - progress)}px`);
-        }
-      });
-    }
-
-    window.addEventListener('scroll', handleScroll, { passive: true });
-    window.addEventListener('resize', handleScroll);
-    handleScroll();
-  })();
-
   // --- About Section: Reveal Animation (desktop scroll-scrub / mobile fade-up) ---
   (function initAboutScrollReveal() {
     const section = document.getElementById('about');
@@ -848,6 +772,83 @@ document.addEventListener('DOMContentLoaded', () => {
     if (aboutCard) {
       observer.observe(aboutCard);
     }
+  })();
+
+  // --- Mobile Floating Navigation Menu & Global Smooth Scrolling ---
+  (function initGlobalNavigation() {
+    const mobileNavbar = document.querySelector('.mobile-navbar');
+    const toggleBtn = document.querySelector('.mobile-nav-toggle');
+    const closeBtn = document.querySelector('.mobile-dropdown-close');
+
+    if (mobileNavbar && toggleBtn) {
+      toggleBtn.addEventListener('click', () => {
+        mobileNavbar.classList.add('open');
+      });
+    }
+
+    if (mobileNavbar && closeBtn) {
+      closeBtn.addEventListener('click', () => {
+        mobileNavbar.classList.remove('open');
+      });
+    }
+
+    // Close mobile dropdown when clicking the backdrop overlay
+    if (mobileNavbar) {
+      mobileNavbar.addEventListener('click', (e) => {
+        // Tapping the backdrop overlay (clicking mobile-navbar directly) closes the menu
+        if (mobileNavbar.classList.contains('open') && e.target === mobileNavbar) {
+          mobileNavbar.classList.remove('open');
+        }
+      });
+    }
+
+    // Bind smooth scrolling for all nav links
+    const navLinks = document.querySelectorAll('.about-nav-link, .mobile-dropdown-link');
+    navLinks.forEach(link => {
+      link.addEventListener('click', (e) => {
+        e.preventDefault();
+        const targetId = link.getAttribute('href');
+        const targetElement = document.querySelector(targetId);
+        if (targetElement) {
+          targetElement.scrollIntoView({ behavior: 'smooth' });
+        }
+        // If it's a mobile link, close the dropdown menu
+        if (link.classList.contains('mobile-dropdown-link') && mobileNavbar) {
+          mobileNavbar.classList.remove('open');
+        }
+      });
+    });
+
+    // Dynamic active state highlighting on mobile dropdown
+    const mobileLinks = document.querySelectorAll('.mobile-dropdown-link');
+    const sections = document.querySelectorAll('section[id]');
+
+    function highlightActiveSection() {
+      if (!mobileNavbar || window.getComputedStyle(mobileNavbar).display === 'none') return;
+      
+      let currentSectionId = '';
+      const scrollPosition = window.scrollY + window.innerHeight / 3;
+
+      sections.forEach(section => {
+        const sectionTop = section.offsetTop;
+        const sectionHeight = section.offsetHeight;
+        if (scrollPosition >= sectionTop && scrollPosition < sectionTop + sectionHeight) {
+          currentSectionId = section.getAttribute('id');
+        }
+      });
+
+      mobileLinks.forEach(link => {
+        const href = link.getAttribute('href');
+        if (href === `#${currentSectionId}`) {
+          link.classList.add('active');
+        } else {
+          link.classList.remove('active');
+        }
+      });
+    }
+
+    window.addEventListener('scroll', highlightActiveSection, { passive: true });
+    highlightActiveSection();
   })();
 
 });
