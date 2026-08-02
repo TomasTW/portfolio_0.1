@@ -779,6 +779,8 @@ document.addEventListener('DOMContentLoaded', () => {
     const mobileNavbar = document.querySelector('.mobile-navbar');
     const toggleBtn = document.querySelector('.mobile-nav-toggle');
     const closeBtn = document.querySelector('.mobile-dropdown-close');
+    const logoBtn = document.querySelector('.mobile-nav-logo');
+    const aboutSection = document.getElementById('about');
 
     if (mobileNavbar && toggleBtn) {
       toggleBtn.addEventListener('click', () => {
@@ -789,6 +791,14 @@ document.addEventListener('DOMContentLoaded', () => {
     if (mobileNavbar && closeBtn) {
       closeBtn.addEventListener('click', () => {
         mobileNavbar.classList.remove('open');
+      });
+    }
+
+    // Logo click smooth scrolls to top of page
+    if (logoBtn) {
+      logoBtn.addEventListener('click', (e) => {
+        e.preventDefault();
+        window.scrollTo({ top: 0, behavior: 'smooth' });
       });
     }
 
@@ -819,12 +829,22 @@ document.addEventListener('DOMContentLoaded', () => {
       });
     });
 
-    // Dynamic active state highlighting on mobile dropdown
+    // Dynamic active state highlighting and visibility trigger
     const mobileLinks = document.querySelectorAll('.mobile-dropdown-link');
     const sections = document.querySelectorAll('section[id]');
 
-    function highlightActiveSection() {
-      if (!mobileNavbar || window.getComputedStyle(mobileNavbar).display === 'none') return;
+    function handleScrollUpdates() {
+      if (!mobileNavbar || !aboutSection) return;
+
+      // Show/hide navbar depending on whether we scrolled past Hero section
+      if (window.scrollY >= aboutSection.offsetTop - 100) {
+        mobileNavbar.classList.add('visible');
+      } else {
+        mobileNavbar.classList.remove('visible');
+        mobileNavbar.classList.remove('open');
+      }
+
+      if (window.getComputedStyle(mobileNavbar).display === 'none') return;
       
       let currentSectionId = '';
       const scrollPosition = window.scrollY + window.innerHeight / 3;
@@ -847,8 +867,8 @@ document.addEventListener('DOMContentLoaded', () => {
       });
     }
 
-    window.addEventListener('scroll', highlightActiveSection, { passive: true });
-    highlightActiveSection();
+    window.addEventListener('scroll', handleScrollUpdates, { passive: true });
+    handleScrollUpdates();
   })();
 
 });

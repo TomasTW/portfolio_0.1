@@ -611,8 +611,8 @@ section {
   position: absolute;
   right: 40px;
   left: auto;
-  top: 50%;
-  transform: translateY(-50%);
+  top: 64px; /* Align with top padding of card */
+  transform: none;
   display: flex;
   flex-direction: column;
   gap: 20px;
@@ -722,7 +722,7 @@ section {
 
 .about-bottom-divider {
   border: none;
-  border-top: 2px solid var(--color-bg-surface-secondary-default);
+  border-top: 1px solid var(--color-bg-surface-secondary-default);
   width: 100%;
   margin: 20px 0;
 }
@@ -736,14 +736,15 @@ section {
 }
 
 .about-nav-link {
-  font-family: var(--font-head);
-  font-size: clamp(24px, 3.5vw, 40px);
-  font-weight: 900;
+  font-family: var(--font-body);
+  font-size: var(--typography-body-md-size);
+  font-weight: var(--typography-body-md-weight);
+  line-height: var(--typography-body-md-line-height);
   text-transform: capitalize;
   text-decoration: none;
   color: var(--color-text-primary-default);
   transition: color 0.2s;
-  letter-spacing: -1.5px;
+  letter-spacing: 0.5px;
 }
 
 .about-nav-link:hover {
@@ -822,8 +823,8 @@ section {
     position: absolute;
     right: 32px;
     left: auto;
-    top: 50%;
-    transform: translateY(-50%);
+    top: 40px; /* Align near top of tablet card */
+    transform: none;
     display: flex;
     flex-direction: column;
     gap: 16px;
@@ -2734,9 +2735,18 @@ footer {
     position: fixed;
     bottom: 30px;
     left: 50%;
-    transform: translateX(-50%);
+    transform: translate(-50%, 50px);
+    opacity: 0;
+    pointer-events: none;
     z-index: 9999;
     width: fit-content;
+    transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.4s ease;
+  }
+
+  .mobile-navbar.visible {
+    transform: translate(-50%, 0);
+    opacity: 1;
+    pointer-events: all;
   }
 
   /* Backdrop overlay when open */
@@ -2760,7 +2770,7 @@ footer {
   .mobile-nav-bar {
     display: flex;
     align-items: center;
-    border: 2px solid #FFFFFF;
+    border: 1px solid #FFFFFF;
     background: #202020;
     height: 48px;
     width: auto;
@@ -2781,10 +2791,11 @@ footer {
     display: flex;
     align-items: center;
     justify-content: center;
-    border-right: 2px solid #FFFFFF;
+    border-right: 1px solid #FFFFFF;
     flex-shrink: 0;
     box-sizing: border-box;
     padding: 10px;
+    cursor: pointer;
   }
 
   .mobile-nav-logo svg {
@@ -2812,12 +2823,12 @@ footer {
     justify-content: flex-end;
   }
 
-  /* Open Dropdown */
+  /* Open Dropdown Overlay matching Image 4 (no header) */
   .mobile-nav-dropdown {
     display: none; /* shown via active state */
     flex-direction: column;
     width: 280px;
-    border: 2px solid #FFFFFF;
+    border: 1px solid #FFFFFF;
     background: #202020;
     z-index: 10000;
     box-sizing: border-box;
@@ -2827,49 +2838,6 @@ footer {
   .mobile-navbar.open .mobile-nav-dropdown {
     display: flex;
     animation: mobileNavDropdownUp 0.3s cubic-bezier(0.16, 1, 0.3, 1) forwards;
-  }
-
-  .mobile-dropdown-header {
-    display: flex;
-    align-items: center;
-    border-bottom: 2px solid #FFFFFF;
-    height: 48px;
-    box-sizing: border-box;
-  }
-
-  .mobile-dropdown-logo {
-    width: 48px;
-    height: 48px;
-    background: #FFFFFF;
-    color: #202020;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    border-right: 2px solid #FFFFFF;
-    flex-shrink: 0;
-    box-sizing: border-box;
-    padding: 10px;
-  }
-
-  .mobile-dropdown-logo svg {
-    width: 100%;
-    height: 100%;
-    display: block;
-  }
-
-  .mobile-dropdown-title {
-    flex-grow: 1;
-    padding: 0 24px;
-    background: #202020;
-    color: #FFFFFF;
-    font-family: var(--font-head);
-    font-size: 16px;
-    font-weight: 900;
-    text-transform: lowercase;
-    letter-spacing: 0.5px;
-    text-align: right;
-    line-height: 44px;
-    box-sizing: border-box;
   }
 
   .mobile-dropdown-links {
@@ -2882,11 +2850,12 @@ footer {
     text-align: right;
     color: #FFFFFF;
     text-decoration: none;
-    font-family: var(--font-head);
-    font-size: 24px;
-    font-weight: 900;
-    border-bottom: 2px solid #FFFFFF;
-    letter-spacing: -0.5px;
+    font-family: var(--font-body);
+    font-size: var(--typography-body-md-size);
+    font-weight: var(--typography-body-md-weight);
+    line-height: var(--typography-body-md-line-height);
+    border-bottom: 1px solid #FFFFFF;
+    letter-spacing: 0.5px;
     transition: color 0.2s;
     box-sizing: border-box;
   }
@@ -2911,7 +2880,7 @@ footer {
     background: #FFFFFF;
     color: #202020;
     border: none;
-    border-right: 2px solid #FFFFFF;
+    border-right: 1px solid #FFFFFF;
     display: flex;
     align-items: center;
     justify-content: center;
