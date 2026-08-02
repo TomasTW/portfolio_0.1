@@ -2584,7 +2584,8 @@
 
   <!-- MOBILE FLOATING NAVIGATION MENU -->
   <nav class="mobile-navbar">
-    <!-- Toggle Bar (floating at bottom when closed) -->
+
+    <!-- CLOSED STATE: Logo square + "menu" text -->
     <div class="mobile-nav-bar">
       <div class="mobile-nav-logo">
         <svg viewBox="0 0 72 82" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
@@ -2593,23 +2594,27 @@
       </div>
       <button class="mobile-nav-toggle">menu</button>
     </div>
-    
-    <!-- Open Dropdown Overlay -->
-    <div class="mobile-nav-dropdown">
-      <div class="mobile-dropdown-links">
+
+    <!-- OPEN STATE: links panel above + X-bar below (hidden until .open) -->
+    <div class="mobile-open-state">
+      <!-- Links float above the bottom X-bar, right-aligned -->
+      <div class="mobile-nav-dropdown">
         <a href="#about" class="mobile-dropdown-link">About</a>
         <a href="#works" class="mobile-dropdown-link">works</a>
         <a href="#contact" class="mobile-dropdown-link">contact</a>
       </div>
-      <div class="mobile-dropdown-footer">
+      <!-- Bottom bar: X on left, dark fill on right (mirrors closed bar width) -->
+      <div class="mobile-open-bar">
         <button class="mobile-dropdown-close" aria-label="Close menu">
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
             <line x1="18" y1="6" x2="6" y2="18"></line>
             <line x1="6" y1="6" x2="18" y2="18"></line>
           </svg>
         </button>
+        <div class="mobile-open-bar-fill"></div>
       </div>
     </div>
+
   </nav>
 
   <!-- DESKTOP FIXED BOTTOM NAVIGATION BAR -->
