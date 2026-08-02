@@ -774,17 +774,20 @@ document.addEventListener('DOMContentLoaded', () => {
     }
   })();
 
-  // --- Mobile Floating Navigation Menu & Global Smooth Scrolling ---
+  // --- Mobile Floating Navigation Menu & Desktop Fixed Navbar ---
   (function initGlobalNavigation() {
     const mobileNavbar = document.querySelector('.mobile-navbar');
+    const desktopNavbar = document.querySelector('.desktop-navbar');
     const toggleBtn = document.querySelector('.mobile-nav-toggle');
     const closeBtn = document.querySelector('.mobile-dropdown-close');
     const logoBtn = document.querySelector('.mobile-nav-logo');
     const aboutSection = document.getElementById('about');
+    const contactSection = document.getElementById('contact');
 
     if (mobileNavbar && toggleBtn) {
-      toggleBtn.addEventListener('click', () => {
-        mobileNavbar.classList.add('open');
+      toggleBtn.addEventListener('click', (e) => {
+        e.stopPropagation();
+        mobileNavbar.classList.toggle('open');
       });
     }
 
@@ -799,21 +802,21 @@ document.addEventListener('DOMContentLoaded', () => {
       logoBtn.addEventListener('click', (e) => {
         e.preventDefault();
         window.scrollTo({ top: 0, behavior: 'smooth' });
+        if (mobileNavbar) mobileNavbar.classList.remove('open');
       });
     }
 
-    // Close mobile dropdown when clicking the backdrop overlay
-    if (mobileNavbar) {
-      mobileNavbar.addEventListener('click', (e) => {
-        // Tapping the backdrop overlay (clicking mobile-navbar directly) closes the menu
-        if (mobileNavbar.classList.contains('open') && e.target === mobileNavbar) {
+    // Close mobile dropdown when clicking outside it
+    document.addEventListener('click', (e) => {
+      if (mobileNavbar && mobileNavbar.classList.contains('open')) {
+        if (!mobileNavbar.contains(e.target)) {
           mobileNavbar.classList.remove('open');
         }
-      });
-    }
+      }
+    });
 
-    // Bind smooth scrolling for all nav links
-    const navLinks = document.querySelectorAll('.about-nav-link, .mobile-dropdown-link');
+    // Bind smooth scrolling for all nav links (mobile dropdown, desktop bar, about card inline)
+    const navLinks = document.querySelectorAll('.about-nav-link, .mobile-dropdown-link, .desktop-nav-link');
     navLinks.forEach(link => {
       link.addEventListener('click', (e) => {
         e.preventDefault();
@@ -822,32 +825,49 @@ document.addEventListener('DOMContentLoaded', () => {
         if (targetElement) {
           targetElement.scrollIntoView({ behavior: 'smooth' });
         }
-        // If it's a mobile link, close the dropdown menu
+        // Close mobile menu if it's a mobile link
         if (link.classList.contains('mobile-dropdown-link') && mobileNavbar) {
           mobileNavbar.classList.remove('open');
         }
       });
     });
 
-    // Dynamic active state highlighting and visibility trigger
+    // Dynamic active state highlighting and navbar visibility trigger
     const mobileLinks = document.querySelectorAll('.mobile-dropdown-link');
+    const desktopLinks = document.querySelectorAll('.desktop-nav-link');
     const sections = document.querySelectorAll('section[id]');
 
     function handleScrollUpdates() {
-      if (!mobileNavbar || !aboutSection) return;
+      const scrollY = window.scrollY;
+      const threshold = aboutSection ? aboutSection.offsetTop - 100 : 0;
+      const pastHero = scrollY >= threshold;
 
-      // Show/hide navbar depending on whether we scrolled past Hero section
-      if (window.scrollY >= aboutSection.offsetTop - 100) {
-        mobileNavbar.classList.add('visible');
-      } else {
-        mobileNavbar.classList.remove('visible');
-        mobileNavbar.classList.remove('open');
+      // --- Mobile navbar visibility ---
+      if (mobileNavbar) {
+        if (pastHero) {
+          mobileNavbar.classList.add('visible');
+        } else {
+          mobileNavbar.classList.remove('visible');
+          mobileNavbar.classList.remove('open');
+        }
       }
 
-      if (window.getComputedStyle(mobileNavbar).display === 'none') return;
-      
+      // --- Desktop navbar visibility ---
+      // Only show when in About, Works, or Contact sections (past hero, before end of contact)
+      if (desktopNavbar) {
+        const endY = contactSection 
+          ? contactSection.offsetTop + contactSection.offsetHeight 
+          : document.body.scrollHeight;
+        if (pastHero && scrollY < endY) {
+          desktopNavbar.classList.add('visible');
+        } else {
+          desktopNavbar.classList.remove('visible');
+        }
+      }
+
+      // --- Active section highlighting ---
       let currentSectionId = '';
-      const scrollPosition = window.scrollY + window.innerHeight / 3;
+      const scrollPosition = scrollY + window.innerHeight / 2;
 
       sections.forEach(section => {
         const sectionTop = section.offsetTop;
@@ -857,13 +877,14 @@ document.addEventListener('DOMContentLoaded', () => {
         }
       });
 
+      // Update mobile links active class
       mobileLinks.forEach(link => {
-        const href = link.getAttribute('href');
-        if (href === `#${currentSectionId}`) {
-          link.classList.add('active');
-        } else {
-          link.classList.remove('active');
-        }
+        link.classList.toggle('active', link.getAttribute('href') === `#${currentSectionId}`);
+      });
+
+      // Update desktop links active class
+      desktopLinks.forEach(link => {
+        link.classList.toggle('active', link.getAttribute('href') === `#${currentSectionId}`);
       });
     }
 
@@ -872,5 +893,6 @@ document.addEventListener('DOMContentLoaded', () => {
   })();
 
 });
+
 
 

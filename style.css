@@ -74,50 +74,22 @@
 
   /* body-md (body3 / button: 14px / 1.000rem) */
   --typography-body-md-family: "DM Sans", sans-serif;
-  --typography-body-md-size: 14px;
+  --typography-body-md-size: clamp(9px, 1vw, 14px);
   --typography-body-md-weight: 700;
   --typography-body-md-line-height: 1.25;
 
   /* body-sm (P: 9px / 0.643rem) */
   --typography-body-sm-family: "DM Sans", sans-serif;
-  --typography-body-sm-size: 9px;
+  --typography-body-sm-size: clamp(5px, 1vw, 9px);
   --typography-body-sm-weight: 500;
   --typography-body-sm-line-height: 1.3;
 
   /* caption: 5px / 0.357rem */
   --typography-caption-family: "DM Sans", sans-serif;
-  --typography-caption-size: 5px;
+  --typography-caption-size: clamp(3px, 1vw, 5px);
   --typography-caption-weight: 500;
   --typography-caption-line-height: 1.3;
 
-  /* Legacy design variables mappings for stylesheet compatibility */
-  --font-family-title-head1: var(--typography-title-3xl-family);
-  --font-size-title-head1: var(--typography-title-3xl-size);
-  --font-weight-title-head1: var(--typography-title-3xl-weight);
-  --font-line-height-title-head1: var(--typography-title-3xl-line-height);
-
-  --font-family-title-3xlarge: var(--typography-title-2xl-family);
-  --font-size-title-3xlarge: var(--typography-title-2xl-size);
-  --font-weight-title-3xlarge: var(--typography-title-2xl-weight);
-  --font-line-height-title-3xlarge: var(--typography-title-2xl-line-height);
-
-  --font-family-title-2xlargle: var(--typography-title-xl-family);
-  --font-size-title-2xlargle: var(--typography-title-xl-size);
-  --font-weight-title-2xlargle: var(--typography-title-xl-weight);
-  --font-line-height-title-2xlargle: var(--typography-title-xl-line-height);
-
-  --font-family-title-medium: var(--typography-title-lg-family);
-  --font-size-title-medium: var(--typography-title-lg-size);
-  --font-weight-title-medium: var(--typography-title-lg-weight);
-  --font-line-height-title-medium: var(--typography-title-lg-line-height);
-
-  --font-family-body-large: var(--typography-body-md-family);
-  --font-size-body-large: var(--typography-body-md-size);
-  --font-weight-body-large: var(--typography-body-md-weight);
-  --font-line-height-body-large: var(--typography-body-md-line-height);
-
-  --font-size-body-small: var(--typography-body-sm-size);
-  --font-size-caption: var(--typography-caption-size);
 
 }
 
@@ -185,20 +157,33 @@ h4 {
   font-weight: var(--font-weight-title-medium);
 }
 
-p {
+p.body-large {
   font-family: var(--font-family-body-large), sans-serif;
   font-size: var(--font-size-body-large);
   line-height: var(--font-line-height-body-large);
   font-weight: var(--font-weight-body-large);
 }
 
-p {
-  font-family: var(--font-family-body-), sans-serif;
-  font-size: var(--font-size-body-large);
-  line-height: var(--font-line-height-body-large);
-  font-weight: var(--font-weight-body-large);
+p.body-medium {
+  font-family: var(--font-family-body-medium), sans-serif;
+  font-size: var(--font-size-body-medium);
+  line-height: var(--font-line-height-body-medium);
+  font-weight: var(--font-weight-body-medium);
 }
 
+p.body-small {
+  font-family: var(--font-family-body-small), sans-serif;
+  font-size: var(--font-size-body-small);
+  line-height: var(--font-line-height-body-small);
+  font-weight: var(--font-weight-body-small);
+}
+
+.caption {
+  font-family: var(--font-family-caption), sans-serif;
+  font-size: var(--font-size-caption);
+  line-height: var(--font-line-height-caption);
+  font-weight: var(--font-weight-caption);
+}
 
 
 /* ==========================================================================
@@ -611,7 +596,8 @@ section {
   position: absolute;
   right: 40px;
   left: auto;
-  top: 64px; /* Align with top padding of card */
+  top: 64px;
+  /* Align with top padding of card */
   transform: none;
   display: flex;
   flex-direction: column;
@@ -823,7 +809,8 @@ section {
     position: absolute;
     right: 32px;
     left: auto;
-    top: 40px; /* Align near top of tablet card */
+    top: 40px;
+    /* Align near top of tablet card */
     transform: none;
     display: flex;
     flex-direction: column;
@@ -940,7 +927,8 @@ section {
     gap: 16px;
     margin: 0;
     padding: 0 20px 8px 20px;
-    justify-content: center; /* centered on phone */
+    justify-content: center;
+    /* centered on phone */
     width: 100%;
     box-sizing: border-box;
   }
@@ -959,7 +947,8 @@ section {
   }
 
   .about-card-bottom-info {
-    flex-direction: column-reverse; /* skills on top, bio text below */
+    flex-direction: column-reverse;
+    /* skills on top, bio text below */
     align-items: center;
     text-align: center;
     gap: 16px;
@@ -2215,7 +2204,8 @@ footer {
 /* ── Desktop stack ────────────────────────────────────────────────── */
 
 .works-desktop-stack {
-  display: block; /* visible only on desktop (hidden via media query below) */
+  display: block;
+  /* visible only on desktop (hidden via media query below) */
 }
 
 /* Each work-item provides 100vh of scrollable distance */
@@ -2223,7 +2213,8 @@ footer {
   position: sticky;
   top: 0;
   height: 100vh;
-  z-index: var(--item-z, 1);      /* CSS custom prop set inline on each item */
+  z-index: var(--item-z, 1);
+  /* CSS custom prop set inline on each item */
   overflow: hidden;
 }
 
@@ -2333,7 +2324,8 @@ footer {
 /* ── Mobile / tablet list ─────────────────────────────────────────── */
 
 .works-mobile-list {
-  display: none;  /* shown only on ≤1024px via media query */
+  display: none;
+  /* shown only on ≤1024px via media query */
   flex-direction: column;
   padding: 0 32px;
   box-sizing: border-box;
@@ -2385,14 +2377,17 @@ footer {
 /* ── Responsive: show list, hide stack ───────────────────────────── */
 
 @media (max-width: 1024px) {
+
   /* Show the mobile list */
   .works-mobile-list {
     display: flex;
   }
+
   /* Hide the desktop stack */
   .works-desktop-stack {
     display: none;
   }
+
   /* Works section no longer needs sticky-stack height */
   .works {
     height: auto !important;
@@ -2404,6 +2399,7 @@ footer {
   .works-mobile-list {
     padding: 0 20px;
   }
+
   .works-list-title {
     font-size: clamp(20px, 6vw, 28px);
   }
@@ -2726,7 +2722,8 @@ footer {
    MOBILE FLOATING NAVIGATION MENU
    ========================================================================== */
 .mobile-navbar {
-  display: none; /* hidden on desktop/tablet */
+  display: none;
+  /* hidden on desktop/tablet */
 }
 
 @media (max-width: 768px) {
@@ -2739,7 +2736,8 @@ footer {
     opacity: 0;
     pointer-events: none;
     z-index: 9999;
-    width: fit-content;
+    width: calc(100% - 48px); /* responsive width */
+    max-width: 340px;
     transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.4s ease;
   }
 
@@ -2749,22 +2747,7 @@ footer {
     pointer-events: all;
   }
 
-  /* Backdrop overlay when open */
-  .mobile-navbar.open::before {
-    content: "";
-    position: fixed;
-    inset: 0;
-    width: 100vw;
-    height: 100vh;
-    background: rgba(0, 0, 0, 0.75);
-    backdrop-filter: blur(4px);
-    z-index: 9998;
-    left: 50%;
-    top: 50%;
-    transform: translate(-50%, -50%);
-    animation: mobileNavBackdropFade 0.25s ease forwards;
-    pointer-events: auto;
-  }
+  /* No backdrop overlay — dropdown floats directly over page content */
 
   /* Closed Toggle Bar */
   .mobile-nav-bar {
@@ -2780,7 +2763,8 @@ footer {
   }
 
   .mobile-navbar.open .mobile-nav-bar {
-    display: none; /* hide closed bar when open */
+    display: none;
+    /* hide closed bar when open */
   }
 
   .mobile-nav-logo {
@@ -2823,21 +2807,26 @@ footer {
     justify-content: flex-end;
   }
 
-  /* Open Dropdown Overlay matching Image 4 (no header) */
+  /* Open Dropdown — anchored directly above the closed bar, no overlay */
   .mobile-nav-dropdown {
-    display: none; /* shown via active state */
+    display: none;
     flex-direction: column;
-    width: 280px;
+    width: 100%; /* match closed bar width */
+    min-width: 200px;
     border: 1px solid #FFFFFF;
+    border-bottom: none; /* connects visually to closed bar */
     background: #202020;
     z-index: 10000;
     box-sizing: border-box;
-    position: relative;
+    position: absolute;
+    bottom: 100%; /* anchored above the mobile-navbar element */
+    left: 0;
+    right: 0;
   }
 
   .mobile-navbar.open .mobile-nav-dropdown {
     display: flex;
-    animation: mobileNavDropdownUp 0.3s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+    animation: mobileNavDropdownUp 0.25s cubic-bezier(0.16, 1, 0.3, 1) forwards;
   }
 
   .mobile-dropdown-links {
@@ -2850,10 +2839,10 @@ footer {
     text-align: right;
     color: #FFFFFF;
     text-decoration: none;
-    font-family: var(--font-body);
-    font-size: var(--typography-body-md-size);
-    font-weight: var(--typography-body-md-weight);
-    line-height: var(--typography-body-md-line-height);
+    font-family: var(--font-family-body-medium);
+    font-size: var(--font-size-body-medium);
+    font-weight: var(--font-weight-body-medium);
+    line-height: var(--font-line-height-body-medium);
     border-bottom: 1px solid #FFFFFF;
     letter-spacing: 0.5px;
     transition: color 0.2s;
@@ -2898,17 +2887,90 @@ footer {
 }
 
 @keyframes mobileNavBackdropFade {
-  from { opacity: 0; }
-  to { opacity: 1; }
+  from {
+    opacity: 0;
+  }
+
+  to {
+    opacity: 1;
+  }
 }
 
 @keyframes mobileNavDropdownUp {
   from {
     opacity: 0;
-    transform: translateY(20px);
+    transform: translateY(10px);
   }
+
   to {
     opacity: 1;
     transform: translateY(0);
+  }
+}
+
+/* ==========================================================================
+   DESKTOP FIXED BOTTOM NAVIGATION BAR
+   Hidden in Hero section, appears when scrolling into About/Works/Contact
+   ========================================================================== */
+.desktop-navbar {
+  display: none; /* hidden on mobile */
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  z-index: 9000;
+  pointer-events: none;
+  opacity: 0;
+  transform: translateY(100%);
+  transition: opacity 0.4s ease, transform 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.desktop-navbar.visible {
+  opacity: 1;
+  transform: translateY(0);
+  pointer-events: all;
+}
+
+.desktop-nav-inner {
+  display: flex;
+  justify-content: space-between;
+  align-items: stretch;
+  width: 100%;
+  background: #202020;
+  border-top: 1px solid #FFFFFF;
+  box-sizing: border-box;
+}
+
+.desktop-nav-link {
+  flex: 1;
+  padding: 14px 32px;
+  text-align: center;
+  color: #FFFFFF;
+  text-decoration: none;
+  font-family: var(--font-family-body-medium);
+  font-size: var(--font-size-body-medium);
+  font-weight: var(--font-weight-body-medium);
+  line-height: var(--font-line-height-body-medium);
+  letter-spacing: 0.5px;
+  border-right: 1px solid rgba(255, 255, 255, 0.2);
+  transition: color 0.2s, background 0.2s;
+  box-sizing: border-box;
+}
+
+.desktop-nav-link:last-child {
+  border-right: none;
+}
+
+.desktop-nav-link:hover {
+  color: var(--color-text-primary-active);
+}
+
+.desktop-nav-link.active {
+  color: var(--color-text-primary-active);
+}
+
+@media (min-width: 769px) {
+  .desktop-navbar {
+    display: block;
   }
 }
