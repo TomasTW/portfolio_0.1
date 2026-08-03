@@ -510,7 +510,6 @@ section {
   display: flex;
   flex-direction: column;
   justify-content: space-between;
-  gap: 32px;
   align-items: stretch;
   margin: 0;
   opacity: 1;
@@ -2751,7 +2750,7 @@ footer {
 
   /* No backdrop overlay — dropdown floats directly over page content */
 
-  /* ── CLOSED STATE: full bar ── */
+  /* ── CLOSED STATE: Logo square + menu button ── */
   .mobile-nav-bar {
     display: flex;
     align-items: center;
@@ -2763,9 +2762,9 @@ footer {
     overflow: hidden;
   }
 
-  /* Hide closed bar when open */
+  /* Hide closed bar completely when menu is open */
   .mobile-navbar.open .mobile-nav-bar {
-    display: none;
+    display: none !important;
   }
 
   .mobile-nav-logo {
@@ -2808,7 +2807,7 @@ footer {
     justify-content: flex-end;
   }
 
-  /* ── OPEN STATE wrapper ── */
+  /* ── OPEN STATE: Hidden by default, shown when .mobile-navbar.open ── */
   .mobile-open-state {
     display: none;
     flex-direction: column;
@@ -2816,16 +2815,16 @@ footer {
   }
 
   .mobile-navbar.open .mobile-open-state {
-    display: flex;
+    display: flex !important;
     animation: mobileNavDropdownUp 0.25s cubic-bezier(0.16, 1, 0.3, 1) forwards;
   }
 
-  /* ── Links panel: right-aligned (matches toggle text area width) ── */
+  /* Dropdown links panel (right-aligned, width = width minus logo 48px) */
   .mobile-nav-dropdown {
     display: flex;
     flex-direction: column;
-    width: calc(100% - 48px); /* exclude the logo/X column width */
-    margin-left: auto;         /* push to the right */
+    width: calc(100% - 48px);
+    margin-left: auto;
     border: 1px solid #FFFFFF;
     border-bottom: none;
     background: #202020;
@@ -2857,7 +2856,7 @@ footer {
     color: var(--color-text-primary-active);
   }
 
-  /* ── Bottom bar of open state: X left + dark fill right ── */
+  /* Bottom row of open state: X button on left (48px), dark fill on right */
   .mobile-open-bar {
     display: flex;
     align-items: stretch;
@@ -2890,7 +2889,6 @@ footer {
     display: block;
   }
 
-  /* Dark fill area to the right of the X button */
   .mobile-open-bar-fill {
     flex: 1;
     background: #202020;
