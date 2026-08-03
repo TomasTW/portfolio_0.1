@@ -2807,20 +2807,30 @@ footer {
     justify-content: flex-end;
   }
 
-  /* ── OPEN STATE: Single dark box matching Image 2 ── */
+  /* ── OPEN STATE: Stepped L-shape panel matching Image 1 & Image 2 ── */
   .mobile-open-state {
     display: none;
     flex-direction: column;
     width: 100%;
-    border: 1px solid #FFFFFF;
-    background: #202020;
     box-sizing: border-box;
-    overflow: hidden;
+    background: transparent;
   }
 
   .mobile-navbar.open .mobile-open-state {
     display: flex !important;
     animation: mobileNavDropdownUp 0.25s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+  }
+
+  /* Upper panel (About & works): right-aligned, width = calc(100% - 48px) */
+  .mobile-open-top-panel {
+    display: flex;
+    flex-direction: column;
+    width: calc(100% - 48px);
+    margin-left: auto;
+    background: #202020;
+    border: 1px solid #FFFFFF;
+    border-bottom: none;
+    box-sizing: border-box;
   }
 
   .mobile-dropdown-link {
@@ -2854,7 +2864,7 @@ footer {
   /* Bottom row: X button on left (48px), contact link on right */
   .mobile-open-bottom-row {
     display: flex;
-    align-items: center;
+    align-items: stretch;
     height: 48px;
     width: 100%;
     box-sizing: border-box;
@@ -2866,7 +2876,7 @@ footer {
     flex-shrink: 0;
     background: #FFFFFF;
     color: #202020;
-    border: none;
+    border: 1px solid #FFFFFF;
     border-right: 1px solid #FFFFFF;
     display: flex;
     align-items: center;
@@ -2885,11 +2895,15 @@ footer {
 
   .mobile-dropdown-link-bottom {
     flex-grow: 1;
-    padding: 0 24px;
+    background: #202020;
     height: 48px;
+    padding: 0 24px;
     display: flex;
     align-items: center;
     justify-content: flex-end;
+    border: 1px solid #FFFFFF;
+    border-left: none;
+    box-sizing: border-box;
   }
 }
 

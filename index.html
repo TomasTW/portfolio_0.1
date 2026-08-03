@@ -2595,12 +2595,16 @@
       <button class="mobile-nav-toggle">menu</button>
     </div>
 
-    <!-- OPEN STATE: Unified dark panel matching Image 2 -->
+    <!-- OPEN STATE: Stepped panel layout matching Image 1 & Image 2 -->
     <div class="mobile-open-state">
-      <a href="#about" class="mobile-dropdown-link">About</a>
-      <div class="mobile-dropdown-divider"></div>
-      <a href="#works" class="mobile-dropdown-link">works</a>
-      <div class="mobile-dropdown-divider"></div>
+      <!-- Upper right panel: About & works -->
+      <div class="mobile-open-top-panel">
+        <a href="#about" class="mobile-dropdown-link">About</a>
+        <div class="mobile-dropdown-divider"></div>
+        <a href="#works" class="mobile-dropdown-link">works</a>
+        <div class="mobile-dropdown-divider"></div>
+      </div>
+      <!-- Bottom row: X button on left (48px) + contact link on right -->
       <div class="mobile-open-bottom-row">
         <button class="mobile-dropdown-close" aria-label="Close menu">
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
