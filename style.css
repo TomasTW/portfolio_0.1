@@ -80,9 +80,9 @@
 
   /* body-sm (P: 9px / 0.643rem) */
   --typography-body-sm-family: "DM Sans", sans-serif;
-  --typography-body-sm-size: clamp(9px, 0.8vw, 11px);
+  --typography-body-sm-size: clamp(5px, 1vw, 9px);
   --typography-body-sm-weight: 500;
-  --typography-body-sm-line-height: 1.4;
+  --typography-body-sm-line-height: 1.3;
 
   /* caption: 5px / 0.357rem */
   --typography-caption-family: "DM Sans", sans-serif;
@@ -650,11 +650,10 @@ section {
   flex-direction: row;
   justify-content: flex-end;
   align-items: center;
-  gap: 12px;
+  gap: 16px;
   box-sizing: border-box;
-  width: auto;
-  flex-wrap: nowrap;
-  white-space: nowrap;
+  width: 100%;
+  flex-wrap: wrap;
 }
 
 .category-item {
@@ -692,8 +691,8 @@ section {
 }
 
 .about-bio-col {
-  flex: 0 1 auto;
-  max-width: 440px;
+  flex: 0 0 50%;
+  max-width: 540px;
 }
 
 .about-bio-text {
@@ -707,10 +706,9 @@ section {
 }
 
 .about-skills-col {
-  flex: 1 0 auto;
+  flex: 0 0 50%;
   display: flex;
   justify-content: flex-end;
-  min-width: 0;
 }
 
 .about-bottom-divider {
