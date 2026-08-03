@@ -671,7 +671,7 @@ section {
   width: 100%;
   margin-top: auto;
   box-sizing: border-box;
-  padding: 16px 32px 32px 32px;
+  padding: 16px 32px 64px 32px;
   transform: translateX(var(--about-footer-x, 110vw));
   opacity: var(--about-footer-opacity, 0);
   will-change: transform, opacity;
@@ -2939,7 +2939,7 @@ footer {
   display: none;
   /* hidden on mobile */
   position: fixed;
-  bottom: 0;
+  bottom: 64px; /* align with the bottom margin of the about card */
   left: 0;
   right: 0;
   z-index: 9000;
@@ -2959,17 +2959,17 @@ footer {
   display: flex;
   justify-content: space-between;
   align-items: stretch;
-  width: 100%;
-  max-width: 100%;
-  background: #202020;
+  width: calc(100% - 128px); /* match about-card width */
+  margin: 0 auto;
+  background: transparent;
   border-top: 1px solid rgba(255, 255, 255, 0.3);
   box-sizing: border-box;
-  padding: 0;
+  padding: 0 40px; /* match about-card inner horizontal padding */
 }
 
 .desktop-nav-link {
   flex: 1;
-  padding: 14px 32px;
+  padding: 14px 0;
   color: #FFFFFF;
   text-decoration: none;
   font-family: var(--font-family-body-medium);
@@ -2983,7 +2983,7 @@ footer {
   align-items: center;
 }
 
-/* About: left, Works: center, Contact: right */
+/* About: left-aligned, Works: center, Contact: right-aligned */
 .desktop-nav-link:nth-child(1) {
   justify-content: flex-start;
   text-align: left;
