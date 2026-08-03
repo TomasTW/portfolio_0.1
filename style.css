@@ -2901,7 +2901,9 @@ footer {
     display: flex;
     align-items: center;
     justify-content: flex-end;
-    border: 1px solid #FFFFFF;
+    border-right: 1px solid #FFFFFF;
+    border-bottom: 1px solid #FFFFFF;
+    border-top: none;
     border-left: none;
     box-sizing: border-box;
   }
