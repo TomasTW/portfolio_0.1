@@ -67,22 +67,22 @@
   --typography-body-xl-line-height: 1.25;
 
   /* body-lg (body2: 18px / 1.286rem) */
-  --typography-body-lg-family: "DM Sans", sans-serif;
+  --typography-body-lg-family: "Poppins", sans-serif;
   --typography-body-lg-size: clamp(14px, 1vw, 18px);
   --typography-body-lg-weight: 700;
   --typography-body-lg-line-height: 1.25;
 
   /* body-md (body3 / button: 14px / 1.000rem) */
-  --typography-body-md-family: "DM Sans", sans-serif;
+  --typography-body-md-family: "Poppins", sans-serif;
   --typography-body-md-size: clamp(9px, 1vw, 14px);
   --typography-body-md-weight: 700;
   --typography-body-md-line-height: 1.25;
 
   /* body-sm (P: 9px / 0.643rem) */
   --typography-body-sm-family: "DM Sans", sans-serif;
-  --typography-body-sm-size: clamp(5px, 1vw, 9px);
+  --typography-body-sm-size: clamp(9px, 0.8vw, 11px);
   --typography-body-sm-weight: 500;
-  --typography-body-sm-line-height: 1.3;
+  --typography-body-sm-line-height: 1.4;
 
   /* caption: 5px / 0.357rem */
   --typography-caption-family: "DM Sans", sans-serif;
@@ -90,6 +90,11 @@
   --typography-caption-weight: 500;
   --typography-caption-line-height: 1.3;
 
+  /* body-small class variable mappings */
+  --font-family-body-small: var(--typography-body-sm-family);
+  --font-size-body-small: var(--typography-body-sm-size);
+  --font-weight-body-small: var(--typography-body-sm-weight);
+  --font-line-height-body-small: var(--typography-body-sm-line-height);
 
 }
 
@@ -671,7 +676,7 @@ section {
   width: 100%;
   margin-top: auto;
   box-sizing: border-box;
-  padding: 16px 32px 64px 32px;
+  padding: 16px 32px 96px 32px;
   transform: translateX(var(--about-footer-x, 110vw));
   opacity: var(--about-footer-opacity, 0);
   will-change: transform, opacity;
@@ -691,11 +696,11 @@ section {
 }
 
 .about-bio-text {
-  font-family: var(--font-body);
-  font-size: 13px;
-  font-weight: 700;
+  font-family: var(--font-family-body-small), sans-serif;
+  font-size: var(--font-size-body-small);
+  font-weight: var(--font-weight-body-small);
+  line-height: var(--font-line-height-body-small);
   color: var(--color-text-primary-default);
-  line-height: 1.6;
   text-align: left;
   margin: 0;
 }
@@ -2844,7 +2849,8 @@ footer {
     letter-spacing: 0.5px;
     transition: color 0.2s;
     box-sizing: border-box;
-    text-transform: none; /* keep exact capitalization: About, works, contact */
+    text-transform: none;
+    /* keep exact capitalization: About, works, contact */
     display: block;
   }
 
@@ -2939,7 +2945,8 @@ footer {
   display: none;
   /* hidden on mobile */
   position: fixed;
-  bottom: 64px; /* align with the bottom margin of the about card */
+  bottom: 64px;
+  /* align with the bottom margin of the about card */
   left: 0;
   right: 0;
   z-index: 9000;
@@ -2959,24 +2966,26 @@ footer {
   display: flex;
   justify-content: space-between;
   align-items: stretch;
-  width: calc(100% - 128px); /* match about-card width */
+  width: calc(100% - 128px);
+  /* match about-card width */
   margin: 0 auto;
   background: transparent;
-  border-top: 1px solid rgba(255, 255, 255, 0.3);
+  border-top: 1px solid var(--color-border-primary-default);
   box-sizing: border-box;
-  padding: 0 40px; /* match about-card inner horizontal padding */
+  padding: 0 80px;
+  /* match about-card inner horizontal padding */
 }
 
 .desktop-nav-link {
   flex: 1;
   padding: 14px 0;
-  color: #FFFFFF;
+  color: var(--color-text-primary-default);
   text-decoration: none;
-  font-family: var(--font-family-body-medium);
-  font-size: var(--font-size-body-medium);
-  font-weight: var(--font-weight-body-medium);
-  line-height: var(--font-line-height-body-medium);
-  letter-spacing: 0.5px;
+  font-family: var(--typography-body-md-family);
+  font-size: var(--typography-body-md-size);
+  font-weight: var(--typography-body-md-weight);
+  line-height: var(--typography-body-md-line-height);
+  letter-spacing: 1.5px;
   transition: color 0.2s;
   box-sizing: border-box;
   display: flex;
