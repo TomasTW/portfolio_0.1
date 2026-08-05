@@ -2243,7 +2243,7 @@ footer {
   display: flex;
   flex-direction: column;
   justify-content: space-between;
-  padding: 40px 40px 64px 40px;
+  padding: 40px 40px 96px 40px;
   box-sizing: border-box;
   background-color: var(--color-bg-surface-primary-default);
   position: relative;
