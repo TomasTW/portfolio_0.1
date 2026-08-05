@@ -2333,8 +2333,10 @@ footer {
   left: 0;
   width: 100%;
   height: 100%;
+  max-width: 100%;
+  max-height: 100%;
   object-fit: contain;
-  transform: translateX(130%) scale(0.85);
+  transform: translateX(120%) scale(0.82);
   opacity: 0;
   transition: transform 0.65s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.65s ease, filter 0.65s ease;
   will-change: transform, opacity, filter;
@@ -2350,15 +2352,15 @@ footer {
 }
 
 .work-img-slide.next-preview {
-  transform: translateX(32%) scale(0.92);
-  opacity: 0.85;
+  transform: translateX(18%) scale(0.82);
+  opacity: 0.8;
   z-index: 1;
-  filter: brightness(0.8);
+  filter: brightness(0.75);
   pointer-events: auto;
 }
 
 .work-img-slide.prev {
-  transform: translateX(-120%) scale(0.88);
+  transform: translateX(-120%) scale(0.82);
   opacity: 0;
   z-index: 2;
   filter: brightness(0.4);
