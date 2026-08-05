@@ -2350,7 +2350,7 @@ footer {
 }
 
 .work-img-slide.next-preview {
-  transform: translateX(60%) scale(0.9);
+  transform: translateX(32%) scale(0.92);
   opacity: 0.85;
   z-index: 1;
   filter: brightness(0.8);
