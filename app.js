@@ -544,6 +544,160 @@ document.addEventListener('DOMContentLoaded', () => {
     onScroll();
   })();
 
+  // --- Works Desktop Pinned Scroll Showcase (Trionn style with Text Scramble & Image Crossfade) ---
+  (function initWorksDesktopPinnedScroll() {
+    const pinnedSection = document.querySelector('.works-desktop-pinned');
+    const titleEl = document.getElementById('works-active-title');
+    const tagsEl = document.getElementById('works-active-tags');
+    const imgEl = document.getElementById('works-active-img');
+    const imgWrapEl = document.getElementById('works-active-img-wrap');
+    const bulletsEl = document.getElementById('works-active-bullets');
+
+    if (!pinnedSection || !titleEl || !imgEl || !bulletsEl) return;
+
+    const worksData = [
+      {
+        title: "NZXT Marketing & Visual Design",
+        tags: "#Packaging #Branding #Hardware #Layout",
+        image: "works/NZXT/nzxt_cover.png",
+        bullets: [
+          "Developed vector layouts for hardware component packaging.",
+          "Structured global marketing promotional banners and social media campaign visuals.",
+          "Collaborated on typography systems ensuring consistent visual brand identity across digital and physical mediums."
+        ],
+        modalId: "modal-nzxt"
+      },
+      {
+        title: "Shin Kong Mitsukoshi Visual Promotions",
+        tags: "#Poster #Flyer #VisualCampaign #Marketing",
+        image: "works/SKM/skm_cover.png",
+        bullets: [
+          "Designed and produced high-fidelity campaign posters and print flyers.",
+          "Created high-converting online promotional graphics and website event slides.",
+          "Engineered visual layout grids for print catalogs and booklets."
+        ],
+        modalId: "modal-mitsukoshi"
+      },
+      {
+        title: "Gallery APP Preview & Ticketing",
+        tags: "#UI/UX #MobileApp #Figma #Interaction",
+        image: "works/app/app_cover.jpg",
+        bullets: [
+          "Created orderly previews and listings of recent exhibitions to help users quickly view schedules.",
+          "Designed a clear and accessible online ticket checkout integration to encourage conversions.",
+          "Utilized chat-shaped exhibition cards to present collections at the top of detail views for clarity.",
+          "Engineered accessibility-focused previews with modern motion interaction designs to enhance engagement."
+        ],
+        modalId: "modal-gallery"
+      },
+      {
+        title: "Li Ho Branding & Packaging",
+        tags: "#Packaging #Branding #GraphicDesign #Identity",
+        image: "works/brand/brand_cover.jpg",
+        bullets: [
+          "Created structural box layout templates and visual wrapping labels.",
+          "Developed custom hand-drawn vector assets and patterns representing warmth and hospitality.",
+          "Designed typography systems and promotional materials for local Taiwanese products."
+        ],
+        modalId: "modal-liho"
+      },
+      {
+        title: "Movie Sketches Sketchbook",
+        tags: "#Drawing #FineArt #Procreate",
+        image: "works/paint/paint_cover.jpg",
+        bullets: [
+          "Created 10+ physical cardboard paintings depicting classic cinematic frames.",
+          "Explored color lighting and composition styles of world-class directors.",
+          "Digitized and cataloged the collection for portfolio showcases."
+        ],
+        modalId: "modal-drawings"
+      }
+    ];
+
+    class Scrambler {
+      constructor(el) {
+        this.el = el;
+        this.chars = '!<>-_\\/[]{}—=+*^?#________';
+      }
+      scramble(newText) {
+        if (!this.el) return;
+        const oldText = this.el.innerText || '';
+        const length = Math.max(oldText.length, newText.length);
+        let frame = 0;
+        const totalFrames = 15;
+
+        const animate = () => {
+          let output = '';
+          const progress = frame / totalFrames;
+          for (let i = 0; i < length; i++) {
+            const targetChar = newText[i] || '';
+            if (i < Math.floor(progress * length)) {
+              output += targetChar;
+            } else {
+              const randomChar = this.chars[Math.floor(Math.random() * this.chars.length)];
+              output += `<span class="doodle-scramble-char">${randomChar}</span>`;
+            }
+          }
+          this.el.innerHTML = output;
+          frame++;
+          if (frame <= totalFrames) {
+            requestAnimationFrame(animate);
+          } else {
+            this.el.innerHTML = newText;
+          }
+        };
+        requestAnimationFrame(animate);
+      }
+    }
+
+    const titleScrambler = new Scrambler(titleEl);
+    const tagsScrambler = new Scrambler(tagsEl);
+    let currentIndex = -1;
+
+    function updateActiveProject(index) {
+      if (index === currentIndex) return;
+      currentIndex = index;
+      const data = worksData[index];
+
+      // Text Scramble Effect
+      titleScrambler.scramble(data.title);
+      if (tagsEl) tagsScrambler.scramble(data.tags);
+
+      // Image Crossfade
+      imgEl.classList.add('fade-out');
+      setTimeout(() => {
+        imgEl.src = data.image;
+        imgEl.alt = data.title;
+        imgEl.classList.remove('fade-out');
+      }, 150);
+
+      // Update modal trigger ID
+      if (imgWrapEl) imgWrapEl.setAttribute('data-modal', data.modalId);
+
+      // Bullets update
+      bulletsEl.style.opacity = '0';
+      setTimeout(() => {
+        bulletsEl.innerHTML = data.bullets.map(b => `<li>${b}</li>`).join('');
+        bulletsEl.style.opacity = '1';
+      }, 150);
+    }
+
+    function onScroll() {
+      if (window.innerWidth <= 1024) return;
+      const rect = pinnedSection.getBoundingClientRect();
+      const pinnedDistance = pinnedSection.offsetHeight - window.innerHeight;
+      if (pinnedDistance <= 0) return;
+
+      const scrolledInPin = -rect.top;
+      const progress = Math.max(0, Math.min(0.999, scrolledInPin / pinnedDistance));
+      const index = Math.floor(progress * worksData.length);
+      updateActiveProject(index);
+    }
+
+    window.addEventListener('scroll', onScroll, { passive: true });
+    updateActiveProject(0);
+  })();
+
   // --- Works Mobile Modal Controls (Tablet & Phone) ---
   (function initWorksMobileModals() {
     const modalTriggers = document.querySelectorAll('[data-modal]');

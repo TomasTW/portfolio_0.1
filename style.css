@@ -2217,23 +2217,22 @@ footer {
    WORKS — Stacked sticky cards (desktop) + vertical list (tablet/phone)
    ===================================================================== */
 
-/* ── Desktop stack ────────────────────────────────────────────────── */
+/* ── Desktop pinned scroll showcase (Trionn style) ───────────────────── */
 
-.works-desktop-stack {
+.works-desktop-pinned {
+  height: 500vh;
+  position: relative;
   display: block;
-  /* visible only on desktop (hidden via media query below) */
 }
 
-/* Each work-item provides 100vh of scrollable distance */
-.work-item {
+.works-sticky-frame {
   position: sticky;
   top: 0;
   height: 100vh;
-  z-index: var(--item-z, 1);
-  overflow: hidden;
   display: flex;
   align-items: center;
   justify-content: center;
+  overflow: hidden;
 }
 
 .work-card {
@@ -2278,6 +2277,11 @@ footer {
   letter-spacing: 0.5px;
 }
 
+.doodle-scramble-char {
+  color: var(--color-text-brand-default);
+  font-family: var(--font-head);
+}
+
 /* Middle row: image (left) + hand graphic (right) */
 .work-mid {
   display: flex;
@@ -2308,7 +2312,13 @@ footer {
   height: 100%;
   object-fit: contain;
   display: block;
-  transition: transform 0.3s ease;
+  transition: opacity 0.35s ease, transform 0.35s ease;
+  opacity: 1;
+}
+
+.work-img.fade-out {
+  opacity: 0;
+  transform: scale(0.96);
 }
 
 .work-img-wrap:hover .work-img {
@@ -2423,8 +2433,8 @@ footer {
     display: flex;
   }
 
-  /* Hide the desktop stack */
-  .works-desktop-stack {
+  /* Hide the desktop pinned frame */
+  .works-desktop-pinned {
     display: none;
   }
 

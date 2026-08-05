@@ -2230,27 +2230,26 @@
   <section id="works" class="works">
 
     <!-- ════════════════════════════════════════════════════════════════
-         DESKTOP (>1024px): Stacked sticky cards inside black frame.
+         DESKTOP (>1024px): Pinned scroll frame with text scramble
+         and image crossfade transitions (Trionn style).
          ════════════════════════════════════════════════════════════════ -->
-    <div class="works-desktop-stack">
-
-      <!-- Card 1: NZXT -->
-      <div class="work-item" style="--item-z:1">
+    <div class="works-desktop-pinned">
+      <div class="works-sticky-frame">
         <div class="work-card">
           <div class="work-top">
-            <h2 class="work-title">NZXT Marketing &amp; Visual Design</h2>
-            <p class="work-hashtags">#Packaging #Branding #Hardware #Layout</p>
+            <h2 class="work-title" id="works-active-title">NZXT Marketing &amp; Visual Design</h2>
+            <p class="work-hashtags" id="works-active-tags">#Packaging #Branding #Hardware #Layout</p>
           </div>
           <div class="work-mid">
-            <div class="work-img-wrap" data-modal="modal-nzxt">
-              <img src="works/NZXT/nzxt_cover.png" alt="NZXT Campaign" class="work-img">
+            <div class="work-img-wrap" id="works-active-img-wrap" data-modal="modal-nzxt">
+              <img src="works/NZXT/nzxt_cover.png" alt="Works Image" class="work-img" id="works-active-img">
             </div>
             <div class="work-graphic-wrap">
               <img src="works_graphic.svg" alt="The Works" class="works-hand-svg">
             </div>
           </div>
           <div class="work-bottom">
-            <ul class="work-bullets">
+            <ul class="work-bullets" id="works-active-bullets">
               <li>Developed vector layouts for hardware component packaging.</li>
               <li>Structured global marketing promotional banners and social media campaign visuals.</li>
               <li>Collaborated on typography systems ensuring consistent visual brand identity across digital and physical mediums.</li>
@@ -2258,109 +2257,7 @@
           </div>
         </div>
       </div>
-
-      <!-- Card 2: Mitsukoshi -->
-      <div class="work-item" style="--item-z:2">
-        <div class="work-card">
-          <div class="work-top">
-            <h2 class="work-title">Shin Kong Mitsukoshi Visual Promotions</h2>
-            <p class="work-hashtags">#Poster #Flyer #VisualCampaign #Marketing</p>
-          </div>
-          <div class="work-mid">
-            <div class="work-img-wrap" data-modal="modal-mitsukoshi">
-              <img src="works/SKM/skm_cover.png" alt="Mitsukoshi Visual Promotions" class="work-img">
-            </div>
-            <div class="work-graphic-wrap">
-              <img src="works_graphic.svg" alt="The Works" class="works-hand-svg">
-            </div>
-          </div>
-          <div class="work-bottom">
-            <ul class="work-bullets">
-              <li>Designed and produced high-fidelity campaign posters and print flyers.</li>
-              <li>Created high-converting online promotional graphics and website event slides.</li>
-              <li>Engineered visual layout grids for print catalogs and booklets.</li>
-            </ul>
-          </div>
-        </div>
-      </div>
-
-      <!-- Card 3: Gallery App -->
-      <div class="work-item" style="--item-z:3">
-        <div class="work-card">
-          <div class="work-top">
-            <h2 class="work-title">Gallery APP Preview &amp; Ticketing</h2>
-            <p class="work-hashtags">#UI/UX #MobileApp #Figma #Interaction</p>
-          </div>
-          <div class="work-mid">
-            <div class="work-img-wrap" data-modal="modal-gallery">
-              <img src="works/app/app_cover.jpg" alt="Gallery App" class="work-img">
-            </div>
-            <div class="work-graphic-wrap">
-              <img src="works_graphic.svg" alt="The Works" class="works-hand-svg">
-            </div>
-          </div>
-          <div class="work-bottom">
-            <ul class="work-bullets">
-              <li>Created orderly previews and listings of recent exhibitions to help users quickly view schedules.</li>
-              <li>Designed a clear and accessible online ticket checkout integration to encourage conversions.</li>
-              <li>Utilized chat-shaped exhibition cards to present collections at the top of detail views for clarity.</li>
-              <li>Engineered accessibility-focused previews with modern motion interaction designs to enhance engagement.</li>
-            </ul>
-          </div>
-        </div>
-      </div>
-
-      <!-- Card 4: Li Ho -->
-      <div class="work-item" style="--item-z:4">
-        <div class="work-card">
-          <div class="work-top">
-            <h2 class="work-title">Li Ho Branding &amp; Packaging</h2>
-            <p class="work-hashtags">#Packaging #Branding #GraphicDesign #Identity</p>
-          </div>
-          <div class="work-mid">
-            <div class="work-img-wrap" data-modal="modal-liho">
-              <img src="works/brand/brand_cover.jpg" alt="Li Ho Branding" class="work-img">
-            </div>
-            <div class="work-graphic-wrap">
-              <img src="works_graphic.svg" alt="The Works" class="works-hand-svg">
-            </div>
-          </div>
-          <div class="work-bottom">
-            <ul class="work-bullets">
-              <li>Created structural box layout templates and visual wrapping labels.</li>
-              <li>Developed custom hand-drawn vector assets and patterns representing warmth and hospitality.</li>
-              <li>Designed typography systems and promotional materials for local Taiwanese products.</li>
-            </ul>
-          </div>
-        </div>
-      </div>
-
-      <!-- Card 5: Movie Sketches -->
-      <div class="work-item" style="--item-z:5">
-        <div class="work-card">
-          <div class="work-top">
-            <h2 class="work-title">Movie Sketches Sketchbook</h2>
-            <p class="work-hashtags">#Drawing #FineArt #Procreate</p>
-          </div>
-          <div class="work-mid">
-            <div class="work-img-wrap" data-modal="modal-drawings">
-              <img src="works/paint/paint_cover.jpg" alt="Movie Sketches" class="work-img">
-            </div>
-            <div class="work-graphic-wrap">
-              <img src="works_graphic.svg" alt="The Works" class="works-hand-svg">
-            </div>
-          </div>
-          <div class="work-bottom">
-            <ul class="work-bullets">
-              <li>Created 10+ physical cardboard paintings depicting classic cinematic frames.</li>
-              <li>Explored color lighting and composition styles of world-class directors.</li>
-              <li>Digitized and cataloged the collection for portfolio showcases.</li>
-            </ul>
-          </div>
-        </div>
-      </div>
-
-    </div><!-- /.works-desktop-stack -->
+    </div><!-- /.works-desktop-pinned -->
 
 
     <!-- ════════════════════════════════════════════════════════════════
