@@ -544,22 +544,21 @@ document.addEventListener('DOMContentLoaded', () => {
     onScroll();
   })();
 
-  // --- Works Desktop Pinned Scroll Showcase (Trionn style with Text Scramble & Image Crossfade) ---
+  // --- Works Desktop Pinned Scroll Showcase (Trionn style with Line-by-Line Scramble & Image Slide Reveal) ---
   (function initWorksDesktopPinnedScroll() {
     const pinnedSection = document.querySelector('.works-desktop-pinned');
     const titleEl = document.getElementById('works-active-title');
     const tagsEl = document.getElementById('works-active-tags');
-    const imgEl = document.getElementById('works-active-img');
     const imgWrapEl = document.getElementById('works-active-img-wrap');
+    const slides = document.querySelectorAll('.work-img-slide');
     const bulletsEl = document.getElementById('works-active-bullets');
 
-    if (!pinnedSection || !titleEl || !imgEl || !bulletsEl) return;
+    if (!pinnedSection || !titleEl || !bulletsEl) return;
 
     const worksData = [
       {
         title: "NZXT Marketing & Visual Design",
         tags: "#Packaging #Branding #Hardware #Layout",
-        image: "works/NZXT/nzxt_cover.png",
         bullets: [
           "Developed vector layouts for hardware component packaging.",
           "Structured global marketing promotional banners and social media campaign visuals.",
@@ -570,7 +569,6 @@ document.addEventListener('DOMContentLoaded', () => {
       {
         title: "Shin Kong Mitsukoshi Visual Promotions",
         tags: "#Poster #Flyer #VisualCampaign #Marketing",
-        image: "works/SKM/skm_cover.png",
         bullets: [
           "Designed and produced high-fidelity campaign posters and print flyers.",
           "Created high-converting online promotional graphics and website event slides.",
@@ -581,7 +579,6 @@ document.addEventListener('DOMContentLoaded', () => {
       {
         title: "Gallery APP Preview & Ticketing",
         tags: "#UI/UX #MobileApp #Figma #Interaction",
-        image: "works/app/app_cover.jpg",
         bullets: [
           "Created orderly previews and listings of recent exhibitions to help users quickly view schedules.",
           "Designed a clear and accessible online ticket checkout integration to encourage conversions.",
@@ -593,7 +590,6 @@ document.addEventListener('DOMContentLoaded', () => {
       {
         title: "Li Ho Branding & Packaging",
         tags: "#Packaging #Branding #GraphicDesign #Identity",
-        image: "works/brand/brand_cover.jpg",
         bullets: [
           "Created structural box layout templates and visual wrapping labels.",
           "Developed custom hand-drawn vector assets and patterns representing warmth and hospitality.",
@@ -604,7 +600,6 @@ document.addEventListener('DOMContentLoaded', () => {
       {
         title: "Movie Sketches Sketchbook",
         tags: "#Drawing #FineArt #Procreate",
-        image: "works/paint/paint_cover.jpg",
         bullets: [
           "Created 10+ physical cardboard paintings depicting classic cinematic frames.",
           "Explored color lighting and composition styles of world-class directors.",
@@ -614,7 +609,7 @@ document.addEventListener('DOMContentLoaded', () => {
       }
     ];
 
-    class Scrambler {
+    class LineScrambler {
       constructor(el) {
         this.el = el;
         this.chars = '!<>-_\\/[]{}—=+*^?#________';
@@ -624,7 +619,7 @@ document.addEventListener('DOMContentLoaded', () => {
         const oldText = this.el.innerText || '';
         const length = Math.max(oldText.length, newText.length);
         let frame = 0;
-        const totalFrames = 15;
+        const totalFrames = 14;
 
         const animate = () => {
           let output = '';
@@ -650,8 +645,8 @@ document.addEventListener('DOMContentLoaded', () => {
       }
     }
 
-    const titleScrambler = new Scrambler(titleEl);
-    const tagsScrambler = new Scrambler(tagsEl);
+    const titleScrambler = new LineScrambler(titleEl);
+    const tagsScrambler = new LineScrambler(tagsEl);
     let currentIndex = -1;
 
     function updateActiveProject(index) {
@@ -659,27 +654,41 @@ document.addEventListener('DOMContentLoaded', () => {
       currentIndex = index;
       const data = worksData[index];
 
-      // Text Scramble Effect
-      titleScrambler.scramble(data.title);
-      if (tagsEl) tagsScrambler.scramble(data.tags);
+      // 1. Trionn Slide-Up Image Reveal Effect
+      slides.forEach((slide, idx) => {
+        if (idx === index) {
+          slide.classList.add('active');
+          slide.classList.remove('prev');
+        } else if (idx < index) {
+          slide.classList.add('prev');
+          slide.classList.remove('active');
+        } else {
+          slide.classList.remove('active', 'prev');
+        }
+      });
 
-      // Image Crossfade
-      imgEl.classList.add('fade-out');
+      // 2. Line-by-line staggered text scramble
+      titleScrambler.scramble(data.title);
+
       setTimeout(() => {
-        imgEl.src = data.image;
-        imgEl.alt = data.title;
-        imgEl.classList.remove('fade-out');
-      }, 150);
+        if (tagsEl) tagsScrambler.scramble(data.tags);
+      }, 90);
 
       // Update modal trigger ID
       if (imgWrapEl) imgWrapEl.setAttribute('data-modal', data.modalId);
 
-      // Bullets update
-      bulletsEl.style.opacity = '0';
+      // Bullets update line-by-line
       setTimeout(() => {
-        bulletsEl.innerHTML = data.bullets.map(b => `<li>${b}</li>`).join('');
-        bulletsEl.style.opacity = '1';
-      }, 150);
+        bulletsEl.innerHTML = data.bullets.map(b => `<li class="scramble-bullet-line">${b}</li>`).join('');
+        const bulletItems = bulletsEl.querySelectorAll('.scramble-bullet-line');
+        bulletItems.forEach((bEl, bIdx) => {
+          const bScrambler = new LineScrambler(bEl);
+          const bulletText = data.bullets[bIdx];
+          setTimeout(() => {
+            bScrambler.scramble(bulletText);
+          }, bIdx * 80);
+        });
+      }, 160);
     }
 
     function onScroll() {

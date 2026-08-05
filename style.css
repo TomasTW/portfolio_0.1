@@ -2294,9 +2294,8 @@ footer {
 }
 
 .work-img-wrap {
-  flex: 0 0 auto;
-  width: auto;
-  max-width: 600px;
+  flex: 1;
+  max-width: 540px;
   height: 100%;
   overflow: hidden;
   border: none;
@@ -2306,23 +2305,40 @@ footer {
   justify-content: center;
 }
 
-.work-img {
-  width: auto;
-  max-width: 100%;
+.work-img-slider {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+}
+
+.work-img-slide {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
   height: 100%;
   object-fit: contain;
-  display: block;
-  transition: opacity 0.35s ease, transform 0.35s ease;
-  opacity: 1;
-}
-
-.work-img.fade-out {
+  transform: translateY(100%) scale(1.05);
   opacity: 0;
-  transform: scale(0.96);
+  transition: transform 0.65s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.65s ease;
+  will-change: transform, opacity;
 }
 
-.work-img-wrap:hover .work-img {
-  transform: scale(1.02);
+.work-img-slide.active {
+  transform: translateY(0%) scale(1);
+  opacity: 1;
+  z-index: 2;
+}
+
+.work-img-slide.prev {
+  transform: translateY(-100%) scale(0.92);
+  opacity: 0;
+  z-index: 1;
+}
+
+.work-img-wrap:hover .work-img-slide.active {
+  transform: translateY(0%) scale(1.02);
 }
 
 .work-graphic-wrap {
