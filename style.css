@@ -2310,7 +2310,7 @@ footer {
   width: 320px;
   height: 320px;
   object-fit: contain;
-  transform: rotate(-90deg);
+  transform: rotate(0deg);
   display: block;
 }
 
@@ -2397,7 +2397,7 @@ footer {
   width: 280px;
   height: 280px;
   object-fit: contain;
-  transform: rotate(0deg);
+  transform: rotate(90deg);
 }
 
 /* ── Responsive: show list, hide stack ───────────────────────────── */
