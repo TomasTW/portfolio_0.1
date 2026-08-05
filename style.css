@@ -2321,20 +2321,31 @@ footer {
   object-fit: contain;
   transform: translateY(100%) scale(1.05);
   opacity: 0;
-  transition: transform 0.65s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.65s ease;
-  will-change: transform, opacity;
+  transition: transform 0.65s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.65s ease, filter 0.65s ease;
+  will-change: transform, opacity, filter;
+  pointer-events: none;
 }
 
 .work-img-slide.active {
   transform: translateY(0%) scale(1);
   opacity: 1;
+  z-index: 3;
+  pointer-events: auto;
+  filter: brightness(1);
+}
+
+.work-img-slide.next-preview {
+  transform: translateY(78%) scale(0.85);
+  opacity: 0.65;
   z-index: 2;
+  filter: brightness(0.7);
 }
 
 .work-img-slide.prev {
   transform: translateY(-100%) scale(0.92);
   opacity: 0;
   z-index: 1;
+  filter: brightness(0.5);
 }
 
 .work-img-wrap:hover .work-img-slide.active {

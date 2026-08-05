@@ -609,28 +609,33 @@ document.addEventListener('DOMContentLoaded', () => {
       }
     ];
 
-    class LineScrambler {
+    class HorizontalScrambler {
       constructor(el) {
         this.el = el;
         this.chars = '!<>-_\\/[]{}—=+*^?#________';
       }
       scramble(newText) {
         if (!this.el) return;
-        const oldText = this.el.innerText || '';
-        const length = Math.max(oldText.length, newText.length);
+        const length = newText.length;
         let frame = 0;
-        const totalFrames = 14;
+        const totalFrames = 18;
 
         const animate = () => {
           let output = '';
           const progress = frame / totalFrames;
+          const revealIndex = Math.floor(progress * length);
+
           for (let i = 0; i < length; i++) {
-            const targetChar = newText[i] || '';
-            if (i < Math.floor(progress * length)) {
+            const targetChar = newText[i];
+            if (targetChar === ' ') {
+              output += ' ';
+            } else if (i < revealIndex) {
               output += targetChar;
-            } else {
+            } else if (i < revealIndex + 4) {
               const randomChar = this.chars[Math.floor(Math.random() * this.chars.length)];
               output += `<span class="doodle-scramble-char">${randomChar}</span>`;
+            } else {
+              output += `<span style="opacity:0.35;">${targetChar}</span>`;
             }
           }
           this.el.innerHTML = output;
@@ -645,8 +650,8 @@ document.addEventListener('DOMContentLoaded', () => {
       }
     }
 
-    const titleScrambler = new LineScrambler(titleEl);
-    const tagsScrambler = new LineScrambler(tagsEl);
+    const titleScrambler = new HorizontalScrambler(titleEl);
+    const tagsScrambler = new HorizontalScrambler(tagsEl);
     let currentIndex = -1;
 
     function updateActiveProject(index) {
@@ -654,20 +659,23 @@ document.addEventListener('DOMContentLoaded', () => {
       currentIndex = index;
       const data = worksData[index];
 
-      // 1. Trionn Slide-Up Image Reveal Effect
+      // 1. Trionn Slide-Up Image Reveal & Next Preview Effect
       slides.forEach((slide, idx) => {
         if (idx === index) {
           slide.classList.add('active');
-          slide.classList.remove('prev');
+          slide.classList.remove('prev', 'next-preview');
+        } else if (idx === index + 1) {
+          slide.classList.add('next-preview');
+          slide.classList.remove('active', 'prev');
         } else if (idx < index) {
           slide.classList.add('prev');
-          slide.classList.remove('active');
+          slide.classList.remove('active', 'next-preview');
         } else {
-          slide.classList.remove('active', 'prev');
+          slide.classList.remove('active', 'prev', 'next-preview');
         }
       });
 
-      // 2. Line-by-line staggered text scramble
+      // 2. Horizontal inline character scramble
       titleScrambler.scramble(data.title);
 
       setTimeout(() => {
@@ -682,7 +690,7 @@ document.addEventListener('DOMContentLoaded', () => {
         bulletsEl.innerHTML = data.bullets.map(b => `<li class="scramble-bullet-line">${b}</li>`).join('');
         const bulletItems = bulletsEl.querySelectorAll('.scramble-bullet-line');
         bulletItems.forEach((bEl, bIdx) => {
-          const bScrambler = new LineScrambler(bEl);
+          const bScrambler = new HorizontalScrambler(bEl);
           const bulletText = data.bullets[bIdx];
           setTimeout(() => {
             bScrambler.scramble(bulletText);
