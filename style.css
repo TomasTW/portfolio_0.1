@@ -2217,6 +2217,29 @@ footer {
    WORKS — Stacked sticky cards (desktop) + vertical list (tablet/phone)
    ===================================================================== */
 
+/* Single fixed hand graphic on right side of Works cards on desktop */
+.works-fixed-hand-desktop {
+  position: fixed;
+  top: 50%;
+  right: calc(64px + 40px);
+  transform: translateY(-50%);
+  width: 320px;
+  height: 320px;
+  z-index: 100;
+  pointer-events: none;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.works-fixed-hand-desktop .works-hand-svg {
+  width: 320px;
+  height: 320px;
+  object-fit: contain;
+  transform: rotate(0deg);
+  display: block;
+}
+
 /* ── Desktop stack ────────────────────────────────────────────────── */
 
 .works-desktop-stack {
@@ -2230,29 +2253,36 @@ footer {
   top: 0;
   height: 100vh;
   z-index: var(--item-z, 1);
-  /* CSS custom prop set inline on each item */
   overflow: hidden;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
 .work-card {
-  height: 100vh;
+  width: calc(100% - 128px);
+  height: calc(100vh - 128px);
+  margin: 0 auto;
+  border: 2px solid var(--color-bg-surface-secondary-default);
   display: flex;
   flex-direction: column;
+  justify-content: space-between;
   padding: 40px 40px 64px 40px;
   box-sizing: border-box;
   background-color: var(--color-bg-surface-primary-default);
+  position: relative;
   overflow: hidden;
 }
 
 /* Top row: title + hashtags */
 .work-top {
   flex-shrink: 0;
-  margin-bottom: 24px;
+  margin-bottom: 16px;
 }
 
 .work-title {
   font-family: var(--font-head);
-  font-size: clamp(28px, 3.5vw, 52px);
+  font-size: clamp(28px, 3.5vw, 48px);
   font-weight: 900;
   letter-spacing: -2px;
   color: var(--color-text-primary-default);
@@ -2269,22 +2299,22 @@ footer {
   letter-spacing: 0.5px;
 }
 
-/* Middle row: image (left) + hand graphic (right) */
+/* Middle row: image (left) */
 .work-mid {
   display: flex;
   flex: 1;
   gap: 40px;
   align-items: center;
-  justify-content: space-between;
+  justify-content: flex-start;
   min-height: 0;
   overflow: hidden;
 }
 
 .work-img-wrap {
   flex: 1;
-  max-width: 540px;
+  max-width: 520px;
   height: 100%;
-  max-height: 420px;
+  max-height: 380px;
   overflow: hidden;
   border: 2px solid var(--color-bg-surface-secondary-default);
 }
@@ -2296,34 +2326,10 @@ footer {
   display: block;
 }
 
-.work-graphic-wrap {
-  flex: 0 0 320px;
-  width: 320px;
-  height: 320px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  overflow: hidden;
-}
-
-.works-hand-svg {
-  width: 320px;
-  height: 320px;
-  object-fit: contain;
-  transform: rotate(0deg);
-  display: block;
-}
-
-/* Bottom row: divider + bullet points */
+/* Bottom row: bullet points stacked vertically */
 .work-bottom {
   flex-shrink: 0;
-  margin-top: 24px;
-}
-
-.work-rule {
-  border: none;
-  border-top: 2px solid var(--color-bg-surface-secondary-default);
-  margin: 0 0 16px 0;
+  margin-top: 16px;
 }
 
 .work-bullets {
@@ -2331,17 +2337,17 @@ footer {
   padding-left: 20px;
   margin: 0;
   display: flex;
-  flex-wrap: wrap;
-  gap: 6px 40px;
+  flex-direction: column;
+  gap: 8px;
+  max-width: 540px;
 }
 
 .work-bullets li {
-  font-family: var(--font-body);
-  font-size: var(--font-size-body-medium);
-  font-weight: 700;
+  font-family: var(--font-family-body-small), sans-serif;
+  font-size: var(--font-size-body-small);
+  font-weight: var(--font-weight-body-small);
+  line-height: var(--font-line-height-body-small);
   color: var(--color-text-primary-default);
-  line-height: 1.5;
-  flex: 1 1 280px;
 }
 
 /* ── Mobile / tablet list ─────────────────────────────────────────── */
@@ -2403,6 +2409,10 @@ footer {
 /* ── Responsive: show list, hide stack ───────────────────────────── */
 
 @media (max-width: 1024px) {
+
+  .works-fixed-hand-desktop {
+    display: none !important;
+  }
 
   /* Show the mobile list */
   .works-mobile-list {
