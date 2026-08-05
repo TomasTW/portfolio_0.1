@@ -546,10 +546,10 @@ document.addEventListener('DOMContentLoaded', () => {
 
   // --- Works Mobile Modal Controls (Tablet & Phone) ---
   (function initWorksMobileModals() {
-    const listItems = document.querySelectorAll('.works-list-item');
+    const modalTriggers = document.querySelectorAll('[data-modal]');
     const modals = document.querySelectorAll('.work-modal');
 
-    listItems.forEach(item => {
+    modalTriggers.forEach(item => {
       item.addEventListener('click', () => {
         const modalId = item.getAttribute('data-modal');
         const targetModal = document.getElementById(modalId);
