@@ -2264,14 +2264,16 @@ footer {
   letter-spacing: -2px;
   color: var(--color-text-primary-default);
   margin: 0 0 8px 0;
-  line-height: 1.05;
+  line-height: 1.2;
+  padding-bottom: 2px;
 }
 
 .work-hashtags {
-  font-family: var(--font-body);
+  font-family: var(--font-family-body-small), sans-serif;
   font-size: var(--font-size-body-small);
-  font-weight: 700;
-  color: var(--color-text-secondary-default);
+  font-weight: var(--font-weight-body-small);
+  line-height: var(--font-line-height-body-small);
+  color: var(--color-text-primary-default);
   margin: 0;
   letter-spacing: 0.5px;
 }
@@ -2281,7 +2283,7 @@ footer {
   display: flex;
   flex: 1;
   gap: 40px;
-  align-items: center;
+  align-items: stretch;
   justify-content: space-between;
   min-height: 0;
   overflow: hidden;
@@ -2291,7 +2293,6 @@ footer {
   flex: 1;
   max-width: 520px;
   height: 100%;
-  max-height: 380px;
   overflow: hidden;
   border: none;
 }
@@ -2318,13 +2319,6 @@ footer {
   height: 320px;
   object-fit: contain;
   transform: rotate(0deg);
-  display: block;
-}
-
-.work-img {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
   display: block;
 }
 
@@ -2384,10 +2378,11 @@ footer {
 }
 
 .works-list-tags {
-  font-family: var(--font-body);
+  font-family: var(--font-family-body-small), sans-serif;
   font-size: var(--font-size-body-small);
-  font-weight: 700;
-  color: var(--color-text-secondary-default);
+  font-weight: var(--font-weight-body-small);
+  line-height: var(--font-line-height-body-small);
+  color: var(--color-text-primary-default);
   margin: 0;
 }
 
