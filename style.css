@@ -2369,13 +2369,18 @@ footer {
 }
 
 .work-graphic-wrap {
-  flex: 0 0 320px;
+  position: absolute;
+  right: 40px;
+  top: 50%;
+  transform: translateY(-50%);
   width: 320px;
   height: 320px;
   display: flex;
   align-items: center;
   justify-content: center;
   overflow: hidden;
+  z-index: 5;
+  pointer-events: none;
 }
 
 .works-hand-svg {
