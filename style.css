@@ -2217,29 +2217,6 @@ footer {
    WORKS — Stacked sticky cards (desktop) + vertical list (tablet/phone)
    ===================================================================== */
 
-/* Single fixed hand graphic on right side of Works cards on desktop */
-.works-fixed-hand-desktop {
-  position: fixed;
-  top: 50%;
-  right: calc(64px + 40px);
-  transform: translateY(-50%);
-  width: 320px;
-  height: 320px;
-  z-index: 100;
-  pointer-events: none;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
-
-.works-fixed-hand-desktop .works-hand-svg {
-  width: 320px;
-  height: 320px;
-  object-fit: contain;
-  transform: rotate(0deg);
-  display: block;
-}
-
 /* ── Desktop stack ────────────────────────────────────────────────── */
 
 .works-desktop-stack {
@@ -2263,7 +2240,7 @@ footer {
   width: calc(100% - 128px);
   height: calc(100vh - 128px);
   margin: 0 auto;
-  border: 2px solid var(--color-bg-surface-secondary-default);
+  border: none;
   display: flex;
   flex-direction: column;
   justify-content: space-between;
@@ -2299,13 +2276,13 @@ footer {
   letter-spacing: 0.5px;
 }
 
-/* Middle row: image (left) */
+/* Middle row: image (left) + hand graphic (right) */
 .work-mid {
   display: flex;
   flex: 1;
   gap: 40px;
   align-items: center;
-  justify-content: flex-start;
+  justify-content: space-between;
   min-height: 0;
   overflow: hidden;
 }
@@ -2316,7 +2293,32 @@ footer {
   height: 100%;
   max-height: 380px;
   overflow: hidden;
-  border: 2px solid var(--color-bg-surface-secondary-default);
+  border: none;
+}
+
+.work-img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+.work-graphic-wrap {
+  flex: 0 0 320px;
+  width: 320px;
+  height: 320px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+}
+
+.works-hand-svg {
+  width: 320px;
+  height: 320px;
+  object-fit: contain;
+  transform: rotate(0deg);
+  display: block;
 }
 
 .work-img {
@@ -2409,10 +2411,6 @@ footer {
 /* ── Responsive: show list, hide stack ───────────────────────────── */
 
 @media (max-width: 1024px) {
-
-  .works-fixed-hand-desktop {
-    display: none !important;
-  }
 
   /* Show the mobile list */
   .works-mobile-list {
