@@ -612,13 +612,13 @@ document.addEventListener('DOMContentLoaded', () => {
     class HorizontalScrambler {
       constructor(el) {
         this.el = el;
-        this.chars = '!<>-_\\/[]{}—=+*^?#________';
+        this.chars = '!<>-_\\/[]{}—=+*^?#_';
       }
       scramble(newText) {
         if (!this.el) return;
         const length = newText.length;
         let frame = 0;
-        const totalFrames = 18;
+        const totalFrames = 14;
 
         const animate = () => {
           let output = '';
@@ -631,19 +631,19 @@ document.addEventListener('DOMContentLoaded', () => {
               output += ' ';
             } else if (i < revealIndex) {
               output += targetChar;
-            } else if (i < revealIndex + 4) {
+            } else if (i < revealIndex + 3) {
               const randomChar = this.chars[Math.floor(Math.random() * this.chars.length)];
-              output += `<span class="doodle-scramble-char">${randomChar}</span>`;
+              output += randomChar;
             } else {
-              output += `<span style="opacity:0.35;">${targetChar}</span>`;
+              output += '_';
             }
           }
-          this.el.innerHTML = output;
+          this.el.textContent = output;
           frame++;
           if (frame <= totalFrames) {
             requestAnimationFrame(animate);
           } else {
-            this.el.innerHTML = newText;
+            this.el.textContent = newText;
           }
         };
         requestAnimationFrame(animate);
