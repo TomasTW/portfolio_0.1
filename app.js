@@ -17,15 +17,16 @@
     if (!svgEl) return;
     svgEl.id = 'hero-svg';
 
-    const DURATION_S = 3; // matches the 3s animation duration in hero_section.svg
+    const DURATION_S = 2.982705; // matches the 3s animation duration in hero_section.svg
     const section = document.getElementById('hero');
 
-    // Scale SVG to cover the full hero viewport (object-fit: cover)
+    // Ensure SVG uses xMidYMid meet so text is never cropped during initial/main animation
     svgEl.setAttribute('preserveAspectRatio', 'xMidYMid slice');
+    svgEl.setAttribute('preserveAspectRatio', 'xMidYMid meet');
 
     // All animated elements in hero_section.svg
     const targets = Array.from(svgEl.querySelectorAll(
-      '#Vector, #Vector_2, #Vector_3, #Vector_4, #Vector_5, #Vector_6, ' +
+      '#Union, #Vector, #Vector_2, #Vector_3, #Vector_4, #Vector_5, #Vector_6, ' +
       '#Vector_7, #Vector_8, #Vector_9, #Vector_10, #Vector_11, #Vector_12, #logo'
     ));
     if (!targets.length) return;
@@ -57,13 +58,37 @@
         const scrolled = Math.max(0, window.scrollY - sectionTop);
         const progress = sectionHeight > 0 ? Math.min(1, scrolled / sectionHeight) : 0;
 
-        // Clamp to DURATION_S - 0.05s to prevent -3.0s % 3.0s wrap-around back to frame 0
-        const seekTime = Math.min(DURATION_S - 0.05, progress * DURATION_S);
+        // Clamp to DURATION_S - 0.001s to prevent -3.0s % 3.0s wrap-around back to frame 0
+        const seekTime = Math.min(DURATION_S - 0.001, progress * DURATION_S);
         seekTo(seekTime);
+
+        // Smooth end scene expansion: scale SVG from 1.0 to cover full sticky area during progress 0.65 -> 1.0
+        const containerWidth = container.clientWidth;
+        const containerHeight = container.clientHeight;
+        if (containerWidth > 0 && containerHeight > 0) {
+          const nativeAspect = 1920 / 1080;
+          const containerAspect = containerWidth / containerHeight;
+          let maxScale = 1.0;
+          if (containerAspect < nativeAspect) {
+            maxScale = containerHeight / (containerWidth / nativeAspect);
+          } else {
+            maxScale = containerWidth / (containerHeight * nativeAspect);
+          }
+
+          let scale = 1.0;
+          if (progress > 0.65) {
+            const t = Math.min(1, (progress - 0.65) / 0.35);
+            const easeT = t * t * (3 - 2 * t); // smoothstep interpolation
+            scale = 1.0 + (maxScale - 1.0) * easeT;
+          }
+
+          svgEl.style.transform = `translate(-50%, -50%) scale(${scale.toFixed(4)})`;
+        }
       });
     }
 
     window.addEventListener('scroll', onScroll, { passive: true });
+    window.addEventListener('resize', onScroll, { passive: true });
     onScroll(); // sync to current scroll position on load
   }
 
@@ -557,7 +582,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
     const worksData = [
       {
-        title: "NZXT Marketing & Visual Design",
+        title: "NZXT Campaign & Packaging",
         tags: "#Packaging #Branding #Hardware #Layout",
         bullets: [
           "Developed vector layouts for hardware component packaging.",
@@ -596,16 +621,6 @@ document.addEventListener('DOMContentLoaded', () => {
           "Designed typography systems and promotional materials for local Taiwanese products."
         ],
         modalId: "modal-liho"
-      },
-      {
-        title: "Movie Sketches Sketchbook",
-        tags: "#Drawing #FineArt #Procreate",
-        bullets: [
-          "Created 10+ physical cardboard paintings depicting classic cinematic frames.",
-          "Explored color lighting and composition styles of world-class directors.",
-          "Digitized and cataloged the collection for portfolio showcases."
-        ],
-        modalId: "modal-drawings"
       }
     ];
 
@@ -715,45 +730,74 @@ document.addEventListener('DOMContentLoaded', () => {
     updateActiveProject(0);
   })();
 
-  // --- Works Mobile Modal Controls (Tablet & Phone) ---
+  // --- Works Modal Controls (Desktop & Mobile) ---
   (function initWorksMobileModals() {
     const modalTriggers = document.querySelectorAll('[data-modal]');
-    const modals = document.querySelectorAll('.work-modal');
+    const modals = document.querySelectorAll('.work-modal, .project-modal');
+
+    function updateModalState() {
+      const openModals = document.querySelectorAll('.work-modal.open, .project-modal.open');
+      if (openModals.length > 0) {
+        document.body.classList.add('modal-is-open');
+        document.body.style.overflow = 'hidden';
+        document.documentElement.style.overflow = 'hidden';
+      } else {
+        document.body.classList.remove('modal-is-open');
+        document.body.style.overflow = '';
+        document.documentElement.style.overflow = '';
+      }
+    }
+
+    const openModal = (targetModal) => {
+      if (targetModal) {
+        targetModal.classList.add('open');
+        updateModalState();
+      }
+    };
+
+    const closeModal = (modal) => {
+      if (modal) {
+        modal.classList.remove('open');
+        updateModalState();
+      }
+    };
 
     modalTriggers.forEach(item => {
-      item.addEventListener('click', () => {
+      item.addEventListener('click', (e) => {
+        e.preventDefault();
         const modalId = item.getAttribute('data-modal');
         const targetModal = document.getElementById(modalId);
-        if (targetModal) {
-          targetModal.classList.add('open');
-          document.body.style.overflow = 'hidden';
-          document.documentElement.style.overflow = 'hidden';
-        }
+        openModal(targetModal);
       });
     });
 
     modals.forEach(modal => {
-      const closeBtn = modal.querySelector('.work-modal-close');
-      
-      const closeModal = () => {
-        modal.classList.remove('open');
-        document.body.style.overflow = '';
-        document.documentElement.style.overflow = '';
-      };
+      const closeBtns = modal.querySelectorAll('.work-modal-close, .modal-close, .modal-close-btn');
 
-      if (closeBtn) {
+      closeBtns.forEach(closeBtn => {
         closeBtn.addEventListener('click', (e) => {
           e.stopPropagation();
-          closeModal();
+          closeModal(modal);
         });
-      }
+      });
 
       // Close on clicking backdrop
       modal.addEventListener('click', (e) => {
         if (e.target === modal) {
-          closeModal();
+          closeModal(modal);
         }
       });
+    });
+
+    // Close on Escape key press
+    window.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape') {
+        modals.forEach(modal => {
+          if (modal.classList.contains('open')) {
+            closeModal(modal);
+          }
+        });
+      }
     });
   })();
 
@@ -992,9 +1036,19 @@ document.addEventListener('DOMContentLoaded', () => {
       link.addEventListener('click', (e) => {
         e.preventDefault();
         const targetId = link.getAttribute('href');
-        const targetElement = document.querySelector(targetId);
-        if (targetElement) {
-          targetElement.scrollIntoView({ behavior: 'smooth' });
+        if (targetId === '#about') {
+          const aboutSection = document.getElementById('about');
+          if (aboutSection) {
+            const sectionTop = aboutSection.getBoundingClientRect().top + window.scrollY;
+            const scrollHeight = aboutSection.offsetHeight - window.innerHeight;
+            const targetY = scrollHeight > 0 ? sectionTop + 0.55 * scrollHeight : sectionTop;
+            window.scrollTo({ top: targetY, behavior: 'smooth' });
+          }
+        } else {
+          const targetElement = document.querySelector(targetId);
+          if (targetElement) {
+            targetElement.scrollIntoView({ behavior: 'smooth' });
+          }
         }
         // Close mobile menu if it's a mobile link
         if (link.classList.contains('mobile-dropdown-link') && mobileNavbar) {
