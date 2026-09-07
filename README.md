@@ -1,3 +1,7 @@
-I don't have coding experience, so I am using Antigravity agent to build my personal portfolio website, and Google Flow is for scrolling animations. 
-The "view" button on my project cards will link to my Behance; therefore, I don't need to upload files twice for different platforms every time I start a new design project. 
-Here is my old portfolio: https://tomasportfolio.framer.website/. I used Framer and Spline to try out a few cool scrolling animations.
+Situation: My previous portfolio highlighted my traditional graphic design background but didn't fully reflect my recent growth in UI/UX.
+
+Task: I wanted to update the site to give recruiters a clearer, more accurate picture of my current capabilities.
+
+Action: Using Figma and Antigravity, I reorganized the layout into four straightforward categories to make my case studies easier for visitors to navigate.
+
+Result: The updated portfolio provides a cleaner, more accessible experience, helping me share my work more effectively as I pursue digital design roles.

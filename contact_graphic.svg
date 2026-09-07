@@ -1,7 +1,39 @@
 <svg width="400" height="400" viewBox="0 0 400 400" fill="none" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+<style>
+  #who-i-am-text {
+    animation: text-glitch-pulse 3.5s infinite ease-in-out, text-glitch-jitter 3.5s infinite ease-in-out;
+    transform-origin: center center;
+  }
+  @keyframes text-glitch-pulse {
+    0%, 100% { filter: drop-shadow(0 0 0 transparent); }
+    14% { filter: drop-shadow(0 0 0 transparent); }
+    15% { filter: drop-shadow(4px 0 0 rgba(0, 240, 255, 0.9)) drop-shadow(-4px 0 0 rgba(255, 0, 128, 0.9)) drop-shadow(0 0 10px rgba(255, 255, 102, 0.9)); }
+    17% { filter: drop-shadow(-4px 0 0 rgba(0, 240, 255, 0.95)) drop-shadow(4px 0 0 rgba(255, 0, 128, 0.95)) drop-shadow(0 0 14px rgba(255, 255, 102, 1)); }
+    19% { filter: drop-shadow(3px -1px 0 rgba(0, 240, 255, 0.85)) drop-shadow(-3px 1px 0 rgba(255, 0, 128, 0.85)); }
+    21% { filter: drop-shadow(0 0 0 transparent); }
+    54% { filter: drop-shadow(0 0 0 transparent); }
+    55% { filter: drop-shadow(3.5px -2px 0 rgba(0, 240, 255, 0.9)) drop-shadow(-3.5px 2px 0 rgba(255, 0, 128, 0.9)) drop-shadow(0 0 8px rgba(255, 255, 102, 0.85)); }
+    57% { filter: drop-shadow(-3px 2px 0 rgba(0, 240, 255, 0.95)) drop-shadow(3px -2px 0 rgba(255, 0, 128, 0.95)) drop-shadow(0 0 12px rgba(255, 255, 102, 1)); }
+    59% { filter: drop-shadow(2px 0 0 rgba(0, 240, 255, 0.8)) drop-shadow(-2px 0 0 rgba(255, 0, 128, 0.8)); }
+    61% { filter: drop-shadow(0 0 0 transparent); }
+  }
+  @keyframes text-glitch-jitter {
+    0%, 100% { transform: translate(0, 0) skewX(0deg); }
+    14% { transform: translate(0, 0) skewX(0deg); }
+    15% { transform: translate(-5px, 2px) skewX(-5deg) scale(1.03); }
+    17% { transform: translate(5px, -2px) skewX(5deg) scale(1.03); }
+    19% { transform: translate(-2px, 1px) skewX(-2deg); }
+    21% { transform: translate(0, 0) skewX(0deg); }
+    54% { transform: translate(0, 0) skewX(0deg); }
+    55% { transform: translate(4px, -3px) skewX(4deg) scale(1.03); }
+    57% { transform: translate(-4px, 3px) skewX(-4deg) scale(1.03); }
+    59% { transform: translate(2px, -1px) skewX(1deg); }
+    61% { transform: translate(0, 0) skewX(0deg); }
+  }
+</style>
 <g clip-path="url(#clip0_2653_829)">
 <rect y="-92" width="400" height="600" fill="url(#pattern0_2653_829)"/>
-<path d="M105 67.1667L130.783 85.5L119.733 56.1667L145.516 74.5L132.625 45.1667M143.675 36L156.566 67.1667V41.5L171.3 59.8333M217.341 25L213.658 56.1667M254.174 49.3833L244.966 37.8333L230.233 48.8333L241.283 63.5L259.699 43.3333L250.491 65.3333M270.749 50.6667L256.016 69L278.116 56.1667L270.749 80L294 67.1667L283.641 91M184.191 34.1667L174.983 45.1667L187.875 56.1667L197.083 45.1667L184.191 34.1667Z" stroke="#FFFF66" stroke-width="8" stroke-linecap="round" stroke-linejoin="round"/>
+<path id="who-i-am-text" d="M58 80.8889L96.6066 108.667L80.0609 64.2222L118.667 92L99.3642 47.5556M115.91 33.6667L135.213 80.8889V42L157.274 69.7778M226.214 17L220.699 64.2222M281.367 53.9444L267.579 36.4444L245.518 53.1111L262.063 75.3333L289.639 44.7778L275.851 78.1111M306.185 55.8889L284.124 83.6667L317.216 64.2222L306.185 100.333L341 80.8889L325.488 117M176.577 30.8889L162.789 47.5556L182.093 64.2222L195.881 47.5556L176.577 30.8889Z" stroke="#FFFF66" stroke-width="8" stroke-linecap="round" stroke-linejoin="round"/>
 </g>
 <defs>
 <pattern id="pattern0_2653_829" patternContentUnits="objectBoundingBox" width="1" height="1">

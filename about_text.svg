@@ -1,0 +1,35 @@
+<svg width="400" height="400" viewBox="0 0 400 400" fill="none" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+<style>
+  #what-i-do-text {
+    animation: text-glitch-pulse 3.5s infinite ease-in-out, text-glitch-jitter 3.5s infinite ease-in-out;
+    transform-origin: center center;
+  }
+  @keyframes text-glitch-pulse {
+    0%, 100% { filter: drop-shadow(0 0 0 transparent); }
+    14% { filter: drop-shadow(0 0 0 transparent); }
+    15% { filter: drop-shadow(4px 0 0 rgba(0, 240, 255, 0.9)) drop-shadow(-4px 0 0 rgba(255, 0, 128, 0.9)) drop-shadow(0 0 10px rgba(255, 255, 102, 0.9)); }
+    17% { filter: drop-shadow(-4px 0 0 rgba(0, 240, 255, 0.95)) drop-shadow(4px 0 0 rgba(255, 0, 128, 0.95)) drop-shadow(0 0 14px rgba(255, 255, 102, 1)); }
+    19% { filter: drop-shadow(3px -1px 0 rgba(0, 240, 255, 0.85)) drop-shadow(-3px 1px 0 rgba(255, 0, 128, 0.85)); }
+    21% { filter: drop-shadow(0 0 0 transparent); }
+    54% { filter: drop-shadow(0 0 0 transparent); }
+    55% { filter: drop-shadow(3.5px -2px 0 rgba(0, 240, 255, 0.9)) drop-shadow(-3.5px 2px 0 rgba(255, 0, 128, 0.9)) drop-shadow(0 0 8px rgba(255, 255, 102, 0.85)); }
+    57% { filter: drop-shadow(-3px 2px 0 rgba(0, 240, 255, 0.95)) drop-shadow(3px -2px 0 rgba(255, 0, 128, 0.95)) drop-shadow(0 0 12px rgba(255, 255, 102, 1)); }
+    59% { filter: drop-shadow(2px 0 0 rgba(0, 240, 255, 0.8)) drop-shadow(-2px 0 0 rgba(255, 0, 128, 0.8)); }
+    61% { filter: drop-shadow(0 0 0 transparent); }
+  }
+  @keyframes text-glitch-jitter {
+    0%, 100% { transform: translate(0, 0) skewX(0deg); }
+    14% { transform: translate(0, 0) skewX(0deg); }
+    15% { transform: translate(-5px, 2px) skewX(-5deg) scale(1.03); }
+    17% { transform: translate(5px, -2px) skewX(5deg) scale(1.03); }
+    19% { transform: translate(-2px, 1px) skewX(-2deg); }
+    21% { transform: translate(0, 0) skewX(0deg); }
+    54% { transform: translate(0, 0) skewX(0deg); }
+    55% { transform: translate(4px, -3px) skewX(4deg) scale(1.03); }
+    57% { transform: translate(-4px, 3px) skewX(-4deg) scale(1.03); }
+    59% { transform: translate(2px, -1px) skewX(1deg); }
+    61% { transform: translate(0, 0) skewX(0deg); }
+  }
+</style>
+<path id="what-i-do-text" d="M57.1241 75.5959L90.9767 104.763L80.9828 59.9148L114.464 91.7455L101.813 46.5268M119.242 38.0958L129.236 82.9438L137.098 46.0194L154.637 75.6253M192.95 72.8248L175.784 40.555L172.039 57.6852L168.294 74.8154M223.982 44.5656C214.799 45.9355 172.039 57.6852 172.039 57.6852M214.469 35.0905L206.236 74.6788L222.55 74.2398M256.61 43.6874L240.034 84.8272M314.19 77.5235L303.66 90.991M303.66 90.991L284.515 115.477L273.034 81.2851L303.66 90.991ZM326.229 107.72L304.601 107.417L303.912 131.763L325.54 132.066L326.229 107.72Z" stroke="#FFFF66" stroke-width="8" stroke-linecap="round" stroke-linejoin="round"/>
+</svg>

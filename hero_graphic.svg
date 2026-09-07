@@ -1,0 +1,36 @@
+<svg width="400" height="400" viewBox="0 0 400 400" fill="none" xmlns="http://www.w3.org/2000/svg">
+<style>
+  #hero-scroll-text {
+    animation: text-glitch-pulse 3.5s infinite ease-in-out, text-glitch-jitter 3.5s infinite ease-in-out;
+    transform-origin: center center;
+  }
+  @keyframes text-glitch-pulse {
+    0%, 100% { filter: drop-shadow(0 0 0 transparent); }
+    14% { filter: drop-shadow(0 0 0 transparent); }
+    15% { filter: drop-shadow(4px 0 0 rgba(0, 240, 255, 0.9)) drop-shadow(-4px 0 0 rgba(255, 0, 128, 0.9)) drop-shadow(0 0 10px rgba(255, 255, 102, 0.9)); }
+    17% { filter: drop-shadow(-4px 0 0 rgba(0, 240, 255, 0.95)) drop-shadow(4px 0 0 rgba(255, 0, 128, 0.95)) drop-shadow(0 0 14px rgba(255, 255, 102, 1)); }
+    19% { filter: drop-shadow(3px -1px 0 rgba(0, 240, 255, 0.85)) drop-shadow(-3px 1px 0 rgba(255, 0, 128, 0.85)); }
+    21% { filter: drop-shadow(0 0 0 transparent); }
+    54% { filter: drop-shadow(0 0 0 transparent); }
+    55% { filter: drop-shadow(3.5px -2px 0 rgba(0, 240, 255, 0.9)) drop-shadow(-3.5px 2px 0 rgba(255, 0, 128, 0.9)) drop-shadow(0 0 8px rgba(255, 255, 102, 0.85)); }
+    57% { filter: drop-shadow(-3px 2px 0 rgba(0, 240, 255, 0.95)) drop-shadow(3px -2px 0 rgba(255, 0, 128, 0.95)) drop-shadow(0 0 12px rgba(255, 255, 102, 1)); }
+    59% { filter: drop-shadow(2px 0 0 rgba(0, 240, 255, 0.8)) drop-shadow(-2px 0 0 rgba(255, 0, 128, 0.8)); }
+    61% { filter: drop-shadow(0 0 0 transparent); }
+  }
+  @keyframes text-glitch-jitter {
+    0%, 100% { transform: translate(0, 0) skewX(0deg); }
+    14% { transform: translate(0, 0) skewX(0deg); }
+    15% { transform: translate(-5px, 2px) skewX(-5deg) scale(1.03); }
+    17% { transform: translate(5px, -2px) skewX(5deg) scale(1.03); }
+    19% { transform: translate(-2px, 1px) skewX(-2deg); }
+    21% { transform: translate(0, 0) skewX(0deg); }
+    54% { transform: translate(0, 0) skewX(0deg); }
+    55% { transform: translate(4px, -3px) skewX(4deg) scale(1.03); }
+    57% { transform: translate(-4px, 3px) skewX(-4deg) scale(1.03); }
+    59% { transform: translate(2px, -1px) skewX(1deg); }
+    61% { transform: translate(0, 0) skewX(0deg); }
+  }
+</style>
+<path d="M139.982 41.3327C138.876 39.4202 136.429 38.7663 134.517 39.8722C132.605 40.978 131.951 43.4248 133.056 45.3372L136.519 43.335L139.982 41.3327ZM136.519 347L174.235 320.338L132.287 301.006L136.519 347ZM136.519 43.335L133.056 45.3372C169.741 108.78 155.773 167.527 133.176 198.112C127.529 205.756 121.418 211.537 115.544 215.211C109.631 218.907 104.251 220.297 99.8947 219.733C95.7317 219.194 91.916 216.801 89.0005 211.565C86.0063 206.188 84 197.823 84 185.762H80H76C76 198.558 78.1044 208.441 82.0109 215.457C85.9959 222.614 91.8708 226.761 98.8677 227.667C105.671 228.548 112.92 226.287 119.785 221.994C126.688 217.677 133.504 211.131 139.61 202.866C164.028 169.817 178.32 107.635 139.982 41.3327L136.519 43.335ZM80 185.762H84C84 174.686 85.7384 166.942 88.3623 161.905C90.9199 156.996 94.2471 154.739 97.8344 154.113C101.605 153.456 106.376 154.479 111.828 157.629C117.243 160.758 123.02 165.817 128.596 172.628C150.957 199.939 168.525 253.47 147.808 312.992L151.586 314.307L155.363 315.622C177.042 253.335 158.817 196.91 134.786 167.56C128.765 160.205 122.281 154.429 115.83 150.702C109.415 146.996 102.713 145.142 96.46 146.232C90.0239 147.355 84.7776 151.471 81.2674 158.209C77.8235 164.82 76 173.996 76 185.762H80Z" fill="#FFFF66"/>
+<path id="hero-scroll-text" d="M186.416 183.909L171.278 175.576L165.935 190.27L189.088 202.737L186.416 218.321L169.497 214.759M225.154 179.138L210.905 171.399L201.11 193.387L213.803 208.928L227.38 196.419M239.16 168.897L241.183 183.909M243.854 207.635L241.183 183.909M254.375 171.399L241.183 183.909M307.624 173.901L291.942 218.321M319.103 190.27L303.964 225.89M275.913 173.901L259.884 190.27L265.227 211.43L284.803 196.419L275.913 173.901Z" stroke="#FFFF66" stroke-width="8" stroke-linecap="round" stroke-linejoin="round"/>
+</svg>
