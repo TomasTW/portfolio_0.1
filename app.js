@@ -9,22 +9,19 @@
    sets the exact frozen frame. Both are applied together on every scroll
    tick so the browser recomputes the frame — reliable across all browsers.
    ========================================================================== */
-// --- Stable Viewport Height Engine (locks layout against toolbar collapse/expand) ---
-let lastRecordedWidth = window.innerWidth;
+// --- Dynamic Viewport Height Engine (tracks visualViewport and innerHeight) ---
 function updateStableVh() {
-  const vh = window.innerHeight;
+  const vh = (window.visualViewport ? window.visualViewport.height : window.innerHeight);
   document.documentElement.style.setProperty('--stable-vh', `${vh}px`);
 }
 updateStableVh();
 window.addEventListener('orientationchange', () => {
   setTimeout(updateStableVh, 150);
 });
-window.addEventListener('resize', () => {
-  if (Math.abs(window.innerWidth - lastRecordedWidth) > 30) {
-    lastRecordedWidth = window.innerWidth;
-    updateStableVh();
-  }
-});
+window.addEventListener('resize', updateStableVh);
+if (window.visualViewport) {
+  window.visualViewport.addEventListener('resize', updateStableVh);
+}
 
 function getViewportHeight() {
   return parseFloat(document.documentElement.style.getPropertyValue('--stable-vh')) || window.innerHeight;

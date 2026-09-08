@@ -477,9 +477,10 @@ section {
     position: sticky !important;
     top: 16px !important;
     height: calc(100vh - 32px) !important;
-    height: calc(var(--stable-vh, 100svh) - 32px) !important;
-    min-height: calc(var(--stable-vh, 100svh) - 32px) !important;
-    max-height: calc(var(--stable-vh, 100svh) - 32px) !important;
+    height: calc(100svh - 32px) !important;
+    height: calc(100dvh - 32px) !important;
+    min-height: calc(100dvh - 32px) !important;
+    max-height: calc(100dvh - 32px) !important;
     width: 100% !important;
     display: flex !important;
     align-items: center !important;
@@ -497,9 +498,13 @@ section {
     position: fixed !important;
     top: 16px !important;
     left: 16px !important;
+    right: 16px !important;
+    bottom: 16px !important;
     width: calc(100% - 32px) !important;
     height: calc(100vh - 32px) !important;
-    height: calc(var(--stable-vh, 100svh) - 32px) !important;
+    height: calc(100svh - 32px) !important;
+    height: calc(100dvh - 32px) !important;
+    max-height: calc(100dvh - 32px) !important;
     box-sizing: border-box !important;
   }
 
@@ -756,9 +761,10 @@ section {
     margin: 0 auto !important;
     width: calc(100% - 32px) !important;
     height: calc(100vh - 32px) !important;
-    height: calc(var(--stable-vh, 100svh) - 32px) !important;
-    min-height: calc(var(--stable-vh, 100svh) - 32px) !important;
-    max-height: calc(var(--stable-vh, 100svh) - 32px) !important;
+    height: calc(100svh - 32px) !important;
+    height: calc(100dvh - 32px) !important;
+    min-height: calc(100dvh - 32px) !important;
+    max-height: calc(100dvh - 32px) !important;
     padding: 48px 64px var(--tablet-section-bottom-clearance, 132px) 64px !important;
     box-sizing: border-box !important;
     background-color: transparent !important;
@@ -1461,11 +1467,16 @@ body.modal-is-open .mobile-navbar {
   }
 
   .hero-canvas-sticky {
-    position: fixed;
-    top: 16px;
-    left: 16px;
-    width: calc(100% - 32px);
-    height: calc(100vh - 32px);
+    position: fixed !important;
+    top: 16px !important;
+    left: 16px !important;
+    right: 16px !important;
+    bottom: 16px !important;
+    width: calc(100% - 32px) !important;
+    height: calc(100vh - 32px) !important;
+    height: calc(100svh - 32px) !important;
+    height: calc(100dvh - 32px) !important;
+    max-height: calc(100dvh - 32px) !important;
     overflow: hidden;
     display: flex;
     align-items: center;
@@ -1486,11 +1497,16 @@ body.modal-is-open .mobile-navbar {
   }
 
   .hero-canvas-sticky {
-    position: fixed;
-    top: 16px;
-    left: 16px;
-    width: calc(100% - 32px);
-    height: calc(100vh - 32px);
+    position: fixed !important;
+    top: 16px !important;
+    left: 16px !important;
+    right: 16px !important;
+    bottom: 16px !important;
+    width: calc(100% - 32px) !important;
+    height: calc(100vh - 32px) !important;
+    height: calc(100svh - 32px) !important;
+    height: calc(100dvh - 32px) !important;
+    max-height: calc(100dvh - 32px) !important;
     overflow: hidden;
     display: flex;
     align-items: center;
@@ -1566,9 +1582,10 @@ body.modal-is-open .mobile-navbar {
     position: sticky !important;
     top: 16px !important;
     height: calc(100vh - 32px) !important;
-    height: calc(var(--stable-vh, 100svh) - 32px) !important;
-    min-height: calc(var(--stable-vh, 100svh) - 32px) !important;
-    max-height: calc(var(--stable-vh, 100svh) - 32px) !important;
+    height: calc(100svh - 32px) !important;
+    height: calc(100dvh - 32px) !important;
+    min-height: calc(100dvh - 32px) !important;
+    max-height: calc(100dvh - 32px) !important;
     width: 100% !important;
     display: flex !important;
     align-items: center !important;
@@ -1603,9 +1620,10 @@ body.modal-is-open .mobile-navbar {
   .works-mobile-list {
     width: calc(100% - 32px) !important;
     height: calc(100vh - 32px) !important;
-    height: calc(var(--stable-vh, 100svh) - 32px) !important;
-    min-height: calc(var(--stable-vh, 100svh) - 32px) !important;
-    max-height: calc(var(--stable-vh, 100svh) - 32px) !important;
+    height: calc(100svh - 32px) !important;
+    height: calc(100dvh - 32px) !important;
+    min-height: calc(100dvh - 32px) !important;
+    max-height: calc(100dvh - 32px) !important;
     margin: 16px auto !important;
     padding: 32px 24px var(--mobile-section-bottom-clearance, 108px) 24px !important;
     box-sizing: border-box !important;
@@ -3060,8 +3078,9 @@ body.modal-is-open .mobile-navbar {
     width: 100% !important;
     max-width: 100% !important;
     height: calc(100vh - 86px) !important;
-    height: calc(var(--stable-vh, 100svh) - 86px) !important;
-    max-height: calc(var(--stable-vh, 100svh) - 86px) !important;
+    height: calc(100svh - 86px) !important;
+    height: calc(100dvh - 86px) !important;
+    max-height: calc(100dvh - 86px) !important;
     margin: 0 !important;
   }
 
@@ -4012,9 +4031,10 @@ body.modal-is-open .mobile-navbar {
   .contact-box {
     width: calc(100% - 32px) !important;
     height: calc(100vh - 32px) !important;
-    height: calc(var(--stable-vh, 100svh) - 32px) !important;
-    min-height: calc(var(--stable-vh, 100svh) - 32px) !important;
-    max-height: calc(var(--stable-vh, 100svh) - 32px) !important;
+    height: calc(100svh - 32px) !important;
+    height: calc(100dvh - 32px) !important;
+    min-height: calc(100dvh - 32px) !important;
+    max-height: calc(100dvh - 32px) !important;
     box-sizing: border-box !important;
     border-radius: 0 !important;
     background-color: transparent !important;
