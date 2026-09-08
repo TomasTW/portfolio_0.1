@@ -13,14 +13,10 @@
 </head>
 
 <body>
-  <!-- Accessible Skip Navigation Link -->
-  <a href="#main-content" class="skip-link">Skip to main content</a>
 
-  <main id="main-content">
-    <h1 class="sr-only">Tomas Chen — Visual &amp; UI/UX Designer Portfolio</h1>
-
-    <!-- HERO SECTION — Scroll-Scrubbed SVG Animation -->
-    <section id="hero" class="hero-canvas-section">
+  <main id="main">
+  <!-- HERO SECTION — Scroll-Scrubbed SVG Animation -->
+  <section id="hero" class="hero-canvas-section">
     <div class="hero-canvas-sticky">
       <!-- Hero Scroll Graphic Indicator (hero_graphic.svg) -->
       <div class="hero-scroll-indicator gyro-card" id="hero-scroll-indicator">
@@ -32,7 +28,7 @@
         </div>
       </div>
 
-      <svg width="1920" height="1080" viewBox="0 0 1920 1080" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <svg width="1920" height="1080" viewBox="0 0 1920 1080" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
         <style>
           @keyframes kf_Vector_transform_0 {
             0% {
@@ -2252,7 +2248,7 @@
 
         <!-- Top Headline Banner -->
         <div class="about-header">
-          <h2 class="about-headline">Visual Designer</h2>
+          <h1 class="about-headline">Visual Designer</h1>
         </div>
 
         <!-- Main Content Area: Hand Graphic -->
@@ -2271,8 +2267,8 @@
           </div><!-- /.about-graphic-layer -->
         </div>
 
-        <!-- Tool Icons Toolbar — directly above the categories footer -->
-        <div class="about-tools-toolbar about-tools-sidebar" role="toolbar" aria-label="Design and prototyping tools">
+        <!-- Tool Icons Row — directly above the categories footer -->
+        <div class="about-tools-sidebar">
           <img src="icons/skill-icons_illustrator.svg" alt="Adobe Illustrator" class="about-tool-icon">
           <img src="icons/skill-icons_photoshop.svg" alt="Adobe Photoshop" class="about-tool-icon">
           <img src="icons/skill-icons_ndesign.svg" alt="Adobe InDesign" class="about-tool-icon">
@@ -2283,9 +2279,9 @@
         </div>
 
         <!-- Bottom Area: Skills + Bio -->
-        <div class="about-details-footer about-card-bottom">
-          <div class="about-details-grid about-card-bottom-info">
-            <div class="about-skills-category about-skills-col">
+        <div class="about-card-bottom">
+          <div class="about-card-bottom-info">
+            <div class="about-skills-col">
               <div class="about-categories-footer">
                 <span class="category-item">Graphic &amp; Branding</span>
                 <span class="category-divider">|</span>
@@ -2298,7 +2294,7 @@
                 <span class="category-item">UI/UX Design</span>
               </div>
             </div>
-            <div class="about-biography about-bio-col">
+            <div class="about-bio-col">
               <p class="about-bio-text body-small">With 8+ years of experience in visual design, I specialize in
                 bridging visual communication with user-centric interfaces. I craft design systems, branding, and
                 conversion-focused campaign visuals that align business goals with exceptional user experiences.</p>
@@ -2314,7 +2310,6 @@
 
   <!-- SELECTED WORKS SECTION -->
   <section id="works" class="works">
-    <h2 class="sr-only">Selected Works</h2>
 
     <!-- ════════════════════════════════════════════════════════════════
          DESKTOP (>1024px): Pinned scroll frame with text scramble
@@ -2332,7 +2327,7 @@
                 <p class="work-hashtags body-small">#Packaging #Branding #Hardware</p>
               </div>
               <div class="work-mid">
-                <div class="work-img-wrap" data-modal="modal-nzxt">
+                <div class="work-img-wrap" data-modal="modal-nzxt" role="button" tabindex="0" aria-haspopup="dialog" aria-expanded="false" aria-controls="modal-nzxt" aria-label="Open NZXT project modal">
                   <img src="works/NZXT/nzxt_cover.png" alt="NZXT Marketing" class="work-img-slide active">
                 </div>
               </div>
@@ -2352,7 +2347,7 @@
                 <p class="work-hashtags body-small">#Poster #Flyer #VisualCampaign</p>
               </div>
               <div class="work-mid">
-                <div class="work-img-wrap" data-modal="modal-mitsukoshi">
+                <div class="work-img-wrap" data-modal="modal-mitsukoshi" role="button" tabindex="0" aria-haspopup="dialog" aria-expanded="false" aria-controls="modal-mitsukoshi" aria-label="Open Shin Kong Mitsukoshi project modal">
                   <img src="works/SKM/skm_cover.png" alt="Mitsukoshi Visual Promotions" class="work-img-slide active">
                 </div>
               </div>
@@ -2372,7 +2367,7 @@
                 <p class="work-hashtags body-small">#UI/UX #MobileApp #Figma</p>
               </div>
               <div class="work-mid">
-                <div class="work-img-wrap" data-modal="modal-gallery">
+                <div class="work-img-wrap" data-modal="modal-gallery" role="button" tabindex="0" aria-haspopup="dialog" aria-expanded="false" aria-controls="modal-gallery" aria-label="Open Gallery APP project modal">
                   <img src="works/app/app_cover.jpg" alt="Gallery App Preview" class="work-img-slide active">
                 </div>
               </div>
@@ -2392,7 +2387,7 @@
                 <p class="work-hashtags body-small">#Packaging #Branding #GraphicDesign</p>
               </div>
               <div class="work-mid">
-                <div class="work-img-wrap" data-modal="modal-liho">
+                <div class="work-img-wrap" data-modal="modal-liho" role="button" tabindex="0" aria-haspopup="dialog" aria-expanded="false" aria-controls="modal-liho" aria-label="Open Li Ho project modal">
                   <img src="works/brand/brand_cover.jpg" alt="Li Ho Branding" class="work-img-slide active">
                 </div>
               </div>
@@ -2424,19 +2419,19 @@
          ════════════════════════════════════════════════════════════════ -->
     <div class="works-mobile-list">
 
-      <div class="works-list-item" data-modal="modal-nzxt">
+      <div class="works-list-item" data-modal="modal-nzxt" role="button" tabindex="0" aria-haspopup="dialog" aria-expanded="false" aria-controls="modal-nzxt">
         <h3 class="works-list-title">NZXT Campaign &amp; Packaging</h3>
         <p class="works-list-tags">#Packaging #Branding #Hardware</p>
       </div>
-      <div class="works-list-item" data-modal="modal-mitsukoshi">
+      <div class="works-list-item" data-modal="modal-mitsukoshi" role="button" tabindex="0" aria-haspopup="dialog" aria-expanded="false" aria-controls="modal-mitsukoshi">
         <h3 class="works-list-title">Shin Kong Mitsukoshi Visual Promotions</h3>
         <p class="works-list-tags">#Poster #Flyer #VisualCampaign</p>
       </div>
-      <div class="works-list-item" data-modal="modal-gallery">
+      <div class="works-list-item" data-modal="modal-gallery" role="button" tabindex="0" aria-haspopup="dialog" aria-expanded="false" aria-controls="modal-gallery">
         <h3 class="works-list-title">Gallery APP Preview &amp; Ticketing</h3>
         <p class="works-list-tags">#UI/UX #MobileApp #Figma</p>
       </div>
-      <div class="works-list-item" data-modal="modal-liho">
+      <div class="works-list-item" data-modal="modal-liho" role="button" tabindex="0" aria-haspopup="dialog" aria-expanded="false" aria-controls="modal-liho">
         <h3 class="works-list-title">Li Ho Branding &amp; Packaging</h3>
         <p class="works-list-tags">#Packaging #Branding #GraphicDesign</p>
       </div>
@@ -2458,13 +2453,13 @@
          MODALS — opened by tapping list items on tablet/phone
          ════════════════════════════════════════════════════════════════ -->
 
-    <div class="work-modal" id="modal-nzxt" role="dialog" aria-modal="true" aria-labelledby="modal-nzxt-title">
+    <div class="work-modal" id="modal-nzxt" role="dialog" aria-modal="true" aria-labelledby="modal-nzxt-title" aria-hidden="true">
       <div class="work-modal-inner">
         <div class="work-modal-scroll-area">
 
           <!-- Sticky Title -->
           <div class="work-modal-title-wrapper">
-            <h3 class="work-modal-title" id="modal-nzxt-title">NZXT Campaign &amp; Packaging</h3>
+            <h2 class="work-modal-title" id="modal-nzxt-title">NZXT Campaign &amp; Packaging</h2>
           </div>
 
           <!-- Header Section: Overview -->
@@ -2481,7 +2476,7 @@
           <div class="work-modal-header-border"></div>
 
           <!-- Metadata Grid -->
-          <div class="modal-meta-grid work-modal-meta-grid nzxt-meta-grid">
+          <div class="work-modal-meta-grid nzxt-meta-grid">
             <div class="work-modal-meta-item">
               <span class="work-modal-meta-label">Role</span>
               <span class="work-modal-meta-val">Graphic Designer</span>
@@ -2515,18 +2510,18 @@
             <!-- Callout Text + Gamescom Image -->
             <div class="work-modal-grid-text-img">
               <div class="work-modal-text-block">
-                <div class="modal-callout nzxt-callout-item">
+                <div class="nzxt-callout-item">
                   <h4 class="work-modal-callout-title"><span class="label-marker">▲</span> COMPUTEX 2025</h4>
                   <p class="work-modal-callout-desc">In this project, my role is to align the branding with graphics and
                     make an impact image for the visitor installation.</p>
                 </div>
-                <div class="modal-callout nzxt-callout-item nzxt-gamescom-callout-desktop">
+                <div class="nzxt-callout-item nzxt-gamescom-callout-desktop">
                   <h4 class="work-modal-callout-title"><span class="label-marker">▶</span> Gamescom 2025</h4>
                   <p class="work-modal-callout-desc">Support the wall sticker's graphics to strengthen branding.</p>
                 </div>
               </div>
               <img src="works/NZXT/NZXT_5.png" alt="Gamescom 2025 Showcase" class="work-modal-grid-img" loading="lazy">
-              <div class="modal-callout nzxt-callout-item nzxt-gamescom-callout-mobile">
+              <div class="nzxt-callout-item nzxt-gamescom-callout-mobile">
                 <h4 class="work-modal-callout-title"><span class="label-marker">▶</span> Gamescom 2025</h4>
                 <p class="work-modal-callout-desc">Support the wall sticker's graphics to strengthen branding.</p>
               </div>
@@ -2545,8 +2540,8 @@
               <img src="works/NZXT/NZXT_8.png" alt="NZXT Japanese Catalog Brochure" class="work-modal-grid-img"
                 loading="lazy">
             </div>
-            <div class="modal-section-header nzxt-section-header-center">
-              <h4 class="work-modal-section-title-clean">Japanese Assets</h4>
+            <div class="nzxt-section-header-center">
+              <h3 class="work-modal-section-title-clean">Japanese Assets</h3>
               <p class="work-modal-section-subtitle">Series Poster / Folder / Flyer</p>
             </div>
           </div>
@@ -2557,7 +2552,7 @@
               <div class="nzxt-korea-col">
                 <img src="works/NZXT/NZXT_9.png" alt="NZXT C650 Gold Korean Web Page Layout"
                   class="work-modal-grid-img nzxt-tall-img" loading="lazy">
-                <div class="modal-callout nzxt-callout-item nzxt-korea-callout-mobile">
+                <div class="nzxt-callout-item nzxt-korea-callout-mobile">
                   <h4 class="work-modal-callout-title"><span class="label-marker">◀</span> Korea Assets</h4>
                   <p class="work-modal-callout-desc">Web content page</p>
                 </div>
@@ -2568,11 +2563,11 @@
                 <img src="works/NZXT/NZXT_11.png" alt="NZXT India Assets Flyer" class="work-modal-grid-img"
                   loading="lazy">
                 <div class="nzxt-callouts-stacked">
-                  <div class="modal-callout nzxt-callout-item nzxt-india-callout">
+                  <div class="nzxt-callout-item nzxt-india-callout">
                     <h4 class="work-modal-callout-title"><span class="label-marker">▲</span> India Assets</h4>
                     <p class="work-modal-callout-desc">Local flyers</p>
                   </div>
-                  <div class="modal-callout nzxt-callout-item nzxt-korea-callout-desktop">
+                  <div class="nzxt-callout-item nzxt-korea-callout-desktop">
                     <h4 class="work-modal-callout-title"><span class="label-marker">◀</span> Korea Assets</h4>
                     <p class="work-modal-callout-desc">Web content page</p>
                   </div>
@@ -2604,11 +2599,11 @@
               </div>
             </div>
             <div class="nzxt-packaging-summary-box">
-              <h4 class="nzxt-packaging-title">Packaging_Shoreline Retail box Assets</h4>
+              <h3 class="nzxt-packaging-title">Packaging_Shoreline Retail box Assets</h3>
               <p class="nzxt-packaging-desc">In this project, my role is to align the branding with graphics and make
                 sure the product features are highlighted and the spec information is also clear.</p>
-              <div class="modal-divider nzxt-summary-divider"></div>
-              <ol class="modal-feature-list nzxt-takeaways-list">
+              <div class="nzxt-summary-divider"></div>
+              <ol class="nzxt-takeaways-list">
                 <li>Start from the small to the big to ensure the basic content is aligned with every product size</li>
                 <li>Use the brand color to increase the company image and highlight the features</li>
                 <li>The limited symbolized icon can catch the user's eye to explain the function and preview the product
@@ -2624,7 +2619,7 @@
             <path class="work-modal-fill-path"></path>
           </svg>
         </div>
-        <button type="button" class="btn-modal-close work-modal-close" aria-label="Close modal">
+        <button class="work-modal-close" aria-label="Close NZXT project modal">
           <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
             stroke-linecap="round" stroke-linejoin="round">
             <line x1="18" y1="6" x2="6" y2="18"></line>
@@ -2634,12 +2629,12 @@
       </div>
     </div>
 
-    <div class="work-modal" id="modal-mitsukoshi" role="dialog" aria-modal="true" aria-labelledby="modal-mitsukoshi-title">
+    <div class="work-modal" id="modal-mitsukoshi" role="dialog" aria-modal="true" aria-labelledby="modal-mitsukoshi-title" aria-hidden="true">
       <div class="work-modal-inner">
         <div class="work-modal-scroll-area">
           <!-- Sticky Title -->
           <div class="work-modal-title-wrapper">
-            <h3 class="work-modal-title" id="modal-mitsukoshi-title">Shin Kong Mitsukoshi Visual Promotions</h3>
+            <h2 class="work-modal-title" id="modal-mitsukoshi-title">Shin Kong Mitsukoshi Visual Promotions</h2>
           </div>
 
           <!-- Header Section: Overview -->
@@ -2657,7 +2652,7 @@
           <div class="work-modal-header-border"></div>
 
           <!-- Metadata Grid -->
-          <div class="modal-meta-grid work-modal-meta-grid nzxt-meta-grid">
+          <div class="work-modal-meta-grid nzxt-meta-grid">
             <div class="work-modal-meta-item">
               <span class="work-modal-meta-label">Role</span>
               <span class="work-modal-meta-val">Graphic Designer</span>
@@ -2692,7 +2687,7 @@
               <img src="works/SKM/SKM_6.png" alt="Fashion Trends Banner" class="work-modal-grid-img" loading="lazy">
               <img src="works/SKM/SKM_7.png" alt="Poster Display Mockup" class="work-modal-grid-img" loading="lazy">
             </div>
-            <div class="modal-section-header nzxt-section-header-center">
+            <div class="nzxt-section-header-center">
               <h4 class="work-modal-callout-title work-modal-callout-title-center">Online Banner</h4>
             </div>
           </div>
@@ -2712,7 +2707,7 @@
                 loading="lazy">
               <img src="works/SKM/SKM_12.png" alt="Event Banner Layout" class="work-modal-grid-img" loading="lazy">
             </div>
-            <div class="modal-section-header nzxt-section-header-center">
+            <div class="nzxt-section-header-center">
               <h4 class="work-modal-callout-title work-modal-callout-title-center">Poster</h4>
             </div>
           </div>
@@ -2734,7 +2729,7 @@
               <img src="works/SKM/SKM_18.png" alt="Home Appliances Spread" class="work-modal-grid-img" loading="lazy">
               <img src="works/SKM/SKM_19.png" alt="Beauty Specials Layout" class="work-modal-grid-img" loading="lazy">
             </div>
-            <div class="modal-section-header nzxt-section-header-center">
+            <div class="nzxt-section-header-center">
               <h4 class="work-modal-callout-title work-modal-callout-title-center">Catalog</h4>
             </div>
           </div>
@@ -2745,7 +2740,7 @@
             <path class="work-modal-fill-path"></path>
           </svg>
         </div>
-        <button type="button" class="btn-modal-close work-modal-close" aria-label="Close modal">
+        <button class="work-modal-close" aria-label="Close Shin Kong Mitsukoshi project modal">
           <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
             stroke-linecap="round" stroke-linejoin="round">
             <line x1="18" y1="6" x2="6" y2="18"></line>
@@ -2755,12 +2750,12 @@
       </div>
     </div>
 
-    <div class="work-modal" id="modal-gallery" role="dialog" aria-modal="true" aria-labelledby="modal-gallery-title">
+    <div class="work-modal" id="modal-gallery" role="dialog" aria-modal="true" aria-labelledby="modal-gallery-title" aria-hidden="true">
       <div class="work-modal-inner">
         <div class="work-modal-scroll-area">
           <!-- Sticky Title -->
           <div class="work-modal-title-wrapper">
-            <h3 class="work-modal-title" id="modal-gallery-title">Gallery APP Preview &amp; Ticketing</h3>
+            <h2 class="work-modal-title" id="modal-gallery-title">Gallery APP Preview &amp; Ticketing</h2>
           </div>
 
           <!-- Header Section: Overview -->
@@ -2778,7 +2773,7 @@
           <div class="work-modal-header-border"></div>
 
           <!-- Metadata Grid -->
-          <div class="work-modal-meta-grid modal-meta-grid nzxt-meta-grid">
+          <div class="work-modal-meta-grid nzxt-meta-grid">
             <div class="work-modal-meta-item">
               <span class="work-modal-meta-label">Role</span>
               <span class="work-modal-meta-val">UI/UX Designer</span>
@@ -2803,12 +2798,12 @@
               <img src="works/app/APP_1.png" alt="Understanding the user 3D Phone Mockup" class="work-modal-grid-img"
                 loading="lazy">
               <div class="work-modal-text-block">
-                <div class="modal-callout nzxt-callout-item">
+                <div class="nzxt-callout-item">
                   <h4 class="work-modal-callout-title" style="padding-left:0;">Understanding the user</h4>
                   <p class="work-modal-section-subtitle" style="margin-top: 4px;">User research/Personas/Problem
                     statements/User journey maps</p>
                 </div>
-                <div class="modal-callout nzxt-callout-item" style="margin-top: 16px;">
+                <div class="nzxt-callout-item" style="margin-top: 16px;">
                   <h4 class="work-modal-callout-title" style="padding-left:0;">User research</h4>
                   <p class="work-modal-desc" style="padding-left:0; margin-top: 6px;"> Summary: conducted interviews,
                     and created
@@ -2850,7 +2845,7 @@
               <img src="works/app/APP_8.png" alt="Digital wireframes and Low-fidelity prototype flow"
                 class="work-modal-grid-img" loading="lazy">
               <div class="work-modal-text-block">
-                <div class="modal-callout nzxt-callout-item">
+                <div class="nzxt-callout-item">
                   <h4 class="work-modal-callout-title" style="padding-left:0;">Digital wireframes</h4>
                   <p class="work-modal-desc" style="padding-left:0; margin-top: 6px;">I want to make people feel like
                     they are in the gallery.</p>
@@ -2860,7 +2855,7 @@
                     <li>3. Collections in the museum are also previewed.</li>
                   </ol>
                 </div>
-                <div class="modal-callout nzxt-callout-item" style="margin-top: 16px;">
+                <div class="nzxt-callout-item" style="margin-top: 16px;">
                   <h4 class="work-modal-callout-title" style="padding-left:0;">Low-fidelity prototype</h4>
                   <ol class="app-numbered-list" style="margin-top: 6px;">
                     <li>1. Click on the exhibition.</li>
@@ -2898,7 +2893,7 @@
               <div class="app-video-wrapper" id="app-video-wrapper">
                 <div class="app-video-inner" id="app-video-inner">
                   <video src="works/app/demo.mov" playsinline loop class="work-modal-video" id="app-demo-video"></video>
-                  <button type="button" class="app-video-play-btn" id="app-video-play-btn" aria-label="Play video">
+                  <button class="app-video-play-btn" id="app-video-play-btn" aria-label="Play video">
                     <svg viewBox="0 0 24 24" fill="currentColor">
                       <polygon points="5 3 19 12 5 21 5 3"></polygon>
                     </svg>
@@ -2912,7 +2907,7 @@
                 </div>
               </div>
             </div>
-            <div class="modal-section-header nzxt-section-header-center">
+            <div class="nzxt-section-header-center">
               <h4 class="work-modal-callout-title work-modal-callout-title-center">High-fidelity prototype</h4>
             </div>
           </div>
@@ -2921,7 +2916,7 @@
           <div class="work-modal-section">
             <div class="work-modal-text-block">
               <h4 class="work-modal-callout-title" style="padding-left:0;">Accessibility considerations</h4>
-              <ul class="modal-feature-list nzxt-takeaways-list" style="margin-top:8px;">
+              <ul class="nzxt-takeaways-list" style="margin-top:8px;">
                 <li>Used detailed imagery for artworks to help all users better understand the exhibitions</li>
                 <li>Used icons to help make navigation easier</li>
                 <li>Used contrasting colors and clear typography to ensure readability</li>
@@ -2944,7 +2939,7 @@
             <path class="work-modal-fill-path"></path>
           </svg>
         </div>
-        <button type="button" class="btn-modal-close work-modal-close" aria-label="Close modal">
+        <button class="work-modal-close" aria-label="Close Gallery APP project modal">
           <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
             stroke-linecap="round" stroke-linejoin="round">
             <line x1="18" y1="6" x2="6" y2="18"></line>
@@ -2954,12 +2949,12 @@
       </div>
     </div>
 
-    <div class="work-modal" id="modal-liho" role="dialog" aria-modal="true" aria-labelledby="modal-liho-title">
+    <div class="work-modal" id="modal-liho" role="dialog" aria-modal="true" aria-labelledby="modal-liho-title" aria-hidden="true">
       <div class="work-modal-inner">
         <div class="work-modal-scroll-area">
           <!-- Sticky Title -->
           <div class="work-modal-title-wrapper">
-            <h3 class="work-modal-title" id="modal-liho-title">LiHo Branding &amp; Packaging</h3>
+            <h2 class="work-modal-title" id="modal-liho-title">LiHo Branding &amp; Packaging</h2>
           </div>
 
           <!-- Header Section: Overview -->
@@ -2977,7 +2972,7 @@
           <div class="work-modal-header-border"></div>
 
           <!-- Metadata Grid -->
-          <div class="work-modal-meta-grid modal-meta-grid nzxt-meta-grid">
+          <div class="work-modal-meta-grid nzxt-meta-grid">
             <div class="work-modal-meta-item">
               <span class="work-modal-meta-label">Role</span>
               <span class="work-modal-meta-val">Branding &amp; Packaging Designer</span>
@@ -3014,8 +3009,8 @@
               <div class="liho-col-logo">
                 <img src="works/brand/brand_2.png" alt="Brand Logo Construction Grid" class="work-modal-grid-img"
                   loading="lazy">
-                <div class="work-modal-text-block modal-callout-block nzxt-callout-block">
-                  <div class="modal-callout nzxt-callout-item">
+                <div class="work-modal-text-block nzxt-callout-block">
+                  <div class="nzxt-callout-item">
                     <h4 class="work-modal-callout-title"><span class="label-marker">▲</span> LOGO concept:</h4>
                     <p class="work-modal-callout-desc">Use greeting gestures to express enthusiasm for Taiwanese. The palm
                       and thumb depict the feeling of a spoon. The inside of the spoon is the image of a dialog box,
@@ -3024,7 +3019,7 @@
                       adjusted to a flatter effect using a gradient method, which also matches the thick feeling of the
                       meaning of the gift.</p>
                   </div>
-                  <div class="modal-callout nzxt-callout-item liho-font-callout-desktop">
+                  <div class="nzxt-callout-item liho-font-callout-desktop">
                     <h4 class="work-modal-callout-title"><span class="label-marker">▶</span> Font concept:</h4>
                     <p class="work-modal-callout-desc">Li Ho means greeting people from all over the world with gifts. For
                       people from everywhere to easily say Hello use the Taiwanese. For the Chinese part, refer to
@@ -3037,7 +3032,7 @@
                   loading="lazy">
                 <img src="works/brand/brand_4.png" alt="Typography &amp; Chinese Character Font Design"
                   class="work-modal-grid-img" loading="lazy">
-                <div class="modal-callout nzxt-callout-item liho-font-callout-mobile">
+                <div class="nzxt-callout-item liho-font-callout-mobile">
                   <h4 class="work-modal-callout-title"><span class="label-marker">▶</span> Font concept:</h4>
                   <p class="work-modal-callout-desc">Li Ho means greeting people from all over the world with gifts. For
                     people from everywhere to easily say Hello use the Taiwanese. For the Chinese part, refer to
@@ -3050,7 +3045,7 @@
           <!-- Section 3: Fu, Lu, Shou Character Breakdowns (3-Column 2-Row) -->
           <div class="work-modal-section">
             <div class="work-modal-grid work-modal-grid-3">
-              <div class="character-showcase-card liho-character-card">
+              <div class="liho-character-card">
                 <img src="works/brand/brand_5.png" alt="Fu Character Illustration" class="work-modal-grid-img"
                   loading="lazy">
                 <div class="work-modal-text-block">
@@ -3058,7 +3053,7 @@
                     good luck. The character is styled in vibrant magenta, holding the traditional blessing tablet.</p>
                 </div>
               </div>
-              <div class="character-showcase-card liho-character-card">
+              <div class="liho-character-card">
                 <img src="works/brand/brand_6.png" alt="Lu Character Illustration" class="work-modal-grid-img"
                   loading="lazy">
                 <div class="work-modal-text-block">
@@ -3066,7 +3061,7 @@
                     status. The character is styled in fresh teal with rounded geometry.</p>
                 </div>
               </div>
-              <div class="character-showcase-card liho-character-card">
+              <div class="liho-character-card">
                 <img src="works/brand/brand_7.png" alt="Shou Character Illustration" class="work-modal-grid-img"
                   loading="lazy">
                 <div class="work-modal-text-block">
@@ -3085,7 +3080,7 @@
               <img src="works/brand/brand_9.png" alt="Product Icons &amp; Food Elements Pies Category"
                 class="work-modal-grid-img" loading="lazy">
             </div>
-            <div class="modal-section-header nzxt-section-header-center">
+            <div class="nzxt-section-header-center">
               <h4 class="work-modal-callout-title work-modal-callout-title-center">The Cards</h4>
             </div>
           </div>
@@ -3100,7 +3095,7 @@
               <img src="works/brand/brand_12.png" alt="Popsicle &amp; Blood Cake Packaging Renders"
                 class="work-modal-grid-img" loading="lazy">
             </div>
-            <div class="modal-section-header nzxt-section-header-center">
+            <div class="nzxt-section-header-center">
               <h4 class="work-modal-callout-title work-modal-callout-title-center">The Products</h4>
             </div>
           </div>
@@ -3111,7 +3106,7 @@
             <path class="work-modal-fill-path"></path>
           </svg>
         </div>
-        <button type="button" class="btn-modal-close work-modal-close" aria-label="Close modal">
+        <button class="work-modal-close" aria-label="Close Li Ho project modal">
           <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
             stroke-linecap="round" stroke-linejoin="round">
             <line x1="18" y1="6" x2="6" y2="18"></line>
@@ -3130,32 +3125,32 @@
       <div class="contact-box">
 
         <!-- Top layout header (for mobile/tablet only, hidden on desktop) -->
-        <div class="contact-heading-group contact-top-mobile">
-          <h2 class="contact-headline">Get in touch</h2>
+        <div class="contact-top-mobile">
+          <h1 class="contact-headline">Get in touch</h1>
           <p class="contact-location-text contact-location-top">Location: 23.6978° N latitude and 120.9605° E longitude</p>
           <p class="contact-credit-text contact-credit-top body-small">® Tomas Chen &amp; Antigravity IDE agent Design</p>
         </div>
 
         <!-- Main Content Layout -->
-        <div class="contact-meta-group contact-main-grid">
+        <div class="contact-main-grid">
           <!-- Left Content: Title (desktop) -->
           <div class="contact-left-side">
-            <h2 class="contact-headline contact-desktop-only">Get in touch</h2>
+            <h1 class="contact-headline contact-desktop-only">Get in touch</h1>
           </div>
 
           <!-- Right Content: Vertical Location and Credit (desktop only) -->
           <div class="contact-right-side contact-desktop-only">
-            <aside class="contact-credit-aside contact-credit-vertical contact-credit-text body-small" aria-label="Design credits">
+            <div class="contact-credit-vertical contact-credit-text body-small">
               ® Tomas Chen &amp; Antigravity IDE agent Design
-            </aside>
-            <aside class="contact-location-aside contact-location-vertical" aria-label="Current location">
+            </div>
+            <div class="contact-location-vertical">
               Location: 23.6978° N latitude and 120.9605° E longitude
-            </aside>
+            </div>
           </div>
         </div>
 
         <!-- Bottom Row: Graphic + Links + Mobile bottom location -->
-        <div class="contact-content-row contact-bottom-row">
+        <div class="contact-bottom-row">
           <!-- Graphic (Desktop/Tablet/Mobile) -->
           <div class="contact-graphic-container gyro-card">
             <div class="gyro-layer-base">
@@ -3224,29 +3219,29 @@
 
     <!-- CLOSED STATE: Logo square + "menu" text -->
     <div class="mobile-nav-bar">
-      <div class="mobile-nav-logo">
-        <svg viewBox="0 0 72 82" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+      <div class="mobile-nav-logo" role="button" tabindex="0" aria-label="Scroll to previous section">
+        <svg viewBox="0 0 72 82" fill="currentColor" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
           <path
             d="M19.5 62.9824C10.5 66.7862 9.5 76.0834 7.5 82H0C5 60.0241 15 15.3117 15 12.2689C15 9.22612 13.5 9.73325 6 16.0722L0 11.0009C9 2.12607 24 -4.2129 42 3.39391C57.0002 9.73299 69 2.12598 72 0.858138C70.5 3.39381 60.1367 11.3849 52.5 13.5365C43.5 16.0722 46.5 24.9471 48 33.8219C49.5 42.6968 51.4917 52.1403 43.5 56.6432C34.5 61.7144 26.341 60.0912 19.5 62.9824Z" />
         </svg>
       </div>
-      <button type="button" class="btn-nav-toggle mobile-nav-toggle" aria-expanded="false" aria-controls="mobile-nav-drawer" aria-label="Open navigation menu">menu</button>
+      <button class="mobile-nav-toggle" aria-label="Open navigation menu" aria-expanded="false" aria-controls="mobile-open-state">menu</button>
     </div>
 
     <!-- OPEN STATE: Stepped panel layout matching Image 1 & Image 2 -->
-    <div class="mobile-open-state" id="mobile-nav-drawer" role="region" aria-label="Mobile navigation">
+    <div class="mobile-open-state" id="mobile-open-state" aria-hidden="true">
       <!-- Upper right panel: About & works -->
-      <div class="nav-drawer-menu mobile-open-top-panel">
+      <div class="mobile-open-top-panel">
         <a href="#about" class="mobile-dropdown-link">About</a>
-        <div class="mobile-dropdown-divider"></div>
+        <div class="mobile-dropdown-divider" aria-hidden="true"></div>
         <a href="#works" class="mobile-dropdown-link">works</a>
-        <div class="mobile-dropdown-divider"></div>
+        <div class="mobile-dropdown-divider" aria-hidden="true"></div>
       </div>
       <!-- Bottom row: X button on left (48px) + contact link on right -->
-      <div class="nav-drawer-footer mobile-open-bottom-row">
-        <button type="button" class="btn-drawer-close mobile-dropdown-close" aria-label="Close menu">
+      <div class="mobile-open-bottom-row">
+        <button class="mobile-dropdown-close" aria-label="Close menu">
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"
-            stroke-linejoin="round">
+            stroke-linejoin="round" aria-hidden="true">
             <line x1="18" y1="6" x2="6" y2="18"></line>
             <line x1="6" y1="6" x2="18" y2="18"></line>
           </svg>
@@ -3268,8 +3263,8 @@
 
   <!-- FULLSCREEN IMAGE & VIDEO LIGHTBOX / ZOOM VIEWER (Behance Style) -->
   <div id="image-lightbox" class="image-lightbox" role="dialog" aria-modal="true" aria-label="Media Preview"
-    tabindex="-1">
-    <div class="image-lightbox-backdrop"></div>
+    tabindex="-1" aria-hidden="true">
+    <div class="image-lightbox-backdrop" aria-hidden="true"></div>
     <div class="image-lightbox-container" id="image-lightbox-container">
       <div class="image-lightbox-stage" id="image-lightbox-stage">
         <img class="image-lightbox-img" id="image-lightbox-img" src="" alt="Zoom preview" draggable="false">
@@ -3277,7 +3272,7 @@
       </div>
     </div>
     <div class="image-lightbox-footer">
-      <button type="button" class="image-lightbox-nav image-lightbox-prev" id="lightbox-prev" aria-label="Previous Media"
+      <button class="image-lightbox-nav image-lightbox-prev" id="lightbox-prev" aria-label="Previous Media"
         title="Previous (Left Arrow)">
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"
           stroke-linejoin="round">
@@ -3288,7 +3283,7 @@
         <span class="image-lightbox-counter" id="image-lightbox-counter">
           <span id="lightbox-curr-idx">01</span> / <span id="lightbox-total-count">01</span>
         </span>
-        <button type="button" class="image-lightbox-btn image-lightbox-close" id="lightbox-close" aria-label="Close Lightbox"
+        <button class="image-lightbox-btn image-lightbox-close" id="lightbox-close" aria-label="Close Lightbox"
           title="Close (Esc)">
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
             stroke-linejoin="round">
@@ -3297,7 +3292,7 @@
           </svg>
         </button>
       </div>
-      <button type="button" class="image-lightbox-nav image-lightbox-next" id="lightbox-next" aria-label="Next Media"
+      <button class="image-lightbox-nav image-lightbox-next" id="lightbox-next" aria-label="Next Media"
         title="Next (Right Arrow)">
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"
           stroke-linejoin="round">
