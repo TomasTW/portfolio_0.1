@@ -434,8 +434,8 @@ section {
   /* Pinned scroll sections on tablet with scroll-driven enter/exit and magnetic hold */
   .about,
   .works {
-    height: 240dvh !important;
-    min-height: 240dvh !important;
+    height: 240svh !important;
+    min-height: 240svh !important;
     max-height: none !important;
     position: relative !important;
     padding: 0 !important;
@@ -446,8 +446,8 @@ section {
   }
 
   .contact {
-    height: 200dvh !important;
-    min-height: 200dvh !important;
+    height: 200svh !important;
+    min-height: 200svh !important;
     max-height: none !important;
     position: relative !important;
     padding: 0 !important;
@@ -461,9 +461,10 @@ section {
   .contact-sticky {
     position: sticky !important;
     top: 16px !important;
-    height: calc(100dvh - 32px) !important;
-    min-height: calc(100dvh - 32px) !important;
-    max-height: calc(100dvh - 32px) !important;
+    height: calc(100vh - 32px) !important;
+    height: calc(var(--stable-vh, 100svh) - 32px) !important;
+    min-height: calc(var(--stable-vh, 100svh) - 32px) !important;
+    max-height: calc(var(--stable-vh, 100svh) - 32px) !important;
     width: 100% !important;
     display: flex !important;
     align-items: center !important;
@@ -482,11 +483,12 @@ section {
     top: 16px !important;
     left: 16px !important;
     width: calc(100% - 32px) !important;
-    height: calc(100dvh - 32px) !important;
+    height: calc(100vh - 32px) !important;
+    height: calc(var(--stable-vh, 100svh) - 32px) !important;
     box-sizing: border-box !important;
   }
 
-  /* Universal Framed Card Style on Tablet (16px outer margin, 48px internal padding) */
+  /* Universal Framed Card Style on Tablet (16px outer margin, 64px horizontal padding matching navbar) */
   .about-card,
   .works-card,
   .contact-box {
@@ -502,7 +504,7 @@ section {
     display: flex !important;
     flex-direction: column !important;
     justify-content: space-between !important;
-    padding: 48px !important;
+    padding: 48px 64px !important;
     margin: 0 auto !important;
     position: relative !important;
     opacity: 1 !important;
@@ -688,7 +690,7 @@ section {
     justify-content: space-between !important;
     align-items: center !important;
     width: 100% !important;
-    gap: 8px !important;
+    gap: clamp(4px, 0.8vw, 8px) !important;
     flex-wrap: nowrap !important;
     white-space: nowrap !important;
     padding: 0 !important;
@@ -696,7 +698,7 @@ section {
 
   .category-item {
     font-family: var(--typography-body-md-family), sans-serif !important;
-    font-size: 14px !important;
+    font-size: clamp(10px, 1.25vw, 13px) !important;
     font-weight: var(--typography-body-md-weight) !important;
     line-height: var(--typography-body-md-line-height) !important;
     color: var(--color-text-primary-default) !important;
@@ -705,7 +707,7 @@ section {
 
   .category-divider {
     font-family: var(--typography-body-md-family), sans-serif !important;
-    font-size: 14px !important;
+    font-size: clamp(10px, 1.25vw, 13px) !important;
     color: var(--color-border-secondary-default) !important;
     white-space: nowrap !important;
   }
@@ -722,7 +724,7 @@ section {
     font-weight: var(--typography-body-sm-weight) !important;
     line-height: var(--typography-body-sm-line-height) !important;
     color: var(--color-text-primary-default) !important;
-    text-align: left !important;
+    text-align: justify !important;
     margin: 0 !important;
     width: 100% !important;
   }
@@ -738,10 +740,11 @@ section {
     top: 16px !important;
     margin: 0 auto !important;
     width: calc(100% - 32px) !important;
-    height: calc(100dvh - 32px) !important;
-    min-height: calc(100dvh - 32px) !important;
-    max-height: calc(100dvh - 32px) !important;
-    padding: 48px !important;
+    height: calc(100vh - 32px) !important;
+    height: calc(var(--stable-vh, 100svh) - 32px) !important;
+    min-height: calc(var(--stable-vh, 100svh) - 32px) !important;
+    max-height: calc(var(--stable-vh, 100svh) - 32px) !important;
+    padding: 48px 64px !important;
     box-sizing: border-box !important;
     background-color: transparent !important;
     background: transparent !important;
@@ -1391,10 +1394,13 @@ body.modal-is-open .mobile-navbar {
 }
 
 #hero-bubble-canvas {
-  width: 100%;
-  height: 100%;
-  display: block;
+  display: none;
   pointer-events: none;
+}
+
+#hero-bubble-img {
+  pointer-events: none;
+  display: block;
 }
 
 /* Hero Scroll Indicator Graphic (hero_graphic.svg) */
@@ -1506,8 +1512,8 @@ body.modal-is-open .mobile-navbar {
 
   .about,
   .works {
-    height: 240dvh !important;
-    min-height: 240dvh !important;
+    height: 240svh !important;
+    min-height: 240svh !important;
     max-height: none !important;
     position: relative !important;
     padding: 0 !important;
@@ -1518,8 +1524,8 @@ body.modal-is-open .mobile-navbar {
   }
 
   .contact {
-    height: 200dvh !important;
-    min-height: 200dvh !important;
+    height: 200svh !important;
+    min-height: 200svh !important;
     max-height: none !important;
     position: relative !important;
     padding: 0 !important;
@@ -1533,9 +1539,10 @@ body.modal-is-open .mobile-navbar {
   .contact-sticky {
     position: sticky !important;
     top: 16px !important;
-    height: calc(100dvh - 32px) !important;
-    min-height: calc(100dvh - 32px) !important;
-    max-height: calc(100dvh - 32px) !important;
+    height: calc(100vh - 32px) !important;
+    height: calc(var(--stable-vh, 100svh) - 32px) !important;
+    min-height: calc(var(--stable-vh, 100svh) - 32px) !important;
+    max-height: calc(var(--stable-vh, 100svh) - 32px) !important;
     width: 100% !important;
     display: flex !important;
     align-items: center !important;
@@ -1569,11 +1576,12 @@ body.modal-is-open .mobile-navbar {
 
   .works-mobile-list {
     width: calc(100% - 32px) !important;
-    height: calc(100dvh - 32px) !important;
-    min-height: calc(100dvh - 32px) !important;
-    max-height: calc(100dvh - 32px) !important;
+    height: calc(100vh - 32px) !important;
+    height: calc(var(--stable-vh, 100svh) - 32px) !important;
+    min-height: calc(var(--stable-vh, 100svh) - 32px) !important;
+    max-height: calc(var(--stable-vh, 100svh) - 32px) !important;
     margin: 16px auto !important;
-    padding: 32px !important;
+    padding: 32px 24px !important;
     box-sizing: border-box !important;
     overflow: hidden !important;
     display: flex !important;
@@ -1605,10 +1613,10 @@ body.modal-is-open .mobile-navbar {
 
   .works-list-title {
     font-family: var(--typography-title-2xl-family), sans-serif !important;
-    font-size: 22px !important;
+    font-size: 18px !important;
     font-weight: var(--typography-title-2xl-weight) !important;
-    line-height: var(--typography-title-2xl-line-height) !important;
-    letter-spacing: -1px !important;
+    line-height: 1.25 !important;
+    letter-spacing: -0.5px !important;
     color: var(--color-text-primary-default) !important;
     margin: 0 !important;
   }
@@ -1856,7 +1864,7 @@ body.modal-is-open .mobile-navbar {
    ABOUT SECTION — Exact Reference Frame Layout & Interactive Skill Slider
    ========================================================================== */
 .about {
-  height: 300dvh;
+  height: 300vh;
   position: relative;
   background-color: transparent;
   color: transparent;
@@ -3025,8 +3033,9 @@ body.modal-is-open .mobile-navbar {
   .work-modal-inner {
     width: 100% !important;
     max-width: 100% !important;
-    height: calc(100dvh - 86px) !important;
-    max-height: calc(100dvh - 86px) !important;
+    height: calc(100vh - 86px) !important;
+    height: calc(var(--stable-vh, 100svh) - 86px) !important;
+    max-height: calc(var(--stable-vh, 100svh) - 86px) !important;
     margin: 0 !important;
   }
 
@@ -3965,8 +3974,8 @@ body.modal-is-open .mobile-navbar {
 /* Mobile responsive styles */
 @media (max-width: 768px) {
   .contact {
-    height: 200dvh !important;
-    min-height: 200dvh !important;
+    height: 200svh !important;
+    min-height: 200svh !important;
     max-height: none !important;
     position: relative !important;
     display: block !important;
@@ -3976,9 +3985,10 @@ body.modal-is-open .mobile-navbar {
 
   .contact-box {
     width: calc(100% - 32px) !important;
-    height: calc(100dvh - 32px) !important;
-    min-height: calc(100dvh - 32px) !important;
-    max-height: calc(100dvh - 32px) !important;
+    height: calc(100vh - 32px) !important;
+    height: calc(var(--stable-vh, 100svh) - 32px) !important;
+    min-height: calc(var(--stable-vh, 100svh) - 32px) !important;
+    max-height: calc(var(--stable-vh, 100svh) - 32px) !important;
     box-sizing: border-box !important;
     border-radius: 0 !important;
     background-color: transparent !important;
@@ -4325,12 +4335,14 @@ body.modal-is-open .mobile-navbar {
   justify-content: center;
   max-width: 100%;
   max-height: 100%;
-  transition: transform 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+  transform-origin: center center;
+  transition: transform 0.25s cubic-bezier(0.16, 1, 0.3, 1);
   will-change: transform;
 }
 
-.image-lightbox.is-dragging .image-lightbox-stage {
-  transition: none;
+.image-lightbox.is-dragging .image-lightbox-stage,
+.image-lightbox.is-gesturing .image-lightbox-stage {
+  transition: none !important;
 }
 
 .image-lightbox-img {
@@ -4341,7 +4353,6 @@ body.modal-is-open .mobile-navbar {
   border-radius: var(--radius-sm);
   user-select: none;
   -webkit-user-drag: none;
-  transition: transform 0.25s cubic-bezier(0.16, 1, 0.3, 1);
   display: block;
 }
 
@@ -4366,7 +4377,7 @@ body.modal-is-open .mobile-navbar {
 .image-lightbox.is-zoomed .image-lightbox-img {
   max-width: none;
   max-height: none;
-  transform: scale(2.2);
+  transform: none;
 }
 
 @media (max-width: 768px) {

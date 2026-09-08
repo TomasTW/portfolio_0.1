@@ -226,8 +226,15 @@ void main () {
   }
 
   function initHeroBubble() {
-    const canvas = document.getElementById('hero-bubble-canvas');
-    if (!canvas) return;
+    let canvas = document.getElementById('hero-bubble-canvas');
+    if (!canvas) {
+      canvas = document.createElement('canvas');
+      canvas.id = 'hero-bubble-canvas';
+      canvas.width = CANVAS_WIDTH;
+      canvas.height = CANVAS_HEIGHT;
+      canvas.style.display = 'none';
+      document.body.appendChild(canvas);
+    }
 
     const unionBgPath = document.getElementById('Union_bg_0');
     if (!unionBgPath) return;
@@ -245,6 +252,7 @@ void main () {
       alpha: true,
       antialias: true,
       premultipliedAlpha: true,
+      preserveDrawingBuffer: true,
       powerPreference: 'low-power',
     });
     if (!gl) {
@@ -324,6 +332,16 @@ void main () {
       gl.uniform1f(loc.uFallbackAlpha, DEFAULTS.fallbackAlpha);
 
       gl.drawArrays(gl.TRIANGLES, 0, 6);
+
+      const imgEl = document.getElementById('hero-bubble-img');
+      if (imgEl) {
+        try {
+          const dataUrl = canvas.toDataURL('image/png');
+          imgEl.setAttribute('href', dataUrl);
+        } catch (err) {
+          console.warn('Could not export hero bubble canvas to SVG image:', err);
+        }
+      }
     }
 
     // Initial render at frame 0

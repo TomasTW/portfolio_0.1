@@ -9,6 +9,27 @@
    sets the exact frozen frame. Both are applied together on every scroll
    tick so the browser recomputes the frame — reliable across all browsers.
    ========================================================================== */
+// --- Stable Viewport Height Engine (locks layout against toolbar collapse/expand) ---
+let lastRecordedWidth = window.innerWidth;
+function updateStableVh() {
+  const vh = window.innerHeight;
+  document.documentElement.style.setProperty('--stable-vh', `${vh}px`);
+}
+updateStableVh();
+window.addEventListener('orientationchange', () => {
+  setTimeout(updateStableVh, 150);
+});
+window.addEventListener('resize', () => {
+  if (Math.abs(window.innerWidth - lastRecordedWidth) > 30) {
+    lastRecordedWidth = window.innerWidth;
+    updateStableVh();
+  }
+});
+
+function getViewportHeight() {
+  return parseFloat(document.documentElement.style.getPropertyValue('--stable-vh')) || window.innerHeight;
+}
+
 (function () {
   const container = document.querySelector('.hero-canvas-sticky');
   if (!container) return;
@@ -81,7 +102,7 @@
         if (!section) return;
 
         const sectionTop = section.getBoundingClientRect().top + window.scrollY;
-        const sectionHeight = section.offsetHeight - window.innerHeight;
+        const sectionHeight = section.offsetHeight - getViewportHeight();
         const scrolled = Math.max(0, window.scrollY - sectionTop);
         const progress = sectionHeight > 0 ? Math.min(1, scrolled / sectionHeight) : 0;
 
@@ -1081,12 +1102,12 @@ document.addEventListener('DOMContentLoaded', () => {
         let p = 0;
         if (isMobileOrTablet) {
           const rect = section.getBoundingClientRect();
-          const scrollHeight = section.offsetHeight - window.innerHeight;
+          const scrollHeight = section.offsetHeight - getViewportHeight();
           const scrolled = Math.max(0, -rect.top);
           p = scrollHeight > 0 ? Math.min(1, scrolled / scrollHeight) : 0;
         } else {
           const sectionTop = section.getBoundingClientRect().top + window.scrollY;
-          const scrollHeight = section.offsetHeight - window.innerHeight;
+          const scrollHeight = section.offsetHeight - getViewportHeight();
           const scrolled = Math.max(0, window.scrollY - sectionTop);
           p = scrollHeight > 0 ? Math.min(1, scrolled / scrollHeight) : 0;
         }
@@ -1211,12 +1232,12 @@ document.addEventListener('DOMContentLoaded', () => {
 
       if (isMobileOrTablet) {
         const rect = section.getBoundingClientRect();
-        const scrollHeight = section.offsetHeight - window.innerHeight;
+        const scrollHeight = section.offsetHeight - getViewportHeight();
         const scrolled = Math.max(0, -rect.top);
         p = scrollHeight > 0 ? Math.min(1, scrolled / scrollHeight) : 0;
       } else {
         const sectionTop = section.getBoundingClientRect().top + window.scrollY;
-        const scrollHeight = section.offsetHeight - window.innerHeight;
+        const scrollHeight = section.offsetHeight - getViewportHeight();
         const scrolled = Math.max(0, window.scrollY - sectionTop);
         p = scrollHeight > 0 ? Math.min(1, scrolled / scrollHeight) : 0;
       }
@@ -1634,36 +1655,68 @@ document.addEventListener('DOMContentLoaded', () => {
       showMedia(nextIdx);
     }
 
-    function toggleZoom(e) {
-      if (e) e.stopPropagation();
-      if (lightbox.classList.contains('has-video')) return;
-      isZoomed = !isZoomed;
-      if (isZoomed) {
-        lightbox.classList.add('is-zoomed');
-        panX = 0;
-        panY = 0;
-        updateTransform();
-      } else {
-        resetZoom();
-      }
-    }
+    let currentScale = 1.0;
+    let touchStartDist = 0;
+    let touchStartScale = 1.0;
+    let touchStartX = 0;
+    let touchStartY = 0;
+    let lastTouchX = 0;
+    let lastTouchY = 0;
+    let isTouchGesturing = false;
+    let touchMoved = false;
+    let lastTapTime = 0;
 
     function resetZoom() {
-      isZoomed = false;
+      currentScale = 1.0;
       panX = 0;
       panY = 0;
+      isDragging = false;
+      isTouchGesturing = false;
       lightbox.classList.remove('is-zoomed');
       lightbox.classList.remove('is-dragging');
-      if (stage) stage.style.transform = '';
+      lightbox.classList.remove('is-gesturing');
+      if (stage) {
+        stage.style.transform = '';
+      }
     }
 
     function updateTransform() {
-      if (stage) {
-        stage.style.transform = `translate(${panX}px, ${panY}px)`;
+      if (!stage) return;
+      if (currentScale > 1.02) {
+        lightbox.classList.add('is-zoomed');
+      } else {
+        lightbox.classList.remove('is-zoomed');
+      }
+      stage.style.transform = `translate3d(${panX.toFixed(2)}px, ${panY.toFixed(2)}px, 0) scale(${currentScale.toFixed(4)})`;
+    }
+
+    function clampPan() {
+      if (currentScale <= 1.02) {
+        panX = 0;
+        panY = 0;
+        return;
+      }
+      const stageRect = stage.getBoundingClientRect();
+      const containerRect = container.getBoundingClientRect();
+      const maxPanX = Math.max(0, (stageRect.width * (currentScale - 1)) / 2 + 100);
+      const maxPanY = Math.max(0, (stageRect.height * (currentScale - 1)) / 2 + 100);
+      panX = Math.max(-maxPanX, Math.min(maxPanX, panX));
+      panY = Math.max(-maxPanY, Math.min(maxPanY, panY));
+    }
+
+    function toggleZoom(focalX, focalY) {
+      if (lightbox.classList.contains('has-video')) return;
+      if (currentScale > 1.2) {
+        resetZoom();
+      } else {
+        currentScale = 2.5;
+        panX = 0;
+        panY = 0;
+        updateTransform();
       }
     }
 
-    // Drag / Pan while zoomed
+    // --- Desktop Mouse Drag / Pan & Double-Click ---
     container.addEventListener('mousedown', (e) => {
       if (e.target === closeBtn || e.target.closest('#lightbox-close') ||
         e.target === prevBtn || e.target.closest('#lightbox-prev') ||
@@ -1671,7 +1724,7 @@ document.addEventListener('DOMContentLoaded', () => {
         e.target === videoEl || e.target.closest('video')) {
         return;
       }
-      if (!isZoomed) return;
+      if (currentScale <= 1.02) return;
       isDragging = true;
       lightbox.classList.add('is-dragging');
       startX = e.clientX - panX;
@@ -1680,9 +1733,10 @@ document.addEventListener('DOMContentLoaded', () => {
     });
 
     window.addEventListener('mousemove', (e) => {
-      if (!isDragging || !isZoomed) return;
+      if (!isDragging || currentScale <= 1.02) return;
       panX = e.clientX - startX;
       panY = e.clientY - startY;
+      clampPan();
       updateTransform();
     });
 
@@ -1690,11 +1744,147 @@ document.addEventListener('DOMContentLoaded', () => {
       if (isDragging) {
         isDragging = false;
         lightbox.classList.remove('is-dragging');
+        clampPan();
+        updateTransform();
+      }
+    });
+
+    container.addEventListener('dblclick', (e) => {
+      if (e.target === imgEl) {
+        toggleZoom(e.clientX, e.clientY);
+      }
+    });
+
+    // --- Trackpad Pinch & Mouse Wheel Zoom ---
+    container.addEventListener('wheel', (e) => {
+      if (lightbox.classList.contains('has-video')) return;
+      e.preventDefault();
+      const zoomFactor = e.ctrlKey ? (1 - e.deltaY * 0.015) : (e.deltaY < 0 ? 1.15 : 0.87);
+      currentScale = Math.max(1.0, Math.min(4.0, currentScale * zoomFactor));
+      if (currentScale <= 1.02) {
+        resetZoom();
+      } else {
+        clampPan();
+        updateTransform();
+      }
+    }, { passive: false });
+
+    // --- Multi-Touch Gestures (Pinch-to-zoom, Pan, Double-Tap) ---
+    container.addEventListener('touchstart', (e) => {
+      if (e.target === closeBtn || e.target.closest('#lightbox-close') ||
+        e.target === prevBtn || e.target.closest('#lightbox-prev') ||
+        e.target === nextBtn || e.target.closest('#lightbox-next') ||
+        e.target === videoEl || e.target.closest('video')) {
+        return;
+      }
+      if (lightbox.classList.contains('has-video')) return;
+
+      if (e.touches.length === 2) {
+        isTouchGesturing = true;
+        lightbox.classList.add('is-gesturing');
+        touchStartDist = Math.hypot(
+          e.touches[0].clientX - e.touches[1].clientX,
+          e.touches[0].clientY - e.touches[1].clientY
+        );
+        touchStartScale = currentScale;
+        lastTouchX = (e.touches[0].clientX + e.touches[1].clientX) / 2;
+        lastTouchY = (e.touches[0].clientY + e.touches[1].clientY) / 2;
+        touchMoved = true;
+        e.preventDefault();
+      } else if (e.touches.length === 1) {
+        touchStartX = e.touches[0].clientX;
+        touchStartY = e.touches[0].clientY;
+        lastTouchX = e.touches[0].clientX;
+        lastTouchY = e.touches[0].clientY;
+        touchMoved = false;
+
+        if (currentScale > 1.02) {
+          isTouchGesturing = true;
+          lightbox.classList.add('is-gesturing');
+          e.preventDefault();
+        }
+      }
+    }, { passive: false });
+
+    window.addEventListener('touchmove', (e) => {
+      if (!isTouchGesturing && currentScale <= 1.02) {
+        if (e.touches.length === 1) {
+          const moveDist = Math.hypot(e.touches[0].clientX - touchStartX, e.touches[0].clientY - touchStartY);
+          if (moveDist > 8) touchMoved = true;
+        }
+        return;
+      }
+      if (lightbox.classList.contains('has-video')) return;
+
+      if (e.touches.length === 2) {
+        touchMoved = true;
+        const dist = Math.hypot(
+          e.touches[0].clientX - e.touches[1].clientX,
+          e.touches[0].clientY - e.touches[1].clientY
+        );
+        if (touchStartDist > 0) {
+          const factor = dist / touchStartDist;
+          currentScale = Math.max(1.0, Math.min(4.0, touchStartScale * factor));
+        }
+        const midX = (e.touches[0].clientX + e.touches[1].clientX) / 2;
+        const midY = (e.touches[0].clientY + e.touches[1].clientY) / 2;
+        panX += midX - lastTouchX;
+        panY += midY - lastTouchY;
+        lastTouchX = midX;
+        lastTouchY = midY;
+        clampPan();
+        updateTransform();
+        e.preventDefault();
+      } else if (e.touches.length === 1 && currentScale > 1.02) {
+        touchMoved = true;
+        const curX = e.touches[0].clientX;
+        const curY = e.touches[0].clientY;
+        panX += curX - lastTouchX;
+        panY += curY - lastTouchY;
+        lastTouchX = curX;
+        lastTouchY = curY;
+        clampPan();
+        updateTransform();
+        e.preventDefault();
+      }
+    }, { passive: false });
+
+    window.addEventListener('touchend', (e) => {
+      if (e.touches.length === 0) {
+        isTouchGesturing = false;
+        lightbox.classList.remove('is-gesturing');
+        if (currentScale <= 1.05) {
+          resetZoom();
+        } else {
+          clampPan();
+          updateTransform();
+        }
+
+        // Tap & Double-Tap detection
+        if (!touchMoved) {
+          const now = Date.now();
+          if (now - lastTapTime < 320) {
+            toggleZoom();
+            lastTapTime = 0;
+          } else {
+            lastTapTime = now;
+            setTimeout(() => {
+              if (Date.now() - lastTapTime >= 310 && lastTapTime !== 0) {
+                // If single tap was on backdrop/container (not image), close lightbox
+                lastTapTime = 0;
+              }
+            }, 320);
+          }
+        }
+      } else if (e.touches.length === 1) {
+        lastTouchX = e.touches[0].clientX;
+        lastTouchY = e.touches[0].clientY;
       }
     });
 
     // Container click: toggle zoom or close if clicked backdrop
     container.addEventListener('click', (e) => {
+      if (touchMoved) return;
       if (e.target === imgEl) {
         toggleZoom();
       } else if (e.target === container || e.target === backdrop) {
