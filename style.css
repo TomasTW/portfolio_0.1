@@ -37,6 +37,21 @@
   --transition-smooth: all 0.35s cubic-bezier(0.25, 0.8, 0.25, 1);
   --transition-elastic: all 0.6s cubic-bezier(0.175, 0.885, 0.32, 1.275);
 
+  /* Navigation & Section Clearance Tokens (Exact 32px gap to floating navbar) */
+  --mobile-nav-height: 44px;
+  --mobile-nav-bottom: 48px;
+  --mobile-card-inset: 16px;
+  --mobile-nav-gap: 32px;
+  /* Clearance = (48px bottom + 44px height + 32px gap - 16px card inset) = 108px */
+  --mobile-section-bottom-clearance: calc(var(--mobile-nav-bottom) + var(--mobile-nav-height) + var(--mobile-nav-gap) - var(--mobile-card-inset));
+
+  --tablet-nav-height: 36px;
+  --tablet-nav-bottom: 80px;
+  --tablet-card-inset: 16px;
+  --tablet-nav-gap: 32px;
+  /* Clearance on tablet = (80px + 36px + 32px - 16px) = 132px */
+  --tablet-section-bottom-clearance: calc(var(--tablet-nav-bottom) + var(--tablet-nav-height) + var(--tablet-nav-gap) - var(--tablet-card-inset));
+
   /* =====================================================================
      TYPOGRAPHY SYSTEM (Modular 14px base, 1.618 scale)
      ===================================================================== */
@@ -504,7 +519,7 @@ section {
     display: flex !important;
     flex-direction: column !important;
     justify-content: space-between !important;
-    padding: 48px 64px !important;
+    padding: 48px 64px var(--tablet-section-bottom-clearance, 132px) 64px !important;
     margin: 0 auto !important;
     position: relative !important;
     opacity: 1 !important;
@@ -657,7 +672,7 @@ section {
     gap: 8px !important;
     width: 100% !important;
     margin-top: auto !important;
-    margin-bottom: 88px !important;
+    margin-bottom: 0 !important;
     transform: translateX(var(--about-footer-x, 0vw)) !important;
     opacity: var(--about-footer-opacity, 1) !important;
     will-change: transform, opacity;
@@ -744,7 +759,7 @@ section {
     height: calc(var(--stable-vh, 100svh) - 32px) !important;
     min-height: calc(var(--stable-vh, 100svh) - 32px) !important;
     max-height: calc(var(--stable-vh, 100svh) - 32px) !important;
-    padding: 48px 64px !important;
+    padding: 48px 64px var(--tablet-section-bottom-clearance, 132px) 64px !important;
     box-sizing: border-box !important;
     background-color: transparent !important;
     background: transparent !important;
@@ -924,7 +939,7 @@ section {
     gap: 16px !important;
     width: 100% !important;
     margin-top: auto !important;
-    margin-bottom: 88px !important;
+    margin-bottom: 0 !important;
     flex-shrink: 0 !important;
     transform: translateX(var(--contact-icons-x, 0vw)) !important;
     opacity: var(--contact-icons-opacity, 1) !important;
@@ -1378,6 +1393,15 @@ body.modal-is-open .mobile-navbar {
   background: transparent;
   z-index: 1;
   box-sizing: border-box;
+  transition: background-color 0.3s ease;
+}
+
+.hero-canvas-sticky.is-dark {
+  background-color: var(--color-bg-surface-primary-default, #202020) !important;
+}
+
+.hero-canvas-sticky.is-dark.no-transition {
+  transition: none !important;
 }
 
 #hero-svg {
@@ -1449,6 +1473,7 @@ body.modal-is-open .mobile-navbar {
     background: transparent;
     z-index: 1;
     box-sizing: border-box;
+    transition: background-color 0.3s ease;
   }
 }
 
@@ -1473,6 +1498,7 @@ body.modal-is-open .mobile-navbar {
     background: transparent;
     z-index: 1;
     box-sizing: border-box;
+    transition: background-color 0.3s ease;
   }
 
   #hero-svg {
@@ -1568,7 +1594,7 @@ body.modal-is-open .mobile-navbar {
     display: flex !important;
     flex-direction: column !important;
     justify-content: space-between !important;
-    padding: 24px 20px !important;
+    padding: 24px 20px var(--mobile-section-bottom-clearance, 108px) 20px !important;
     overflow: hidden !important;
     margin: 0 auto !important;
     position: relative !important;
@@ -1581,7 +1607,7 @@ body.modal-is-open .mobile-navbar {
     min-height: calc(var(--stable-vh, 100svh) - 32px) !important;
     max-height: calc(var(--stable-vh, 100svh) - 32px) !important;
     margin: 16px auto !important;
-    padding: 32px 24px !important;
+    padding: 32px 24px var(--mobile-section-bottom-clearance, 108px) 24px !important;
     box-sizing: border-box !important;
     overflow: hidden !important;
     display: flex !important;
@@ -1633,7 +1659,7 @@ body.modal-is-open .mobile-navbar {
 
   .works-list-hand {
     position: absolute !important;
-    bottom: 118px !important;
+    bottom: calc(var(--mobile-section-bottom-clearance, 108px) + 6px) !important;
     left: 50% !important;
     transform: translateX(-50%) !important;
     display: flex !important;
@@ -1668,7 +1694,7 @@ body.modal-is-open .mobile-navbar {
     display: flex !important;
     flex-direction: column !important;
     justify-content: space-between !important;
-    padding: 32px !important;
+    padding: 32px 32px var(--mobile-section-bottom-clearance, 108px) 32px !important;
     overflow: hidden !important;
     margin: 16px auto !important;
     position: relative !important;
@@ -1786,7 +1812,7 @@ body.modal-is-open .mobile-navbar {
     flex-direction: column !important;
     width: 100% !important;
     margin-top: auto !important;
-    margin-bottom: 76px !important;
+    margin-bottom: 0 !important;
     padding: 0 !important;
     transform: translateX(var(--about-footer-x, 0vw)) !important;
     opacity: var(--about-footer-opacity, 1) !important;
@@ -3997,7 +4023,7 @@ body.modal-is-open .mobile-navbar {
     display: flex !important;
     flex-direction: column !important;
     justify-content: space-between !important;
-    padding: 32px !important;
+    padding: 32px 32px var(--mobile-section-bottom-clearance, 108px) 32px !important;
     overflow: hidden !important;
     margin: 16px auto !important;
     position: relative !important;
@@ -4100,7 +4126,7 @@ body.modal-is-open .mobile-navbar {
     width: 100% !important;
     max-width: none !important;
     margin-top: auto !important;
-    margin-bottom: 76px !important;
+    margin-bottom: 0 !important;
     padding: 0 !important;
     z-index: 3 !important;
     position: relative !important;
@@ -4321,11 +4347,13 @@ body.modal-is-open .mobile-navbar {
   cursor: zoom-in;
 }
 
-.image-lightbox.is-zoomed .image-lightbox-container {
+.image-lightbox.is-zoomed .image-lightbox-container,
+.image-lightbox.is-shrunk .image-lightbox-container {
   cursor: grab;
 }
 
-.image-lightbox.is-zoomed.is-dragging .image-lightbox-container {
+.image-lightbox.is-zoomed.is-dragging .image-lightbox-container,
+.image-lightbox.is-shrunk.is-dragging .image-lightbox-container {
   cursor: grabbing;
 }
 

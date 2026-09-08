@@ -86,18 +86,10 @@ function getViewportHeight() {
       }
     }
 
-    // Freeze at frame 0 immediately — no auto-play flash
-    seekTo(0);
-    if (window.heroBubbleInstance) {
-      window.heroBubbleInstance.setScrollProgress(0);
-    }
-    updateHeroIndicatorPosition();
-
     let rafId = null;
 
-    function onScroll() {
-      if (rafId) return;
-      rafId = requestAnimationFrame(() => {
+    function onScroll(immediate) {
+      function doUpdate() {
         rafId = null;
         if (!section) return;
 
@@ -130,6 +122,13 @@ function getViewportHeight() {
         container.style.opacity = '1';
         container.style.visibility = 'visible';
         container.style.pointerEvents = progress >= 1.0 ? 'none' : 'auto';
+
+        // Solid background fallback ensures black area NEVER disappears on reload or rapid scrub
+        if (progress >= 0.99) {
+          container.classList.add('is-dark');
+        } else {
+          container.classList.remove('is-dark');
+        }
 
         // Explicitly hide text letters at the end of hero to ensure zero text bleed-through into subsequent sections
         const heroTextGroup = svgEl.querySelector('#I___m_Tomas_Chen');
@@ -164,15 +163,47 @@ function getViewportHeight() {
 
           svgEl.style.transform = `translate(-50%, -50%) scale(${scale.toFixed(4)})`;
         }
-      });
+      }
+
+      if (immediate) {
+        if (rafId) {
+          cancelAnimationFrame(rafId);
+          rafId = null;
+        }
+        doUpdate();
+      } else {
+        if (rafId) return;
+        rafId = requestAnimationFrame(doUpdate);
+      }
     }
 
-    window.addEventListener('scroll', onScroll, { passive: true });
+    // Freeze at frame 0 only if user is at the very top of the page on load
+    if (window.scrollY === 0) {
+      seekTo(0);
+      if (window.heroBubbleInstance) {
+        window.heroBubbleInstance.setScrollProgress(0);
+      }
+      updateHeroIndicatorPosition();
+    } else {
+      onScroll(true);
+    }
+
+    window.addEventListener('scroll', () => onScroll(false), { passive: true });
     window.addEventListener('resize', () => {
       updateHeroIndicatorPosition();
-      onScroll();
+      onScroll(false);
     }, { passive: true });
-    onScroll(); // sync to current scroll position on load
+    window.addEventListener('load', () => onScroll(true));
+    window.addEventListener('pageshow', () => onScroll(true));
+
+    // Initial sync + multi-frame checks to catch async browser scroll restoration on reload
+    onScroll(true);
+    requestAnimationFrame(() => {
+      onScroll(true);
+      requestAnimationFrame(() => {
+        onScroll(true);
+      });
+    });
   }
 
   // SVG is inlined in index.html — works on file:// with no fetch needed
@@ -1509,6 +1540,16 @@ document.addEventListener('DOMContentLoaded', () => {
         window.canvasUIInstance.setVisible(inTargetSections, !inTargetSections);
       }
 
+      // --- Solid continuous dark background fallback for sticky container ---
+      const stickyHeroContainer = document.querySelector('.hero-canvas-sticky');
+      if (stickyHeroContainer) {
+        if (pastHero) {
+          stickyHeroContainer.classList.add('is-dark');
+        } else {
+          stickyHeroContainer.classList.remove('is-dark');
+        }
+      }
+
       // --- Active section highlighting ---
       let currentSectionId = '';
       const scrollPosition = scrollY + window.innerHeight / 2;
@@ -1533,7 +1574,15 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     window.addEventListener('scroll', handleScrollUpdates, { passive: true });
+    window.addEventListener('load', handleScrollUpdates);
+    window.addEventListener('pageshow', handleScrollUpdates);
     handleScrollUpdates();
+    requestAnimationFrame(() => {
+      handleScrollUpdates();
+      requestAnimationFrame(() => {
+        handleScrollUpdates();
+      });
+    });
   })();
 
   // --- Behance-style Fullscreen Image & Video Lightbox & Zoom Viewer ---
@@ -1673,6 +1722,7 @@ document.addEventListener('DOMContentLoaded', () => {
       isDragging = false;
       isTouchGesturing = false;
       lightbox.classList.remove('is-zoomed');
+      lightbox.classList.remove('is-shrunk');
       lightbox.classList.remove('is-dragging');
       lightbox.classList.remove('is-gesturing');
       if (stage) {
@@ -1684,16 +1734,26 @@ document.addEventListener('DOMContentLoaded', () => {
       if (!stage) return;
       if (currentScale > 1.02) {
         lightbox.classList.add('is-zoomed');
+        lightbox.classList.remove('is-shrunk');
+      } else if (currentScale < 0.98) {
+        lightbox.classList.add('is-shrunk');
+        lightbox.classList.remove('is-zoomed');
       } else {
         lightbox.classList.remove('is-zoomed');
+        lightbox.classList.remove('is-shrunk');
       }
       stage.style.transform = `translate3d(${panX.toFixed(2)}px, ${panY.toFixed(2)}px, 0) scale(${currentScale.toFixed(4)})`;
     }
 
     function clampPan() {
-      if (currentScale <= 1.02) {
+      if (currentScale >= 0.98 && currentScale <= 1.02) {
         panX = 0;
         panY = 0;
+        return;
+      }
+      if (currentScale < 0.98) {
+        panX = Math.max(-60, Math.min(60, panX));
+        panY = Math.max(-60, Math.min(60, panY));
         return;
       }
       const stageRect = stage.getBoundingClientRect();
@@ -1706,7 +1766,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
     function toggleZoom(focalX, focalY) {
       if (lightbox.classList.contains('has-video')) return;
-      if (currentScale > 1.2) {
+      if (currentScale > 1.2 || currentScale < 0.98) {
         resetZoom();
       } else {
         currentScale = 2.5;
@@ -1724,7 +1784,7 @@ document.addEventListener('DOMContentLoaded', () => {
         e.target === videoEl || e.target.closest('video')) {
         return;
       }
-      if (currentScale <= 1.02) return;
+      if (currentScale >= 0.98 && currentScale <= 1.02) return;
       isDragging = true;
       lightbox.classList.add('is-dragging');
       startX = e.clientX - panX;
@@ -1733,7 +1793,7 @@ document.addEventListener('DOMContentLoaded', () => {
     });
 
     window.addEventListener('mousemove', (e) => {
-      if (!isDragging || currentScale <= 1.02) return;
+      if (!isDragging || (currentScale >= 0.98 && currentScale <= 1.02)) return;
       panX = e.clientX - startX;
       panY = e.clientY - startY;
       clampPan();
@@ -1755,13 +1815,13 @@ document.addEventListener('DOMContentLoaded', () => {
       }
     });
 
-    // --- Trackpad Pinch & Mouse Wheel Zoom ---
+    // --- Trackpad Pinch & Mouse Wheel Zoom (min 0.5x to max 4.0x) ---
     container.addEventListener('wheel', (e) => {
       if (lightbox.classList.contains('has-video')) return;
       e.preventDefault();
       const zoomFactor = e.ctrlKey ? (1 - e.deltaY * 0.015) : (e.deltaY < 0 ? 1.15 : 0.87);
-      currentScale = Math.max(1.0, Math.min(4.0, currentScale * zoomFactor));
-      if (currentScale <= 1.02) {
+      currentScale = Math.max(0.5, Math.min(4.0, currentScale * zoomFactor));
+      if (currentScale >= 0.98 && currentScale <= 1.02) {
         resetZoom();
       } else {
         clampPan();
@@ -1769,7 +1829,7 @@ document.addEventListener('DOMContentLoaded', () => {
       }
     }, { passive: false });
 
-    // --- Multi-Touch Gestures (Pinch-to-zoom, Pan, Double-Tap) ---
+    // --- Multi-Touch Gestures (Pinch-to-zoom down to 0.5x, Pan, Double-Tap) ---
     container.addEventListener('touchstart', (e) => {
       if (e.target === closeBtn || e.target.closest('#lightbox-close') ||
         e.target === prevBtn || e.target.closest('#lightbox-prev') ||
@@ -1798,7 +1858,7 @@ document.addEventListener('DOMContentLoaded', () => {
         lastTouchY = e.touches[0].clientY;
         touchMoved = false;
 
-        if (currentScale > 1.02) {
+        if (currentScale > 1.02 || currentScale < 0.98) {
           isTouchGesturing = true;
           lightbox.classList.add('is-gesturing');
           e.preventDefault();
@@ -1807,7 +1867,7 @@ document.addEventListener('DOMContentLoaded', () => {
     }, { passive: false });
 
     window.addEventListener('touchmove', (e) => {
-      if (!isTouchGesturing && currentScale <= 1.02) {
+      if (!isTouchGesturing && (currentScale >= 0.98 && currentScale <= 1.02)) {
         if (e.touches.length === 1) {
           const moveDist = Math.hypot(e.touches[0].clientX - touchStartX, e.touches[0].clientY - touchStartY);
           if (moveDist > 8) touchMoved = true;
@@ -1824,7 +1884,7 @@ document.addEventListener('DOMContentLoaded', () => {
         );
         if (touchStartDist > 0) {
           const factor = dist / touchStartDist;
-          currentScale = Math.max(1.0, Math.min(4.0, touchStartScale * factor));
+          currentScale = Math.max(0.5, Math.min(4.0, touchStartScale * factor));
         }
         const midX = (e.touches[0].clientX + e.touches[1].clientX) / 2;
         const midY = (e.touches[0].clientY + e.touches[1].clientY) / 2;
@@ -1835,7 +1895,7 @@ document.addEventListener('DOMContentLoaded', () => {
         clampPan();
         updateTransform();
         e.preventDefault();
-      } else if (e.touches.length === 1 && currentScale > 1.02) {
+      } else if (e.touches.length === 1 && (currentScale > 1.02 || currentScale < 0.98)) {
         touchMoved = true;
         const curX = e.touches[0].clientX;
         const curY = e.touches[0].clientY;
@@ -1853,8 +1913,12 @@ document.addEventListener('DOMContentLoaded', () => {
       if (e.touches.length === 0) {
         isTouchGesturing = false;
         lightbox.classList.remove('is-gesturing');
-        if (currentScale <= 1.05) {
+        if (currentScale >= 0.96 && currentScale <= 1.04) {
           resetZoom();
+        } else if (currentScale < 0.5) {
+          currentScale = 0.5;
+          clampPan();
+          updateTransform();
         } else {
           clampPan();
           updateTransform();
