@@ -4367,13 +4367,11 @@ body.modal-is-open .mobile-navbar {
   cursor: zoom-in;
 }
 
-.image-lightbox.is-zoomed .image-lightbox-container,
-.image-lightbox.is-shrunk .image-lightbox-container {
+.image-lightbox.is-zoomed .image-lightbox-container {
   cursor: grab;
 }
 
-.image-lightbox.is-zoomed.is-dragging .image-lightbox-container,
-.image-lightbox.is-shrunk.is-dragging .image-lightbox-container {
+.image-lightbox.is-zoomed.is-dragging .image-lightbox-container {
   cursor: grabbing;
 }
 
@@ -4423,8 +4421,6 @@ body.modal-is-open .mobile-navbar {
 }
 
 .image-lightbox.is-zoomed .image-lightbox-img {
-  max-width: none;
-  max-height: none;
   transform: none;
 }
 

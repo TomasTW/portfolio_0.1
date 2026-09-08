@@ -1710,7 +1710,6 @@ document.addEventListener('DOMContentLoaded', () => {
     let lastTouchY = 0;
     let isTouchGesturing = false;
     let touchMoved = false;
-    let lastTapTime = 0;
 
     function resetZoom() {
       currentScale = 1.0;
@@ -1731,42 +1730,42 @@ document.addEventListener('DOMContentLoaded', () => {
       if (!stage) return;
       if (currentScale > 1.02) {
         lightbox.classList.add('is-zoomed');
-        lightbox.classList.remove('is-shrunk');
-      } else if (currentScale < 0.98) {
-        lightbox.classList.add('is-shrunk');
-        lightbox.classList.remove('is-zoomed');
       } else {
         lightbox.classList.remove('is-zoomed');
-        lightbox.classList.remove('is-shrunk');
       }
+      lightbox.classList.remove('is-shrunk');
       stage.style.transform = `translate3d(${panX.toFixed(2)}px, ${panY.toFixed(2)}px, 0) scale(${currentScale.toFixed(4)})`;
     }
 
     function clampPan() {
-      if (currentScale >= 0.98 && currentScale <= 1.02) {
+      if (currentScale <= 1.02) {
         panX = 0;
         panY = 0;
         return;
       }
-      if (currentScale < 0.98) {
-        panX = Math.max(-60, Math.min(60, panX));
-        panY = Math.max(-60, Math.min(60, panY));
-        return;
-      }
-      const stageRect = stage.getBoundingClientRect();
-      const containerRect = container.getBoundingClientRect();
-      const maxPanX = Math.max(0, (stageRect.width * (currentScale - 1)) / 2 + 100);
-      const maxPanY = Math.max(0, (stageRect.height * (currentScale - 1)) / 2 + 100);
+      const imgW = imgEl ? (imgEl.offsetWidth || 0) : (stage ? stage.offsetWidth : 0);
+      const imgH = imgEl ? (imgEl.offsetHeight || 0) : (stage ? stage.offsetHeight : 0);
+      const scaledW = imgW * currentScale;
+      const scaledH = imgH * currentScale;
+      const containerW = container ? container.clientWidth : window.innerWidth;
+      const containerH = container ? container.clientHeight : window.innerHeight;
+
+      // Generous buffer (64px) allows dragging edges completely away from screen margins and bottom pill
+      const bufferX = 64;
+      const bufferY = 64;
+      const maxPanX = Math.max(bufferX, Math.abs(scaledW - containerW) / 2 + bufferX);
+      const maxPanY = Math.max(bufferY, Math.abs(scaledH - containerH) / 2 + bufferY);
+
       panX = Math.max(-maxPanX, Math.min(maxPanX, panX));
       panY = Math.max(-maxPanY, Math.min(maxPanY, panY));
     }
 
     function toggleZoom(focalX, focalY) {
       if (lightbox.classList.contains('has-video')) return;
-      if (currentScale > 1.2 || currentScale < 0.98) {
+      if (currentScale > 1.05) {
         resetZoom();
       } else {
-        currentScale = 2.5;
+        currentScale = 1.5;
         panX = 0;
         panY = 0;
         updateTransform();
@@ -1781,7 +1780,7 @@ document.addEventListener('DOMContentLoaded', () => {
         e.target === videoEl || e.target.closest('video')) {
         return;
       }
-      if (currentScale >= 0.98 && currentScale <= 1.02) return;
+      if (currentScale <= 1.02) return;
       isDragging = true;
       lightbox.classList.add('is-dragging');
       startX = e.clientX - panX;
@@ -1790,7 +1789,7 @@ document.addEventListener('DOMContentLoaded', () => {
     });
 
     window.addEventListener('mousemove', (e) => {
-      if (!isDragging || (currentScale >= 0.98 && currentScale <= 1.02)) return;
+      if (!isDragging || currentScale <= 1.02) return;
       panX = e.clientX - startX;
       panY = e.clientY - startY;
       clampPan();
@@ -1812,13 +1811,13 @@ document.addEventListener('DOMContentLoaded', () => {
       }
     });
 
-    // --- Trackpad Pinch & Mouse Wheel Zoom (min 0.5x to max 4.0x) ---
+    // --- Trackpad Pinch & Mouse Wheel Zoom (min 1.0x to max 1.5x) ---
     container.addEventListener('wheel', (e) => {
       if (lightbox.classList.contains('has-video')) return;
       e.preventDefault();
       const zoomFactor = e.ctrlKey ? (1 - e.deltaY * 0.015) : (e.deltaY < 0 ? 1.15 : 0.87);
-      currentScale = Math.max(0.5, Math.min(4.0, currentScale * zoomFactor));
-      if (currentScale >= 0.98 && currentScale <= 1.02) {
+      currentScale = Math.max(1.0, Math.min(1.5, currentScale * zoomFactor));
+      if (currentScale <= 1.02) {
         resetZoom();
       } else {
         clampPan();
@@ -1826,7 +1825,7 @@ document.addEventListener('DOMContentLoaded', () => {
       }
     }, { passive: false });
 
-    // --- Multi-Touch Gestures (Pinch-to-zoom down to 0.5x, Pan, Double-Tap) ---
+    // --- Multi-Touch Gestures (Pinch-to-zoom max 1.5x, min 1.0x, Pan) ---
     container.addEventListener('touchstart', (e) => {
       if (e.target === closeBtn || e.target.closest('#lightbox-close') ||
         e.target === prevBtn || e.target.closest('#lightbox-prev') ||
@@ -1855,7 +1854,7 @@ document.addEventListener('DOMContentLoaded', () => {
         lastTouchY = e.touches[0].clientY;
         touchMoved = false;
 
-        if (currentScale > 1.02 || currentScale < 0.98) {
+        if (currentScale > 1.02) {
           isTouchGesturing = true;
           lightbox.classList.add('is-gesturing');
           e.preventDefault();
@@ -1864,7 +1863,7 @@ document.addEventListener('DOMContentLoaded', () => {
     }, { passive: false });
 
     window.addEventListener('touchmove', (e) => {
-      if (!isTouchGesturing && (currentScale >= 0.98 && currentScale <= 1.02)) {
+      if (!isTouchGesturing && currentScale <= 1.02) {
         if (e.touches.length === 1) {
           const moveDist = Math.hypot(e.touches[0].clientX - touchStartX, e.touches[0].clientY - touchStartY);
           if (moveDist > 8) touchMoved = true;
@@ -1881,7 +1880,7 @@ document.addEventListener('DOMContentLoaded', () => {
         );
         if (touchStartDist > 0) {
           const factor = dist / touchStartDist;
-          currentScale = Math.max(0.5, Math.min(4.0, touchStartScale * factor));
+          currentScale = Math.max(1.0, Math.min(1.5, touchStartScale * factor));
         }
         const midX = (e.touches[0].clientX + e.touches[1].clientX) / 2;
         const midY = (e.touches[0].clientY + e.touches[1].clientY) / 2;
@@ -1892,7 +1891,7 @@ document.addEventListener('DOMContentLoaded', () => {
         clampPan();
         updateTransform();
         e.preventDefault();
-      } else if (e.touches.length === 1 && (currentScale > 1.02 || currentScale < 0.98)) {
+      } else if (e.touches.length === 1 && currentScale > 1.02) {
         touchMoved = true;
         const curX = e.touches[0].clientX;
         const curY = e.touches[0].clientY;
@@ -1910,32 +1909,11 @@ document.addEventListener('DOMContentLoaded', () => {
       if (e.touches.length === 0) {
         isTouchGesturing = false;
         lightbox.classList.remove('is-gesturing');
-        if (currentScale >= 0.96 && currentScale <= 1.04) {
+        if (currentScale <= 1.04) {
           resetZoom();
-        } else if (currentScale < 0.5) {
-          currentScale = 0.5;
-          clampPan();
-          updateTransform();
         } else {
           clampPan();
           updateTransform();
-        }
-
-        // Tap & Double-Tap detection
-        if (!touchMoved) {
-          const now = Date.now();
-          if (now - lastTapTime < 320) {
-            toggleZoom();
-            lastTapTime = 0;
-          } else {
-            lastTapTime = now;
-            setTimeout(() => {
-              if (Date.now() - lastTapTime >= 310 && lastTapTime !== 0) {
-                // If single tap was on backdrop/container (not image), close lightbox
-                lastTapTime = 0;
-              }
-            }, 320);
-          }
         }
       } else if (e.touches.length === 1) {
         lastTouchX = e.touches[0].clientX;
