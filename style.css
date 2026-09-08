@@ -2183,6 +2183,11 @@ body.modal-is-open .mobile-navbar {
 
 /* ── Desktop pinned scroll showcase (Trionn style) ───────────────────── */
 
+.works {
+  position: relative;
+  z-index: 5;
+}
+
 .works-desktop-pinned {
   height: 500vh;
   position: relative;
