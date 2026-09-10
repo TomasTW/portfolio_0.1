@@ -418,7 +418,7 @@ section {
 /* Phone & Tablet (<= 1024px): 3D Perspective & Depth Transforms */
 @media (max-width: 1024px) {
   .gyro-card {
-    perspective: 800px;
+    perspective: 500px;
     transform-style: preserve-3d;
     will-change: transform;
   }
@@ -431,7 +431,7 @@ section {
 
   .gyro-layer-text {
     transform-style: preserve-3d;
-    transform: translate3d(var(--gyro-text-x, 0px), var(--gyro-text-y, 0px), 24px) rotateX(var(--gyro-rot-x, 0deg)) rotateY(var(--gyro-rot-y, 0deg));
+    transform: translate3d(var(--gyro-text-x, 0px), var(--gyro-text-y, 0px), 48px) rotateX(var(--gyro-rot-x, 0deg)) rotateY(var(--gyro-rot-y, 0deg));
     will-change: transform;
   }
 }
@@ -449,8 +449,8 @@ section {
   /* Pinned scroll sections on tablet with scroll-driven enter/exit and magnetic hold */
   .about,
   .works {
-    height: 240svh !important;
-    min-height: 240svh !important;
+    height: 320svh !important;
+    min-height: 320svh !important;
     max-height: none !important;
     position: relative !important;
     padding: 0 !important;
@@ -461,8 +461,8 @@ section {
   }
 
   .contact {
-    height: 200svh !important;
-    min-height: 200svh !important;
+    height: 260svh !important;
+    min-height: 260svh !important;
     max-height: none !important;
     position: relative !important;
     padding: 0 !important;
@@ -1554,8 +1554,8 @@ body.modal-is-open .mobile-navbar {
 
   .about,
   .works {
-    height: 240svh !important;
-    min-height: 240svh !important;
+    height: 320svh !important;
+    min-height: 320svh !important;
     max-height: none !important;
     position: relative !important;
     padding: 0 !important;
@@ -1566,8 +1566,8 @@ body.modal-is-open .mobile-navbar {
   }
 
   .contact {
-    height: 200svh !important;
-    min-height: 200svh !important;
+    height: 260svh !important;
+    min-height: 260svh !important;
     max-height: none !important;
     position: relative !important;
     padding: 0 !important;
@@ -4664,60 +4664,4 @@ body.is-webview .hero-canvas-sticky svg {
   will-change: auto;
 }
 
-/* Webview open-in-browser banner */
-.webview-banner {
-  position: fixed;
-  top: 0;
-  left: 0;
-  right: 0;
-  z-index: 99999;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: 12px;
-  padding: 10px 16px;
-  background: rgba(32, 32, 32, 0.96);
-  backdrop-filter: blur(12px);
-  -webkit-backdrop-filter: blur(12px);
-  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
-  font-family: var(--typography-body-sm-family, 'Inter', sans-serif);
-  font-size: 13px;
-  color: rgba(255, 255, 255, 0.85);
-  transform: translateY(-100%);
-  transition: transform 0.4s cubic-bezier(0.22, 1, 0.36, 1);
-}
-
-.webview-banner.visible {
-  transform: translateY(0);
-}
-
-.webview-banner-text {
-  flex: 1;
-  text-align: center;
-}
-
-.webview-banner-link {
-  color: #FFD600;
-  text-decoration: underline;
-  text-underline-offset: 2px;
-  font-weight: 600;
-  white-space: nowrap;
-  cursor: pointer;
-}
-
-.webview-banner-close {
-  width: 28px;
-  height: 28px;
-  border-radius: 50%;
-  border: none;
-  background: rgba(255, 255, 255, 0.1);
-  color: rgba(255, 255, 255, 0.7);
-  font-size: 16px;
-  line-height: 1;
-  cursor: pointer;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  flex-shrink: 0;
-  padding: 0;
-}
+/* (Webview banner styles removed — banner no longer shown) */

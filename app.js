@@ -2118,10 +2118,10 @@ document.addEventListener('DOMContentLoaded', () => {
     let currentTextY = 0;
     let animId = null;
 
-    const MAX_TILT = 20; // Max 3D tilt in degrees (was 15, louder now)
-    const BASE_SHIFT = 10; // Base graphic shift amplitude in px (was 4, more pronounced)
-    const TEXT_SHIFT = 28; // Floating yellow text shift amplitude in px (was 14, doubled)
-    const LERP_FACTOR = 0.14; // Inertial spring smoothing (was 0.08, smoother response)
+    const MAX_TILT = 30; // Max 3D tilt in degrees (boosted for dramatic depth)
+    const BASE_SHIFT = 22; // Base graphic shift amplitude in px (stronger layer separation)
+    const TEXT_SHIFT = 48; // Floating yellow text shift amplitude in px (very pronounced parallax split)
+    const LERP_FACTOR = 0.18; // Inertial spring smoothing (quicker response to tilt)
 
     function checkViewport() {
       return window.innerWidth <= 1024;
@@ -2262,53 +2262,7 @@ document.addEventListener('DOMContentLoaded', () => {
       heroSvg.style.willChange = 'auto';
     }
 
-    // 3. Show "Open in browser" banner
-    const banner = document.createElement('div');
-    banner.className = 'webview-banner';
-    banner.setAttribute('role', 'alert');
-    banner.innerHTML = `
-      <span class="webview-banner-text">
-        For the best experience, 
-        <a class="webview-banner-link" id="webview-open-link" href="#">open in Safari / Chrome</a>
-      </span>
-      <button class="webview-banner-close" id="webview-close" aria-label="Close banner">✕</button>
-    `;
-    document.body.appendChild(banner);
-
-    // Slide banner in after a short delay
-    setTimeout(() => banner.classList.add('visible'), 600);
-
-    // Open in system browser
-    const openLink = document.getElementById('webview-open-link');
-    if (openLink) {
-      openLink.addEventListener('click', (e) => {
-        e.preventDefault();
-        const url = window.location.href;
-        // iOS: Try to open in Safari using an x-callback URL
-        const isIOS = /iPhone|iPad|iPod/.test(navigator.userAgent);
-        if (isIOS) {
-          window.location.href = url;
-          // iOS in-app browsers often redirect to Safari on a second navigation
-          setTimeout(() => { window.open(url, '_blank'); }, 300);
-        } else {
-          // Android: intent:// can open in Chrome
-          try {
-            window.open(url, '_system');
-          } catch (err) {
-            window.open(url, '_blank');
-          }
-        }
-      });
-    }
-
-    // Close banner
-    const closeBtn = document.getElementById('webview-close');
-    if (closeBtn) {
-      closeBtn.addEventListener('click', () => {
-        banner.classList.remove('visible');
-        setTimeout(() => banner.remove(), 400);
-      });
-    }
+    // (Banner removed — portfolio works well enough in webviews without prompting)
   })();
 
 });
