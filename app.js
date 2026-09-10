@@ -3,6 +3,29 @@
    ========================================================================== */
 
 /* ==========================================================================
+   -1. IN-APP BROWSER / WEBVIEW DETECTION
+   Detects LinkedIn, Facebook, Instagram, LINE, 104.com.tw and other common
+   in-app browsers that embed a limited WebView instead of a full browser.
+   ========================================================================== */
+(function detectWebView() {
+  const ua = navigator.userAgent || '';
+  const isWebView = /LinkedIn|LIFF|FBAV|FBAN|Instagram|Line\/|Twitter|MicroMessenger|104app|Bytedance|TikTok|Snapchat|Pinterest|WeChat/i.test(ua)
+    || ((/iPhone|iPad|iPod/.test(ua)) && !(/Safari/.test(ua)) && /AppleWebKit/.test(ua))
+    || (/wv\)/.test(ua)); // Android WebView marker
+  window.isWebView = isWebView;
+  if (isWebView) {
+    document.documentElement.classList.add('is-webview');
+    document.body && document.body.classList.add('is-webview');
+    // Defer body class if body isn't available yet
+    if (!document.body) {
+      document.addEventListener('DOMContentLoaded', () => {
+        document.body.classList.add('is-webview');
+      }, { once: true });
+    }
+  }
+})();
+
+/* ==========================================================================
    0. HERO SCROLL-SCRUBBED FRAME ANIMATION
    Uses hero_section.svg inlined in the HTML.
    Technique: CSS animation-play-state:paused + negative animation-delay
@@ -1029,14 +1052,14 @@ document.addEventListener('DOMContentLoaded', () => {
       const p = scrollHeight > 0 ? Math.min(1, scrolled / scrollHeight) : 0;
 
       // Staggered cascade for work list items only (slide in/out):
-      // Enter Phase: 0.02 -> 0.35 (staggered from left -100vw -> 0vw)
-      // Magnetic Pin / Hold: 0.35 -> 0.65 (held at 0vw, opacity 1)
-      // Exit Phase: 0.65 -> 0.98 (staggered to right 0vw -> +100vw)
+      // Enter Phase: 0.06 -> 0.40 (staggered from left -100vw -> 0vw) — widened for less sensitivity
+      // Magnetic Pin / Hold: 0.40 -> 0.58 (held at 0vw, opacity 1)
+      // Exit Phase: 0.58 -> 0.94 (staggered to right 0vw -> +100vw)
       slideItems.forEach((item, i) => {
-        const enterStart = 0.02 + i * 0.04;
-        const enterEnd = enterStart + 0.16;
-        const exitStart = 0.66 + i * 0.04;
-        const exitEnd = exitStart + 0.16;
+        const enterStart = 0.06 + i * 0.04;
+        const enterEnd = enterStart + 0.20;
+        const exitStart = 0.60 + i * 0.04;
+        const exitEnd = exitStart + 0.20;
 
         let xVw = 0;
         let opacity = 1;
@@ -1064,18 +1087,18 @@ document.addEventListener('DOMContentLoaded', () => {
         item.style.setProperty('--item-opacity', opacity.toFixed(4));
       });
 
-      // Hand SVG: fade in/out like about & contact hands (opacity only, no slide)
-      // Enter: 0.05 -> 0.25 (fade in), Hold: 0.25 -> 0.72, Exit: 0.72 -> 0.95 (fade out)
+      // Hand SVG: fade in/out — widened ranges for less sensitivity
+      // Enter: 0.08 -> 0.32 (fade in), Hold: 0.32 -> 0.62, Exit: 0.62 -> 0.92 (fade out)
       if (handEl) {
         let handOpacity = 1;
-        if (p < 0.05) {
+        if (p < 0.08) {
           handOpacity = 0;
-        } else if (p < 0.25) {
-          handOpacity = easeInOut(mapRange(p, 0.05, 0.25, 0, 1));
-        } else if (p < 0.72) {
+        } else if (p < 0.32) {
+          handOpacity = easeInOut(mapRange(p, 0.08, 0.32, 0, 1));
+        } else if (p < 0.62) {
           handOpacity = 1;
-        } else if (p < 0.95) {
-          handOpacity = 1 - easeInOut(mapRange(p, 0.72, 0.95, 0, 1));
+        } else if (p < 0.92) {
+          handOpacity = 1 - easeInOut(mapRange(p, 0.62, 0.92, 0, 1));
         } else {
           handOpacity = 0;
         }
@@ -1140,33 +1163,34 @@ document.addEventListener('DOMContentLoaded', () => {
           p = scrollHeight > 0 ? Math.min(1, scrolled / scrollHeight) : 0;
         }
 
-        // Hand SVG: Enters (0.00→0.22), Holds (0.22→0.72), Exits (0.72→0.96)
+        // Hand SVG: Enters, Holds, Exits — mobile ranges widened for less sensitivity
         const handOpacity = isMobileOrTablet
-          ? (p < 0.05 ? 0 : (p < 0.25 ? easeInOut(mapRange(p, 0.05, 0.25, 0, 1)) : (p > 0.72 ? 1 - easeInOut(mapRange(p, 0.72, 0.95, 0, 1)) : 1)))
+          ? (p < 0.08 ? 0 : (p < 0.32 ? easeInOut(mapRange(p, 0.08, 0.32, 0, 1)) : (p > 0.66 ? 1 - easeInOut(mapRange(p, 0.66, 0.92, 0, 1)) : 1)))
           : (p < 0.10 ? easeInOut(mapRange(p, 0, 0.10, 0, 1)) : (p > 0.88 ? 1 - easeInOut(mapRange(p, 0.88, 0.98, 0, 1)) : 1));
 
-        // Tool Icons: Enters (0.08→0.25), Holds (0.25→0.72), Exits (0.72→0.95)
+        // Tool Icons: Enters, Holds, Exits — mobile ranges widened
         const iconsOpacity = isMobileOrTablet
-          ? (p < 0.08 ? 0 : (p < 0.25 ? easeInOut(mapRange(p, 0.08, 0.25, 0, 1)) : (p > 0.72 ? 1 - easeInOut(mapRange(p, 0.72, 0.95, 0, 1)) : 1)))
+          ? (p < 0.10 ? 0 : (p < 0.32 ? easeInOut(mapRange(p, 0.10, 0.32, 0, 1)) : (p > 0.66 ? 1 - easeInOut(mapRange(p, 0.66, 0.92, 0, 1)) : 1)))
           : (p < 0.02 ? 0 : (p < 0.15 ? easeInOut(mapRange(p, 0.02, 0.15, 0, 1)) : (p > 0.85 ? 1 - easeInOut(mapRange(p, 0.85, 0.98, 0, 1)) : 1)));
 
-        // Header: -100vw→0vw (0.02→0.24), 0vw (hold 0.24→0.72), 0vw→-100vw (exit 0.72→0.96)
+        // Header: slides in/out — mobile ranges widened
         const headerXvw = isMobileOrTablet
-          ? (p < 0.02 ? -100 : (p < 0.24 ? -100 + easeInOut(mapRange(p, 0.02, 0.24, 0, 1)) * 100 : (p < 0.72 ? 0 : -(easeInOut(mapRange(p, 0.72, 0.96, 0, 1)) * 100))))
+          ? (p < 0.06 ? -100 : (p < 0.30 ? -100 + easeInOut(mapRange(p, 0.06, 0.30, 0, 1)) * 100 : (p < 0.66 ? 0 : -(easeInOut(mapRange(p, 0.66, 0.94, 0, 1)) * 100))))
           : (p < 0.02 ? -110 : (p < 0.15 ? -110 + easeInOut(mapRange(p, 0.02, 0.15, 0, 1)) * 110 : (p < 0.85 ? 0 : -(easeInOut(mapRange(p, 0.85, 1.0, 0, 1)) * 110))));
 
         const headerOpacity = isMobileOrTablet
-          ? (p < 0.02 ? 0 : (p < 0.24 ? easeInOut(mapRange(p, 0.02, 0.24, 0, 1)) : (p < 0.72 ? 1 : 1 - easeInOut(mapRange(p, 0.72, 0.96, 0, 1)))))
+          ? (p < 0.06 ? 0 : (p < 0.30 ? easeInOut(mapRange(p, 0.06, 0.30, 0, 1)) : (p < 0.66 ? 1 : 1 - easeInOut(mapRange(p, 0.66, 0.94, 0, 1)))))
           : (p < 0.02 ? 0 : (p < 0.15 ? easeInOut(mapRange(p, 0.02, 0.15, 0, 1)) : (p < 0.85 ? 1 : 1 - easeInOut(mapRange(p, 0.85, 1.0, 0, 1)))));
 
-        // Footer: +100vw→0vw (0.02→0.24), 0vw (hold 0.24→0.72), 0vw→+100vw (exit 0.72→0.96)
+        // Footer: slides in/out — mobile ranges widened
         const footerXvw = isMobileOrTablet
-          ? (p < 0.02 ? 100 : (p < 0.24 ? 100 - easeInOut(mapRange(p, 0.02, 0.24, 0, 1)) * 100 : (p < 0.72 ? 0 : +(easeInOut(mapRange(p, 0.72, 0.96, 0, 1)) * 100))))
+          ? (p < 0.06 ? 100 : (p < 0.30 ? 100 - easeInOut(mapRange(p, 0.06, 0.30, 0, 1)) * 100 : (p < 0.66 ? 0 : +(easeInOut(mapRange(p, 0.66, 0.94, 0, 1)) * 100))))
           : (p < 0.02 ? 110 : (p < 0.15 ? 110 - easeInOut(mapRange(p, 0.02, 0.15, 0, 1)) * 110 : (p < 0.85 ? 0 : +(easeInOut(mapRange(p, 0.85, 1.0, 0, 1)) * 110))));
 
         const footerOpacity = isMobileOrTablet
-          ? (p < 0.02 ? 0 : (p < 0.24 ? easeInOut(mapRange(p, 0.02, 0.24, 0, 1)) : (p < 0.72 ? 1 : 1 - easeInOut(mapRange(p, 0.72, 0.96, 0, 1)))))
+          ? (p < 0.06 ? 0 : (p < 0.30 ? easeInOut(mapRange(p, 0.06, 0.30, 0, 1)) : (p < 0.66 ? 1 : 1 - easeInOut(mapRange(p, 0.66, 0.94, 0, 1)))))
           : (p < 0.02 ? 0 : (p < 0.15 ? easeInOut(mapRange(p, 0.02, 0.15, 0, 1)) : (p < 0.85 ? 1 : 1 - easeInOut(mapRange(p, 0.85, 1.0, 0, 1)))));
+
 
         // ── Desktop Hand Rotation (Starts pointing to skills/tools, then rotates down to point right) ──
         function getAboutStartAngle() {
@@ -1270,36 +1294,36 @@ document.addEventListener('DOMContentLoaded', () => {
         p = scrollHeight > 0 ? Math.min(1, scrolled / scrollHeight) : 0;
       }
 
-      // 1. Head SVG: Fades in & rotates from -30deg to 0deg during enter (0.02 -> 0.25) and stays 1 / 0deg
+      // 1. Head SVG: Fades in & rotates — mobile ranges widened for less sensitivity
       const headOpacity = isMobileOrTablet
-        ? (p < 0.02 ? 0 : (p < 0.25 ? easeInOut(mapRange(p, 0.02, 0.25, 0, 1)) : 1))
+        ? (p < 0.06 ? 0 : (p < 0.32 ? easeInOut(mapRange(p, 0.06, 0.32, 0, 1)) : 1))
         : (p < 0.10 ? easeInOut(mapRange(p, 0.00, 0.10, 0, 1)) : 1);
 
       const headRotateDeg = isMobileOrTablet
-        ? (p < 0.02 ? -30 : (p < 0.25 ? -30 + easeInOut(mapRange(p, 0.02, 0.25, 0, 1)) * 30 : 0))
+        ? (p < 0.06 ? -30 : (p < 0.32 ? -30 + easeInOut(mapRange(p, 0.06, 0.32, 0, 1)) * 30 : 0))
         : (p < 0.02 ? -30 : (p < 0.16 ? -30 + easeInOut(mapRange(p, 0.02, 0.16, 0, 1)) * 30 : 0));
 
-      // 2. Location text: Fades in (0.05 -> 0.25)
+      // 2. Location text: Fades in — mobile range widened
       const locationOpacity = isMobileOrTablet
-        ? (p < 0.05 ? 0 : (p < 0.25 ? easeInOut(mapRange(p, 0.05, 0.25, 0, 1)) : 1))
+        ? (p < 0.08 ? 0 : (p < 0.32 ? easeInOut(mapRange(p, 0.08, 0.32, 0, 1)) : 1))
         : (p < 0.04 ? 0 : (p < 0.15 ? easeInOut(mapRange(p, 0.04, 0.15, 0, 1)) : 1));
 
-      // 3. "Get in touch": Slides in from left (-100vw -> 0vw) (0.02 -> 0.25)
+      // 3. "Get in touch": Slides in from left — mobile range widened
       const headlineXvw = isMobileOrTablet
-        ? (p < 0.02 ? -100 : (p < 0.25 ? -100 + easeInOut(mapRange(p, 0.02, 0.25, 0, 1)) * 100 : 0))
+        ? (p < 0.06 ? -100 : (p < 0.32 ? -100 + easeInOut(mapRange(p, 0.06, 0.32, 0, 1)) * 100 : 0))
         : (p < 0.02 ? -110 : (p < 0.15 ? -110 + easeInOut(mapRange(p, 0.02, 0.15, 0, 1)) * 110 : 0));
 
       const headlineOpacity = isMobileOrTablet
-        ? (p < 0.02 ? 0 : (p < 0.25 ? easeInOut(mapRange(p, 0.02, 0.25, 0, 1)) : 1))
+        ? (p < 0.06 ? 0 : (p < 0.32 ? easeInOut(mapRange(p, 0.06, 0.32, 0, 1)) : 1))
         : (p < 0.02 ? 0 : (p < 0.15 ? easeInOut(mapRange(p, 0.02, 0.15, 0, 1)) : 1));
 
-      // 4. Icons list: Slides in from right (+100vw -> 0vw) (0.05 -> 0.28)
+      // 4. Icons list: Slides in from right — mobile range widened
       const iconsXvw = isMobileOrTablet
-        ? (p < 0.05 ? 100 : (p < 0.28 ? 100 - easeInOut(mapRange(p, 0.05, 0.28, 0, 1)) * 100 : 0))
+        ? (p < 0.08 ? 100 : (p < 0.35 ? 100 - easeInOut(mapRange(p, 0.08, 0.35, 0, 1)) * 100 : 0))
         : (p < 0.04 ? 110 : (p < 0.18 ? 110 - easeInOut(mapRange(p, 0.04, 0.18, 0, 1)) * 110 : 0));
 
       const iconsOpacity = isMobileOrTablet
-        ? (p < 0.05 ? 0 : (p < 0.28 ? easeInOut(mapRange(p, 0.05, 0.28, 0, 1)) : 1))
+        ? (p < 0.08 ? 0 : (p < 0.35 ? easeInOut(mapRange(p, 0.08, 0.35, 0, 1)) : 1))
         : (p < 0.04 ? 0 : (p < 0.18 ? easeInOut(mapRange(p, 0.04, 0.18, 0, 1)) : 1));
 
       card.style.setProperty('--contact-head-opacity', headOpacity.toFixed(4));
@@ -1825,7 +1849,10 @@ document.addEventListener('DOMContentLoaded', () => {
       }
     }, { passive: false });
 
-    // --- Multi-Touch Gestures (Pinch-to-zoom max 1.5x, min 1.0x, Pan) ---
+    // --- Multi-Touch Gestures (Pinch-to-zoom max 1.5x, min 1.0x, Pan) + Swipe-to-Navigate ---
+    let swipeOffsetX = 0; // tracks horizontal swipe drag for visual feedback
+    let isSwipeTracking = false; // true when tracking a potential swipe (not zoomed, single finger)
+
     container.addEventListener('touchstart', (e) => {
       if (e.target === closeBtn || e.target.closest('#lightbox-close') ||
         e.target === prevBtn || e.target.closest('#lightbox-prev') ||
@@ -1836,6 +1863,7 @@ document.addEventListener('DOMContentLoaded', () => {
       if (lightbox.classList.contains('has-video')) return;
 
       if (e.touches.length === 2) {
+        isSwipeTracking = false;
         isTouchGesturing = true;
         lightbox.classList.add('is-gesturing');
         touchStartDist = Math.hypot(
@@ -1853,16 +1881,44 @@ document.addEventListener('DOMContentLoaded', () => {
         lastTouchX = e.touches[0].clientX;
         lastTouchY = e.touches[0].clientY;
         touchMoved = false;
+        swipeOffsetX = 0;
 
         if (currentScale > 1.02) {
+          isSwipeTracking = false;
           isTouchGesturing = true;
           lightbox.classList.add('is-gesturing');
           e.preventDefault();
+        } else {
+          // Start tracking for a potential horizontal swipe
+          isSwipeTracking = true;
+          if (stage) stage.classList.add('swiping');
         }
       }
     }, { passive: false });
 
     window.addEventListener('touchmove', (e) => {
+      // Swipe tracking mode (not zoomed, single finger)
+      if (isSwipeTracking && e.touches.length === 1 && currentScale <= 1.02) {
+        const curX = e.touches[0].clientX;
+        const curY = e.touches[0].clientY;
+        const deltaX = curX - touchStartX;
+        const deltaY = curY - touchStartY;
+        const absDX = Math.abs(deltaX);
+        const absDY = Math.abs(deltaY);
+
+        if (absDX > 8 || absDY > 8) touchMoved = true;
+
+        // If dominantly horizontal, show drag feedback
+        if (absDX > 10 && absDX > absDY * 1.2) {
+          swipeOffsetX = deltaX;
+          if (stage) {
+            stage.style.transform = `translate3d(${swipeOffsetX.toFixed(1)}px, 0, 0)`;
+          }
+          e.preventDefault(); // prevent vertical scroll during horizontal swipe
+        }
+        return;
+      }
+
       if (!isTouchGesturing && currentScale <= 1.02) {
         if (e.touches.length === 1) {
           const moveDist = Math.hypot(e.touches[0].clientX - touchStartX, e.touches[0].clientY - touchStartY);
@@ -1906,6 +1962,38 @@ document.addEventListener('DOMContentLoaded', () => {
     }, { passive: false });
 
     window.addEventListener('touchend', (e) => {
+      // Handle swipe navigation commit
+      if (isSwipeTracking && e.touches.length === 0) {
+        isSwipeTracking = false;
+        if (stage) stage.classList.remove('swiping');
+
+        const SWIPE_THRESHOLD = 50;
+        if (Math.abs(swipeOffsetX) > SWIPE_THRESHOLD && currentGallery.length > 1) {
+          // Animate out in swipe direction, then show next/prev
+          const direction = swipeOffsetX > 0 ? 'prev' : 'next';
+          if (stage) {
+            stage.style.transform = `translate3d(${swipeOffsetX > 0 ? '100%' : '-100%'}, 0, 0)`;
+          }
+          setTimeout(() => {
+            if (direction === 'prev') prevMedia(); else nextMedia();
+            // Snap in from opposite side
+            if (stage) {
+              stage.classList.add('swiping');
+              stage.style.transform = `translate3d(${direction === 'prev' ? '-60%' : '60%'}, 0, 0)`;
+              requestAnimationFrame(() => {
+                stage.classList.remove('swiping');
+                stage.style.transform = '';
+              });
+            }
+          }, 180);
+        } else {
+          // Snap back — no navigation
+          if (stage) stage.style.transform = '';
+        }
+        swipeOffsetX = 0;
+        return;
+      }
+
       if (e.touches.length === 0) {
         isTouchGesturing = false;
         lightbox.classList.remove('is-gesturing');
@@ -2013,12 +2101,13 @@ document.addEventListener('DOMContentLoaded', () => {
   })();
 
   // --- Gyroscope-Driven 3D Parallax Depth Effect (Phone & Tablet: <= 1024px) ---
+  // True device orientation only — no touch drag fallback.
+  // Tilting/rotating the phone drives the parallax depth layers.
   (function initGyroscopeParallax() {
     const gyroCards = document.querySelectorAll('.gyro-card');
     if (!gyroCards || gyroCards.length === 0) return;
 
     let isEnabled = false;
-    let hasGyro = false;
     let targetRotX = 0;
     let targetRotY = 0;
     let currentRotX = 0;
@@ -2029,10 +2118,10 @@ document.addEventListener('DOMContentLoaded', () => {
     let currentTextY = 0;
     let animId = null;
 
-    const MAX_TILT = 15; // Max 3D tilt in degrees
-    const BASE_SHIFT = 4; // Base graphic shift amplitude in px
-    const TEXT_SHIFT = 14; // Floating yellow text shift amplitude in px
-    const LERP_FACTOR = 0.08; // Inertial spring smoothing
+    const MAX_TILT = 20; // Max 3D tilt in degrees (was 15, louder now)
+    const BASE_SHIFT = 10; // Base graphic shift amplitude in px (was 4, more pronounced)
+    const TEXT_SHIFT = 28; // Floating yellow text shift amplitude in px (was 14, doubled)
+    const LERP_FACTOR = 0.14; // Inertial spring smoothing (was 0.08, smoother response)
 
     function checkViewport() {
       return window.innerWidth <= 1024;
@@ -2103,7 +2192,6 @@ document.addEventListener('DOMContentLoaded', () => {
     function handleOrientation(e) {
       if (!checkViewport()) return;
       if (e.gamma === null || e.beta === null) return;
-      hasGyro = true;
 
       // gamma: left-to-right tilt [-90, 90]
       // beta: front-to-back tilt [-180, 180], ~45deg is comfortable resting hand holding angle
@@ -2114,29 +2202,6 @@ document.addEventListener('DOMContentLoaded', () => {
       targetRotX = -(beta / 45) * MAX_TILT;
 
       startLoop();
-    }
-
-    // Touch-move fallback when gyroscope is unavailable
-    function handleTouchMove(e) {
-      if (hasGyro || !checkViewport()) return;
-      if (!e.touches || e.touches.length === 0) return;
-
-      const touch = e.touches[0];
-      const cx = window.innerWidth / 2;
-      const cy = window.innerHeight / 2;
-      const nx = (touch.clientX - cx) / cx;
-      const ny = (touch.clientY - cy) / cy;
-
-      targetRotY = Math.max(-MAX_TILT, Math.min(MAX_TILT, nx * MAX_TILT));
-      targetRotX = Math.max(-MAX_TILT, Math.min(MAX_TILT, -ny * MAX_TILT));
-
-      startLoop();
-    }
-
-    function handleTouchEnd() {
-      if (hasGyro) return;
-      targetRotX = 0;
-      targetRotY = 0;
     }
 
     // iOS 13+ permission request on user interaction
@@ -2152,14 +2217,12 @@ document.addEventListener('DOMContentLoaded', () => {
             }
           })
           .catch(() => {
-            // Fallback active
+            // Permission denied — no fallback, parallax simply won't activate
           });
       } else if ('ondeviceorientation' in window) {
         window.addEventListener('deviceorientation', handleOrientation, { passive: true });
       }
 
-      window.addEventListener('touchmove', handleTouchMove, { passive: true });
-      window.addEventListener('touchend', handleTouchEnd, { passive: true });
       startLoop();
     }
 
@@ -2179,14 +2242,73 @@ document.addEventListener('DOMContentLoaded', () => {
     // Initial trigger if supported immediately (e.g. Android)
     if ('ondeviceorientation' in window && !(typeof DeviceOrientationEvent !== 'undefined' && typeof DeviceOrientationEvent.requestPermission === 'function')) {
       window.addEventListener('deviceorientation', handleOrientation, { passive: true });
-      window.addEventListener('touchmove', handleTouchMove, { passive: true });
-      window.addEventListener('touchend', handleTouchEnd, { passive: true });
       startLoop();
     }
   })();
 
+  // --- In-App Browser (WebView) Degradation & Banner ---
+  (function initWebViewDegradation() {
+    if (!window.isWebView) return;
+
+    // 1. Prevent canvas-ui WebGL from initializing (already hidden via CSS .is-webview)
+    //    Also prevent the JS instance from doing any work
+    if (window.canvasUIInstance) {
+      try { window.canvasUIInstance.setVisible(false, true); } catch (e) { }
+    }
+
+    // 2. Reduce will-change on heavy SVG elements to free compositor memory
+    const heroSvg = document.querySelector('.hero-canvas-sticky svg');
+    if (heroSvg) {
+      heroSvg.style.willChange = 'auto';
+    }
+
+    // 3. Show "Open in browser" banner
+    const banner = document.createElement('div');
+    banner.className = 'webview-banner';
+    banner.setAttribute('role', 'alert');
+    banner.innerHTML = `
+      <span class="webview-banner-text">
+        For the best experience, 
+        <a class="webview-banner-link" id="webview-open-link" href="#">open in Safari / Chrome</a>
+      </span>
+      <button class="webview-banner-close" id="webview-close" aria-label="Close banner">✕</button>
+    `;
+    document.body.appendChild(banner);
+
+    // Slide banner in after a short delay
+    setTimeout(() => banner.classList.add('visible'), 600);
+
+    // Open in system browser
+    const openLink = document.getElementById('webview-open-link');
+    if (openLink) {
+      openLink.addEventListener('click', (e) => {
+        e.preventDefault();
+        const url = window.location.href;
+        // iOS: Try to open in Safari using an x-callback URL
+        const isIOS = /iPhone|iPad|iPod/.test(navigator.userAgent);
+        if (isIOS) {
+          window.location.href = url;
+          // iOS in-app browsers often redirect to Safari on a second navigation
+          setTimeout(() => { window.open(url, '_blank'); }, 300);
+        } else {
+          // Android: intent:// can open in Chrome
+          try {
+            window.open(url, '_system');
+          } catch (err) {
+            window.open(url, '_blank');
+          }
+        }
+      });
+    }
+
+    // Close banner
+    const closeBtn = document.getElementById('webview-close');
+    if (closeBtn) {
+      closeBtn.addEventListener('click', () => {
+        banner.classList.remove('visible');
+        setTimeout(() => banner.remove(), 400);
+      });
+    }
+  })();
+
 });
-
-
-
-
