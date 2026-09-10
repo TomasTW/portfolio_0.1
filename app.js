@@ -2103,9 +2103,23 @@ document.addEventListener('DOMContentLoaded', () => {
   // --- Gyroscope-Driven 3D Parallax Depth Effect (Phone & Tablet: <= 1024px) ---
   // True device orientation only — no touch drag fallback.
   // Tilting/rotating the phone drives the parallax depth layers.
+  // NOTE: Transforms are applied as INLINE STYLES directly on .gyro-layer-base
+  // and .gyro-layer-text elements to bypass CSS `transform: ... !important`
+  // overrides in responsive media queries that would otherwise nullify the effect.
   (function initGyroscopeParallax() {
     const gyroCards = document.querySelectorAll('.gyro-card');
     if (!gyroCards || gyroCards.length === 0) return;
+
+    // Collect all base and text layer elements across all gyro-cards
+    const layerPairs = [];
+    gyroCards.forEach(card => {
+      const base = card.querySelector('.gyro-layer-base');
+      const text = card.querySelector('.gyro-layer-text');
+      if (base || text) {
+        layerPairs.push({ card, base, text });
+      }
+    });
+    if (layerPairs.length === 0) return;
 
     let isEnabled = false;
     let targetRotX = 0;
@@ -2122,26 +2136,34 @@ document.addEventListener('DOMContentLoaded', () => {
     const BASE_SHIFT = 22; // Base graphic shift amplitude in px (stronger layer separation)
     const TEXT_SHIFT = 48; // Floating yellow text shift amplitude in px (very pronounced parallax split)
     const LERP_FACTOR = 0.18; // Inertial spring smoothing (quicker response to tilt)
+    const TEXT_Z = 48; // Z-depth offset for the text layer (px)
 
     function checkViewport() {
       return window.innerWidth <= 1024;
     }
 
     function applyValues() {
-      const rotXStr = `${currentRotX.toFixed(2)}deg`;
-      const rotYStr = `${currentRotY.toFixed(2)}deg`;
-      const baseXStr = `${currentBaseX.toFixed(2)}px`;
-      const baseYStr = `${currentBaseY.toFixed(2)}px`;
-      const textXStr = `${currentTextX.toFixed(2)}px`;
-      const textYStr = `${currentTextY.toFixed(2)}px`;
+      const rotX = currentRotX.toFixed(2);
+      const rotY = currentRotY.toFixed(2);
+      const bx = currentBaseX.toFixed(2);
+      const by = currentBaseY.toFixed(2);
+      const tx = currentTextX.toFixed(2);
+      const ty = currentTextY.toFixed(2);
 
-      gyroCards.forEach(card => {
-        card.style.setProperty('--gyro-rot-x', rotXStr);
-        card.style.setProperty('--gyro-rot-y', rotYStr);
-        card.style.setProperty('--gyro-base-x', baseXStr);
-        card.style.setProperty('--gyro-base-y', baseYStr);
-        card.style.setProperty('--gyro-text-x', textXStr);
-        card.style.setProperty('--gyro-text-y', textYStr);
+      layerPairs.forEach(({ card, base, text }) => {
+        // Apply perspective and preserve-3d inline on the card container
+        // so it can't be overridden by any CSS !important rule
+        card.style.perspective = '500px';
+        card.style.transformStyle = 'preserve-3d';
+
+        if (base) {
+          base.style.transformStyle = 'preserve-3d';
+          base.style.transform = `translate3d(${bx}px, ${by}px, 0px) rotateX(${rotX}deg) rotateY(${rotY}deg)`;
+        }
+        if (text) {
+          text.style.transformStyle = 'preserve-3d';
+          text.style.transform = `translate3d(${tx}px, ${ty}px, ${TEXT_Z}px) rotateX(${rotX}deg) rotateY(${rotY}deg)`;
+        }
       });
     }
 
@@ -2154,7 +2176,20 @@ document.addEventListener('DOMContentLoaded', () => {
       currentBaseY = 0;
       currentTextX = 0;
       currentTextY = 0;
-      applyValues();
+
+      // Clear inline transforms to restore default CSS positioning
+      layerPairs.forEach(({ card, base, text }) => {
+        card.style.perspective = '';
+        card.style.transformStyle = '';
+        if (base) {
+          base.style.transformStyle = '';
+          base.style.transform = '';
+        }
+        if (text) {
+          text.style.transformStyle = '';
+          text.style.transform = '';
+        }
+      });
     }
 
     function tick() {
