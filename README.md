@@ -1,7 +1,7 @@
-Situation: My previous portfolio highlighted my traditional graphic design background but didn't fully reflect my recent growth in UI/UX.
+Situation: My old portfolio highlighted graphic design, not my recent UI/UX growth.
 
-Task: I wanted to update the site to give recruiters a clearer, more accurate picture of my current capabilities.
+Task: I wanted to show my full digital design and web skills.
 
-Action: Using Figma and Antigravity, I reorganized the layout into four straightforward categories to make my case studies easier for visitors to navigate.
+Action: Collaborating with AI to build the site, I used Figma to reorganize it into four clear categories.
 
-Result: The updated portfolio provides a cleaner, more accessible experience, helping me share my work more effectively as I pursue digital design roles.
+Result: The new site is cleaner, easier to navigate, and better shows what I can do.

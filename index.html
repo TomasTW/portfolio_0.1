@@ -2451,7 +2451,11 @@
          MODALS — opened by tapping list items on tablet/phone
          ════════════════════════════════════════════════════════════════ -->
 
-    <div class="work-modal" id="modal-nzxt" role="dialog" aria-modal="true" aria-labelledby="modal-nzxt-title" aria-hidden="true">
+        <!-- Dynamic Modal Mount Host -->
+    <div id="modal-container" aria-live="polite"></div>
+
+    <template id="tpl-modal-nzxt">
+  <div class="work-modal" id="modal-nzxt" role="dialog" aria-modal="true" aria-labelledby="modal-nzxt-title" aria-hidden="true">
       <div class="work-modal-inner">
         <div class="work-modal-scroll-area">
 
@@ -2627,7 +2631,10 @@
       </div>
     </div>
 
-    <div class="work-modal" id="modal-mitsukoshi" role="dialog" aria-modal="true" aria-labelledby="modal-mitsukoshi-title" aria-hidden="true">
+      </template>
+
+    <template id="tpl-modal-mitsukoshi">
+  <div class="work-modal" id="modal-mitsukoshi" role="dialog" aria-modal="true" aria-labelledby="modal-mitsukoshi-title" aria-hidden="true">
       <div class="work-modal-inner">
         <div class="work-modal-scroll-area">
           <!-- Sticky Title -->
@@ -2748,7 +2755,10 @@
       </div>
     </div>
 
-    <div class="work-modal" id="modal-gallery" role="dialog" aria-modal="true" aria-labelledby="modal-gallery-title" aria-hidden="true">
+      </template>
+
+    <template id="tpl-modal-gallery">
+  <div class="work-modal" id="modal-gallery" role="dialog" aria-modal="true" aria-labelledby="modal-gallery-title" aria-hidden="true">
       <div class="work-modal-inner">
         <div class="work-modal-scroll-area">
           <!-- Sticky Title -->
@@ -2947,7 +2957,10 @@
       </div>
     </div>
 
-    <div class="work-modal" id="modal-liho" role="dialog" aria-modal="true" aria-labelledby="modal-liho-title" aria-hidden="true">
+      </template>
+
+    <template id="tpl-modal-liho">
+  <div class="work-modal" id="modal-liho" role="dialog" aria-modal="true" aria-labelledby="modal-liho-title" aria-hidden="true">
       <div class="work-modal-inner">
         <div class="work-modal-scroll-area">
           <!-- Sticky Title -->
@@ -3113,6 +3126,7 @@
         </button>
       </div>
     </div>
+    </template>
 
   </section>
 

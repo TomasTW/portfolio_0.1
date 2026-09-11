@@ -657,10 +657,13 @@ document.addEventListener('DOMContentLoaded', () => {
     update();
   })();
 
-  // --- Works Modal Controls (Desktop & Mobile) ---
+  // --- Works Modal Controls (Desktop & Mobile, <template>-backed) ---
   (function initWorksMobileModals() {
-    const modalTriggers = document.querySelectorAll('[data-modal]');
-    const modals = document.querySelectorAll('.work-modal, .project-modal');
+    const modalContainer = document.getElementById('modal-container') || document.body;
+    let activeModal = null;
+    let activeModalResizeObserver = null;
+    let lastActiveModalTrigger = null;
+    let removeModalTimer = null;
 
     function updateModalState() {
       const openModals = document.querySelectorAll('.work-modal.open, .project-modal.open');
@@ -728,210 +731,121 @@ document.addEventListener('DOMContentLoaded', () => {
       }
     }
 
-    let lastActiveModalTrigger = null;
+    function initModalVideo(modal) {
+      const appVideoWrapper = modal.querySelector('#app-video-wrapper');
+      const appDemoVideo = modal.querySelector('#app-demo-video');
+      const appTimelineTrack = modal.querySelector('#app-video-timeline-track');
+      const appTimelineProgress = modal.querySelector('#app-video-timeline-progress');
+      const appTimelineHandle = modal.querySelector('#app-video-timeline-handle');
+      const appVideoControls = modal.querySelector('#app-video-controls');
 
-    const openModal = (targetModal) => {
-      if (targetModal) {
-        lastActiveModalTrigger = document.activeElement;
-        targetModal.classList.add('open');
-        targetModal.setAttribute('aria-hidden', 'false');
+      if (appVideoWrapper && appDemoVideo) {
+        let isDraggingTimeline = false;
 
-        const modalId = targetModal.id;
-        document.querySelectorAll(`[data-modal="${modalId}"]`).forEach(trig => {
-          trig.setAttribute('aria-expanded', 'true');
-        });
-
-        const scrollArea = targetModal.querySelector('.work-modal-scroll-area');
-        if (scrollArea) {
-          scrollArea.scrollTop = 0;
+        if (appVideoControls) {
+          appVideoControls.addEventListener('click', (e) => {
+            e.stopPropagation();
+          });
         }
-        updateModalState();
-        updateSvgProgress(targetModal);
-        updateStickyBorderPosition(targetModal);
-        requestAnimationFrame(() => {
-          updateSvgProgress(targetModal);
-          updateStickyBorderPosition(targetModal);
-        });
-        setTimeout(() => {
-          updateSvgProgress(targetModal);
-          updateStickyBorderPosition(targetModal);
-          const closeBtn = targetModal.querySelector('.work-modal-close, .modal-close');
-          if (closeBtn) closeBtn.focus();
-        }, 50);
-      }
-    };
 
-    const closeModal = (modal) => {
-      if (modal) {
-        modal.classList.remove('open');
-        modal.setAttribute('aria-hidden', 'true');
-
-        const modalId = modal.id;
-        document.querySelectorAll(`[data-modal="${modalId}"]`).forEach(trig => {
-          trig.setAttribute('aria-expanded', 'false');
+        appVideoWrapper.addEventListener('click', (e) => {
+          if (e.target.closest('#app-video-controls') || isDraggingTimeline) return;
+          if (appDemoVideo.paused) {
+            appDemoVideo.play().then(() => {
+              appVideoWrapper.classList.add('is-playing');
+            }).catch(() => { });
+          } else {
+            appDemoVideo.pause();
+            appVideoWrapper.classList.remove('is-playing');
+          }
         });
 
-        const videos = modal.querySelectorAll('video');
-        videos.forEach(v => {
-          try { v.pause(); } catch (e) { }
+        appDemoVideo.addEventListener('play', () => {
+          appVideoWrapper.classList.add('is-playing');
         });
-        const videoWrappers = modal.querySelectorAll('.app-video-wrapper');
-        videoWrappers.forEach(vw => vw.classList.remove('is-playing'));
-        updateModalState();
 
-        if (lastActiveModalTrigger && typeof lastActiveModalTrigger.focus === 'function') {
-          lastActiveModalTrigger.focus();
-          lastActiveModalTrigger = null;
-        }
-      }
-    };
-
-    // App Video Play/Pause & Timeline Scrubber Handler
-    const appVideoWrapper = document.getElementById('app-video-wrapper');
-    const appDemoVideo = document.getElementById('app-demo-video');
-    const appTimelineTrack = document.getElementById('app-video-timeline-track');
-    const appTimelineProgress = document.getElementById('app-video-timeline-progress');
-    const appTimelineHandle = document.getElementById('app-video-timeline-handle');
-    const appVideoControls = document.getElementById('app-video-controls');
-
-    if (appVideoWrapper && appDemoVideo) {
-      let isDraggingTimeline = false;
-
-      // Prevent play/pause toggle when clicking controls
-      if (appVideoControls) {
-        appVideoControls.addEventListener('click', (e) => {
-          e.stopPropagation();
-        });
-      }
-
-      appVideoWrapper.addEventListener('click', (e) => {
-        if (e.target.closest('#app-video-controls') || isDraggingTimeline) return;
-        if (appDemoVideo.paused) {
-          appDemoVideo.play().then(() => {
-            appVideoWrapper.classList.add('is-playing');
-          }).catch(() => { });
-        } else {
-          appDemoVideo.pause();
+        appDemoVideo.addEventListener('pause', () => {
           appVideoWrapper.classList.remove('is-playing');
+        });
+
+        appDemoVideo.addEventListener('ended', () => {
+          appVideoWrapper.classList.remove('is-playing');
+        });
+
+        const updateTimelineDisplay = (percent) => {
+          const clampedPercent = Math.max(0, Math.min(100, percent));
+          if (appTimelineProgress) appTimelineProgress.style.width = `${clampedPercent}%`;
+          if (appTimelineHandle) appTimelineHandle.style.left = `${clampedPercent}%`;
+        };
+
+        const seekFromEvent = (e) => {
+          if (!appTimelineTrack || !appDemoVideo.duration) return;
+          const rect = appTimelineTrack.getBoundingClientRect();
+          const clientX = e.touches ? e.touches[0].clientX : e.clientX;
+          const offsetX = Math.max(0, Math.min(clientX - rect.left, rect.width));
+          const fraction = offsetX / rect.width;
+          appDemoVideo.currentTime = fraction * appDemoVideo.duration;
+          updateTimelineDisplay(fraction * 100);
+        };
+
+        if (appTimelineTrack) {
+          appTimelineTrack.addEventListener('mousedown', (e) => {
+            e.stopPropagation();
+            isDraggingTimeline = true;
+            appTimelineTrack.classList.add('is-dragging');
+            appVideoWrapper.classList.add('is-dragging');
+            seekFromEvent(e);
+          });
+
+          window.addEventListener('mousemove', (e) => {
+            if (isDraggingTimeline) {
+              e.preventDefault();
+              seekFromEvent(e);
+            }
+          });
+
+          window.addEventListener('mouseup', () => {
+            if (isDraggingTimeline) {
+              isDraggingTimeline = false;
+              appTimelineTrack.classList.remove('is-dragging');
+              appVideoWrapper.classList.remove('is-dragging');
+            }
+          });
+
+          appTimelineTrack.addEventListener('touchstart', (e) => {
+            e.stopPropagation();
+            isDraggingTimeline = true;
+            appTimelineTrack.classList.add('is-dragging');
+            appVideoWrapper.classList.add('is-dragging');
+            seekFromEvent(e);
+          }, { passive: false });
+
+          window.addEventListener('touchmove', (e) => {
+            if (isDraggingTimeline) {
+              seekFromEvent(e);
+            }
+          }, { passive: false });
+
+          window.addEventListener('touchend', () => {
+            if (isDraggingTimeline) {
+              isDraggingTimeline = false;
+              appTimelineTrack.classList.remove('is-dragging');
+              appVideoWrapper.classList.remove('is-dragging');
+            }
+          });
         }
-      });
 
-      appDemoVideo.addEventListener('play', () => {
-        appVideoWrapper.classList.add('is-playing');
-      });
-
-      appDemoVideo.addEventListener('pause', () => {
-        appVideoWrapper.classList.remove('is-playing');
-      });
-
-      appDemoVideo.addEventListener('ended', () => {
-        appVideoWrapper.classList.remove('is-playing');
-      });
-
-      const updateTimelineDisplay = (percent) => {
-        const clampedPercent = Math.max(0, Math.min(100, percent));
-        if (appTimelineProgress) appTimelineProgress.style.width = `${clampedPercent}%`;
-        if (appTimelineHandle) appTimelineHandle.style.left = `${clampedPercent}%`;
-      };
-
-      const seekFromEvent = (e) => {
-        if (!appTimelineTrack || !appDemoVideo.duration) return;
-        const rect = appTimelineTrack.getBoundingClientRect();
-        const clientX = e.touches ? e.touches[0].clientX : e.clientX;
-        const offsetX = Math.max(0, Math.min(clientX - rect.left, rect.width));
-        const fraction = offsetX / rect.width;
-        appDemoVideo.currentTime = fraction * appDemoVideo.duration;
-        updateTimelineDisplay(fraction * 100);
-      };
-
-      if (appTimelineTrack) {
-        appTimelineTrack.addEventListener('mousedown', (e) => {
-          e.stopPropagation();
-          isDraggingTimeline = true;
-          appTimelineTrack.classList.add('is-dragging');
-          appVideoWrapper.classList.add('is-dragging');
-          seekFromEvent(e);
-        });
-
-        window.addEventListener('mousemove', (e) => {
-          if (isDraggingTimeline) {
-            e.preventDefault();
-            seekFromEvent(e);
-          }
-        });
-
-        window.addEventListener('mouseup', () => {
-          if (isDraggingTimeline) {
-            isDraggingTimeline = false;
-            appTimelineTrack.classList.remove('is-dragging');
-            appVideoWrapper.classList.remove('is-dragging');
-          }
-        });
-
-        // Mobile touch events
-        appTimelineTrack.addEventListener('touchstart', (e) => {
-          e.stopPropagation();
-          isDraggingTimeline = true;
-          appTimelineTrack.classList.add('is-dragging');
-          appVideoWrapper.classList.add('is-dragging');
-          seekFromEvent(e);
-        }, { passive: false });
-
-        window.addEventListener('touchmove', (e) => {
-          if (isDraggingTimeline) {
-            seekFromEvent(e);
-          }
-        }, { passive: false });
-
-        window.addEventListener('touchend', () => {
-          if (isDraggingTimeline) {
-            isDraggingTimeline = false;
-            appTimelineTrack.classList.remove('is-dragging');
-            appVideoWrapper.classList.remove('is-dragging');
+        appDemoVideo.addEventListener('timeupdate', () => {
+          if (!isDraggingTimeline && appDemoVideo.duration) {
+            const percent = (appDemoVideo.currentTime / appDemoVideo.duration) * 100;
+            updateTimelineDisplay(percent);
           }
         });
       }
-
-      appDemoVideo.addEventListener('timeupdate', () => {
-        if (!isDraggingTimeline && appDemoVideo.duration) {
-          const percent = (appDemoVideo.currentTime / appDemoVideo.duration) * 100;
-          updateTimelineDisplay(percent);
-        }
-      });
     }
 
-    // Pre-initialize SVG paths on all modals
-    modals.forEach(modal => {
-      updateSvgProgress(modal);
-    });
-
-    // Global modal trigger delegation (only clicking active image or mobile list item opens modal)
-    document.addEventListener('click', (e) => {
-      const trigger = e.target.closest('.work-img-slide.active, .works-list-item, .work-img-wrap');
-      if (trigger && !e.target.closest('.work-modal')) {
-        const modalId = trigger.getAttribute('data-modal') || (trigger.closest('[data-modal]') ? trigger.closest('[data-modal]').getAttribute('data-modal') : 'modal-nzxt');
-        const targetModal = document.getElementById(modalId);
-        if (targetModal) {
-          e.preventDefault();
-          openModal(targetModal);
-        }
-      }
-    });
-
-    // Keyboard trigger (Enter or Space) on works-list-item or work-img-wrap
-    document.addEventListener('keydown', (e) => {
-      if ((e.key === 'Enter' || e.key === ' ') && (e.target.matches('.works-list-item, .work-img-wrap') || e.target.closest('.works-list-item, .work-img-wrap'))) {
-        const trigger = e.target.matches('.works-list-item, .work-img-wrap') ? e.target : e.target.closest('.works-list-item, .work-img-wrap');
-        if (trigger && !e.target.closest('.work-modal')) {
-          e.preventDefault();
-          trigger.click();
-        }
-      }
-    });
-
-    modals.forEach(modal => {
+    function setupModalListeners(modal) {
       const scrollArea = modal.querySelector('.work-modal-scroll-area');
-
       if (scrollArea) {
         scrollArea.addEventListener('scroll', () => {
           updateSvgProgress(modal);
@@ -940,11 +854,14 @@ document.addEventListener('DOMContentLoaded', () => {
 
       const inner = modal.querySelector('.work-modal-inner');
       if (inner && window.ResizeObserver) {
-        const ro = new ResizeObserver(() => {
+        if (activeModalResizeObserver) {
+          activeModalResizeObserver.disconnect();
+        }
+        activeModalResizeObserver = new ResizeObserver(() => {
           updateSvgProgress(modal);
           updateStickyBorderPosition(modal);
         });
-        ro.observe(inner);
+        activeModalResizeObserver.observe(inner);
       }
 
       const closeBtns = modal.querySelectorAll('.work-modal-close, .modal-close, .modal-close-btn');
@@ -988,7 +905,6 @@ document.addEventListener('DOMContentLoaded', () => {
       if (window.matchMedia('(min-width: 901px)').matches) {
         modal.addEventListener('wheel', (e) => {
           if (!e.target.closest('.work-modal-inner')) {
-            const scrollArea = modal.querySelector('.work-modal-scroll-area');
             if (scrollArea) {
               scrollArea.scrollTop += e.deltaY;
               e.preventDefault();
@@ -996,20 +912,160 @@ document.addEventListener('DOMContentLoaded', () => {
           }
         }, { passive: false });
       }
+
+      // Initialize video player if present
+      initModalVideo(modal);
+    }
+
+    const openModal = (targetModal) => {
+      if (targetModal) {
+        if (removeModalTimer) {
+          clearTimeout(removeModalTimer);
+          removeModalTimer = null;
+        }
+
+        lastActiveModalTrigger = document.activeElement;
+        activeModal = targetModal;
+
+        // Force browser layout flush so transition runs smoothly
+        void targetModal.offsetWidth;
+
+        targetModal.classList.add('open');
+        targetModal.setAttribute('aria-hidden', 'false');
+
+        const modalId = targetModal.id;
+        document.querySelectorAll(`[data-modal="${modalId}"]`).forEach(trig => {
+          trig.setAttribute('aria-expanded', 'true');
+        });
+
+        const scrollArea = targetModal.querySelector('.work-modal-scroll-area');
+        if (scrollArea) {
+          scrollArea.scrollTop = 0;
+        }
+        updateModalState();
+        updateSvgProgress(targetModal);
+        updateStickyBorderPosition(targetModal);
+        requestAnimationFrame(() => {
+          updateSvgProgress(targetModal);
+          updateStickyBorderPosition(targetModal);
+        });
+        setTimeout(() => {
+          updateSvgProgress(targetModal);
+          updateStickyBorderPosition(targetModal);
+          const closeBtn = targetModal.querySelector('.work-modal-close, .modal-close');
+          if (closeBtn) closeBtn.focus();
+        }, 50);
+      }
+    };
+
+    const openModalById = (modalId) => {
+      if (!modalId) return;
+
+      // If another modal is already open, close it first
+      if (activeModal && activeModal.id !== modalId) {
+        closeModal(activeModal, true); // immediate close
+      }
+
+      let targetModal = document.getElementById(modalId);
+      if (!targetModal) {
+        const tpl = document.getElementById('tpl-' + modalId);
+        if (tpl) {
+          const clone = tpl.content.cloneNode(true);
+          modalContainer.appendChild(clone);
+          targetModal = document.getElementById(modalId);
+          if (targetModal) {
+            setupModalListeners(targetModal);
+          }
+        }
+      }
+
+      if (targetModal) {
+        openModal(targetModal);
+      }
+    };
+
+    const closeModal = (modal, immediate = false) => {
+      const targetModal = modal || activeModal;
+      if (targetModal) {
+        targetModal.classList.remove('open');
+        targetModal.setAttribute('aria-hidden', 'true');
+
+        const modalId = targetModal.id;
+        document.querySelectorAll(`[data-modal="${modalId}"]`).forEach(trig => {
+          trig.setAttribute('aria-expanded', 'false');
+        });
+
+        const videos = targetModal.querySelectorAll('video');
+        videos.forEach(v => {
+          try { v.pause(); } catch (e) { }
+        });
+        const videoWrappers = targetModal.querySelectorAll('.app-video-wrapper');
+        videoWrappers.forEach(vw => vw.classList.remove('is-playing'));
+        updateModalState();
+
+        if (lastActiveModalTrigger && typeof lastActiveModalTrigger.focus === 'function') {
+          lastActiveModalTrigger.focus();
+          lastActiveModalTrigger = null;
+        }
+
+        const cleanup = () => {
+          if (activeModalResizeObserver) {
+            activeModalResizeObserver.disconnect();
+            activeModalResizeObserver = null;
+          }
+          if (targetModal.parentNode) {
+            targetModal.parentNode.removeChild(targetModal);
+          }
+          if (activeModal === targetModal) {
+            activeModal = null;
+          }
+          removeModalTimer = null;
+        };
+
+        if (immediate) {
+          cleanup();
+        } else {
+          // Wait for CSS fade-out transition (350ms) before releasing DOM nodes
+          if (removeModalTimer) clearTimeout(removeModalTimer);
+          removeModalTimer = setTimeout(cleanup, 360);
+        }
+      }
+    };
+
+    // Global modal trigger delegation (only clicking active image or mobile list item opens modal)
+    document.addEventListener('click', (e) => {
+      const trigger = e.target.closest('.work-img-slide.active, .works-list-item, .work-img-wrap');
+      if (trigger && !e.target.closest('.work-modal')) {
+        const modalId = trigger.getAttribute('data-modal') || (trigger.closest('[data-modal]') ? trigger.closest('[data-modal]').getAttribute('data-modal') : 'modal-nzxt');
+        if (modalId) {
+          e.preventDefault();
+          openModalById(modalId);
+        }
+      }
+    });
+
+    // Keyboard trigger (Enter or Space) on works-list-item or work-img-wrap
+    document.addEventListener('keydown', (e) => {
+      if ((e.key === 'Enter' || e.key === ' ') && (e.target.matches('.works-list-item, .work-img-wrap') || e.target.closest('.works-list-item, .work-img-wrap'))) {
+        const trigger = e.target.matches('.works-list-item, .work-img-wrap') ? e.target : e.target.closest('.works-list-item, .work-img-wrap');
+        if (trigger && !e.target.closest('.work-modal')) {
+          e.preventDefault();
+          trigger.click();
+        }
+      }
     });
 
     window.addEventListener('resize', () => {
-      modals.forEach(modal => updateSvgProgress(modal));
+      if (activeModal) {
+        updateSvgProgress(activeModal);
+        updateStickyBorderPosition(activeModal);
+      }
     }, { passive: true });
 
     // Close on Escape key press
     window.addEventListener('keydown', (e) => {
-      if (e.key === 'Escape') {
-        modals.forEach(modal => {
-          if (modal.classList.contains('open')) {
-            closeModal(modal);
-          }
-        });
+      if (e.key === 'Escape' && activeModal && activeModal.classList.contains('open')) {
+        closeModal(activeModal);
       }
     });
   })();
