@@ -1874,6 +1874,19 @@ p.body-small {
   border: none;
   background: transparent;
   object-fit: cover;
+  cursor: zoom-in;
+  transition: outline 0.15s ease, opacity 0.2s ease;
+}
+
+.work-modal-scroll-area img {
+  cursor: zoom-in;
+}
+
+.work-modal-grid-img:focus-visible,
+.work-modal-scroll-area img:focus-visible,
+.work-modal-scroll-area .app-video-wrapper:focus-visible {
+  outline: 2px solid var(--color-text-primary-active);
+  outline-offset: 2px;
 }
 
 .app-video-cell,
@@ -2417,7 +2430,7 @@ p.body-small {
 .image-lightbox {
   position: fixed;
   inset: 0;
-  z-index: 9999;
+  z-index: 20000;
   display: flex;
   align-items: center;
   justify-content: center;

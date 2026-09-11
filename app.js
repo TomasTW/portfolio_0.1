@@ -905,6 +905,37 @@ document.addEventListener('DOMContentLoaded', () => {
         }
       });
 
+      // Accessible media triggers inside modal
+      const modalMedia = modal.querySelectorAll('.work-modal-scroll-area img, .work-modal-scroll-area .app-video-wrapper');
+      modalMedia.forEach(el => {
+        if (!el.closest('.work-modal-close') && !el.hasAttribute('tabindex')) {
+          el.setAttribute('tabindex', '0');
+          el.setAttribute('role', 'button');
+          el.setAttribute('aria-haspopup', 'dialog');
+          if (el.tagName === 'IMG') {
+            const altText = el.getAttribute('alt') || 'Project image';
+            if (!el.getAttribute('aria-label')) {
+              el.setAttribute('aria-label', `View ${altText} in full screen preview`);
+            }
+          } else if (el.classList.contains('app-video-wrapper')) {
+            if (!el.getAttribute('aria-label')) {
+              el.setAttribute('aria-label', 'View video in full screen preview');
+            }
+          }
+        }
+      });
+
+      // Keyboard trigger (Enter or Space) to open media in lightbox
+      modal.addEventListener('keydown', (e) => {
+        if (e.key === 'Enter' || e.key === ' ') {
+          const mediaEl = e.target && (e.target.matches('.work-modal-scroll-area img, .work-modal-scroll-area .app-video-wrapper') ? e.target : e.target.closest('.work-modal-scroll-area img, .work-modal-scroll-area .app-video-wrapper'));
+          if (mediaEl && !mediaEl.closest('.work-modal-close')) {
+            e.preventDefault();
+            mediaEl.click();
+          }
+        }
+      });
+
       // Forward backdrop wheel events into modal scroll area (desktop only)
       if (window.matchMedia('(min-width: 901px)').matches) {
         modal.addEventListener('wheel', (e) => {
@@ -1720,9 +1751,11 @@ document.addEventListener('DOMContentLoaded', () => {
 
     function openLightbox(mediaList, index) {
       if (!mediaList || mediaList.length === 0) return;
-      lastActiveLightboxTrigger = document.activeElement;
-      currentGallery = mediaList;
       currentIndex = Math.max(0, Math.min(index, mediaList.length - 1));
+      currentGallery = mediaList;
+      lastActiveLightboxTrigger = (mediaList[currentIndex] && mediaList[currentIndex].element)
+        ? mediaList[currentIndex].element
+        : document.activeElement;
       showMedia(currentIndex);
       lightbox.classList.add('is-open');
       lightbox.setAttribute('aria-hidden', 'false');
@@ -1744,10 +1777,22 @@ document.addEventListener('DOMContentLoaded', () => {
       }
       resetZoom();
       document.removeEventListener('keydown', onKeyDown);
-      if (lastActiveLightboxTrigger && typeof lastActiveLightboxTrigger.focus === 'function') {
-        lastActiveLightboxTrigger.focus();
-        lastActiveLightboxTrigger = null;
+
+      // Restore position in modal to the media where the user last stopped
+      const targetElement = (currentGallery && currentGallery[currentIndex] && currentGallery[currentIndex].element)
+        ? currentGallery[currentIndex].element
+        : lastActiveLightboxTrigger;
+
+      if (targetElement) {
+        try {
+          targetElement.scrollIntoView({ block: 'nearest', behavior: 'smooth' });
+        } catch (err) { }
+
+        if (typeof targetElement.focus === 'function') {
+          targetElement.focus({ preventScroll: true });
+        }
       }
+      lastActiveLightboxTrigger = null;
     }
 
     function showMedia(idx) {
