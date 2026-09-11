@@ -2517,7 +2517,6 @@ p.body-small {
   transition: color 0.15s ease;
 }
 
-.image-lightbox-close:hover,
 .image-lightbox-close:focus-visible {
   outline: none;
   color: var(--color-text-primary-active);
@@ -2550,7 +2549,6 @@ p.body-small {
   transition: border-color 0.15s ease, color 0.15s ease, box-shadow 0.15s ease, transform 0.15s ease;
 }
 
-.image-lightbox-nav:hover,
 .image-lightbox-nav:focus-visible,
 .image-lightbox-nav.is-key-active {
   border-color: var(--color-text-primary-active);
