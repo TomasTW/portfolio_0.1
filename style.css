@@ -693,7 +693,7 @@ p.body-small {
    ========================================================================== */
 
 .hero-canvas-section {
-  height: 600vh;
+  height: 380vh;
   padding: 64px 0;
   position: relative;
   background: transparent;
@@ -755,14 +755,13 @@ p.body-small {
    ABOUT SECTION — Exact Reference Frame Layout & Interactive Skill Slider
    ========================================================================== */
 .about {
-  height: 300vh;
+  height: 200vh;
   position: relative;
   background-color: transparent;
   color: transparent;
   z-index: 5;
-  /* Desktop: overlap with the last 100vh of hero so About starts appearing
-     when the hero animation hits ~2.0s (scroll progress 2/3). */
-  margin-top: -100vh;
+  /* Desktop: overlap with the last 70vh of hero so About starts appearing smoothly */
+  margin-top: -70vh;
 }
 
 .about-card {
@@ -1030,7 +1029,7 @@ p.body-small {
 }
 
 .works-desktop-pinned {
-  height: 500vh;
+  height: 350vh;
   position: relative;
   display: block;
 }
@@ -1591,6 +1590,8 @@ p.body-small {
   color: var(--color-text-primary-default);
   font-size: 0.7em;
   line-height: 1;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+  font-variant-emoji: text;
 }
 
 .work-modal-callout-desc {
@@ -2177,7 +2178,7 @@ p.body-small {
 }
 
 .contact {
-  height: 250vh;
+  height: 170vh;
   padding: 0;
   position: relative;
   background-color: transparent;
@@ -2513,6 +2514,13 @@ p.body-small {
   justify-content: center;
   cursor: pointer;
   box-sizing: border-box;
+  transition: color 0.15s ease;
+}
+
+.image-lightbox-close:hover,
+.image-lightbox-close:focus-visible {
+  outline: none;
+  color: var(--color-text-primary-active);
 }
 
 .image-lightbox-close svg {
@@ -2539,7 +2547,16 @@ p.body-small {
   box-sizing: border-box;
   padding: 0;
   box-shadow: 0 8px 30px rgba(0, 0, 0, 0.6);
-  transition: transform 0.1s ease;
+  transition: border-color 0.15s ease, color 0.15s ease, box-shadow 0.15s ease, transform 0.15s ease;
+}
+
+.image-lightbox-nav:hover,
+.image-lightbox-nav:focus-visible,
+.image-lightbox-nav.is-key-active {
+  border-color: var(--color-text-primary-active);
+  color: var(--color-text-primary-active);
+  box-shadow: 0 0 16px rgba(255, 255, 102, 0.45);
+  transform: scale(1.08);
 }
 
 .image-lightbox-nav:active {
@@ -2785,8 +2802,8 @@ p.body-small {
   /* Pinned scroll sections on tablet with scroll-driven enter/exit and magnetic hold */
   .about,
   .works {
-    height: 320svh;
-    min-height: 320svh;
+    height: 220svh;
+    min-height: 220svh;
     max-height: none;
     position: relative;
     padding: 0;
@@ -2797,8 +2814,8 @@ p.body-small {
   }
 
   .contact {
-    height: 260svh;
-    min-height: 260svh;
+    height: 180svh;
+    min-height: 180svh;
     max-height: none;
     position: relative;
     padding: 0;
@@ -3383,7 +3400,7 @@ p.body-small {
 
 @media (max-width: 1024px) {
   .hero-canvas-section {
-    height: 600vh;
+    height: 380vh;
     padding: 0;
     position: relative;
     background: transparent;
@@ -4255,7 +4272,7 @@ p.body-small {
 
 @media (max-width: 767px) {
   .hero-canvas-section {
-    height: 600vh;
+    height: 380vh;
     padding: 64px 0;
     position: relative;
     background: transparent;
@@ -4319,8 +4336,8 @@ p.body-small {
 
   .about,
   .works {
-    height: 320svh;
-    min-height: 320svh;
+    height: 220svh;
+    min-height: 220svh;
     max-height: none;
     position: relative;
     padding: 0;
@@ -4331,8 +4348,8 @@ p.body-small {
   }
 
   .contact {
-    height: 260svh;
-    min-height: 260svh;
+    height: 180svh;
+    min-height: 180svh;
     max-height: none;
     position: relative;
     padding: 0;

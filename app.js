@@ -1560,10 +1560,55 @@ document.addEventListener('DOMContentLoaded', () => {
           prevTargetY = 0;
         }
 
-        window.scrollTo({ top: prevTargetY, behavior: 'smooth' });
+        smoothScrollTo(prevTargetY, 750);
         closeMobileMenu();
       });
     }
+
+    // High-performance, smooth animated scroll replacing sluggish native smooth scrolling
+    let smoothScrollRafId = null;
+    function smoothScrollTo(targetY, duration = 750) {
+      if (smoothScrollRafId) {
+        cancelAnimationFrame(smoothScrollRafId);
+        smoothScrollRafId = null;
+      }
+      const startY = window.scrollY;
+      const diff = targetY - startY;
+      if (Math.abs(diff) < 2) {
+        window.scrollTo(0, targetY);
+        return;
+      }
+      const startTime = performance.now();
+      function easeInOutCubic(t) {
+        return t < 0.5 ? 4 * t * t * t : 1 - Math.pow(-2 * t + 2, 3) / 2;
+      }
+      function step(currentTime) {
+        const elapsed = currentTime - startTime;
+        const progress = Math.min(1, elapsed / duration);
+        const ease = easeInOutCubic(progress);
+        window.scrollTo(0, startY + diff * ease);
+        if (progress < 1) {
+          smoothScrollRafId = requestAnimationFrame(step);
+        } else {
+          smoothScrollRafId = null;
+          window.scrollTo(0, targetY);
+        }
+      }
+      smoothScrollRafId = requestAnimationFrame(step);
+    }
+
+    window.addEventListener('wheel', () => {
+      if (smoothScrollRafId) {
+        cancelAnimationFrame(smoothScrollRafId);
+        smoothScrollRafId = null;
+      }
+    }, { passive: true });
+    window.addEventListener('touchstart', () => {
+      if (smoothScrollRafId) {
+        cancelAnimationFrame(smoothScrollRafId);
+        smoothScrollRafId = null;
+      }
+    }, { passive: true });
 
     // Close mobile dropdown when clicking outside it
     document.addEventListener('click', (e) => {
@@ -1585,11 +1630,12 @@ document.addEventListener('DOMContentLoaded', () => {
         const targetId = link.getAttribute('href');
         if (targetId === '#about' || targetId === '#works' || targetId === '#contact' || targetId === '#hero') {
           const targetY = getSectionTargetY(targetId);
-          window.scrollTo({ top: targetY, behavior: 'smooth' });
+          smoothScrollTo(targetY, 750);
         } else {
           const targetElement = document.querySelector(targetId);
           if (targetElement) {
-            targetElement.scrollIntoView({ behavior: 'smooth' });
+            const elTop = targetElement.getBoundingClientRect().top + window.scrollY;
+            smoothScrollTo(elTop, 750);
           }
         }
         // Close mobile menu if it's a mobile link
@@ -1762,8 +1808,7 @@ document.addEventListener('DOMContentLoaded', () => {
       document.body.classList.add('lightbox-is-open');
       document.addEventListener('keydown', onKeyDown);
       setTimeout(() => {
-        if (closeBtn) closeBtn.focus();
-        else lightbox.focus();
+        lightbox.focus({ preventScroll: true });
       }, 50);
     }
 
@@ -2142,8 +2187,16 @@ document.addEventListener('DOMContentLoaded', () => {
         closeLightbox();
       } else if (e.key === 'ArrowLeft') {
         prevMedia();
+        if (prevBtn) {
+          prevBtn.classList.add('is-key-active');
+          setTimeout(() => prevBtn.classList.remove('is-key-active'), 180);
+        }
       } else if (e.key === 'ArrowRight') {
         nextMedia();
+        if (nextBtn) {
+          nextBtn.classList.add('is-key-active');
+          setTimeout(() => nextBtn.classList.remove('is-key-active'), 180);
+        }
       } else if (e.key === 'Tab') {
         const focusable = lightbox.querySelectorAll('button:not([disabled]), [href], video[controls], [tabindex]:not([tabindex="-1"])');
         if (focusable.length > 0) {
