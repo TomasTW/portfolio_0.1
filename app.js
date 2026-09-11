@@ -667,14 +667,18 @@ document.addEventListener('DOMContentLoaded', () => {
 
     function updateModalState() {
       const openModals = document.querySelectorAll('.work-modal.open, .project-modal.open');
+      const desktopNavbar = document.querySelector('.desktop-navbar');
+      const mobileNavbar = document.querySelector('.mobile-navbar');
       if (openModals.length > 0) {
         document.body.classList.add('modal-is-open');
         document.body.style.overflow = 'hidden';
         document.documentElement.style.overflow = 'hidden';
-        const mobileNavbar = document.querySelector('.mobile-navbar');
         if (mobileNavbar && mobileNavbar.classList.contains('open')) {
           mobileNavbar.classList.remove('open');
           mobileNavbar.classList.remove('closing');
+        }
+        if (desktopNavbar) {
+          desktopNavbar.classList.remove('visible');
         }
       } else {
         document.body.classList.remove('modal-is-open');
@@ -1064,6 +1068,10 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // Close on Escape key press
     window.addEventListener('keydown', (e) => {
+      // If lightbox is open, let the lightbox handle Escape to return to modal
+      if (document.body.classList.contains('lightbox-is-open') || document.querySelector('.image-lightbox.is-open')) {
+        return;
+      }
       if (e.key === 'Escape' && activeModal && activeModal.classList.contains('open')) {
         closeModal(activeModal);
       }
@@ -1597,7 +1605,9 @@ document.addEventListener('DOMContentLoaded', () => {
       const inTargetSections = pastHero && scrollY < endY;
 
       if (desktopNavbar) {
-        if (inTargetSections) {
+        if (document.body.classList.contains('modal-is-open')) {
+          desktopNavbar.classList.remove('visible');
+        } else if (inTargetSections) {
           desktopNavbar.classList.remove('no-transition');
           desktopNavbar.classList.add('visible');
         } else {
@@ -2082,6 +2092,8 @@ document.addEventListener('DOMContentLoaded', () => {
 
     function onKeyDown(e) {
       if (e.key === 'Escape') {
+        e.preventDefault();
+        e.stopImmediatePropagation();
         closeLightbox();
       } else if (e.key === 'ArrowLeft') {
         prevMedia();

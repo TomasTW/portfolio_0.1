@@ -284,15 +284,6 @@ section {
   opacity: 1;
 }
 
-/* Navbar hiding rule when modal is open */
-body.modal-is-open .desktop-navbar,
-body.modal-is-open .mobile-navbar {
-  opacity: 0;
-  pointer-events: none;
-  transform: translateY(30px);
-  transition: opacity 0.35s ease, transform 0.35s ease;
-  z-index: -1;
-}
 
 /* Circular Close Button at Bottom Center */
 .btn-modal-close,
@@ -4694,6 +4685,27 @@ p.body-small {
   .container {
     padding-left: 0px;
     padding-right: 0px;
+  }
+}
+
+/* Overarching Modal Open State — Strictly Hide Navbars */
+body.modal-is-open .desktop-navbar,
+body.modal-is-open .mobile-navbar {
+  opacity: 0 !important;
+  pointer-events: none !important;
+  visibility: hidden !important;
+  transform: translateY(30px) !important;
+  transition: opacity 0.35s ease, transform 0.35s ease !important;
+  z-index: -1 !important;
+}
+
+@media (max-width: 768px) {
+  body.modal-is-open .mobile-navbar {
+    transform: translate(-50%, calc(100% + 80px)) !important;
+    opacity: 0 !important;
+    visibility: hidden !important;
+    pointer-events: none !important;
+    transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.3s ease !important;
   }
 }
 

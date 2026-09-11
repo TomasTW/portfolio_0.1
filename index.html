@@ -2451,7 +2451,154 @@
          MODALS — opened by tapping list items on tablet/phone
          ════════════════════════════════════════════════════════════════ -->
 
-        <!-- Dynamic Modal Mount Host -->
+    
+
+  </section>
+
+
+  <!-- CONTACT SECTION -->
+  <section class="contact" id="contact">
+    <div class="contact-sticky">
+      <div class="contact-box">
+
+        <!-- Top layout header (for mobile/tablet only, hidden on desktop) -->
+        <div class="contact-top-mobile">
+          <h1 class="contact-headline">Get in touch</h1>
+          <p class="contact-location-text contact-location-top">Location: 23.6978° N latitude and 120.9605° E longitude</p>
+          <p class="contact-credit-text contact-credit-top body-small">® Tomas Chen &amp; Antigravity IDE agent Design</p>
+        </div>
+
+        <!-- Main Content Layout -->
+        <div class="contact-main-grid">
+          <!-- Left Content: Title (desktop) -->
+          <div class="contact-left-side">
+            <h1 class="contact-headline contact-desktop-only">Get in touch</h1>
+          </div>
+
+          <!-- Right Content: Vertical Location and Credit (desktop only) -->
+          <div class="contact-right-side contact-desktop-only">
+            <div class="contact-credit-vertical contact-credit-text body-small">
+              ® Tomas Chen &amp; Antigravity IDE agent Design
+            </div>
+            <div class="contact-location-vertical">
+              Location: 23.6978° N latitude and 120.9605° E longitude
+            </div>
+          </div>
+        </div>
+
+        <!-- Bottom Row: Graphic + Links + Mobile bottom location -->
+        <div class="contact-bottom-row">
+          <!-- Graphic (Desktop/Tablet/Mobile) -->
+          <div class="contact-graphic-container gyro-card">
+            <div class="gyro-layer-base">
+              <img src="contact_base.svg" alt="Contact Profile Avatar" class="contact-hand-graphic">
+            </div>
+            <div class="gyro-layer-text">
+              <img src="contact_text.svg" alt="Who I Am Text" class="contact-hand-graphic">
+            </div>
+          </div>
+
+          <!-- Links list container with credit sentence -->
+          <div class="contact-links-wrapper">
+            <div class="contact-links-list">
+              <!-- LinkedIn -->
+              <a href="https://www.linkedin.com/in/chung-yi-chen" target="_blank" rel="noopener"
+                class="contact-link-item" aria-label="LinkedIn">
+                <div class="contact-link-icon-box">in</div>
+                <span class="contact-link-label">linkedin</span>
+              </a>
+              <!-- Behance -->
+              <a href="https://www.behance.net/tomaschen1994tw" target="_blank" rel="noopener"
+                class="contact-link-item" aria-label="Behance">
+                <div class="contact-link-icon-box">Bē</div>
+                <span class="contact-link-label">behance</span>
+              </a>
+              <!-- Email -->
+              <a href="mailto:tomaschen1994@gmail.com" class="contact-link-item" id="copy-email-btn"
+                aria-label="Email">
+                <div class="contact-link-icon-box">
+                  <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2.5"
+                    stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path>
+                    <polyline points="22,6 12,13 2,6"></polyline>
+                  </svg>
+                </div>
+                <span class="contact-link-label">Email</span>
+              </a>
+              <!-- CV -->
+              <a href="CV.pdf" download="Chung_Yi_Chen_CV.pdf" target="_blank" rel="noopener"
+                class="contact-link-item" aria-label="Download CV">
+                <div class="contact-link-icon-box">
+                  <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2.5"
+                    stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
+                    <polyline points="7 10 12 15 17 10"></polyline>
+                    <line x1="12" y1="15" x2="12" y2="3"></line>
+                  </svg>
+                </div>
+                <span class="contact-link-label">CV</span>
+              </a>
+            </div>
+          </div>
+
+          <!-- Location text for mobile bottom (Image 1 placement) -->
+          <p class="contact-location-text contact-location-bottom">Location: 23.6978° N latitude and 120.9605° E
+            longitude</p>
+        </div>
+
+      </div><!-- /.contact-box -->
+    </div><!-- /.contact-sticky -->
+  </section>
+  </main>
+
+  <!-- MOBILE FLOATING NAVIGATION MENU -->
+  <nav class="mobile-navbar" aria-label="Mobile navigation">
+
+    <!-- CLOSED STATE: Logo square + "menu" text -->
+    <div class="mobile-nav-bar">
+      <div class="mobile-nav-logo" role="button" tabindex="0" aria-label="Scroll to previous section">
+        <svg viewBox="0 0 72 82" fill="currentColor" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+          <path
+            d="M19.5 62.9824C10.5 66.7862 9.5 76.0834 7.5 82H0C5 60.0241 15 15.3117 15 12.2689C15 9.22612 13.5 9.73325 6 16.0722L0 11.0009C9 2.12607 24 -4.2129 42 3.39391C57.0002 9.73299 69 2.12598 72 0.858138C70.5 3.39381 60.1367 11.3849 52.5 13.5365C43.5 16.0722 46.5 24.9471 48 33.8219C49.5 42.6968 51.4917 52.1403 43.5 56.6432C34.5 61.7144 26.341 60.0912 19.5 62.9824Z" />
+        </svg>
+      </div>
+      <button class="mobile-nav-toggle" aria-label="Open navigation menu" aria-expanded="false" aria-controls="mobile-open-state">menu</button>
+    </div>
+
+    <!-- OPEN STATE: Stepped panel layout matching Image 1 & Image 2 -->
+    <div class="mobile-open-state" id="mobile-open-state" aria-hidden="true">
+      <!-- Upper right panel: About & works -->
+      <div class="mobile-open-top-panel">
+        <a href="#about" class="mobile-dropdown-link">About</a>
+        <div class="mobile-dropdown-divider" aria-hidden="true"></div>
+        <a href="#works" class="mobile-dropdown-link">works</a>
+        <div class="mobile-dropdown-divider" aria-hidden="true"></div>
+      </div>
+      <!-- Bottom row: X button on left (48px) + contact link on right -->
+      <div class="mobile-open-bottom-row">
+        <button class="mobile-dropdown-close" aria-label="Close menu">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"
+            stroke-linejoin="round" aria-hidden="true">
+            <line x1="18" y1="6" x2="6" y2="18"></line>
+            <line x1="6" y1="6" x2="18" y2="18"></line>
+          </svg>
+        </button>
+        <a href="#contact" class="mobile-dropdown-link mobile-dropdown-link-bottom">contact</a>
+      </div>
+    </div>
+
+  </nav>
+
+  <!-- DESKTOP FIXED BOTTOM NAVIGATION BAR -->
+  <nav class="desktop-navbar" aria-label="Desktop navigation">
+    <div class="desktop-nav-inner">
+      <a href="#about" class="desktop-nav-link">About</a>
+      <a href="#works" class="desktop-nav-link">Works</a>
+      <a href="#contact" class="desktop-nav-link">Contact</a>
+    </div>
+  </nav>
+
+    <!-- Dynamic Modal Mount Host -->
     <div id="modal-container" aria-live="polite"></div>
 
     <template id="tpl-modal-nzxt">
@@ -3127,151 +3274,6 @@
       </div>
     </div>
     </template>
-
-  </section>
-
-
-  <!-- CONTACT SECTION -->
-  <section class="contact" id="contact">
-    <div class="contact-sticky">
-      <div class="contact-box">
-
-        <!-- Top layout header (for mobile/tablet only, hidden on desktop) -->
-        <div class="contact-top-mobile">
-          <h1 class="contact-headline">Get in touch</h1>
-          <p class="contact-location-text contact-location-top">Location: 23.6978° N latitude and 120.9605° E longitude</p>
-          <p class="contact-credit-text contact-credit-top body-small">® Tomas Chen &amp; Antigravity IDE agent Design</p>
-        </div>
-
-        <!-- Main Content Layout -->
-        <div class="contact-main-grid">
-          <!-- Left Content: Title (desktop) -->
-          <div class="contact-left-side">
-            <h1 class="contact-headline contact-desktop-only">Get in touch</h1>
-          </div>
-
-          <!-- Right Content: Vertical Location and Credit (desktop only) -->
-          <div class="contact-right-side contact-desktop-only">
-            <div class="contact-credit-vertical contact-credit-text body-small">
-              ® Tomas Chen &amp; Antigravity IDE agent Design
-            </div>
-            <div class="contact-location-vertical">
-              Location: 23.6978° N latitude and 120.9605° E longitude
-            </div>
-          </div>
-        </div>
-
-        <!-- Bottom Row: Graphic + Links + Mobile bottom location -->
-        <div class="contact-bottom-row">
-          <!-- Graphic (Desktop/Tablet/Mobile) -->
-          <div class="contact-graphic-container gyro-card">
-            <div class="gyro-layer-base">
-              <img src="contact_base.svg" alt="Contact Profile Avatar" class="contact-hand-graphic">
-            </div>
-            <div class="gyro-layer-text">
-              <img src="contact_text.svg" alt="Who I Am Text" class="contact-hand-graphic">
-            </div>
-          </div>
-
-          <!-- Links list container with credit sentence -->
-          <div class="contact-links-wrapper">
-            <div class="contact-links-list">
-              <!-- LinkedIn -->
-              <a href="https://www.linkedin.com/in/chung-yi-chen" target="_blank" rel="noopener"
-                class="contact-link-item" aria-label="LinkedIn">
-                <div class="contact-link-icon-box">in</div>
-                <span class="contact-link-label">linkedin</span>
-              </a>
-              <!-- Behance -->
-              <a href="https://www.behance.net/tomaschen1994tw" target="_blank" rel="noopener"
-                class="contact-link-item" aria-label="Behance">
-                <div class="contact-link-icon-box">Bē</div>
-                <span class="contact-link-label">behance</span>
-              </a>
-              <!-- Email -->
-              <a href="mailto:tomaschen1994@gmail.com" class="contact-link-item" id="copy-email-btn"
-                aria-label="Email">
-                <div class="contact-link-icon-box">
-                  <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2.5"
-                    stroke-linecap="round" stroke-linejoin="round">
-                    <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path>
-                    <polyline points="22,6 12,13 2,6"></polyline>
-                  </svg>
-                </div>
-                <span class="contact-link-label">Email</span>
-              </a>
-              <!-- CV -->
-              <a href="CV.pdf" download="Chung_Yi_Chen_CV.pdf" target="_blank" rel="noopener"
-                class="contact-link-item" aria-label="Download CV">
-                <div class="contact-link-icon-box">
-                  <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2.5"
-                    stroke-linecap="round" stroke-linejoin="round">
-                    <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
-                    <polyline points="7 10 12 15 17 10"></polyline>
-                    <line x1="12" y1="15" x2="12" y2="3"></line>
-                  </svg>
-                </div>
-                <span class="contact-link-label">CV</span>
-              </a>
-            </div>
-          </div>
-
-          <!-- Location text for mobile bottom (Image 1 placement) -->
-          <p class="contact-location-text contact-location-bottom">Location: 23.6978° N latitude and 120.9605° E
-            longitude</p>
-        </div>
-
-      </div><!-- /.contact-box -->
-    </div><!-- /.contact-sticky -->
-  </section>
-  </main>
-
-  <!-- MOBILE FLOATING NAVIGATION MENU -->
-  <nav class="mobile-navbar" aria-label="Mobile navigation">
-
-    <!-- CLOSED STATE: Logo square + "menu" text -->
-    <div class="mobile-nav-bar">
-      <div class="mobile-nav-logo" role="button" tabindex="0" aria-label="Scroll to previous section">
-        <svg viewBox="0 0 72 82" fill="currentColor" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
-          <path
-            d="M19.5 62.9824C10.5 66.7862 9.5 76.0834 7.5 82H0C5 60.0241 15 15.3117 15 12.2689C15 9.22612 13.5 9.73325 6 16.0722L0 11.0009C9 2.12607 24 -4.2129 42 3.39391C57.0002 9.73299 69 2.12598 72 0.858138C70.5 3.39381 60.1367 11.3849 52.5 13.5365C43.5 16.0722 46.5 24.9471 48 33.8219C49.5 42.6968 51.4917 52.1403 43.5 56.6432C34.5 61.7144 26.341 60.0912 19.5 62.9824Z" />
-        </svg>
-      </div>
-      <button class="mobile-nav-toggle" aria-label="Open navigation menu" aria-expanded="false" aria-controls="mobile-open-state">menu</button>
-    </div>
-
-    <!-- OPEN STATE: Stepped panel layout matching Image 1 & Image 2 -->
-    <div class="mobile-open-state" id="mobile-open-state" aria-hidden="true">
-      <!-- Upper right panel: About & works -->
-      <div class="mobile-open-top-panel">
-        <a href="#about" class="mobile-dropdown-link">About</a>
-        <div class="mobile-dropdown-divider" aria-hidden="true"></div>
-        <a href="#works" class="mobile-dropdown-link">works</a>
-        <div class="mobile-dropdown-divider" aria-hidden="true"></div>
-      </div>
-      <!-- Bottom row: X button on left (48px) + contact link on right -->
-      <div class="mobile-open-bottom-row">
-        <button class="mobile-dropdown-close" aria-label="Close menu">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"
-            stroke-linejoin="round" aria-hidden="true">
-            <line x1="18" y1="6" x2="6" y2="18"></line>
-            <line x1="6" y1="6" x2="18" y2="18"></line>
-          </svg>
-        </button>
-        <a href="#contact" class="mobile-dropdown-link mobile-dropdown-link-bottom">contact</a>
-      </div>
-    </div>
-
-  </nav>
-
-  <!-- DESKTOP FIXED BOTTOM NAVIGATION BAR -->
-  <nav class="desktop-navbar" aria-label="Desktop navigation">
-    <div class="desktop-nav-inner">
-      <a href="#about" class="desktop-nav-link">About</a>
-      <a href="#works" class="desktop-nav-link">Works</a>
-      <a href="#contact" class="desktop-nav-link">Contact</a>
-    </div>
-  </nav>
 
   <!-- FULLSCREEN IMAGE & VIDEO LIGHTBOX / ZOOM VIEWER (Behance Style) -->
   <div id="image-lightbox" class="image-lightbox" role="dialog" aria-modal="true" aria-label="Media Preview"
