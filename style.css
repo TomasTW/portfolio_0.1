@@ -3379,21 +3379,31 @@ p.body-small {
 /* Phone & Tablet (<= 1024px): 3D Perspective & Depth Transforms */
 @media (max-width: 1024px) {
   .gyro-card {
-    perspective: 500px;
+    perspective: 800px;
     transform-style: preserve-3d;
+  }
+
+  .gyro-layer-base,
+  .gyro-layer-text {
+    backface-visibility: hidden;
+    -webkit-backface-visibility: hidden;
     will-change: transform;
   }
 
   .gyro-layer-base {
     transform-style: preserve-3d;
-    transform: translate3d(var(--gyro-base-x, 0px), var(--gyro-base-y, 0px), 0px) rotateX(var(--gyro-rot-x, 0deg)) rotateY(var(--gyro-rot-y, 0deg));
-    will-change: transform;
   }
 
   .gyro-layer-text {
     transform-style: preserve-3d;
-    transform: translate3d(var(--gyro-text-x, 0px), var(--gyro-text-y, 0px), 48px) rotateX(var(--gyro-rot-x, 0deg)) rotateY(var(--gyro-rot-y, 0deg));
-    will-change: transform;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .gyro-layer-base,
+  .gyro-layer-text {
+    transform: none !important;
+    transition: none !important;
   }
 }
 

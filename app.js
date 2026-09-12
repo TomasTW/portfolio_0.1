@@ -2274,11 +2274,12 @@ document.addEventListener('DOMContentLoaded', () => {
   })();
 
   // --- Gyroscope-Driven 3D Parallax Depth Effect (Phone & Tablet: <= 1024px) ---
-  // True device orientation only — no touch drag fallback.
-  // Tilting/rotating the phone drives the parallax depth layers.
-  // NOTE: Transforms are applied as INLINE STYLES directly on .gyro-layer-base
-  // and .gyro-layer-text elements to bypass CSS `transform: ... !important`
-  // overrides in responsive media queries that would otherwise nullify the effect.
+  // Horizontal-dominant counter-parallax: yellow text shifts with tilt (+36px),
+  // while the base graphic shifts in the opposite direction (-16px), giving 52px of net separation.
+  // Pitch (vertical rotation & shift) is strictly clamped (±4° rotX, ±5px translateY)
+  // so tilt NEVER affects or mimics vertical scrolling / section transitions.
+  // Adaptive calibration gently tracks user resting hand posture.
+  // Full a11y support for prefers-reduced-motion and battery sleep via IntersectionObserver.
   (function initGyroscopeParallax() {
     const gyroCards = document.querySelectorAll('.gyro-card');
     if (!gyroCards || gyroCards.length === 0) return;
@@ -2297,6 +2298,11 @@ document.addEventListener('DOMContentLoaded', () => {
     let isEnabled = false;
     let targetRotX = 0;
     let targetRotY = 0;
+    let targetBaseX = 0;
+    let targetBaseY = 0;
+    let targetTextX = 0;
+    let targetTextY = 0;
+
     let currentRotX = 0;
     let currentRotY = 0;
     let currentBaseX = 0;
@@ -2305,11 +2311,57 @@ document.addEventListener('DOMContentLoaded', () => {
     let currentTextY = 0;
     let animId = null;
 
-    const MAX_TILT = 30; // Max 3D tilt in degrees (boosted for dramatic depth)
-    const BASE_SHIFT = 22; // Base graphic shift amplitude in px (stronger layer separation)
-    const TEXT_SHIFT = 48; // Floating yellow text shift amplitude in px (very pronounced parallax split)
-    const LERP_FACTOR = 0.18; // Inertial spring smoothing (quicker response to tilt)
-    const TEXT_Z = 48; // Z-depth offset for the text layer (px)
+    // Motion tuning constants
+    const MAX_TILT_Y = 8;     // Max 3D rotateY (deg) on roll
+    const MAX_TILT_X = 4;     // Max 3D rotateX (deg) on pitch (strictly minimal to decouple from vertical scroll)
+    const TEXT_SHIFT_X = 36;  // Floating yellow text horizontal shift amplitude (px)
+    const BASE_SHIFT_X = -16; // Base graphic horizontal shift amplitude (px, counter-direction)
+    const TEXT_SHIFT_Y = 5;   // Minimal vertical shift amplitude (px)
+    const BASE_SHIFT_Y = -2;  // Minimal vertical base shift (px, counter-direction)
+    const LERP_FACTOR = 0.15;  // Smooth spring response
+    const DRIFT_FACTOR = 0.02; // Exponential drift for adaptive neutral posture centering
+    const TEXT_Z = 30;        // Z-depth offset for text layer (px)
+
+    // Adaptive baseline calibration
+    let baselineGamma = null;
+    let baselineBeta = null;
+
+    // A11y reduced motion check
+    const motionQuery = window.matchMedia('(prefers-reduced-motion: reduce)');
+    let isReducedMotion = motionQuery.matches;
+    motionQuery.addEventListener('change', (e) => {
+      isReducedMotion = e.matches;
+      if (isReducedMotion) {
+        resetValues();
+        if (animId) {
+          cancelAnimationFrame(animId);
+          animId = null;
+        }
+      } else {
+        startLoop();
+      }
+    });
+
+    // Viewport & battery visibility tracking
+    let visibleCardsCount = 0;
+    if ('IntersectionObserver' in window) {
+      const visibilityObserver = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+          if (entry.isIntersecting) {
+            visibleCardsCount++;
+          } else {
+            visibleCardsCount = Math.max(0, visibleCardsCount - 1);
+          }
+        });
+        if (visibleCardsCount > 0 && !isReducedMotion) {
+          startLoop();
+        }
+      }, { threshold: 0.05 });
+
+      gyroCards.forEach(card => visibilityObserver.observe(card));
+    } else {
+      visibleCardsCount = gyroCards.length;
+    }
 
     function checkViewport() {
       return window.innerWidth <= 1024;
@@ -2324,9 +2376,7 @@ document.addEventListener('DOMContentLoaded', () => {
       const ty = currentTextY.toFixed(2);
 
       layerPairs.forEach(({ card, base, text }) => {
-        // Apply perspective and preserve-3d inline on the card container
-        // so it can't be overridden by any CSS !important rule
-        card.style.perspective = '500px';
+        card.style.perspective = '800px';
         card.style.transformStyle = 'preserve-3d';
 
         if (base) {
@@ -2343,6 +2393,11 @@ document.addEventListener('DOMContentLoaded', () => {
     function resetValues() {
       targetRotX = 0;
       targetRotY = 0;
+      targetBaseX = 0;
+      targetBaseY = 0;
+      targetTextX = 0;
+      targetTextY = 0;
+
       currentRotX = 0;
       currentRotY = 0;
       currentBaseX = 0;
@@ -2350,7 +2405,6 @@ document.addEventListener('DOMContentLoaded', () => {
       currentTextX = 0;
       currentTextY = 0;
 
-      // Clear inline transforms to restore default CSS positioning
       layerPairs.forEach(({ card, base, text }) => {
         card.style.perspective = '';
         card.style.transformStyle = '';
@@ -2366,19 +2420,12 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     function tick() {
-      if (!checkViewport()) {
-        resetValues();
+      if (!checkViewport() || isReducedMotion || visibleCardsCount === 0) {
+        if (!checkViewport() || isReducedMotion) resetValues();
         animId = null;
         return;
       }
 
-      // Calculate target layer shifts from target rotations
-      const targetBaseX = (targetRotY / MAX_TILT) * BASE_SHIFT;
-      const targetBaseY = (-targetRotX / MAX_TILT) * BASE_SHIFT;
-      const targetTextX = (targetRotY / MAX_TILT) * TEXT_SHIFT;
-      const targetTextY = (-targetRotX / MAX_TILT) * TEXT_SHIFT;
-
-      // Smooth lerp interpolation
       currentRotX += (targetRotX - currentRotX) * LERP_FACTOR;
       currentRotY += (targetRotY - currentRotY) * LERP_FACTOR;
       currentBaseX += (targetBaseX - currentBaseX) * LERP_FACTOR;
@@ -2388,26 +2435,61 @@ document.addEventListener('DOMContentLoaded', () => {
 
       applyValues();
 
-      animId = requestAnimationFrame(tick);
+      // Sleep RAF when settled to save mobile battery
+      const isSettled =
+        Math.abs(targetRotX - currentRotX) < 0.05 &&
+        Math.abs(targetRotY - currentRotY) < 0.05 &&
+        Math.abs(targetTextX - currentTextX) < 0.1 &&
+        Math.abs(targetBaseX - currentBaseX) < 0.1;
+
+      if (!isSettled) {
+        animId = requestAnimationFrame(tick);
+      } else {
+        animId = null;
+      }
     }
 
     function startLoop() {
-      if (!animId && checkViewport()) {
+      if (!animId && checkViewport() && !isReducedMotion && visibleCardsCount > 0) {
         animId = requestAnimationFrame(tick);
       }
     }
 
     function handleOrientation(e) {
-      if (!checkViewport()) return;
+      if (!checkViewport() || isReducedMotion || visibleCardsCount === 0) return;
       if (e.gamma === null || e.beta === null) return;
 
-      // gamma: left-to-right tilt [-90, 90]
-      // beta: front-to-back tilt [-180, 180], ~45deg is comfortable resting hand holding angle
-      const gamma = Math.max(-45, Math.min(45, e.gamma || 0));
-      const beta = Math.max(0, Math.min(90, e.beta || 45)) - 45;
+      const rawGamma = e.gamma; // [-90, 90]
+      const rawBeta = e.beta;   // [-180, 180]
 
-      targetRotY = (gamma / 45) * MAX_TILT;
-      targetRotX = -(beta / 45) * MAX_TILT;
+      // Initialize baseline on first event
+      if (baselineGamma === null) {
+        baselineGamma = rawGamma;
+        baselineBeta = rawBeta;
+      } else {
+        // Continuous gentle exponential moving average to auto-center resting posture
+        baselineGamma += (rawGamma - baselineGamma) * DRIFT_FACTOR;
+        baselineBeta += (rawBeta - baselineBeta) * DRIFT_FACTOR;
+      }
+
+      const deltaGamma = rawGamma - baselineGamma;
+      const deltaBeta = rawBeta - baselineBeta;
+
+      // Normalize with comfortable tilt boundaries (±35° roll, ±25° pitch)
+      const normGamma = Math.max(-1, Math.min(1, deltaGamma / 35));
+      const normBeta = Math.max(-1, Math.min(1, deltaBeta / 25));
+
+      // 3D rotations
+      targetRotY = normGamma * MAX_TILT_Y;
+      targetRotX = -normBeta * MAX_TILT_X;
+
+      // Horizontal counter-parallax: yellow text shifts with tilt, base graphic shifts opposite
+      targetTextX = normGamma * TEXT_SHIFT_X;
+      targetBaseX = normGamma * BASE_SHIFT_X;
+
+      // Strictly dampened vertical shift
+      targetTextY = -normBeta * TEXT_SHIFT_Y;
+      targetBaseY = -normBeta * BASE_SHIFT_Y;
 
       startLoop();
     }
@@ -2422,6 +2504,7 @@ document.addEventListener('DOMContentLoaded', () => {
           .then(permissionState => {
             if (permissionState === 'granted') {
               window.addEventListener('deviceorientation', handleOrientation, { passive: true });
+              startLoop();
             }
           })
           .catch(() => {
@@ -2429,18 +2512,17 @@ document.addEventListener('DOMContentLoaded', () => {
           });
       } else if ('ondeviceorientation' in window) {
         window.addEventListener('deviceorientation', handleOrientation, { passive: true });
+        startLoop();
       }
-
-      startLoop();
     }
 
     // Bind auto-permission on first user interaction
     window.addEventListener('touchstart', requestPermissionAndStart, { once: true, passive: true });
     window.addEventListener('click', requestPermissionAndStart, { once: true, passive: true });
 
-    // Handle resize
+    // Handle resize / viewport change
     window.addEventListener('resize', () => {
-      if (!checkViewport()) {
+      if (!checkViewport() || isReducedMotion) {
         resetValues();
       } else {
         startLoop();
