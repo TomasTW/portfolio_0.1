@@ -1700,8 +1700,15 @@ document.addEventListener('DOMContentLoaded', () => {
 
       // --- Canvas UI WebGL background visibility (About, Works, Contact black area) ---
       if (window.canvasUIInstance) {
-        // immediate = true when exiting to avoid afterimage over hero clouds
-        window.canvasUIInstance.setVisible(inTargetSections, !inTargetSections);
+        const isCoarse = window.matchMedia && (window.matchMedia('(pointer: coarse)').matches || window.matchMedia('(hover: none)').matches);
+        const hasTouch = ('ontouchstart' in window) || (navigator.maxTouchPoints && navigator.maxTouchPoints > 0);
+        const isDesktop = window.innerWidth >= 1025 && !isCoarse && !hasTouch;
+        if (!isDesktop) {
+          try { window.canvasUIInstance.setVisible(false, true); } catch (e) { }
+        } else {
+          // immediate = true when exiting to avoid afterimage over hero clouds
+          window.canvasUIInstance.setVisible(inTargetSections, !inTargetSections);
+        }
       }
 
       // --- Solid continuous dark background fallback for sticky container ---

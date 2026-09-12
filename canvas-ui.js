@@ -10,6 +10,13 @@
   // Desktop breakpoint
   const MIN_DESKTOP_WIDTH = 1025;
 
+  function isDesktopPointerDevice() {
+    if (window.innerWidth < MIN_DESKTOP_WIDTH) return false;
+    const isCoarse = window.matchMedia && (window.matchMedia('(pointer: coarse)').matches || window.matchMedia('(hover: none)').matches);
+    const hasTouch = ('ontouchstart' in window) || (navigator.maxTouchPoints && navigator.maxTouchPoints > 0);
+    return !isCoarse && !hasTouch;
+  }
+
   const DEFAULTS = {
     threadSize: 2,
     threadWidth: 0.2,
@@ -537,7 +544,7 @@ void main () {
     }
 
     function syncCanvasSize() {
-      if (window.innerWidth < MIN_DESKTOP_WIDTH) return;
+      if (!isDesktopPointerDevice()) return;
       const dpr = Math.min(window.devicePixelRatio || 1, 2);
       const width = Math.max(1, Math.round(canvas.clientWidth * dpr));
       const height = Math.max(1, Math.round(canvas.clientHeight * dpr));
@@ -694,7 +701,7 @@ void main () {
 
     function frame(now) {
       if (destroyed) return;
-      if (!visible || window.innerWidth < MIN_DESKTOP_WIDTH) {
+      if (!visible || !isDesktopPointerDevice()) {
         running = false;
         return;
       }
@@ -729,7 +736,7 @@ void main () {
     }
 
     function start() {
-      if (destroyed || running || !visible || window.innerWidth < MIN_DESKTOP_WIDTH) return;
+      if (destroyed || running || !visible || !isDesktopPointerDevice()) return;
       running = true;
       lastTime = performance.now();
       raf = requestAnimationFrame(frame);
@@ -745,13 +752,20 @@ void main () {
     }
     motionQuery.addEventListener('change', onMotionChange);
 
-    // Resize handler
-    window.addEventListener('resize', () => {
-      if (window.innerWidth >= MIN_DESKTOP_WIDTH) {
+    // Resize / orientation change handler
+    function onViewportChange() {
+      if (isDesktopPointerDevice()) {
         syncCanvasSize();
-        start();
+        if (visible) start();
+      } else {
+        canvas.style.opacity = '0';
+        cancelAnimationFrame(raf);
+        raf = null;
+        running = false;
       }
-    });
+    }
+    window.addEventListener('resize', onViewportChange, { passive: true });
+    window.addEventListener('orientationchange', onViewportChange, { passive: true });
 
     // Check if scroll is within About, Works, or Contact sections
     function isWithinTargetSections() {
@@ -766,7 +780,7 @@ void main () {
 
     // Pointer event tracking over the full black card background
     function onPointerMove(event) {
-      if (window.innerWidth < MIN_DESKTOP_WIDTH || !visible) {
+      if (!isDesktopPointerDevice() || !visible) {
         if (pointer.target !== 0) {
           pointer.target = 0;
           wake();
@@ -821,6 +835,18 @@ void main () {
     // Public API exposed on window for app.js
     window.canvasUIInstance = {
       setVisible(val, immediate) {
+        if (!isDesktopPointerDevice()) {
+          visible = false;
+          running = false;
+          if (raf) {
+            cancelAnimationFrame(raf);
+            raf = null;
+          }
+          canvas.style.opacity = '0';
+          canvas.classList.add('no-transition');
+          canvas.style.transition = 'none';
+          return;
+        }
         const nextVisible = Boolean(val);
         if (visible === nextVisible && !immediate) return;
         visible = nextVisible;
