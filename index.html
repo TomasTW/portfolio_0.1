@@ -31,13 +31,8 @@
   <section id="hero" class="hero-canvas-section">
     <div class="hero-canvas-sticky">
       <!-- Hero Scroll Graphic Indicator (hero_graphic.svg) -->
-      <div class="hero-scroll-indicator gyro-card" id="hero-scroll-indicator">
-        <div class="gyro-layer-base">
-          <img src="hero_base.svg" alt="Scroll Indicator Base" class="hero-hand-graphic" width="160" height="160" fetchpriority="high">
-        </div>
-        <div class="gyro-layer-text" aria-hidden="true">
-          <img src="hero_text.svg" alt="Scroll" class="hero-hand-graphic" width="160" height="160">
-        </div>
+      <div class="hero-scroll-indicator" id="hero-scroll-indicator">
+        <img src="hero_graphic.svg" alt="Scroll Indicator" class="hero-hand-graphic" width="160" height="160" fetchpriority="high">
       </div>
 
       <svg id="hero-svg" width="1920" height="1080" viewBox="0 0 1920 1080" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
@@ -138,13 +133,8 @@
           <!-- Graphic Layer: animated as one unit (SVG fade) -->
           <div class="about-graphic-layer">
             <!-- Center Hand Graphic -->
-            <div class="about-graphic-container gyro-card">
-              <div class="gyro-layer-base">
-                <img src="about_base.svg" alt="What I Do pointing hand graphic" class="about-hand-graphic" width="200" height="200" loading="lazy" decoding="async">
-              </div>
-              <div class="gyro-layer-text" aria-hidden="true">
-                <img src="about_text.svg" alt="What I Do text" class="about-hand-graphic" width="200" height="200" loading="lazy" decoding="async">
-              </div>
+            <div class="about-graphic-container">
+              <img src="about_graphic.svg" alt="What I Do pointing hand graphic" class="about-hand-graphic" width="200" height="200" loading="lazy" decoding="async">
             </div>
           </div><!-- /.about-graphic-layer -->
         </div>
@@ -320,13 +310,8 @@
       </div>
 
       <!-- "The Works" hand anchors the bottom of the list -->
-      <div class="works-list-hand gyro-card">
-        <div class="gyro-layer-base">
-          <img src="works_base.svg" alt="The Works Fist Graphic" class="works-hand-svg" width="200" height="200" loading="lazy" decoding="async">
-        </div>
-        <div class="gyro-layer-text" aria-hidden="true">
-          <img src="works_text.svg" alt="The Works Text" class="works-hand-svg" width="200" height="200" loading="lazy" decoding="async">
-        </div>
+      <div class="works-list-hand">
+        <img src="works_graphic.svg" alt="The Works" class="works-hand-svg" width="200" height="200" loading="lazy" decoding="async">
       </div>
 
     </div><!-- /.works-mobile-list -->
@@ -374,13 +359,8 @@
         <!-- Bottom Row: Graphic + Links + Mobile bottom location -->
         <div class="contact-bottom-row">
           <!-- Graphic (Desktop/Tablet/Mobile) -->
-          <div class="contact-graphic-container gyro-card">
-            <div class="gyro-layer-base">
-              <img src="contact_base.svg" alt="Contact Profile Avatar" class="contact-hand-graphic" width="200" height="200" loading="lazy" decoding="async">
-            </div>
-            <div class="gyro-layer-text" aria-hidden="true">
-              <img src="contact_text.svg" alt="Who I Am Text" class="contact-hand-graphic" width="200" height="200" loading="lazy" decoding="async">
-            </div>
+          <div class="contact-graphic-container">
+            <img src="contact_graphic.svg" alt="Contact Profile Avatar" class="contact-hand-graphic" width="200" height="200" loading="lazy" decoding="async">
           </div>
 
           <!-- Links list container with credit sentence -->
@@ -1201,15 +1181,6 @@
     </div>
   </div>
 
-  <!-- iOS Gyroscope Motion Permission Prompt (shown only if iOS requires explicit permission) -->
-  <button id="gyro-permission-prompt" class="gyro-permission-prompt" type="button" aria-label="Enable 3D Tilt Parallax" style="display: none;">
-    <svg class="gyro-prompt-icon" viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-      <circle cx="12" cy="12" r="10"></circle>
-      <path d="M12 2a14.5 14.5 0 0 0 0 20 14.5 14.5 0 0 0 0-20"></path>
-      <path d="M2 12h20"></path>
-    </svg>
-    <span>Enable 3D Tilt</span>
-  </button>
 
   <script defer src="canvas-ui.js"></script>
   <script defer src="hero-bubble.js"></script>

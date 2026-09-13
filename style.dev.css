@@ -599,86 +599,7 @@ p.body-small {
   outline-offset: 3px;
 }
 
-/* ==========================================================================
-   03. 3D GYROSCOPE PARALLAX SYSTEM
-   ========================================================================== */
 
-/* ── 3D Gyroscope Parallax Layer System ── */
-.gyro-card {
-  position: relative;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  perspective: 1000px;
-  transform-style: preserve-3d;
-  overflow: hidden;
-}
-
-.gyro-layer-base,
-.gyro-layer-text {
-  position: absolute;
-  top: -10%;
-  left: -10%;
-  width: 120%;
-  height: 120%;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  will-change: transform;
-  backface-visibility: hidden;
-  -webkit-backface-visibility: hidden;
-  transform-style: preserve-3d;
-}
-
-.gyro-layer-base img,
-.gyro-layer-text img {
-  width: 100%;
-  height: 100%;
-  object-fit: contain;
-  display: block;
-}
-
-.gyro-layer-text {
-  pointer-events: none;
-}
-
-/* iOS Gyroscope Motion Permission Prompt */
-.gyro-permission-prompt {
-  position: fixed;
-  bottom: 24px;
-  right: 24px;
-  z-index: 9999;
-  display: inline-flex;
-  align-items: center;
-  gap: 8px;
-  padding: 10px 18px;
-  background: rgba(18, 22, 34, 0.88);
-  color: var(--color-text-primary-default, #fff);
-  border: 1px solid var(--color-border-primary-default, rgba(255, 255, 255, 0.15));
-  border-radius: 9999px;
-  font-family: var(--font-base, sans-serif);
-  font-size: 13px;
-  font-weight: 600;
-  backdrop-filter: blur(12px);
-  -webkit-backdrop-filter: blur(12px);
-  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.4);
-  cursor: pointer;
-  transition: transform 0.25s ease, opacity 0.25s ease;
-  will-change: transform, opacity;
-}
-
-.gyro-permission-prompt:hover,
-.gyro-permission-prompt:focus-visible {
-  background: rgba(30, 36, 56, 0.95);
-  border-color: var(--color-accent, #ffd000);
-  outline: none;
-}
-
-.gyro-permission-prompt.is-hidden {
-  opacity: 0;
-  transform: translateY(20px) scale(0.9);
-  pointer-events: none;
-}
 
 .desktop-nav-inner {
   display: flex;
@@ -960,9 +881,6 @@ p.body-small {
   will-change: transform;
 }
 
-.about-graphic-container .gyro-layer-text .about-hand-graphic {
-  transform: rotate(calc(var(--about-hand-rotate, -90deg) + 90deg));
-}
 
 /* Footer Category Links — slides in from right.
    Uses vw units so translateX is viewport-relative on all screen sizes. */
@@ -3451,37 +3369,7 @@ p.body-small {
   }
 }
 
-/* Phone & Tablet (<= 1024px): 3D Perspective & Depth Transforms */
-@media (max-width: 1024px) {
-  .gyro-card {
-    perspective: 1000px;
-    transform-style: preserve-3d;
-    overflow: hidden;
-  }
 
-  .gyro-layer-base,
-  .gyro-layer-text {
-    backface-visibility: hidden;
-    -webkit-backface-visibility: hidden;
-    will-change: transform;
-  }
-
-  .gyro-layer-base {
-    transform-style: preserve-3d;
-  }
-
-  .gyro-layer-text {
-    transform-style: preserve-3d;
-  }
-}
-
-@media (prefers-reduced-motion: reduce) {
-  .gyro-layer-base,
-  .gyro-layer-text {
-    transform: none !important;
-    transition: none !important;
-  }
-}
 
 @media (max-width: 1024px) {
   .hero-canvas-section {
