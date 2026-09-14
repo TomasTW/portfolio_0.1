@@ -430,7 +430,7 @@ body.is-webview .hero-canvas-sticky svg {
 }
 
 .hero-canvas-sticky.is-dark {
-  background-color: #000000;
+  background-color: var(--color-bg-surface-primary-default);
 }
 
 .hero-canvas-sticky.is-dark.no-transition {
@@ -493,7 +493,7 @@ canvas[aria-hidden="true"],
   opacity: 0;
   transition: opacity 0.3s ease;
   display: none;
-  background-color: #000000;
+  background-color: var(--color-bg-surface-primary-default);
   -webkit-transform: translate3d(0, 0, 0);
   transform: translate3d(0, 0, 0);
   -webkit-backface-visibility: hidden;
@@ -516,7 +516,7 @@ canvas[aria-hidden="true"],
 }
 
 canvas[aria-hidden="true"] {
-  background-color: #000000;
+  background-color: var(--color-bg-surface-primary-default);
 }
 
 } /* end @layer layout */
@@ -4489,6 +4489,7 @@ p.body-small {
     justify-content: flex-start;
     border-radius: 0;
     background: transparent;
+    background-color: transparent;
     position: sticky;
     top: 16px;
     z-index: 5;

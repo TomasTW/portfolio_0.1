@@ -87,37 +87,22 @@ function getViewportHeight() {
   return parseFloat(document.documentElement.style.getPropertyValue('--stable-vh')) || window.innerHeight;
 }
 
-// Mobile Resize Lock & ScrollTrigger Compatibility Registration
-if (typeof gsap !== 'undefined' && gsap.registerPlugin && typeof ScrollTrigger !== 'undefined') {
-  gsap.registerPlugin(ScrollTrigger);
-  ScrollTrigger.config({
-    ignoreMobileResize: true,
-    autoRefreshEvents: "DOMContentLoaded,load,resize"
-  });
-} else {
-  // Global layout refresh and ScrollTrigger fallback engine
-  window.ScrollTrigger = window.ScrollTrigger || {
-    config: function () {},
-    refresh: function () {
-      updateStableVh(true);
-      window.dispatchEvent(new Event('resize'));
-      window.dispatchEvent(new Event('scroll'));
-    }
-  };
+// Global layout refresh engine
+function refreshLayoutEngine() {
+  updateStableVh(true);
+  window.dispatchEvent(new Event('resize'));
+  window.dispatchEvent(new Event('scroll'));
 }
+window.refreshLayoutEngine = refreshLayoutEngine;
 
-// Post-Asset Layout Recalculation: Add a window load listener to ensure ScrollTrigger.refresh() runs once all images, web fonts, and SVGs are fully parsed:
+// Post-Asset Layout Recalculation: ensure layout refreshes once all images, web fonts, and SVGs are fully parsed
 window.addEventListener('load', () => {
-  if (window.ScrollTrigger && typeof window.ScrollTrigger.refresh === 'function') {
-    window.ScrollTrigger.refresh();
-  }
+  refreshLayoutEngine();
 });
 
 if (document.fonts && document.fonts.ready) {
   document.fonts.ready.then(() => {
-    if (window.ScrollTrigger && typeof window.ScrollTrigger.refresh === 'function') {
-      window.ScrollTrigger.refresh();
-    }
+    refreshLayoutEngine();
   });
 }
 
@@ -225,8 +210,8 @@ if (document.fonts && document.fonts.ready) {
         container.style.visibility = 'visible';
         container.style.pointerEvents = progress >= 1.0 ? 'none' : 'auto';
 
-        // Solid background fallback ensures black area NEVER disappears on reload or rapid scrub
-        if (progress >= 0.99 || window.scrollY > (section.offsetHeight || 1000)) {
+        // Solid background fallback ensures dark area NEVER disappears on reload or rapid scrub
+        if (progress >= 1.0) {
           container.classList.add('is-dark');
         } else {
           container.classList.remove('is-dark');
@@ -235,7 +220,7 @@ if (document.fonts && document.fonts.ready) {
         // Explicitly hide text letters at the end of hero to ensure zero text bleed-through into subsequent sections
         const heroTextGroup = svgEl.querySelector('#I___m_Tomas_Chen');
         const heroUnion = svgEl.querySelector('#Union');
-        if (progress >= 0.98 || window.scrollY > (section.offsetHeight || 1000)) {
+        if (progress >= 1.0) {
           if (heroTextGroup) heroTextGroup.style.opacity = '0';
           if (heroUnion) heroUnion.style.opacity = '0';
         } else {
@@ -1771,10 +1756,11 @@ document.addEventListener('DOMContentLoaded', () => {
       let pastHero = false;
       if (heroSection) {
         const heroSectionTop = heroSection.getBoundingClientRect().top + window.scrollY;
-        const heroScrollHeight = heroSection.offsetHeight - window.innerHeight;
-        // Hero animation reaches 100% (black logo covers frame) when scrolled >= heroScrollHeight
-        const heroProgress = heroScrollHeight > 0 ? (scrollY - heroSectionTop) / heroScrollHeight : 0;
-        pastHero = heroProgress >= 0.999;
+        const vh = getViewportHeight();
+        const heroScrollHeight = heroSection.offsetHeight - vh;
+        const scrolledPastHeroTop = scrollY - heroSectionTop;
+        const heroProgress = heroScrollHeight > 0 ? scrolledPastHeroTop / heroScrollHeight : 0;
+        pastHero = heroProgress >= 1.0;
       } else {
         const threshold = aboutSection ? aboutSection.offsetTop - 100 : 0;
         pastHero = scrollY >= threshold;
