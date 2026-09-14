@@ -265,6 +265,10 @@ if (document.fonts && document.fonts.ready) {
 
           svgEl.style.transform = `translate(-50%, -50%) scale(${scale.toFixed(4)})`;
         }
+
+        if (!svgEl.classList.contains('is-loaded')) {
+          svgEl.classList.add('is-loaded');
+        }
       }
 
       if (immediate) {
@@ -285,6 +289,9 @@ if (document.fonts && document.fonts.ready) {
       if (window.heroBubbleInstance) {
         window.heroBubbleInstance.setScrollProgress(0);
       }
+      requestAnimationFrame(() => {
+        svgEl.classList.add('is-loaded');
+      });
       if ('requestIdleCallback' in window) {
         requestIdleCallback(updateHeroIndicatorPosition, { timeout: 1000 });
       } else {
@@ -297,6 +304,9 @@ if (document.fonts && document.fonts.ready) {
         indicator.style.visibility = 'hidden';
       }
       onScroll(true);
+      requestAnimationFrame(() => {
+        svgEl.classList.add('is-loaded');
+      });
     }
 
     window.addEventListener('scroll', () => onScroll(false), { passive: true });
@@ -729,6 +739,16 @@ document.addEventListener('DOMContentLoaded', () => {
 
     window.addEventListener('scroll', onScroll, { passive: true });
     window.addEventListener('resize', onScroll, { passive: true });
+    window.addEventListener('load', onScroll);
+    window.addEventListener('pageshow', onScroll);
+    if (document.fonts && document.fonts.ready) {
+      document.fonts.ready.then(onScroll);
+    }
+    trackEl.querySelectorAll('img').forEach(img => {
+      if (!img.complete) {
+        img.addEventListener('load', onScroll, { once: true });
+      }
+    });
     update();
   })();
 
@@ -1215,9 +1235,12 @@ document.addEventListener('DOMContentLoaded', () => {
       }
 
       const rect = worksSection.getBoundingClientRect();
-      const scrollHeight = worksSection.offsetHeight - window.innerHeight;
+      const vh = getViewportHeight() || window.innerHeight;
+      const scrollHeight = worksSection.offsetHeight > vh
+        ? (worksSection.offsetHeight - vh)
+        : (vh * 1.2);
       const scrolled = Math.max(0, -rect.top);
-      const p = scrollHeight > 0 ? Math.min(1, scrolled / scrollHeight) : 0;
+      const p = Math.min(1, scrolled / scrollHeight);
 
       // Staggered cascade for work list items only (slide in/out):
       // Enter Phase: 0.06 -> 0.40 (staggered from left -100vw -> 0vw) — widened for less sensitivity
@@ -1283,6 +1306,16 @@ document.addEventListener('DOMContentLoaded', () => {
 
     window.addEventListener('scroll', onScroll, { passive: true });
     window.addEventListener('resize', onScroll, { passive: true });
+    window.addEventListener('load', onScroll);
+    window.addEventListener('pageshow', onScroll);
+    if (document.fonts && document.fonts.ready) {
+      document.fonts.ready.then(onScroll);
+    }
+    worksList.querySelectorAll('img').forEach(img => {
+      if (!img.complete) {
+        img.addEventListener('load', onScroll, { once: true });
+      }
+    });
     update();
   })();
 
@@ -1412,6 +1445,11 @@ document.addEventListener('DOMContentLoaded', () => {
 
       window.addEventListener('scroll', onScroll, { passive: true });
       window.addEventListener('resize', onScroll, { passive: true });
+      window.addEventListener('load', onScroll);
+      window.addEventListener('pageshow', onScroll);
+      if (document.fonts && document.fonts.ready) {
+        document.fonts.ready.then(onScroll);
+      }
       update();
     }
 
@@ -1509,6 +1547,11 @@ document.addEventListener('DOMContentLoaded', () => {
 
     window.addEventListener('scroll', onScroll, { passive: true });
     window.addEventListener('resize', onScroll, { passive: true });
+    window.addEventListener('load', onScroll);
+    window.addEventListener('pageshow', onScroll);
+    if (document.fonts && document.fonts.ready) {
+      document.fonts.ready.then(onScroll);
+    }
     update();
   })();
 

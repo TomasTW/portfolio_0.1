@@ -411,6 +411,9 @@ body.is-webview .hero-canvas-sticky svg {
   left: 40px;
   width: calc(100% - 80px);
   height: calc(100vh - 80px);
+  height: calc(100svh - 80px);
+  height: calc(100dvh - 80px);
+  min-height: calc(100dvh - 80px);
   overflow: hidden;
   display: flex;
   align-items: center;
@@ -433,6 +436,9 @@ body.is-webview .hero-canvas-sticky svg {
   position: sticky;
   top: 0;
   height: 100vh;
+  height: 100svh;
+  height: 100dvh;
+  min-height: 100dvh;
   width: 100%;
   display: flex;
   align-items: center;
@@ -452,6 +458,9 @@ body.is-webview .hero-canvas-sticky svg {
   position: sticky;
   top: 0;
   height: 100vh;
+  height: 100svh;
+  height: 100dvh;
+  min-height: 100dvh;
   width: 100%;
   display: flex;
   align-items: center;
@@ -704,6 +713,12 @@ p.body-small {
   display: block;
   background-color: transparent;
   z-index: 2;
+  opacity: 0;
+  transition: opacity 0.25s ease;
+}
+
+#hero-svg.is-loaded {
+  opacity: 1;
 }
 
 #hero-bubble-canvas {
@@ -763,6 +778,9 @@ p.body-small {
 .about-card {
   width: calc(100% - 128px);
   height: calc(100vh - 128px);
+  height: calc(100svh - 128px);
+  height: calc(100dvh - 128px);
+  min-height: calc(100dvh - 128px);
   box-sizing: border-box;
   border-radius: 0;
   background-color: transparent;
@@ -1023,6 +1041,8 @@ p.body-small {
 
 .works-desktop-pinned {
   height: 350vh;
+  height: 350dvh;
+  min-height: 350dvh;
   position: relative;
   display: block;
 }
@@ -1031,6 +1051,9 @@ p.body-small {
   position: sticky;
   top: 0;
   height: 100vh;
+  height: 100svh;
+  height: 100dvh;
+  min-height: 100dvh;
   display: flex;
   align-items: flex-start;
   justify-content: center;
@@ -1040,6 +1063,9 @@ p.body-small {
 .work-card {
   width: calc(100% - 200px);
   height: calc(100vh - 272px);
+  height: calc(100svh - 272px);
+  height: calc(100dvh - 272px);
+  min-height: calc(100dvh - 272px);
   margin: 104px auto 0 auto;
   border: none;
   display: flex;
@@ -1067,7 +1093,9 @@ p.body-small {
 
 .work-project-item {
   width: calc(50vw - 80px);
+  min-width: 280px;
   height: 100%;
+  min-height: calc(100dvh - 272px);
   display: flex;
   flex-direction: column;
   justify-content: space-between;
@@ -1126,7 +1154,7 @@ p.body-small {
   flex: 1;
   align-items: center;
   justify-content: center;
-  min-height: 0;
+  min-height: 160px;
   overflow: visible;
   position: relative;
   width: 100%;
@@ -1140,6 +1168,8 @@ p.body-small {
   margin: 0 auto;
   height: 100%;
   max-height: 100%;
+  aspect-ratio: 16 / 9;
+  min-height: 160px;
   overflow: hidden;
   border: none;
   cursor: default;
@@ -1153,6 +1183,7 @@ p.body-small {
 .work-img-slide {
   width: 100%;
   height: 100%;
+  aspect-ratio: 16 / 9;
   object-fit: cover;
   object-position: center center;
   display: block;
@@ -2188,6 +2219,9 @@ p.body-small {
 .contact-box {
   width: calc(100% - 128px);
   height: calc(100vh - 128px);
+  height: calc(100svh - 128px);
+  height: calc(100dvh - 128px);
+  min-height: calc(100dvh - 128px);
   box-sizing: border-box;
   border-radius: 0;
   background-color: transparent;
@@ -2799,7 +2833,8 @@ p.body-small {
   .about,
   .works {
     height: 220svh;
-    min-height: 220svh;
+    height: 220dvh;
+    min-height: 220dvh;
     max-height: none;
     position: relative;
     padding: 0;
@@ -2811,7 +2846,8 @@ p.body-small {
 
   .contact {
     height: 180svh;
-    min-height: 180svh;
+    height: 180dvh;
+    min-height: 180dvh;
     max-height: none;
     position: relative;
     width: 100%;
@@ -4329,7 +4365,8 @@ p.body-small {
   .about,
   .works {
     height: 220svh;
-    min-height: 220svh;
+    height: 220dvh;
+    min-height: 220dvh;
     max-height: none;
     position: relative;
     padding: 0;
@@ -4341,9 +4378,13 @@ p.body-small {
 
   .contact {
     height: 180svh;
-    min-height: 180svh;
+    height: 180dvh;
+    min-height: 180dvh;
     max-height: none;
     position: relative;
+    width: 100%;
+    clear: both;
+    z-index: 10;
     padding: 0;
     margin: 0;
     background: transparent;
