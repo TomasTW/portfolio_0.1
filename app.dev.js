@@ -3,6 +3,26 @@
    ========================================================================== */
 
 /* ==========================================================================
+   -2. MOBILE RELOAD & SCROLL RESTORATION MANAGEMENT
+   Prevents sticky/fixed elements from overlapping on reload and ensures
+   clean reset to coordinate (0, 0) across all mobile and desktop browsers.
+   ========================================================================== */
+if ('scrollRestoration' in history) {
+  history.scrollRestoration = 'manual';
+}
+window.scrollTo(0, 0);
+
+window.addEventListener('beforeunload', () => {
+  window.scrollTo(0, 0);
+});
+
+window.addEventListener('pageshow', (event) => {
+  if (event.persisted) {
+    window.scrollTo(0, 0);
+  }
+});
+
+/* ==========================================================================
    -1. IN-APP BROWSER / WEBVIEW DETECTION
    Detects LinkedIn, Facebook, Instagram, LINE, 104.com.tw and other common
    in-app browsers that embed a limited WebView instead of a full browser.
@@ -32,22 +52,73 @@
    sets the exact frozen frame. Both are applied together on every scroll
    tick so the browser recomputes the frame — reliable across all browsers.
    ========================================================================== */
-// --- Dynamic Viewport Height Engine (tracks visualViewport and innerHeight) ---
-function updateStableVh() {
-  const vh = (window.visualViewport ? window.visualViewport.height : window.innerHeight);
-  document.documentElement.style.setProperty('--stable-vh', `${vh}px`);
+// --- Dynamic Viewport Height Engine (tracks visualViewport and innerHeight with Mobile Resize Lock) ---
+let lastStableWidth = window.innerWidth;
+let lastStableVh = (window.visualViewport ? window.visualViewport.height : window.innerHeight);
+
+function updateStableVh(force) {
+  const currentWidth = window.innerWidth;
+  const currentVh = (window.visualViewport ? window.visualViewport.height : window.innerHeight);
+  const isMobile = window.innerWidth <= 1024 || ('ontouchstart' in window);
+
+  // Mobile address bar shifts cause vertical-only resize changes (<120px). Ignore them during scroll unless forced.
+  if (!force && isMobile && currentWidth === lastStableWidth) {
+    const diff = Math.abs(currentVh - lastStableVh);
+    if (diff < 120) {
+      return;
+    }
+  }
+
+  lastStableWidth = currentWidth;
+  lastStableVh = currentVh;
+  document.documentElement.style.setProperty('--stable-vh', `${currentVh}px`);
 }
-updateStableVh();
+updateStableVh(true);
+
 window.addEventListener('orientationchange', () => {
-  setTimeout(updateStableVh, 150);
+  setTimeout(() => updateStableVh(true), 150);
 });
-window.addEventListener('resize', updateStableVh);
+window.addEventListener('resize', () => updateStableVh(false));
 if (window.visualViewport) {
-  window.visualViewport.addEventListener('resize', updateStableVh);
+  window.visualViewport.addEventListener('resize', () => updateStableVh(false));
 }
 
 function getViewportHeight() {
   return parseFloat(document.documentElement.style.getPropertyValue('--stable-vh')) || window.innerHeight;
+}
+
+// Mobile Resize Lock & ScrollTrigger Compatibility Registration
+if (typeof gsap !== 'undefined' && gsap.registerPlugin && typeof ScrollTrigger !== 'undefined') {
+  gsap.registerPlugin(ScrollTrigger);
+  ScrollTrigger.config({
+    ignoreMobileResize: true,
+    autoRefreshEvents: "DOMContentLoaded,load,resize"
+  });
+} else {
+  // Global layout refresh and ScrollTrigger fallback engine
+  window.ScrollTrigger = window.ScrollTrigger || {
+    config: function () {},
+    refresh: function () {
+      updateStableVh(true);
+      window.dispatchEvent(new Event('resize'));
+      window.dispatchEvent(new Event('scroll'));
+    }
+  };
+}
+
+// Post-Asset Layout Recalculation: Add a window load listener to ensure ScrollTrigger.refresh() runs once all images, web fonts, and SVGs are fully parsed:
+window.addEventListener('load', () => {
+  if (window.ScrollTrigger && typeof window.ScrollTrigger.refresh === 'function') {
+    window.ScrollTrigger.refresh();
+  }
+});
+
+if (document.fonts && document.fonts.ready) {
+  document.fonts.ready.then(() => {
+    if (window.ScrollTrigger && typeof window.ScrollTrigger.refresh === 'function') {
+      window.ScrollTrigger.refresh();
+    }
+  });
 }
 
 (function () {
@@ -119,7 +190,8 @@ function getViewportHeight() {
         const sectionTop = section.getBoundingClientRect().top + window.scrollY;
         const sectionHeight = section.offsetHeight - getViewportHeight();
         const scrolled = Math.max(0, window.scrollY - sectionTop);
-        const progress = sectionHeight > 0 ? Math.min(1, scrolled / sectionHeight) : 0;
+        const effectiveHeight = sectionHeight > 0 ? sectionHeight : (window.innerHeight * 2.8);
+        const progress = Math.min(1, Math.max(0, scrolled / effectiveHeight));
 
         // Clamp to DURATION_S - 0.001s to prevent -3.0s % 3.0s wrap-around back to frame 0
         const seekTime = Math.min(DURATION_S - 0.001, progress * DURATION_S);
@@ -128,14 +200,15 @@ function getViewportHeight() {
           window.heroBubbleInstance.setScrollProgress(progress);
         }
 
-        // Fade out hero scroll indicator graphic smoothly on scroll
+        // Fade out hero scroll indicator graphic smoothly on scroll with strict guard for scroll past hero start
         const indicator = document.getElementById('hero-scroll-indicator');
         if (indicator) {
-          if (progress > 0.005) {
-            const fadeOut = Math.max(0, 1 - (progress / 0.06));
+          const isPastHeroStart = progress > 0.005 || window.scrollY > 30;
+          if (isPastHeroStart) {
+            const fadeOut = (window.scrollY > 30 && progress <= 0.005) ? 0 : Math.max(0, 1 - (progress / 0.06));
             indicator.style.opacity = fadeOut.toFixed(3);
             indicator.style.pointerEvents = 'none';
-            if (fadeOut <= 0) {
+            if (fadeOut <= 0 || window.scrollY > 30) {
               indicator.style.visibility = 'hidden';
             } else {
               indicator.style.visibility = 'visible';
@@ -153,7 +226,7 @@ function getViewportHeight() {
         container.style.pointerEvents = progress >= 1.0 ? 'none' : 'auto';
 
         // Solid background fallback ensures black area NEVER disappears on reload or rapid scrub
-        if (progress >= 0.99) {
+        if (progress >= 0.99 || window.scrollY > (section.offsetHeight || 1000)) {
           container.classList.add('is-dark');
         } else {
           container.classList.remove('is-dark');
@@ -162,7 +235,7 @@ function getViewportHeight() {
         // Explicitly hide text letters at the end of hero to ensure zero text bleed-through into subsequent sections
         const heroTextGroup = svgEl.querySelector('#I___m_Tomas_Chen');
         const heroUnion = svgEl.querySelector('#Union');
-        if (progress >= 0.98) {
+        if (progress >= 0.98 || window.scrollY > (section.offsetHeight || 1000)) {
           if (heroTextGroup) heroTextGroup.style.opacity = '0';
           if (heroUnion) heroUnion.style.opacity = '0';
         } else {
@@ -218,6 +291,11 @@ function getViewportHeight() {
         setTimeout(updateHeroIndicatorPosition, 200);
       }
     } else {
+      const indicator = document.getElementById('hero-scroll-indicator');
+      if (indicator) {
+        indicator.style.opacity = '0';
+        indicator.style.visibility = 'hidden';
+      }
       onScroll(true);
     }
 
