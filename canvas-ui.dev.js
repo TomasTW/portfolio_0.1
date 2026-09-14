@@ -7,6 +7,10 @@
 (function () {
   'use strict';
 
+  if ('scrollRestoration' in history) {
+    history.scrollRestoration = 'manual';
+  }
+
   // Desktop breakpoint
   const MIN_DESKTOP_WIDTH = 1025;
 
@@ -753,15 +757,20 @@ void main () {
     motionQuery.addEventListener('change', onMotionChange);
 
     // Resize / orientation change handler
-    function onViewportChange() {
-      if (isDesktopPointerDevice()) {
-        syncCanvasSize();
-        if (visible) start();
-      } else {
-        canvas.style.opacity = '0';
-        cancelAnimationFrame(raf);
-        raf = null;
-        running = false;
+    let lastWidth = window.innerWidth;
+    function onViewportChange(event) {
+      const isOrientation = event && event.type === 'orientationchange';
+      if (isOrientation || window.innerWidth !== lastWidth) {
+        lastWidth = window.innerWidth;
+        if (isDesktopPointerDevice()) {
+          syncCanvasSize();
+          if (visible) start();
+        } else {
+          canvas.style.opacity = '0';
+          cancelAnimationFrame(raf);
+          raf = null;
+          running = false;
+        }
       }
     }
     window.addEventListener('resize', onViewportChange, { passive: true });
@@ -901,9 +910,13 @@ void main () {
 
   function scheduleInit() {
     if (!isDesktopPointerDevice()) {
+      let lastInitWidth = window.innerWidth;
       window.addEventListener('resize', () => {
-        if (!initialized && isDesktopPointerDevice()) {
-          startIfDesktop();
+        if (window.innerWidth !== lastInitWidth) {
+          lastInitWidth = window.innerWidth;
+          if (!initialized && isDesktopPointerDevice()) {
+            startIfDesktop();
+          }
         }
       }, { passive: true });
       return;

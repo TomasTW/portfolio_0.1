@@ -422,10 +422,15 @@ body.is-webview .hero-canvas-sticky svg {
   z-index: 1;
   box-sizing: border-box;
   transition: background-color 0.3s ease;
+  -webkit-transform: translate3d(0, 0, 0);
+  transform: translate3d(0, 0, 0);
+  -webkit-backface-visibility: hidden;
+  backface-visibility: hidden;
+  will-change: transform;
 }
 
 .hero-canvas-sticky.is-dark {
-  background-color: var(--color-bg-surface-primary-default, #202020);
+  background-color: #000000;
 }
 
 .hero-canvas-sticky.is-dark.no-transition {
@@ -475,6 +480,7 @@ body.is-webview .hero-canvas-sticky svg {
    Canvas UI — Woven Artist Canvas (WebGL2)
    Desktop-only background effect for About, Works, and Contact
    ===================================================================== */
+canvas[aria-hidden="true"],
 .canvas-ui-bg {
   position: fixed;
   top: 40px;
@@ -487,10 +493,30 @@ body.is-webview .hero-canvas-sticky svg {
   opacity: 0;
   transition: opacity 0.3s ease;
   display: none;
+  background-color: #000000;
+  -webkit-transform: translate3d(0, 0, 0);
+  transform: translate3d(0, 0, 0);
+  -webkit-backface-visibility: hidden;
+  backface-visibility: hidden;
+  will-change: transform;
 }
 
 .canvas-ui-bg.no-transition {
   transition: none;
+}
+
+/* Target canvas element & sticky layer hardware acceleration and mobile fallback */
+canvas[aria-hidden="true"],
+.hero-canvas-sticky {
+  -webkit-transform: translate3d(0, 0, 0);
+  transform: translate3d(0, 0, 0);
+  -webkit-backface-visibility: hidden;
+  backface-visibility: hidden;
+  will-change: transform;
+}
+
+canvas[aria-hidden="true"] {
+  background-color: #000000;
 }
 
 } /* end @layer layout */
@@ -2894,6 +2920,11 @@ p.body-small {
     height: calc(100dvh - 32px);
     max-height: calc(100dvh - 32px);
     box-sizing: border-box;
+    -webkit-transform: translate3d(0, 0, 0);
+    transform: translate3d(0, 0, 0);
+    -webkit-backface-visibility: hidden;
+    backface-visibility: hidden;
+    will-change: transform;
   }
 
   /* Universal Framed Card Style on Tablet (16px outer margin, 64px horizontal padding matching navbar) */
@@ -3443,6 +3474,11 @@ p.body-small {
     z-index: 1;
     box-sizing: border-box;
     transition: background-color 0.3s ease;
+    -webkit-transform: translate3d(0, 0, 0);
+    transform: translate3d(0, 0, 0);
+    -webkit-backface-visibility: hidden;
+    backface-visibility: hidden;
+    will-change: transform;
   }
 }
 
@@ -4325,6 +4361,11 @@ p.body-small {
     z-index: 1;
     box-sizing: border-box;
     transition: background-color 0.3s ease;
+    -webkit-transform: translate3d(0, 0, 0);
+    transform: translate3d(0, 0, 0);
+    -webkit-backface-visibility: hidden;
+    backface-visibility: hidden;
+    will-change: transform;
   }
 
   #hero-svg {
