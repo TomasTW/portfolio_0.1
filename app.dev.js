@@ -12,14 +12,63 @@ if ('scrollRestoration' in history) {
 }
 window.scrollTo(0, 0);
 
-window.addEventListener('beforeunload', () => {
-  window.scrollTo(0, 0);
+// Configure ScrollTrigger to prevent stale scroll state caching and avoid jumpiness caused by mobile address bar resizing
+if (typeof ScrollTrigger === 'undefined') {
+  window.ScrollTrigger = {
+    _config: { ignoreMobileResize: true },
+    clearScrollMemory(mode) {
+      if ('scrollRestoration' in history) {
+        history.scrollRestoration = mode || 'manual';
+      }
+      window.scrollTo(0, 0);
+    },
+    config(cfg) {
+      this._config = Object.assign(this._config || {}, cfg);
+    },
+    refresh() {
+      if (typeof refreshLayoutEngine === 'function') {
+        refreshLayoutEngine();
+      }
+    }
+  };
+} else {
+  const origRefresh = ScrollTrigger.refresh.bind(ScrollTrigger);
+  ScrollTrigger.refresh = function () {
+    const res = origRefresh();
+    if (typeof refreshLayoutEngine === 'function') {
+      refreshLayoutEngine();
+    }
+    return res;
+  };
+}
+
+ScrollTrigger.clearScrollMemory('manual');
+ScrollTrigger.config({
+  ignoreMobileResize: true
 });
 
+// Ensure all ScrollTrigger animations recalculate trigger coordinates only after the DOM, images, and fonts are fully loaded
+window.addEventListener('load', () => {
+  window.scrollTo(0, 0);
+  if (document.fonts) {
+    document.fonts.ready.then(() => {
+      ScrollTrigger.refresh();
+    });
+  } else {
+    ScrollTrigger.refresh();
+  }
+});
+
+// Handle iOS Safari page cache restoration (BFCache)
 window.addEventListener('pageshow', (event) => {
   if (event.persisted) {
     window.scrollTo(0, 0);
+    ScrollTrigger.refresh();
   }
+});
+
+window.addEventListener('beforeunload', () => {
+  window.scrollTo(0, 0);
 });
 
 /* ==========================================================================
@@ -95,16 +144,7 @@ function refreshLayoutEngine() {
 }
 window.refreshLayoutEngine = refreshLayoutEngine;
 
-// Post-Asset Layout Recalculation: ensure layout refreshes once all images, web fonts, and SVGs are fully parsed
-window.addEventListener('load', () => {
-  refreshLayoutEngine();
-});
-
-if (document.fonts && document.fonts.ready) {
-  document.fonts.ready.then(() => {
-    refreshLayoutEngine();
-  });
-}
+// Post-Asset Layout Recalculation is coordinated via ScrollTrigger.refresh() on window 'load' & document.fonts.ready
 
 (function () {
   const container = document.querySelector('.hero-canvas-sticky');
