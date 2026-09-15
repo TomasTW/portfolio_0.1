@@ -2425,11 +2425,7 @@ document.addEventListener('DOMContentLoaded', () => {
     }, { passive: true });
   })();
 
-  // --- Gyroscope-Driven 3D Parallax Depth Effect (Phone & Tablet: <= 1024px) ---
-  // Horizontal-dominant counter-parallax: yellow text shifts with tilt (+24px),
-  // while the base graphic shifts in the opposite direction (-12px), giving net separation.
-  // Pitch (vertical rotation & shift) is strictly clamped (±6° rotX, ±12px translateY)
-  // so tilt NEVER affects or mimics vertical scrolling / section transitions.
+
   // --- 09. Gyroscope-Driven 3D Parallax System (Mobile & Tablet Touch Only) ---
   // Restricts interaction strictly to touch devices (desktop remains static).
   // Natural resting posture calibration (~45° pitch offset).
@@ -2648,7 +2644,7 @@ document.addEventListener('DOMContentLoaded', () => {
               attachOrientationListener();
             }
           })
-          .catch(() => {});
+          .catch(() => { });
       }
       window.addEventListener('touchstart', onFirstUserGesture, { passive: true, once: true });
       window.addEventListener('pointerdown', onFirstUserGesture, { passive: true, once: true });
