@@ -634,7 +634,46 @@ p.body-small {
   outline-offset: 3px;
 }
 
+/* ==========================================================================
+   03. 3D GYROSCOPE PARALLAX SYSTEM
+   ========================================================================== */
 
+/* ── 3D Gyroscope Parallax Layer System ── */
+.gyro-card {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  perspective: 1000px;
+  overflow: visible;
+}
+
+.gyro-layer-base,
+.gyro-layer-text {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  will-change: transform;
+  backface-visibility: hidden;
+  -webkit-backface-visibility: hidden;
+}
+
+.gyro-layer-base img,
+.gyro-layer-text img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  display: block;
+}
+
+.gyro-layer-text {
+  pointer-events: none;
+}
 
 .desktop-nav-inner {
   display: flex;
@@ -3443,7 +3482,28 @@ p.body-small {
   }
 }
 
+/* Phone & Tablet (<= 1024px): 3D Perspective & Depth Transforms */
+@media (max-width: 1024px) {
+  .gyro-card {
+    perspective: 1000px;
+    overflow: visible;
+  }
 
+  .gyro-layer-base,
+  .gyro-layer-text {
+    backface-visibility: hidden;
+    -webkit-backface-visibility: hidden;
+    will-change: transform;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .gyro-layer-base,
+  .gyro-layer-text {
+    transform: none !important;
+    transition: none !important;
+  }
+}
 
 @media (max-width: 1024px) {
   .hero-canvas-section {

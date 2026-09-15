@@ -2425,7 +2425,248 @@ document.addEventListener('DOMContentLoaded', () => {
     }, { passive: true });
   })();
 
+  // --- Gyroscope-Driven 3D Parallax Depth Effect (Phone & Tablet: <= 1024px) ---
+  // Horizontal-dominant counter-parallax: yellow text shifts with tilt (+24px),
+  // while the base graphic shifts in the opposite direction (-12px), giving net separation.
+  // Pitch (vertical rotation & shift) is strictly clamped (±6° rotX, ±12px translateY)
+  // so tilt NEVER affects or mimics vertical scrolling / section transitions.
+  // --- 09. Gyroscope-Driven 3D Parallax System (Mobile & Tablet Touch Only) ---
+  // Restricts interaction strictly to touch devices (desktop remains static).
+  // Natural resting posture calibration (~45° pitch offset).
+  // Differential depth multipliers for background vs foreground layers.
+  // Full iOS 13+ permission support and Android auto-start.
+  (function initGyroscopeParallax() {
+    const isTouchDevice = ('ontouchstart' in window || (navigator.maxTouchPoints && navigator.maxTouchPoints > 0));
+    if (!isTouchDevice) return; // Desktop browsers stay strictly static
 
+    const gyroCards = document.querySelectorAll('.gyro-card');
+    if (!gyroCards || gyroCards.length === 0) return;
+
+    // Collect layer pairs across all gyro-cards
+    const layerPairs = [];
+    gyroCards.forEach(card => {
+      const base = card.querySelector('.gyro-layer-base');
+      const text = card.querySelector('.gyro-layer-text');
+      if (base || text) {
+        layerPairs.push({ card, base, text });
+      }
+    });
+    if (layerPairs.length === 0) return;
+
+    let isListening = false;
+    let targetRotX = 0;
+    let targetRotY = 0;
+    let targetBaseX = 0;
+    let targetBaseY = 0;
+    let targetTextX = 0;
+    let targetTextY = 0;
+
+    let currentRotX = 0;
+    let currentRotY = 0;
+    let currentBaseX = 0;
+    let currentBaseY = 0;
+    let currentTextX = 0;
+    let currentTextY = 0;
+    let animId = null;
+
+    // Motion physics tuning constants
+    const NATURAL_PITCH = 45; // Average ergonomic holding pitch angle
+    const MAX_TILT_Y = 8;     // Max 3D rotateY (deg) on roll
+    const MAX_TILT_X = 6;     // Max 3D rotateX (deg) on pitch
+    const TEXT_SHIFT_X = 24;  // Foreground text horizontal shift amplitude (px)
+    const BASE_SHIFT_X = -12; // Background base graphic horizontal shift amplitude (px, inverse)
+    const TEXT_SHIFT_Y = 12;  // Foreground text vertical shift amplitude (px)
+    const BASE_SHIFT_Y = -6;  // Background base graphic vertical shift amplitude (px, inverse)
+    const LERP_FACTOR = 0.15;  // Smooth spring response
+    const TEXT_Z = 25;        // Z-depth offset for text layer (px)
+
+    // A11y reduced motion check
+    const motionQuery = window.matchMedia('(prefers-reduced-motion: reduce)');
+    let isReducedMotion = motionQuery.matches;
+    motionQuery.addEventListener('change', (e) => {
+      isReducedMotion = e.matches;
+      if (isReducedMotion) {
+        resetValues();
+        if (animId) {
+          cancelAnimationFrame(animId);
+          animId = null;
+        }
+      } else {
+        startLoop();
+      }
+    });
+
+    // Viewport & visibility tracking via Set to fix multi-entry batch bug
+    const visibleCards = new Set();
+    if ('IntersectionObserver' in window) {
+      const visibilityObserver = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+          if (entry.isIntersecting) {
+            visibleCards.add(entry.target);
+          } else {
+            visibleCards.delete(entry.target);
+          }
+        });
+        if (visibleCards.size > 0 && !isReducedMotion) {
+          startLoop();
+        }
+      }, { threshold: 0.05 });
+
+      gyroCards.forEach(card => visibilityObserver.observe(card));
+    } else {
+      gyroCards.forEach(card => visibleCards.add(card));
+    }
+
+    function checkViewport() {
+      return ('ontouchstart' in window || (navigator.maxTouchPoints && navigator.maxTouchPoints > 0));
+    }
+
+    function applyValues() {
+      const rotX = currentRotX.toFixed(2);
+      const rotY = currentRotY.toFixed(2);
+      const bx = currentBaseX.toFixed(2);
+      const by = currentBaseY.toFixed(2);
+      const tx = currentTextX.toFixed(2);
+      const ty = currentTextY.toFixed(2);
+
+      layerPairs.forEach(({ card, base, text }) => {
+        if (!visibleCards.has(card)) return;
+
+        if (base) {
+          base.style.transform = `translate3d(${bx}px, ${by}px, 0px) rotateX(${rotX}deg) rotateY(${rotY}deg)`;
+        }
+        if (text) {
+          text.style.transform = `translate3d(${tx}px, ${ty}px, 0px) rotateX(${rotX}deg) rotateY(${rotY}deg)`;
+        }
+      });
+    }
+
+    function resetValues() {
+      targetRotX = 0;
+      targetRotY = 0;
+      targetBaseX = 0;
+      targetBaseY = 0;
+      targetTextX = 0;
+      targetTextY = 0;
+
+      currentRotX = 0;
+      currentRotY = 0;
+      currentBaseX = 0;
+      currentBaseY = 0;
+      currentTextX = 0;
+      currentTextY = 0;
+
+      layerPairs.forEach(({ base, text }) => {
+        if (base) base.style.transform = '';
+        if (text) text.style.transform = '';
+      });
+    }
+
+    function tick() {
+      if (!checkViewport() || isReducedMotion || visibleCards.size === 0) {
+        if (!checkViewport() || isReducedMotion) resetValues();
+        animId = null;
+        return;
+      }
+
+      currentRotX += (targetRotX - currentRotX) * LERP_FACTOR;
+      currentRotY += (targetRotY - currentRotY) * LERP_FACTOR;
+      currentBaseX += (targetBaseX - currentBaseX) * LERP_FACTOR;
+      currentBaseY += (targetBaseY - currentBaseY) * LERP_FACTOR;
+      currentTextX += (targetTextX - currentTextX) * LERP_FACTOR;
+      currentTextY += (targetTextY - currentTextY) * LERP_FACTOR;
+
+      applyValues();
+
+      // Sleep RAF when settled to conserve battery
+      const isSettled =
+        Math.abs(targetRotX - currentRotX) < 0.05 &&
+        Math.abs(targetRotY - currentRotY) < 0.05 &&
+        Math.abs(targetTextX - currentTextX) < 0.1 &&
+        Math.abs(targetBaseX - currentBaseX) < 0.1;
+
+      if (!isSettled) {
+        animId = requestAnimationFrame(tick);
+      } else {
+        animId = null;
+      }
+    }
+
+    function startLoop() {
+      if (!animId && checkViewport() && !isReducedMotion && visibleCards.size > 0) {
+        animId = requestAnimationFrame(tick);
+      }
+    }
+
+    function handleOrientation(e) {
+      if (!checkViewport() || isReducedMotion || visibleCards.size === 0) return;
+      if (e.gamma === null || e.beta === null) return;
+
+      const rawGamma = e.gamma; // Roll: [-90, 90]
+      const rawBeta = e.beta;   // Pitch: [-180, 180]
+
+      // Natural holding tilt offset (~45° pitch)
+      const deltaGamma = rawGamma;
+      const deltaBeta = rawBeta - NATURAL_PITCH;
+
+      // Normalize and clamp between -1 and 1
+      const normGamma = Math.max(-1, Math.min(1, deltaGamma / 30));
+      const normBeta = Math.max(-1, Math.min(1, deltaBeta / 25));
+
+      // 3D rotations
+      targetRotY = normGamma * MAX_TILT_Y;
+      targetRotX = -normBeta * MAX_TILT_X;
+
+      // Differential translations
+      targetBaseX = normGamma * BASE_SHIFT_X;
+      targetBaseY = normBeta * BASE_SHIFT_Y;
+      targetTextX = normGamma * TEXT_SHIFT_X;
+      targetTextY = normBeta * TEXT_SHIFT_Y;
+
+      startLoop();
+    }
+
+    function attachOrientationListener() {
+      if (isListening) return;
+      isListening = true;
+      window.addEventListener('deviceorientation', handleOrientation, { passive: true });
+      startLoop();
+    }
+
+    // Check if device requires permission (iOS 13+)
+    const requiresPermission = (typeof DeviceOrientationEvent !== 'undefined' && typeof DeviceOrientationEvent.requestPermission === 'function');
+
+    if (requiresPermission) {
+      // Seamlessly trigger permission on the user's first touch gesture anywhere
+      function onFirstUserGesture() {
+        window.removeEventListener('touchstart', onFirstUserGesture);
+        window.removeEventListener('pointerdown', onFirstUserGesture);
+        window.removeEventListener('click', onFirstUserGesture);
+        DeviceOrientationEvent.requestPermission()
+          .then(state => {
+            if (state === 'granted') {
+              attachOrientationListener();
+            }
+          })
+          .catch(() => {});
+      }
+      window.addEventListener('touchstart', onFirstUserGesture, { passive: true, once: true });
+      window.addEventListener('pointerdown', onFirstUserGesture, { passive: true, once: true });
+      window.addEventListener('click', onFirstUserGesture, { passive: true, once: true });
+    } else if ('ondeviceorientation' in window || 'DeviceOrientationEvent' in window) {
+      // Android & standard mobile browsers: auto-bind immediately
+      attachOrientationListener();
+    }
+
+    // Handle resize / orientationchange
+    window.addEventListener('resize', () => {
+      if (!checkViewport() || isReducedMotion) {
+        resetValues();
+      } else {
+        startLoop();
+      }
+    }, { passive: true });
+  })();
 
   // --- In-App Browser (WebView) Degradation & Banner ---
   (function initWebViewDegradation() {

@@ -365,12 +365,14 @@ void main () {
   }
 
   function scheduleHeroBubble() {
-    if ('requestAnimationFrame' in window) {
+    if ('requestIdleCallback' in window) {
+      window.requestIdleCallback(initHeroBubble, { timeout: 1500 });
+    } else if ('requestAnimationFrame' in window) {
       requestAnimationFrame(() => {
-        setTimeout(initHeroBubble, 0);
+        setTimeout(initHeroBubble, 60);
       });
     } else {
-      setTimeout(initHeroBubble, 50);
+      setTimeout(initHeroBubble, 100);
     }
   }
 
