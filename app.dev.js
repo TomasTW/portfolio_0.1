@@ -101,46 +101,162 @@ window.addEventListener('beforeunload', () => {
    sets the exact frozen frame. Both are applied together on every scroll
    tick so the browser recomputes the frame — reliable across all browsers.
    ========================================================================== */
-// --- Dynamic Viewport Height Engine (tracks visualViewport and innerHeight with Mobile Resize Lock) ---
+// ==========================================================================
+// CENTRALIZED SCROLL ENGINE & RESIZE ORCHESTRATION (Read-Then-Write)
+// - All scroll listeners registered with { passive: true }
+// - Scroll handlers only store window.scrollY and set a dirty flag
+// - A single requestAnimationFrame batches all DOM reads, then all DOM writes
+// - Clamps all scroll-progress values to [0, 1] to prevent iOS overscroll jitter
+// - Debounces resize to ~150ms AND ignores height changes < 120px with unchanged width (Safari toolbar collapse)
+// - Quantises all per-frame transform translation values to 0.5px and uses translate3d
+// ==========================================================================
+
+function quantise(val) {
+  return Math.round(val * 2) / 2;
+}
+
+function clamp01(val) {
+  if (typeof val !== 'number' || isNaN(val)) return 0;
+  return val < 0 ? 0 : val > 1 ? 1 : val;
+}
+
+// --- Dynamic Viewport Height & Debounced Resize Engine ---
 let lastStableWidth = window.innerWidth;
+let lastStableHeight = window.innerHeight;
 let lastStableVh = (window.visualViewport ? window.visualViewport.height : window.innerHeight);
+let resizeDebounceTimer = null;
 
 function updateStableVh(force) {
   const currentWidth = window.innerWidth;
+  const currentHeight = window.innerHeight;
   const currentVh = (window.visualViewport ? window.visualViewport.height : window.innerHeight);
-  const isMobile = window.innerWidth <= 1024 || ('ontouchstart' in window);
 
-  // Mobile address bar shifts cause vertical-only resize changes (<120px). Ignore them during scroll unless forced.
-  if (!force && isMobile && currentWidth === lastStableWidth) {
-    const diff = Math.abs(currentVh - lastStableVh);
-    if (diff < 120) {
+  // Debounce to ~150ms AND ignore resize events where only the viewport HEIGHT changed by less than 120px
+  if (!force) {
+    if (currentWidth === lastStableWidth && Math.abs(currentHeight - lastStableHeight) < 120) {
       return;
     }
   }
 
   lastStableWidth = currentWidth;
+  lastStableHeight = currentHeight;
   lastStableVh = currentVh;
   document.documentElement.style.setProperty('--stable-vh', `${currentVh}px`);
+
+  if (window.ScrollEngine) {
+    window.ScrollEngine.measureAll();
+    window.ScrollEngine.requestTick();
+  }
 }
 updateStableVh(true);
 
+function handleDebouncedResize() {
+  if (resizeDebounceTimer) clearTimeout(resizeDebounceTimer);
+  resizeDebounceTimer = setTimeout(() => {
+    updateStableVh(false);
+  }, 150);
+}
+
+window.addEventListener('resize', handleDebouncedResize, { passive: true });
+if (window.visualViewport) {
+  window.visualViewport.addEventListener('resize', handleDebouncedResize, { passive: true });
+}
 window.addEventListener('orientationchange', () => {
   setTimeout(() => updateStableVh(true), 150);
 });
-window.addEventListener('resize', () => updateStableVh(false));
-if (window.visualViewport) {
-  window.visualViewport.addEventListener('resize', () => updateStableVh(false));
-}
 
 function getViewportHeight() {
   return parseFloat(document.documentElement.style.getPropertyValue('--stable-vh')) || window.innerHeight;
 }
 
+const ScrollEngine = (function () {
+  let currentScrollY = window.scrollY;
+  let isDirty = false;
+  let isTicking = false;
+  const subscribers = [];
+
+  function register(subscriber) {
+    subscribers.push(subscriber);
+    if (subscriber.measure) {
+      try { subscriber.measure(); } catch (e) { console.error(e); }
+    }
+  }
+
+  function measureAll() {
+    for (let i = 0; i < subscribers.length; i++) {
+      if (subscribers[i].measure) {
+        try { subscribers[i].measure(); } catch (e) { console.error(e); }
+      }
+    }
+  }
+
+  function step() {
+    isTicking = false;
+    if (!isDirty) return;
+    isDirty = false;
+
+    const scrollY = currentScrollY;
+    const vh = getViewportHeight();
+
+    // 1. ALL DOM READS FIRST (No DOM writes allowed in read phase)
+    for (let i = 0; i < subscribers.length; i++) {
+      if (subscribers[i].read) {
+        try { subscribers[i].read(scrollY, vh); } catch (e) { console.error(e); }
+      }
+    }
+
+    // 2. ALL DOM WRITES SECOND (No DOM reads allowed in write phase)
+    for (let i = 0; i < subscribers.length; i++) {
+      if (subscribers[i].write) {
+        try { subscribers[i].write(); } catch (e) { console.error(e); }
+      }
+    }
+  }
+
+  function requestTick() {
+    isDirty = true;
+    if (!isTicking) {
+      isTicking = true;
+      requestAnimationFrame(step);
+    }
+  }
+
+  function onScroll() {
+    currentScrollY = window.scrollY;
+    requestTick();
+  }
+
+  window.addEventListener('scroll', onScroll, { passive: true });
+  window.addEventListener('load', () => {
+    measureAll();
+    requestTick();
+  });
+  window.addEventListener('pageshow', () => {
+    measureAll();
+    requestTick();
+  });
+  if (document.fonts && document.fonts.ready) {
+    document.fonts.ready.then(() => {
+      measureAll();
+      requestTick();
+    });
+  }
+
+  return {
+    register,
+    measureAll,
+    requestTick,
+    onScroll,
+    getScrollY: () => currentScrollY
+  };
+})();
+window.ScrollEngine = ScrollEngine;
+
 // Global layout refresh engine
 function refreshLayoutEngine() {
   updateStableVh(true);
-  window.dispatchEvent(new Event('resize'));
-  window.dispatchEvent(new Event('scroll'));
+  ScrollEngine.measureAll();
+  ScrollEngine.requestTick();
 }
 window.refreshLayoutEngine = refreshLayoutEngine;
 
@@ -196,119 +312,122 @@ window.refreshLayoutEngine = refreshLayoutEngine;
         const topLoopOffset = indicatorHeight * 0.10;
         const gap = 16; // 16px compact gap between bottom of letters and top of yellow loop
 
-        const topPx = (textRect.bottom - containerRect.top) + gap - topLoopOffset;
+        const topPx = quantise((textRect.bottom - containerRect.top) + gap - topLoopOffset);
         const cur = parseFloat(indicator.style.top);
         if (isNaN(cur) || Math.abs(cur - topPx) > 1.5) {
-          indicator.style.top = `${topPx.toFixed(2)}px`;
+          indicator.style.top = `${topPx}px`;
         }
-        if (!indicator.style.transform) indicator.style.transform = 'translateX(-50%)';
+        if (!indicator.style.transform) indicator.style.transform = 'translate3d(-50%, 0, 0)';
       }
     }
 
-    let rafId = null;
+    let heroSectionTop = 0;
+    let heroEffectiveHeight = 1;
+    let heroMaxScale = 1.0;
 
-    function onScroll(immediate) {
-      function doUpdate() {
-        rafId = null;
-        if (!section) return;
+    function measureHero() {
+      if (!section || !container) return;
+      const rect = section.getBoundingClientRect();
+      heroSectionTop = rect.top + window.scrollY;
+      const sectionHeight = section.offsetHeight - getViewportHeight();
+      heroEffectiveHeight = sectionHeight > 0 ? sectionHeight : (getViewportHeight() * 2.8);
 
-        const sectionTop = section.getBoundingClientRect().top + window.scrollY;
-        const sectionHeight = section.offsetHeight - getViewportHeight();
-        const scrolled = Math.max(0, window.scrollY - sectionTop);
-        const effectiveHeight = sectionHeight > 0 ? sectionHeight : (window.innerHeight * 2.8);
-        const progress = Math.min(1, Math.max(0, scrolled / effectiveHeight));
-
-        // Clamp to DURATION_S - 0.001s to prevent -3.0s % 3.0s wrap-around back to frame 0
-        const seekTime = Math.min(DURATION_S - 0.001, progress * DURATION_S);
-        seekTo(seekTime);
-        if (window.heroBubbleInstance) {
-          window.heroBubbleInstance.setScrollProgress(progress);
-        }
-
-        // Fade out hero scroll indicator graphic smoothly on scroll with strict guard for scroll past hero start
-        const indicator = document.getElementById('hero-scroll-indicator');
-        if (indicator) {
-          const isPastHeroStart = progress > 0.005 || window.scrollY > 30;
-          if (isPastHeroStart) {
-            const fadeOut = (window.scrollY > 30 && progress <= 0.005) ? 0 : Math.max(0, 1 - (progress / 0.06));
-            indicator.style.opacity = fadeOut.toFixed(3);
-            indicator.style.pointerEvents = 'none';
-            if (fadeOut <= 0 || window.scrollY > 30) {
-              indicator.style.visibility = 'hidden';
-            } else {
-              indicator.style.visibility = 'visible';
-            }
-          } else {
-            if (indicator.style.opacity && indicator.style.opacity !== '1') indicator.style.opacity = '1';
-            indicator.style.visibility = 'visible';
-            updateHeroIndicatorPosition();
-          }
-        }
-
-        // Ensure hero canvas remains visible as continuous dark background (#202020) for About, Works, and Contact
-        container.style.opacity = '1';
-        container.style.visibility = 'visible';
-        container.style.pointerEvents = progress >= 1.0 ? 'none' : 'auto';
-
-        // Solid background fallback ensures dark area NEVER disappears on reload or rapid scrub
-        if (progress >= 1.0) {
-          container.classList.add('is-dark');
+      const containerWidth = container.clientWidth;
+      const containerHeight = container.clientHeight;
+      if (containerWidth > 0 && containerHeight > 0) {
+        const nativeAspect = 1920 / 1080;
+        const containerAspect = containerWidth / containerHeight;
+        if (containerAspect < nativeAspect) {
+          heroMaxScale = (containerHeight / (containerWidth / nativeAspect)) * 1.08;
         } else {
-          container.classList.remove('is-dark');
-        }
-
-        // Explicitly hide text letters at the end of hero to ensure zero text bleed-through into subsequent sections
-        const heroTextGroup = svgEl.querySelector('#I___m_Tomas_Chen');
-        const heroUnion = svgEl.querySelector('#Union');
-        if (progress >= 1.0) {
-          if (heroTextGroup) heroTextGroup.style.opacity = '0';
-          if (heroUnion) heroUnion.style.opacity = '0';
-        } else {
-          if (heroTextGroup) heroTextGroup.style.opacity = '';
-          if (heroUnion) heroUnion.style.opacity = '';
-        }
-
-        // Smooth end scene expansion: scale SVG from 1.0 to cover full sticky area during progress 0.65 -> 1.0
-        const containerWidth = container.clientWidth;
-        const containerHeight = container.clientHeight;
-        if (containerWidth > 0 && containerHeight > 0) {
-          const nativeAspect = 1920 / 1080;
-          const containerAspect = containerWidth / containerHeight;
-          let maxScale = 1.0;
-          if (containerAspect < nativeAspect) {
-            maxScale = (containerHeight / (containerWidth / nativeAspect)) * 1.08;
-          } else {
-            maxScale = (containerWidth / (containerHeight * nativeAspect)) * 1.08;
-          }
-
-          let scale = 1.0;
-          if (progress > 0.65) {
-            const t = Math.min(1, (progress - 0.65) / 0.35);
-            const easeT = t * t * (3 - 2 * t); // smoothstep interpolation
-            scale = 1.0 + (maxScale - 1.0) * easeT;
-          }
-
-          svgEl.style.transform = `translate(-50%, -50%) scale(${scale.toFixed(4)})`;
-        }
-
-        if (!svgEl.classList.contains('is-loaded')) {
-          svgEl.classList.add('is-loaded');
+          heroMaxScale = (containerWidth / (containerHeight * nativeAspect)) * 1.08;
         }
       }
+      updateHeroIndicatorPosition();
+    }
 
-      if (immediate) {
-        if (rafId) {
-          cancelAnimationFrame(rafId);
-          rafId = null;
-        }
-        doUpdate();
+    let nextHeroProgress = 0;
+    let nextHeroSeekTime = 0;
+    let nextHeroScale = 1.0;
+    let nextIndicatorOpacity = '1';
+    let nextIndicatorVisible = 'visible';
+    let nextIndicatorPointerEvents = 'auto';
+
+    function readHero(scrollY, vh) {
+      if (!section) return;
+      const scrolled = Math.max(0, scrollY - heroSectionTop);
+      nextHeroProgress = clamp01(scrolled / heroEffectiveHeight);
+
+      // Clamp to DURATION_S - 0.001s to prevent -3.0s % 3.0s wrap-around back to frame 0
+      nextHeroSeekTime = Math.min(DURATION_S - 0.001, nextHeroProgress * DURATION_S);
+
+      let scale = 1.0;
+      if (nextHeroProgress > 0.65) {
+        const t = Math.min(1, (nextHeroProgress - 0.65) / 0.35);
+        const easeT = t * t * (3 - 2 * t); // smoothstep interpolation
+        scale = 1.0 + (heroMaxScale - 1.0) * easeT;
+      }
+      nextHeroScale = scale;
+
+      const isPastHeroStart = nextHeroProgress > 0.005 || scrollY > 30;
+      if (isPastHeroStart) {
+        const fadeOut = (scrollY > 30 && nextHeroProgress <= 0.005) ? 0 : Math.max(0, 1 - (nextHeroProgress / 0.06));
+        nextIndicatorOpacity = fadeOut.toFixed(3);
+        nextIndicatorPointerEvents = 'none';
+        nextIndicatorVisible = (fadeOut <= 0 || scrollY > 30) ? 'hidden' : 'visible';
       } else {
-        if (rafId) return;
-        rafId = requestAnimationFrame(doUpdate);
+        nextIndicatorOpacity = '1';
+        nextIndicatorPointerEvents = 'auto';
+        nextIndicatorVisible = 'visible';
       }
     }
 
-    // Freeze at frame 0 only if user is at the very top of the page on load
+    function writeHero() {
+      seekTo(nextHeroSeekTime);
+      if (window.heroBubbleInstance) {
+        window.heroBubbleInstance.setScrollProgress(nextHeroProgress);
+      }
+
+      const indicator = document.getElementById('hero-scroll-indicator');
+      if (indicator) {
+        indicator.style.opacity = nextIndicatorOpacity;
+        indicator.style.pointerEvents = nextIndicatorPointerEvents;
+        indicator.style.visibility = nextIndicatorVisible;
+      }
+
+      container.style.opacity = '1';
+      container.style.visibility = 'visible';
+      container.style.pointerEvents = nextHeroProgress >= 1.0 ? 'none' : 'auto';
+
+      if (nextHeroProgress >= 1.0) {
+        container.classList.add('is-dark');
+      } else {
+        container.classList.remove('is-dark');
+      }
+
+      const heroTextGroup = svgEl.querySelector('#I___m_Tomas_Chen');
+      const heroUnion = svgEl.querySelector('#Union');
+      if (nextHeroProgress >= 1.0) {
+        if (heroTextGroup) heroTextGroup.style.opacity = '0';
+        if (heroUnion) heroUnion.style.opacity = '0';
+      } else {
+        if (heroTextGroup) heroTextGroup.style.opacity = '';
+        if (heroUnion) heroUnion.style.opacity = '';
+      }
+
+      svgEl.style.transform = `translate3d(-50%, -50%, 0) scale(${nextHeroScale.toFixed(4)})`;
+
+      if (!svgEl.classList.contains('is-loaded')) {
+        svgEl.classList.add('is-loaded');
+      }
+    }
+
+    ScrollEngine.register({
+      measure: measureHero,
+      read: readHero,
+      write: writeHero
+    });
+
     if (window.scrollY === 0) {
       seekTo(0);
       if (window.heroBubbleInstance) {
@@ -317,39 +436,8 @@ window.refreshLayoutEngine = refreshLayoutEngine;
       requestAnimationFrame(() => {
         svgEl.classList.add('is-loaded');
       });
-      if ('requestIdleCallback' in window) {
-        requestIdleCallback(updateHeroIndicatorPosition, { timeout: 1000 });
-      } else {
-        setTimeout(updateHeroIndicatorPosition, 200);
-      }
-    } else {
-      const indicator = document.getElementById('hero-scroll-indicator');
-      if (indicator) {
-        indicator.style.opacity = '0';
-        indicator.style.visibility = 'hidden';
-      }
-      onScroll(true);
-      requestAnimationFrame(() => {
-        svgEl.classList.add('is-loaded');
-      });
     }
-
-    window.addEventListener('scroll', () => onScroll(false), { passive: true });
-    window.addEventListener('resize', () => {
-      updateHeroIndicatorPosition();
-      onScroll(false);
-    }, { passive: true });
-    window.addEventListener('load', () => onScroll(true));
-    window.addEventListener('pageshow', () => onScroll(true));
-
-    // Initial sync if restored scroll position
-    if (window.scrollY > 0) onScroll(true);
-    requestAnimationFrame(() => {
-      onScroll(true);
-      requestAnimationFrame(() => {
-        onScroll(true);
-      });
-    });
+    ScrollEngine.requestTick();
   }
 
   // SVG is inlined in index.html — works on file:// with no fetch needed
@@ -579,68 +667,91 @@ document.addEventListener('DOMContentLoaded', () => {
       allItems.forEach(item => item.style.setProperty('--item-y', '0px'));
     }
 
-    function getMaxScroll() {
-      const items = trackEl.querySelectorAll('.work-project-item');
-      if (items.length < 2) return 0;
-      return items[items.length - 1].offsetLeft - items[0].offsetLeft;
+    let items = [];
+    let numItems = 0;
+    let itemOffsets = [];
+    let maxScroll = 0;
+    let cardHeight = 0;
+    let pinnedSectionTop = 0;
+    let pinnedDistance = 0;
+    let cachedTitleAngle = 20;
+    let cachedImageAngle = 25;
+
+    function getTitleAimAngle() {
+      const firstTitle = trackEl.querySelector('.work-title');
+      if (!firstTitle || !graphicWrapEl) return 20;
+      const titleRect = firstTitle.getBoundingClientRect();
+      const handRect = graphicWrapEl.getBoundingClientRect();
+
+      const handCenterX = handRect.left + handRect.width * 0.5;
+      const handCenterY = handRect.top + handRect.height * 0.5;
+      const titleTargetX = titleRect.left + Math.min(titleRect.width * 0.4, 250);
+      const titleTargetY = titleRect.top + titleRect.height * 0.5;
+
+      const deltaX = handCenterX - titleTargetX;
+      const deltaY = handCenterY - titleTargetY;
+      if (deltaX <= 0) return 20;
+      const deg = Math.atan2(deltaY, deltaX) * (180 / Math.PI);
+      return Math.max(12, Math.min(40, deg));
     }
 
-    let rafId = null;
+    function getImageAimAngle() {
+      const firstImgWrap = trackEl.querySelector('.work-img-wrap');
+      if (!firstImgWrap || !graphicWrapEl) return 25;
+      const imgRect = firstImgWrap.getBoundingClientRect();
+      const handRect = graphicWrapEl.getBoundingClientRect();
 
-    function update() {
-      rafId = null;
-      if (window.innerWidth <= 1024) {
-        setFullyVisible();
-        const allItems = trackEl.querySelectorAll('.work-project-item');
-        allItems.forEach(item => item.style.removeProperty('--item-y'));
-        return;
-      }
+      const handCenterX = handRect.left + handRect.width * 0.5;
+      const handCenterY = handRect.top + handRect.height * 0.5;
+      const imageTargetX = imgRect.left + imgRect.width * 0.5;
+      const imageTargetY = imgRect.top + imgRect.height * 0.5;
+
+      const deltaX = handCenterX - imageTargetX;
+      const deltaY = handCenterY - imageTargetY;
+      if (deltaX <= 0) return 25;
+      const deg = Math.atan2(deltaY, deltaX) * (180 / Math.PI);
+      return Math.max(15, Math.min(38, deg));
+    }
+
+    function measureWorksDesktop() {
+      items = Array.from(trackEl.querySelectorAll('.work-project-item'));
+      numItems = items.length;
+      if (window.innerWidth <= 1024) return;
 
       const rect = pinnedSection.getBoundingClientRect();
-      const pinnedDistance = pinnedSection.offsetHeight - window.innerHeight;
+      pinnedSectionTop = rect.top + window.scrollY;
+      pinnedDistance = pinnedSection.offsetHeight - getViewportHeight();
+
+      if (numItems > 1) {
+        itemOffsets = items.map(item => item.offsetLeft - items[0].offsetLeft);
+        maxScroll = itemOffsets[numItems - 1];
+      }
+      cardHeight = card.offsetHeight || (getViewportHeight() - 272);
+
+      cachedTitleAngle = getTitleAimAngle();
+      cachedImageAngle = getImageAimAngle();
+    }
+
+    let isMobile = false;
+    let nextHandOpacity = 1;
+    let nextHandRotate = 0;
+    let nextTrackOpacity = 1;
+    let nextTrackX = 0;
+    let nextItemYs = [];
+
+    function readWorksDesktop(scrollY, vh) {
+      if (window.innerWidth <= 1024) {
+        isMobile = true;
+        return;
+      }
+      isMobile = false;
       if (pinnedDistance <= 0) return;
 
-      const scrolledInPin = -rect.top;
-      const p = Math.max(0, Math.min(1, scrolledInPin / pinnedDistance));
+      const scrolledInPin = scrollY - pinnedSectionTop;
+      const p = clamp01(scrolledInPin / pinnedDistance);
 
-      function getTitleAimAngle() {
-        const firstTitle = trackEl.querySelector('.work-title');
-        if (!firstTitle || !graphicWrapEl) return 20;
-        const titleRect = firstTitle.getBoundingClientRect();
-        const handRect = graphicWrapEl.getBoundingClientRect();
-
-        const handCenterX = handRect.left + handRect.width * 0.5;
-        const handCenterY = handRect.top + handRect.height * 0.5;
-        const titleTargetX = titleRect.left + Math.min(titleRect.width * 0.4, 250);
-        const titleTargetY = titleRect.top + titleRect.height * 0.5;
-
-        const deltaX = handCenterX - titleTargetX;
-        const deltaY = handCenterY - titleTargetY;
-        if (deltaX <= 0) return 20;
-        const deg = Math.atan2(deltaY, deltaX) * (180 / Math.PI);
-        return Math.max(12, Math.min(40, deg));
-      }
-
-      function getImageAimAngle() {
-        const firstImgWrap = trackEl.querySelector('.work-img-wrap');
-        if (!firstImgWrap || !graphicWrapEl) return 25;
-        const imgRect = firstImgWrap.getBoundingClientRect();
-        const handRect = graphicWrapEl.getBoundingClientRect();
-
-        const handCenterX = handRect.left + handRect.width * 0.5;
-        const handCenterY = handRect.top + handRect.height * 0.5;
-        const imageTargetX = imgRect.left + imgRect.width * 0.5;
-        const imageTargetY = imgRect.top + imgRect.height * 0.5;
-
-        const deltaX = handCenterX - imageTargetX;
-        const deltaY = handCenterY - imageTargetY;
-        if (deltaX <= 0) return 25;
-        const deg = Math.atan2(deltaY, deltaX) * (180 / Math.PI);
-        return Math.max(15, Math.min(38, deg));
-      }
-
-      const titleAngle = getTitleAimAngle();
-      const imageAngle = getImageAimAngle();
+      const titleAngle = cachedTitleAngle;
+      const imageAngle = cachedImageAngle;
 
       // 1. Hand SVG: Fades in early (0.00→0.08), stays visible, fades out last (0.88→0.98)
       const handOpacity = p < 0.08
@@ -676,29 +787,18 @@ document.addEventListener('DOMContentLoaded', () => {
               ? 1 - easeInOut(mapRange(p, 0.82, 0.94, 0, 1))
               : 0;
 
-      const enterXvw = 0; // In-place entrance to prevent left clipping of title
-
       // 3. Magnetic Multi-Project Scroll (0.16 → 0.80) with Dwell Plateau on each project
-      const items = Array.from(trackEl.querySelectorAll('.work-project-item'));
-      const numItems = items.length;
-      let trackX = 0;
-
-      // Vertical slide offset for incoming projects (entering smooth from top to resting position)
-      // Positions incoming project so its bottom bullet text sits above the container vertical midpoint (~1/2)
-      const cardHeight = card.offsetHeight || (window.innerHeight - 272);
+      let rawTrackX = 0;
       const Y_SLIDE = cardHeight * 0.54;
+      nextItemYs = [];
 
       if (numItems > 1) {
-        const itemOffsets = items.map(item => item.offsetLeft - items[0].offsetLeft);
-        const maxScroll = itemOffsets[numItems - 1];
-
-        const browseP = Math.max(0, Math.min(1, (p - 0.16) / (0.80 - 0.16)));
-        const numTransitions = numItems - 1; // 3 transitions for 4 projects
+        const browseP = clamp01((p - 0.16) / (0.80 - 0.16));
+        const numTransitions = numItems - 1;
         const segmentProgress = browseP * numTransitions;
         const currentIdx = Math.min(Math.floor(segmentProgress), numTransitions - 1);
-        const u = segmentProgress - currentIdx; // progress within this transition [0, 1]
+        const u = segmentProgress - currentIdx;
 
-        // 25% magnetic dwell plateau at the start of each project position
         const DWELL_RATIO = 0.25;
         let t = 0;
         if (u > DWELL_RATIO) {
@@ -708,73 +808,82 @@ document.addEventListener('DOMContentLoaded', () => {
 
         const startX = -itemOffsets[currentIdx];
         const endX = -itemOffsets[currentIdx + 1];
-        trackX = startX + (endX - startX) * t;
+        rawTrackX = startX + (endX - startX) * t;
 
-        // If at or past browsing window, lock cleanly at final project offset
         if (browseP >= 1) {
-          trackX = -maxScroll;
+          rawTrackX = -maxScroll;
         }
 
-        // Calculate smooth slide-down from top for each incoming project
         items.forEach((item, k) => {
           if (k === 0) {
-            // First project is already in resting position
-            item.style.setProperty('--item-y', '0px');
+            nextItemYs.push(0);
             return;
           }
 
           if (browseP >= 1 || segmentProgress >= k) {
-            // Reached or passed this project: resting cleanly in original position
-            item.style.setProperty('--item-y', '0px');
+            nextItemYs.push(0);
           } else if (segmentProgress < k - 1) {
-            // Project is waiting in the future on the right: starts at the top
-            item.style.setProperty('--item-y', `${(-Y_SLIDE).toFixed(2)}px`);
+            nextItemYs.push(quantise(-Y_SLIDE));
           } else {
-            // Currently transitioning into this project (k - 1 <= segmentProgress < k)
             const segU = segmentProgress - (k - 1);
             let slideT = 0;
             if (segU > DWELL_RATIO) {
               const moveProgress = (segU - DWELL_RATIO) / (1 - DWELL_RATIO);
-              // Quadratic ease-out matching the curve in user diagram:
-              // starts descending rapidly, then smoothly glides flat into resting position
               slideT = 1 - Math.pow(1 - moveProgress, 2);
             }
             const itemY = -Y_SLIDE * (1 - slideT);
-            item.style.setProperty('--item-y', `${itemY.toFixed(2)}px`);
+            nextItemYs.push(quantise(itemY));
           }
         });
       }
 
-      const handOpacityStr = handOpacity.toFixed(4);
-      const handRotateStr = `${handRotate.toFixed(2)}deg`;
+      nextHandOpacity = handOpacity;
+      nextHandRotate = handRotate;
+      nextTrackOpacity = trackOpacity;
+      nextTrackX = quantise(rawTrackX);
+    }
+
+    function writeWorksDesktop() {
+      if (isMobile) {
+        setFullyVisible();
+        const allItems = trackEl.querySelectorAll('.work-project-item');
+        allItems.forEach(item => item.style.removeProperty('--item-y'));
+        return;
+      }
+
+      const handOpacityStr = nextHandOpacity.toFixed(4);
+      const handRotateStr = `${nextHandRotate.toFixed(2)}deg`;
       if (stickyFrame) {
         stickyFrame.style.setProperty('--works-hand-opacity', handOpacityStr);
         stickyFrame.style.setProperty('--works-hand-rotate', handRotateStr);
       }
       card.style.setProperty('--works-hand-opacity', handOpacityStr);
       card.style.setProperty('--works-hand-rotate', handRotateStr);
-      card.style.setProperty('--works-track-opacity', trackOpacity.toFixed(4));
-      card.style.setProperty('--works-enter-x', `${enterXvw.toFixed(2)}vw`);
-      card.style.setProperty('--works-track-x', `${trackX.toFixed(2)}px`);
+      card.style.setProperty('--works-track-opacity', nextTrackOpacity.toFixed(4));
+      card.style.setProperty('--works-enter-x', '0vw');
+      card.style.setProperty('--works-track-x', `${nextTrackX.toFixed(1)}px`);
+
+      items.forEach((item, k) => {
+        if (nextItemYs[k] !== undefined) {
+          item.style.setProperty('--item-y', `${nextItemYs[k].toFixed(1)}px`);
+        }
+      });
     }
 
-    function onScroll() {
-      if (!rafId) rafId = requestAnimationFrame(update);
-    }
+    ScrollEngine.register({
+      measure: measureWorksDesktop,
+      read: readWorksDesktop,
+      write: writeWorksDesktop
+    });
 
-    window.addEventListener('scroll', onScroll, { passive: true });
-    window.addEventListener('resize', onScroll, { passive: true });
-    window.addEventListener('load', onScroll);
-    window.addEventListener('pageshow', onScroll);
-    if (document.fonts && document.fonts.ready) {
-      document.fonts.ready.then(onScroll);
-    }
     trackEl.querySelectorAll('img').forEach(img => {
       if (!img.complete) {
-        img.addEventListener('load', onScroll, { once: true });
+        img.addEventListener('load', () => {
+          ScrollEngine.measureAll();
+          ScrollEngine.requestTick();
+        }, { once: true });
       }
     });
-    update();
   })();
 
   // --- Works Modal Controls (Desktop & Mobile, <template>-backed) ---
@@ -1239,39 +1348,39 @@ document.addEventListener('DOMContentLoaded', () => {
       return outMin + t * (outMax - outMin);
     }
 
-    let rafId = null;
+    let slideItems = [];
+    let handEl = null;
+    let worksSectionTop = 0;
+    let worksSectionHeight = 0;
 
-    function update() {
-      rafId = null;
-      const slideItems = Array.from(worksList.querySelectorAll('.works-list-item'));
-      const handEl = worksList.querySelector('.works-list-hand');
+    function measureTabletWorks() {
+      slideItems = Array.from(worksList.querySelectorAll('.works-list-item'));
+      handEl = worksList.querySelector('.works-list-hand');
+      if (worksSection) {
+        const rect = worksSection.getBoundingClientRect();
+        worksSectionTop = rect.top + window.scrollY;
+        worksSectionHeight = worksSection.offsetHeight;
+      }
+    }
+
+    let isDesktop = false;
+    let nextItemStates = [];
+    let nextHandOpacity = null;
+
+    function readTabletWorks(scrollY, vh) {
       if (window.innerWidth > 1024) {
-        worksList.style.removeProperty('--works-list-x');
-        worksList.style.removeProperty('--works-list-opacity');
-        worksList.style.removeProperty('--works-hand-opacity');
-        slideItems.forEach(item => {
-          item.style.removeProperty('--item-x');
-          item.style.removeProperty('--item-opacity');
-        });
-        if (handEl) {
-          handEl.style.removeProperty('--item-opacity');
-        }
+        isDesktop = true;
         return;
       }
+      isDesktop = false;
 
-      const rect = worksSection.getBoundingClientRect();
-      const vh = getViewportHeight() || window.innerHeight;
-      const scrollHeight = worksSection.offsetHeight > vh
-        ? (worksSection.offsetHeight - vh)
+      const scrollHeight = worksSectionHeight > vh
+        ? (worksSectionHeight - vh)
         : (vh * 1.2);
-      const scrolled = Math.max(0, -rect.top);
-      const p = Math.min(1, scrolled / scrollHeight);
+      const scrolled = Math.max(0, scrollY - worksSectionTop);
+      const p = clamp01(scrolled / scrollHeight);
 
-      // Staggered cascade for work list items only (slide in/out):
-      // Enter Phase: 0.06 -> 0.40 (staggered from left -100vw -> 0vw) — widened for less sensitivity
-      // Magnetic Pin / Hold: 0.40 -> 0.58 (held at 0vw, opacity 1)
-      // Exit Phase: 0.58 -> 0.94 (staggered to right 0vw -> +100vw)
-      slideItems.forEach((item, i) => {
+      nextItemStates = slideItems.map((item, i) => {
         const enterStart = 0.06 + i * 0.04;
         const enterEnd = enterStart + 0.20;
         const exitStart = 0.60 + i * 0.04;
@@ -1299,12 +1408,9 @@ document.addEventListener('DOMContentLoaded', () => {
           opacity = 0;
         }
 
-        item.style.setProperty('--item-x', `${xVw.toFixed(2)}vw`);
-        item.style.setProperty('--item-opacity', opacity.toFixed(4));
+        return { xVw: xVw.toFixed(2), opacity: opacity.toFixed(4) };
       });
 
-      // Hand SVG: fade in/out — widened ranges for less sensitivity
-      // Enter: 0.08 -> 0.32 (fade in), Hold: 0.32 -> 0.62, Exit: 0.62 -> 0.92 (fade out)
       if (handEl) {
         let handOpacity = 1;
         if (p < 0.08) {
@@ -1318,30 +1424,55 @@ document.addEventListener('DOMContentLoaded', () => {
         } else {
           handOpacity = 0;
         }
-        handEl.style.setProperty('--item-opacity', handOpacity.toFixed(4));
+        nextHandOpacity = handOpacity.toFixed(4);
+      }
+    }
+
+    function writeTabletWorks() {
+      if (isDesktop) {
+        worksList.style.removeProperty('--works-list-x');
+        worksList.style.removeProperty('--works-list-opacity');
+        worksList.style.removeProperty('--works-hand-opacity');
+        slideItems.forEach(item => {
+          item.style.removeProperty('--item-x');
+          item.style.removeProperty('--item-opacity');
+        });
+        if (handEl) {
+          handEl.style.removeProperty('--item-opacity');
+        }
+        return;
+      }
+
+      slideItems.forEach((item, i) => {
+        const state = nextItemStates[i];
+        if (state) {
+          item.style.setProperty('--item-x', `${state.xVw}vw`);
+          item.style.setProperty('--item-opacity', state.opacity);
+        }
+      });
+
+      if (handEl && nextHandOpacity !== null) {
+        handEl.style.setProperty('--item-opacity', nextHandOpacity);
       }
 
       worksList.style.setProperty('--works-list-opacity', '1');
       worksList.style.setProperty('--works-hand-opacity', '1');
     }
 
-    function onScroll() {
-      if (!rafId) rafId = requestAnimationFrame(update);
-    }
+    ScrollEngine.register({
+      measure: measureTabletWorks,
+      read: readTabletWorks,
+      write: writeTabletWorks
+    });
 
-    window.addEventListener('scroll', onScroll, { passive: true });
-    window.addEventListener('resize', onScroll, { passive: true });
-    window.addEventListener('load', onScroll);
-    window.addEventListener('pageshow', onScroll);
-    if (document.fonts && document.fonts.ready) {
-      document.fonts.ready.then(onScroll);
-    }
     worksList.querySelectorAll('img').forEach(img => {
       if (!img.complete) {
-        img.addEventListener('load', onScroll, { once: true });
+        img.addEventListener('load', () => {
+          ScrollEngine.measureAll();
+          ScrollEngine.requestTick();
+        }, { once: true });
       }
     });
-    update();
   })();
 
   // --- About Section: Reveal Animation (desktop/tablet scroll-scrub / mobile fade-up) ---
@@ -1369,117 +1500,121 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     // ── DESKTOP, TABLET & MOBILE: scroll-scrubbed cinematic reveal ───────────
-    function initDesktopReveal() {
-      let rafId = null;
-
-      function update() {
-        rafId = null;
-
-        const isMobileOrTablet = window.innerWidth <= 1024;
-        let p = 0;
-        if (isMobileOrTablet) {
-          const rect = section.getBoundingClientRect();
-          const scrollHeight = section.offsetHeight - getViewportHeight();
-          const scrolled = Math.max(0, -rect.top);
-          p = scrollHeight > 0 ? Math.min(1, scrolled / scrollHeight) : 0;
-        } else {
-          const sectionTop = section.getBoundingClientRect().top + window.scrollY;
-          const scrollHeight = section.offsetHeight - getViewportHeight();
-          const scrolled = Math.max(0, window.scrollY - sectionTop);
-          p = scrollHeight > 0 ? Math.min(1, scrolled / scrollHeight) : 0;
-        }
-
-        // Hand SVG: Enters, Holds, Exits — mobile ranges widened for less sensitivity
-        const handOpacity = isMobileOrTablet
-          ? (p < 0.08 ? 0 : (p < 0.32 ? easeInOut(mapRange(p, 0.08, 0.32, 0, 1)) : (p > 0.66 ? 1 - easeInOut(mapRange(p, 0.66, 0.92, 0, 1)) : 1)))
-          : (p < 0.10 ? easeInOut(mapRange(p, 0, 0.10, 0, 1)) : (p > 0.88 ? 1 - easeInOut(mapRange(p, 0.88, 0.98, 0, 1)) : 1));
-
-        // Tool Icons: Enters, Holds, Exits — mobile ranges widened
-        const iconsOpacity = isMobileOrTablet
-          ? (p < 0.10 ? 0 : (p < 0.32 ? easeInOut(mapRange(p, 0.10, 0.32, 0, 1)) : (p > 0.66 ? 1 - easeInOut(mapRange(p, 0.66, 0.92, 0, 1)) : 1)))
-          : (p < 0.02 ? 0 : (p < 0.15 ? easeInOut(mapRange(p, 0.02, 0.15, 0, 1)) : (p > 0.85 ? 1 - easeInOut(mapRange(p, 0.85, 0.98, 0, 1)) : 1)));
-
-        // Header: slides in/out — mobile ranges widened
-        const headerXvw = isMobileOrTablet
-          ? (p < 0.06 ? -100 : (p < 0.30 ? -100 + easeInOut(mapRange(p, 0.06, 0.30, 0, 1)) * 100 : (p < 0.66 ? 0 : -(easeInOut(mapRange(p, 0.66, 0.94, 0, 1)) * 100))))
-          : (p < 0.02 ? -110 : (p < 0.15 ? -110 + easeInOut(mapRange(p, 0.02, 0.15, 0, 1)) * 110 : (p < 0.85 ? 0 : -(easeInOut(mapRange(p, 0.85, 1.0, 0, 1)) * 110))));
-
-        const headerOpacity = isMobileOrTablet
-          ? (p < 0.06 ? 0 : (p < 0.30 ? easeInOut(mapRange(p, 0.06, 0.30, 0, 1)) : (p < 0.66 ? 1 : 1 - easeInOut(mapRange(p, 0.66, 0.94, 0, 1)))))
-          : (p < 0.02 ? 0 : (p < 0.15 ? easeInOut(mapRange(p, 0.02, 0.15, 0, 1)) : (p < 0.85 ? 1 : 1 - easeInOut(mapRange(p, 0.85, 1.0, 0, 1)))));
-
-        // Footer: slides in/out — mobile ranges widened
-        const footerXvw = isMobileOrTablet
-          ? (p < 0.06 ? 100 : (p < 0.30 ? 100 - easeInOut(mapRange(p, 0.06, 0.30, 0, 1)) * 100 : (p < 0.66 ? 0 : +(easeInOut(mapRange(p, 0.66, 0.94, 0, 1)) * 100))))
-          : (p < 0.02 ? 110 : (p < 0.15 ? 110 - easeInOut(mapRange(p, 0.02, 0.15, 0, 1)) * 110 : (p < 0.85 ? 0 : +(easeInOut(mapRange(p, 0.85, 1.0, 0, 1)) * 110))));
-
-        const footerOpacity = isMobileOrTablet
-          ? (p < 0.06 ? 0 : (p < 0.30 ? easeInOut(mapRange(p, 0.06, 0.30, 0, 1)) : (p < 0.66 ? 1 : 1 - easeInOut(mapRange(p, 0.66, 0.94, 0, 1)))))
-          : (p < 0.02 ? 0 : (p < 0.15 ? easeInOut(mapRange(p, 0.02, 0.15, 0, 1)) : (p < 0.85 ? 1 : 1 - easeInOut(mapRange(p, 0.85, 1.0, 0, 1)))));
-
-
-        // ── Desktop Hand Rotation (Starts pointing to skills/tools, then rotates down to point right) ──
-        function getAboutStartAngle() {
-          const toolsSidebar = document.querySelector('.about-tools-sidebar');
-          const firstHand = document.querySelector('.about-hand-graphic');
-          if (!toolsSidebar || !firstHand) return -112;
-          const handRect = firstHand.getBoundingClientRect();
-          const handCenterX = handRect.left + handRect.width / 2;
-          const handCenterY = handRect.top + handRect.height / 2;
-          const toolsRect = toolsSidebar.getBoundingClientRect();
-          const toolsCenterX = toolsRect.left + toolsRect.width / 2;
-          const toolsCenterY = toolsRect.top + toolsRect.height / 2;
-          const dx = toolsCenterX - handCenterX;
-          const dy = toolsCenterY - handCenterY;
-          if (dx <= 0) return -112;
-          const deg = Math.atan2(dy, dx) * (180 / Math.PI) - 90;
-          return deg;
-        }
-
-        const startAngle = getAboutStartAngle();
-        const activeAngle = -90;
-
-        let handRotate = activeAngle;
-        if (!isMobileOrTablet) {
-          if (p < 0.02) {
-            handRotate = startAngle;
-          } else if (p < 0.16) {
-            const enterT = easeInOut(mapRange(p, 0.02, 0.16, 0, 1));
-            handRotate = startAngle * (1 - enterT) + activeAngle * enterT;
-          } else if (p > 0.85) {
-            const exitT = easeInOut(mapRange(p, 0.85, 0.98, 0, 1));
-            handRotate = activeAngle + 15 * exitT;
-          } else {
-            handRotate = activeAngle;
-          }
-        }
-
-        card.style.setProperty('--about-layer-opacity', handOpacity.toFixed(4));
-        card.style.setProperty('--about-hand-opacity', handOpacity.toFixed(4));
-        card.style.setProperty('--about-hand-rotate', `${handRotate.toFixed(2)}deg`);
-        card.style.setProperty('--about-icons-opacity', iconsOpacity.toFixed(4));
-        card.style.setProperty('--about-header-x', `${headerXvw.toFixed(2)}vw`);
-        card.style.setProperty('--about-header-opacity', headerOpacity.toFixed(4));
-        card.style.setProperty('--about-footer-x', `${footerXvw.toFixed(2)}vw`);
-        card.style.setProperty('--about-footer-opacity', headerOpacity.toFixed(4));
-      }
-
-      function onScroll() {
-        if (!rafId) rafId = requestAnimationFrame(update);
-      }
-
-      window.addEventListener('scroll', onScroll, { passive: true });
-      window.addEventListener('resize', onScroll, { passive: true });
-      window.addEventListener('load', onScroll);
-      window.addEventListener('pageshow', onScroll);
-      if (document.fonts && document.fonts.ready) {
-        document.fonts.ready.then(onScroll);
-      }
-      update();
+    function getAboutStartAngle() {
+      const toolsSidebar = document.querySelector('.about-tools-sidebar');
+      const firstHand = document.querySelector('.about-hand-graphic');
+      if (!toolsSidebar || !firstHand) return -112;
+      const handRect = firstHand.getBoundingClientRect();
+      const handCenterX = handRect.left + handRect.width / 2;
+      const handCenterY = handRect.top + handRect.height / 2;
+      const toolsRect = toolsSidebar.getBoundingClientRect();
+      const toolsCenterX = toolsRect.left + toolsRect.width / 2;
+      const toolsCenterY = toolsRect.top + toolsRect.height / 2;
+      const dx = toolsCenterX - handCenterX;
+      const dy = toolsCenterY - handCenterY;
+      if (dx <= 0) return -112;
+      const deg = Math.atan2(dy, dx) * (180 / Math.PI) - 90;
+      return deg;
     }
 
-    // ── Run scroll-scrubbed cinematic reveal on all viewports (desktop, tablet, mobile) ──
-    initDesktopReveal();
+    let aboutSectionTop = 0;
+    let aboutSectionHeight = 0;
+    let cachedStartAngle = -112;
+
+    function measureAbout() {
+      if (!section) return;
+      const rect = section.getBoundingClientRect();
+      aboutSectionTop = rect.top + window.scrollY;
+      aboutSectionHeight = section.offsetHeight;
+      cachedStartAngle = getAboutStartAngle();
+    }
+
+    let isMobileOrTablet = false;
+    let nextHandOpacity = 1;
+    let nextHandRotate = -90;
+    let nextIconsOpacity = 1;
+    let nextHeaderXvw = 0;
+    let nextHeaderOpacity = 1;
+    let nextFooterXvw = 0;
+    let nextFooterOpacity = 1;
+
+    function readAbout(scrollY, vh) {
+      isMobileOrTablet = window.innerWidth <= 1024;
+      const scrollHeight = aboutSectionHeight - vh;
+      const scrolled = Math.max(0, scrollY - aboutSectionTop);
+      const p = scrollHeight > 0 ? clamp01(scrolled / scrollHeight) : 0;
+
+      // Hand SVG: Enters, Holds, Exits — mobile ranges widened for less sensitivity
+      const handOpacity = isMobileOrTablet
+        ? (p < 0.08 ? 0 : (p < 0.32 ? easeInOut(mapRange(p, 0.08, 0.32, 0, 1)) : (p > 0.66 ? 1 - easeInOut(mapRange(p, 0.66, 0.92, 0, 1)) : 1)))
+        : (p < 0.10 ? easeInOut(mapRange(p, 0, 0.10, 0, 1)) : (p > 0.88 ? 1 - easeInOut(mapRange(p, 0.88, 0.98, 0, 1)) : 1));
+
+      // Tool Icons: Enters, Holds, Exits — mobile ranges widened
+      const iconsOpacity = isMobileOrTablet
+        ? (p < 0.10 ? 0 : (p < 0.32 ? easeInOut(mapRange(p, 0.10, 0.32, 0, 1)) : (p > 0.66 ? 1 - easeInOut(mapRange(p, 0.66, 0.92, 0, 1)) : 1)))
+        : (p < 0.02 ? 0 : (p < 0.15 ? easeInOut(mapRange(p, 0.02, 0.15, 0, 1)) : (p > 0.85 ? 1 - easeInOut(mapRange(p, 0.85, 0.98, 0, 1)) : 1)));
+
+      // Header: slides in/out — mobile ranges widened
+      const headerXvw = isMobileOrTablet
+        ? (p < 0.06 ? -100 : (p < 0.30 ? -100 + easeInOut(mapRange(p, 0.06, 0.30, 0, 1)) * 100 : (p < 0.66 ? 0 : -(easeInOut(mapRange(p, 0.66, 0.94, 0, 1)) * 100))))
+        : (p < 0.02 ? -110 : (p < 0.15 ? -110 + easeInOut(mapRange(p, 0.02, 0.15, 0, 1)) * 110 : (p < 0.85 ? 0 : -(easeInOut(mapRange(p, 0.85, 1.0, 0, 1)) * 110))));
+
+      const headerOpacity = isMobileOrTablet
+        ? (p < 0.06 ? 0 : (p < 0.30 ? easeInOut(mapRange(p, 0.06, 0.30, 0, 1)) : (p < 0.66 ? 1 : 1 - easeInOut(mapRange(p, 0.66, 0.94, 0, 1)))))
+        : (p < 0.02 ? 0 : (p < 0.15 ? easeInOut(mapRange(p, 0.02, 0.15, 0, 1)) : (p < 0.85 ? 1 : 1 - easeInOut(mapRange(p, 0.85, 1.0, 0, 1)))));
+
+      // Footer: slides in/out — mobile ranges widened
+      const footerXvw = isMobileOrTablet
+        ? (p < 0.06 ? 100 : (p < 0.30 ? 100 - easeInOut(mapRange(p, 0.06, 0.30, 0, 1)) * 100 : (p < 0.66 ? 0 : +(easeInOut(mapRange(p, 0.66, 0.94, 0, 1)) * 100))))
+        : (p < 0.02 ? 110 : (p < 0.15 ? 110 - easeInOut(mapRange(p, 0.02, 0.15, 0, 1)) * 110 : (p < 0.85 ? 0 : +(easeInOut(mapRange(p, 0.85, 1.0, 0, 1)) * 110))));
+
+      const footerOpacity = isMobileOrTablet
+        ? (p < 0.06 ? 0 : (p < 0.30 ? easeInOut(mapRange(p, 0.06, 0.30, 0, 1)) : (p < 0.66 ? 1 : 1 - easeInOut(mapRange(p, 0.66, 0.94, 0, 1)))))
+        : (p < 0.02 ? 0 : (p < 0.15 ? easeInOut(mapRange(p, 0.02, 0.15, 0, 1)) : (p < 0.85 ? 1 : 1 - easeInOut(mapRange(p, 0.85, 1.0, 0, 1)))));
+
+      const startAngle = cachedStartAngle;
+      const activeAngle = -90;
+
+      let handRotate = activeAngle;
+      if (!isMobileOrTablet) {
+        if (p < 0.02) {
+          handRotate = startAngle;
+        } else if (p < 0.16) {
+          const enterT = easeInOut(mapRange(p, 0.02, 0.16, 0, 1));
+          handRotate = startAngle * (1 - enterT) + activeAngle * enterT;
+        } else if (p > 0.85) {
+          const exitT = easeInOut(mapRange(p, 0.85, 0.98, 0, 1));
+          handRotate = activeAngle + 15 * exitT;
+        } else {
+          handRotate = activeAngle;
+        }
+      }
+
+      nextHandOpacity = handOpacity;
+      nextHandRotate = handRotate;
+      nextIconsOpacity = iconsOpacity;
+      nextHeaderXvw = headerXvw;
+      nextHeaderOpacity = headerOpacity;
+      nextFooterXvw = footerXvw;
+      nextFooterOpacity = footerOpacity;
+    }
+
+    function writeAbout() {
+      card.style.setProperty('--about-layer-opacity', nextHandOpacity.toFixed(4));
+      card.style.setProperty('--about-hand-opacity', nextHandOpacity.toFixed(4));
+      card.style.setProperty('--about-hand-rotate', `${nextHandRotate.toFixed(2)}deg`);
+      card.style.setProperty('--about-icons-opacity', nextIconsOpacity.toFixed(4));
+      card.style.setProperty('--about-header-x', `${nextHeaderXvw.toFixed(2)}vw`);
+      card.style.setProperty('--about-header-opacity', nextHeaderOpacity.toFixed(4));
+      card.style.setProperty('--about-footer-x', `${nextFooterXvw.toFixed(2)}vw`);
+      card.style.setProperty('--about-footer-opacity', nextFooterOpacity.toFixed(4));
+    }
+
+    ScrollEngine.register({
+      measure: measureAbout,
+      read: readAbout,
+      write: writeAbout
+    });
   })();
 
   // --- Contact Section: Reveal Animation (desktop scroll-scrub / mobile set visible) ---
@@ -1505,25 +1640,30 @@ document.addEventListener('DOMContentLoaded', () => {
       card.style.setProperty('--contact-icons-opacity', '1');
     }
 
-    let rafId = null;
+    let contactSectionTop = 0;
+    let contactSectionHeight = 0;
 
-    function update() {
-      rafId = null;
+    function measureContact() {
+      if (!section) return;
+      const rect = section.getBoundingClientRect();
+      contactSectionTop = rect.top + window.scrollY;
+      contactSectionHeight = section.offsetHeight;
+    }
 
-      const isMobileOrTablet = window.innerWidth <= 1024;
-      let p = 0;
+    let isMobileOrTablet = false;
+    let nextHeadOpacity = 1;
+    let nextHeadRotateDeg = 0;
+    let nextLocationOpacity = 1;
+    let nextHeadlineXvw = 0;
+    let nextHeadlineOpacity = 1;
+    let nextIconsXvw = 0;
+    let nextIconsOpacity = 1;
 
-      if (isMobileOrTablet) {
-        const rect = section.getBoundingClientRect();
-        const scrollHeight = section.offsetHeight - getViewportHeight();
-        const scrolled = Math.max(0, -rect.top);
-        p = scrollHeight > 0 ? Math.min(1, scrolled / scrollHeight) : 0;
-      } else {
-        const sectionTop = section.getBoundingClientRect().top + window.scrollY;
-        const scrollHeight = section.offsetHeight - getViewportHeight();
-        const scrolled = Math.max(0, window.scrollY - sectionTop);
-        p = scrollHeight > 0 ? Math.min(1, scrolled / scrollHeight) : 0;
-      }
+    function readContact(scrollY, vh) {
+      isMobileOrTablet = window.innerWidth <= 1024;
+      const scrollHeight = contactSectionHeight - vh;
+      const scrolled = Math.max(0, scrollY - contactSectionTop);
+      const p = scrollHeight > 0 ? clamp01(scrolled / scrollHeight) : 0;
 
       // 1. Head SVG: Fades in & rotates — mobile ranges widened for less sensitivity
       const headOpacity = isMobileOrTablet
@@ -1557,27 +1697,30 @@ document.addEventListener('DOMContentLoaded', () => {
         ? (p < 0.08 ? 0 : (p < 0.35 ? easeInOut(mapRange(p, 0.08, 0.35, 0, 1)) : 1))
         : (p < 0.04 ? 0 : (p < 0.18 ? easeInOut(mapRange(p, 0.04, 0.18, 0, 1)) : 1));
 
-      card.style.setProperty('--contact-head-opacity', headOpacity.toFixed(4));
-      card.style.setProperty('--contact-head-rotate', `${headRotateDeg.toFixed(2)}deg`);
-      card.style.setProperty('--contact-location-opacity', locationOpacity.toFixed(4));
-      card.style.setProperty('--contact-headline-x', `${headlineXvw.toFixed(2)}vw`);
-      card.style.setProperty('--contact-headline-opacity', headlineOpacity.toFixed(4));
-      card.style.setProperty('--contact-icons-x', `${iconsXvw.toFixed(2)}vw`);
-      card.style.setProperty('--contact-icons-opacity', iconsOpacity.toFixed(4));
+      nextHeadOpacity = headOpacity;
+      nextHeadRotateDeg = headRotateDeg;
+      nextLocationOpacity = locationOpacity;
+      nextHeadlineXvw = headlineXvw;
+      nextHeadlineOpacity = headlineOpacity;
+      nextIconsXvw = iconsXvw;
+      nextIconsOpacity = iconsOpacity;
     }
 
-    function onScroll() {
-      if (!rafId) rafId = requestAnimationFrame(update);
+    function writeContact() {
+      card.style.setProperty('--contact-head-opacity', nextHeadOpacity.toFixed(4));
+      card.style.setProperty('--contact-head-rotate', `${nextHeadRotateDeg.toFixed(2)}deg`);
+      card.style.setProperty('--contact-location-opacity', nextLocationOpacity.toFixed(4));
+      card.style.setProperty('--contact-headline-x', `${nextHeadlineXvw.toFixed(2)}vw`);
+      card.style.setProperty('--contact-headline-opacity', nextHeadlineOpacity.toFixed(4));
+      card.style.setProperty('--contact-icons-x', `${nextIconsXvw.toFixed(2)}vw`);
+      card.style.setProperty('--contact-icons-opacity', nextIconsOpacity.toFixed(4));
     }
 
-    window.addEventListener('scroll', onScroll, { passive: true });
-    window.addEventListener('resize', onScroll, { passive: true });
-    window.addEventListener('load', onScroll);
-    window.addEventListener('pageshow', onScroll);
-    if (document.fonts && document.fonts.ready) {
-      document.fonts.ready.then(onScroll);
-    }
-    update();
+    ScrollEngine.register({
+      measure: measureContact,
+      read: readContact,
+      write: writeContact
+    });
   })();
 
   // --- Mobile Floating Navigation Menu & Desktop Fixed Navbar ---
@@ -1791,24 +1934,52 @@ document.addEventListener('DOMContentLoaded', () => {
     const desktopLinks = document.querySelectorAll('.desktop-nav-link');
     const sections = document.querySelectorAll('section[id]');
 
-    function handleScrollUpdates() {
-      const scrollY = window.scrollY;
-      let pastHero = false;
-      if (heroSection) {
-        const heroSectionTop = heroSection.getBoundingClientRect().top + window.scrollY;
-        const vh = getViewportHeight();
-        const heroScrollHeight = heroSection.offsetHeight - vh;
-        const scrolledPastHeroTop = scrollY - heroSectionTop;
-        const heroProgress = heroScrollHeight > 0 ? scrolledPastHeroTop / heroScrollHeight : 0;
-        pastHero = heroProgress >= 1.0;
-      } else {
-        const threshold = aboutSection ? aboutSection.offsetTop - 100 : 0;
-        pastHero = scrollY >= threshold;
-      }
+    let heroEnd = 0;
+    let sectionCache = [];
 
-      // --- Mobile navbar visibility ---
+    function measureNav() {
+      if (heroSection) {
+        heroEnd = heroSection.offsetTop + heroSection.offsetHeight - getViewportHeight();
+      } else {
+        heroEnd = aboutSection ? aboutSection.offsetTop - 100 : 0;
+      }
+      sectionCache = [];
+      sections.forEach(sec => {
+        sectionCache.push({
+          id: sec.getAttribute('id'),
+          top: sec.offsetTop,
+          height: sec.offsetHeight
+        });
+      });
+    }
+
+    let nextPastHero = false;
+    let nextInTargetSections = false;
+    let nextModalIsOpen = false;
+    let nextActiveSectionId = '';
+
+    function readNav(scrollY, vh) {
+      nextPastHero = scrollY >= (heroEnd - 10);
+      // Continuous black background & navigation through About, Works, Contact and bottom rubber-band overscroll
+      // Contact is the final section. Overscroll past contact keeps nextInTargetSections true to prevent canvas flash!
+      nextInTargetSections = nextPastHero;
+      nextModalIsOpen = document.body.classList.contains('modal-is-open');
+
+      let activeId = '';
+      const scrollCenter = scrollY + vh / 2;
+      for (let i = 0; i < sectionCache.length; i++) {
+        const item = sectionCache[i];
+        if (scrollCenter >= item.top && scrollCenter < item.top + item.height) {
+          activeId = item.id;
+          break;
+        }
+      }
+      nextActiveSectionId = activeId;
+    }
+
+    function writeNav() {
       if (mobileNavbar) {
-        if (pastHero) {
+        if (nextPastHero) {
           mobileNavbar.classList.add('visible');
         } else {
           mobileNavbar.classList.remove('visible');
@@ -1816,22 +1987,14 @@ document.addEventListener('DOMContentLoaded', () => {
         }
       }
 
-      // --- Desktop navbar visibility ---
-      // Only show when in About, Works, or Contact sections (past hero, before end of contact)
-      const endY = contactSection
-        ? contactSection.offsetTop + contactSection.offsetHeight
-        : document.body.scrollHeight;
-      const inTargetSections = pastHero && scrollY < endY;
-
       if (desktopNavbar) {
-        if (document.body.classList.contains('modal-is-open')) {
+        if (nextModalIsOpen) {
           desktopNavbar.classList.remove('visible');
-        } else if (inTargetSections) {
+        } else if (nextInTargetSections) {
           desktopNavbar.classList.remove('no-transition');
           desktopNavbar.classList.add('visible');
         } else {
-          if (!pastHero) {
-            // Immediately hide when returning to hero to eliminate afterimage
+          if (!nextPastHero) {
             desktopNavbar.classList.add('no-transition');
           } else {
             desktopNavbar.classList.remove('no-transition');
@@ -1840,7 +2003,6 @@ document.addEventListener('DOMContentLoaded', () => {
         }
       }
 
-      // --- Canvas UI WebGL background visibility (About, Works, Contact black area) ---
       if (window.canvasUIInstance) {
         const isCoarse = window.matchMedia && (window.matchMedia('(pointer: coarse)').matches || window.matchMedia('(hover: none)').matches);
         const hasTouch = ('ontouchstart' in window) || (navigator.maxTouchPoints && navigator.maxTouchPoints > 0);
@@ -1848,63 +2010,32 @@ document.addEventListener('DOMContentLoaded', () => {
         if (!isDesktop) {
           try { window.canvasUIInstance.setVisible(false, true); } catch (e) { }
         } else {
-          // immediate = true when exiting to avoid afterimage over hero clouds
-          window.canvasUIInstance.setVisible(inTargetSections, !inTargetSections);
+          window.canvasUIInstance.setVisible(nextInTargetSections, !nextInTargetSections);
         }
       }
 
-      // --- Solid continuous dark background fallback for sticky container ---
       const stickyHeroContainer = document.querySelector('.hero-canvas-sticky');
       if (stickyHeroContainer) {
-        if (pastHero) {
+        if (nextPastHero) {
           stickyHeroContainer.classList.add('is-dark');
         } else {
           stickyHeroContainer.classList.remove('is-dark');
         }
       }
 
-      // --- Active section highlighting ---
-      let currentSectionId = '';
-      const scrollPosition = scrollY + window.innerHeight / 2;
-
-      sections.forEach(section => {
-        const sectionTop = section.offsetTop;
-        const sectionHeight = section.offsetHeight;
-        if (scrollPosition >= sectionTop && scrollPosition < sectionTop + sectionHeight) {
-          currentSectionId = section.getAttribute('id');
-        }
-      });
-
-      // Update mobile links active class
       mobileLinks.forEach(link => {
-        link.classList.toggle('active', link.getAttribute('href') === `#${currentSectionId}`);
+        link.classList.toggle('active', link.getAttribute('href') === `#${nextActiveSectionId}`);
       });
 
-      // Update desktop links active class
       desktopLinks.forEach(link => {
-        link.classList.toggle('active', link.getAttribute('href') === `#${currentSectionId}`);
+        link.classList.toggle('active', link.getAttribute('href') === `#${nextActiveSectionId}`);
       });
     }
 
-    let navScrollRaf = null;
-    function onNavScroll() {
-      if (!navScrollRaf) {
-        navScrollRaf = requestAnimationFrame(() => {
-          navScrollRaf = null;
-          handleScrollUpdates();
-        });
-      }
-    }
-
-    window.addEventListener('scroll', onNavScroll, { passive: true });
-    window.addEventListener('load', handleScrollUpdates);
-    window.addEventListener('pageshow', handleScrollUpdates);
-    handleScrollUpdates();
-    requestAnimationFrame(() => {
-      handleScrollUpdates();
-      requestAnimationFrame(() => {
-        handleScrollUpdates();
-      });
+    ScrollEngine.register({
+      measure: measureNav,
+      read: readNav,
+      write: writeNav
     });
   })();
 

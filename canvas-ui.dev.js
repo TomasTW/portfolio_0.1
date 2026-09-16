@@ -756,36 +756,49 @@ void main () {
     }
     motionQuery.addEventListener('change', onMotionChange);
 
-    // Resize / orientation change handler
+    // Resize / orientation change handler (debounced 150ms & Safari toolbar collapse filter)
     let lastWidth = window.innerWidth;
-    function onViewportChange(event) {
-      const isOrientation = event && event.type === 'orientationchange';
-      if (isOrientation || window.innerWidth !== lastWidth) {
-        lastWidth = window.innerWidth;
-        if (isDesktopPointerDevice()) {
-          syncCanvasSize();
-          if (visible) start();
-        } else {
-          canvas.style.opacity = '0';
+    let lastHeight = window.innerHeight;
+    let resizeTimer = null;
+
+    function handleViewportResize() {
+      const currentWidth = window.innerWidth;
+      const currentHeight = window.innerHeight;
+      const widthChanged = currentWidth !== lastWidth;
+      const heightDelta = Math.abs(currentHeight - lastHeight);
+
+      // Ignore resize events where only viewport height changed by < 120px (Safari toolbar collapse/expansion)
+      if (!widthChanged && heightDelta < 120) {
+        return;
+      }
+
+      lastWidth = currentWidth;
+      lastHeight = currentHeight;
+
+      if (isDesktopPointerDevice()) {
+        syncCanvasSize();
+        if (visible) start();
+      } else {
+        canvas.style.opacity = '0';
+        if (raf) {
           cancelAnimationFrame(raf);
           raf = null;
-          running = false;
         }
+        running = false;
       }
+    }
+
+    function onViewportChange(event) {
+      const isOrientation = event && event.type === 'orientationchange';
+      if (isOrientation) {
+        handleViewportResize();
+        return;
+      }
+      clearTimeout(resizeTimer);
+      resizeTimer = setTimeout(handleViewportResize, 150);
     }
     window.addEventListener('resize', onViewportChange, { passive: true });
     window.addEventListener('orientationchange', onViewportChange, { passive: true });
-
-    // Check if scroll is within About, Works, or Contact sections
-    function isWithinTargetSections() {
-      const about = document.getElementById('about');
-      const contact = document.getElementById('contact');
-      if (!about) return false;
-      const scrollY = window.scrollY;
-      const startY = about.offsetTop - 150;
-      const endY = contact ? contact.offsetTop + contact.offsetHeight : document.body.scrollHeight;
-      return scrollY >= startY && scrollY <= endY;
-    }
 
     // Pointer event tracking over the full black card background
     function onPointerMove(event) {

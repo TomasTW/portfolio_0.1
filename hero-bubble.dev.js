@@ -350,6 +350,7 @@ void main () {
     // Public API for scroll synchronization
     window.heroBubbleInstance = {
       setScrollProgress(progress) {
+        const p = Math.max(0, Math.min(1, typeof progress === 'number' ? progress : 0));
         // Locked Studio Lighting: maintain fixed crisp specular highlights
         // (Opacity fade-out is handled natively by #Union's keyframe animation)
       },
