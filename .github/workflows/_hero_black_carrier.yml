@@ -1,0 +1,47 @@
+name: Hero black carrier
+on:
+  push:
+    branches: [main]
+permissions:
+  contents: write
+jobs:
+  apply:
+    if: "!contains(github.event.head_commit.message, '[hero-black-carrier]')"
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Update source CSS and regenerate minified CSS
+        run: |
+          python3 - <<'PY'
+          from pathlib import Path
+          p = Path('style.dev.css')
+          s = p.read_text()
+          marker = 'body:has(.hero-canvas-sticky.is-dark)::after'
+          if marker not in s:
+              s = s.rstrip() + """
+
+/* Safari hero black carrier: keep the final black state outside the fixed hero clipping/compositing boundary. */
+body:has(.hero-canvas-sticky.is-dark)::after {
+  content: '';
+  position: fixed;
+  inset: 0;
+  background-color: var(--color-bg-surface-primary-default);
+  pointer-events: none;
+  z-index: 0;
+  -webkit-transform: translate3d(0, 0, 0);
+  transform: translate3d(0, 0, 0);
+  -webkit-backface-visibility: hidden;
+  backface-visibility: hidden;
+}
+"""
+              p.write_text(s + '\n')
+          PY
+          npx --yes clean-css-cli@5.3.3 -o style.css style.dev.css
+      - name: Commit and remove temporary workflow
+        run: |
+          rm .github/workflows/_hero_black_carrier.yml
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git add style.dev.css style.css .github/workflows/_hero_black_carrier.yml
+          git commit -m 'fix: stabilize hero black carrier [hero-black-carrier]'
+          git push
