@@ -765,7 +765,7 @@ p.body-small {
 .hero-canvas-section {
   height: 380vh;
   min-height: 100svh;
-  overflow: hidden;
+  overflow: visible;
   padding: 64px 0;
   position: relative;
   background: transparent;
