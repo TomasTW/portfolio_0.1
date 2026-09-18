@@ -37,6 +37,7 @@
   animation:
     kf_Vector_transform_0 2.982705s linear infinite,
     kf_Vector_opacity_0 2.982705s linear infinite;
+  animation-play-state: paused;
 }
 @keyframes kf_Vector_2_transform_0 {
   0% {
@@ -75,6 +76,7 @@
   animation:
     kf_Vector_2_transform_0 2.982705s linear infinite,
     kf_Vector_2_opacity_0 2.982705s linear infinite;
+  animation-play-state: paused;
 }
 @keyframes kf_Vector_3_transform_0 {
   0% {
@@ -113,6 +115,7 @@
   animation:
     kf_Vector_3_transform_0 2.982705s linear infinite,
     kf_Vector_3_opacity_0 2.982705s linear infinite;
+  animation-play-state: paused;
 }
 @keyframes kf_Vector_4_transform_0 {
   0% {
@@ -151,6 +154,7 @@
   animation:
     kf_Vector_4_transform_0 2.982705s linear infinite,
     kf_Vector_4_opacity_0 2.982705s linear infinite;
+  animation-play-state: paused;
 }
 @keyframes kf_Vector_5_transform_0 {
   0% {
@@ -377,6 +381,7 @@
   animation:
     kf_Vector_5_transform_0 2.982705s linear infinite,
     kf_Vector_5_opacity_0 2.982705s linear infinite;
+  animation-play-state: paused;
 }
 @keyframes kf_Vector_6_transform_0 {
   0% {
@@ -603,6 +608,7 @@
   animation:
     kf_Vector_6_transform_0 2.982705s linear infinite,
     kf_Vector_6_opacity_0 2.982705s linear infinite;
+  animation-play-state: paused;
 }
 @keyframes kf_Vector_7_transform_0 {
   0% {
@@ -829,6 +835,7 @@
   animation:
     kf_Vector_7_transform_0 2.982705s linear infinite,
     kf_Vector_7_opacity_0 2.982705s linear infinite;
+  animation-play-state: paused;
 }
 @keyframes kf_Vector_8_transform_0 {
   0% {
@@ -1055,6 +1062,7 @@
   animation:
     kf_Vector_8_transform_0 2.982705s linear infinite,
     kf_Vector_8_opacity_0 2.982705s linear infinite;
+  animation-play-state: paused;
 }
 @keyframes kf_Vector_9_transform_0 {
   0% {
@@ -1278,6 +1286,7 @@
   animation:
     kf_Vector_9_transform_0 2.982705s linear infinite,
     kf_Vector_9_opacity_0 2.982705s linear infinite;
+  animation-play-state: paused;
 }
 @keyframes kf_Vector_10_transform_0 {
   0% {
@@ -1316,6 +1325,7 @@
   animation:
     kf_Vector_10_transform_0 2.982705s linear infinite,
     kf_Vector_10_opacity_0 2.982705s linear infinite;
+  animation-play-state: paused;
 }
 @keyframes kf_Vector_11_transform_0 {
   0% {
@@ -1354,6 +1364,7 @@
   animation:
     kf_Vector_11_transform_0 2.982705s linear infinite,
     kf_Vector_11_opacity_0 2.982705s linear infinite;
+  animation-play-state: paused;
 }
 @keyframes kf_Vector_12_transform_0 {
   0% {
@@ -1392,6 +1403,7 @@
   animation:
     kf_Vector_12_transform_0 2.982705s linear infinite,
     kf_Vector_12_opacity_0 2.982705s linear infinite;
+  animation-play-state: paused;
 }
 @keyframes kf_Union_opacity_0 {
   0% {
@@ -1408,6 +1420,7 @@
 }
 #Union {
   animation: kf_Union_opacity_0 2.982705s linear infinite;
+  animation-play-state: paused;
 }
 @keyframes kf_logo_transform_0 {
   0% {
@@ -1631,6 +1644,7 @@
   animation:
     kf_logo_transform_0 2.982705s linear infinite,
     kf_logo_opacity_0 2.982705s linear infinite;
+  animation-play-state: paused;
 }
 </style>
 <g id="hero_section0_1" clip-path="url(#clip0_2679_1420)">
