@@ -38,7 +38,11 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link rel="dns-prefetch" href="https://fonts.googleapis.com">
   <link rel="preload" as="image" href="hero_base.svg" type="image/svg+xml" fetchpriority="high">
-  <link rel="preload" as="image" href="hero_bg.webp" type="image/webp" fetchpriority="high">
+  <!-- Hero backdrop preload, kept in sync with the body::before breakpoints in style.dev.css. -->
+  <link rel="preload" as="image" media="(max-width: 768px)" href="img/640/hero_bg.webp"
+    imagesrcset="img/640/hero_bg.webp 1x, img/960/hero_bg.webp 2x" type="image/webp" fetchpriority="high">
+  <link rel="preload" as="image" media="(min-width: 769px)" href="img/1280/hero_bg.webp"
+    imagesrcset="img/1280/hero_bg.webp 1x, hero_bg.webp 2x" type="image/webp" fetchpriority="high">
   <link rel="stylesheet" href="style.css">
   <link rel="stylesheet"
     href="https://fonts.googleapis.com/css2?family=Poppins:wght@500;600;700;800;900&family=DM+Sans:wght@400;500;700&display=swap"
@@ -235,7 +239,10 @@
               </div>
               <div class="work-mid">
                 <div class="work-img-wrap" data-modal="modal-nzxt" role="button" tabindex="0" aria-haspopup="dialog" aria-expanded="false" aria-controls="modal-nzxt" aria-label="Open NZXT project modal">
-                  <img src="works/NZXT/nzxt_cover.png" alt="NZXT Marketing" class="work-img-slide active" width="1920" height="1080" loading="lazy" decoding="async">
+                  <picture>
+                    <source type="image/webp" sizes="(max-width: 1024px) 100vw, calc(50vw - 100px)" srcset="img/320/works/NZXT/nzxt_cover.webp 320w, img/480/works/NZXT/nzxt_cover.webp 480w, img/640/works/NZXT/nzxt_cover.webp 640w, img/960/works/NZXT/nzxt_cover.webp 960w, img/1280/works/NZXT/nzxt_cover.webp 1280w, img/1600/works/NZXT/nzxt_cover.webp 1600w, img/2048/works/NZXT/nzxt_cover.webp 1920w">
+                    <img src="works/NZXT/nzxt_cover.png" alt="NZXT Marketing" class="work-img-slide active" width="1920" height="1080" loading="lazy" decoding="async" data-lightbox-src="img/2048/works/NZXT/nzxt_cover.webp" data-lightbox-fallback="works/NZXT/nzxt_cover.png">
+                  </picture>
                 </div>
               </div>
               <div class="work-bottom">
@@ -255,7 +262,10 @@
               </div>
               <div class="work-mid">
                 <div class="work-img-wrap" data-modal="modal-mitsukoshi" role="button" tabindex="0" aria-haspopup="dialog" aria-expanded="false" aria-controls="modal-mitsukoshi" aria-label="Open Shin Kong Mitsukoshi project modal">
-                  <img src="works/SKM/skm_cover.png" alt="Mitsukoshi Visual Promotions" class="work-img-slide active" width="1920" height="1080" loading="lazy" decoding="async">
+                  <picture>
+                    <source type="image/webp" sizes="(max-width: 1024px) 100vw, calc(50vw - 100px)" srcset="img/320/works/SKM/skm_cover.webp 320w, img/480/works/SKM/skm_cover.webp 480w, img/640/works/SKM/skm_cover.webp 640w, img/960/works/SKM/skm_cover.webp 960w, img/1280/works/SKM/skm_cover.webp 1280w, img/1600/works/SKM/skm_cover.webp 1600w, img/2048/works/SKM/skm_cover.webp 1920w">
+                    <img src="works/SKM/skm_cover.png" alt="Mitsukoshi Visual Promotions" class="work-img-slide active" width="1920" height="1080" loading="lazy" decoding="async" data-lightbox-src="img/2048/works/SKM/skm_cover.webp" data-lightbox-fallback="works/SKM/skm_cover.png">
+                  </picture>
                 </div>
               </div>
               <div class="work-bottom">
@@ -275,7 +285,10 @@
               </div>
               <div class="work-mid">
                 <div class="work-img-wrap" data-modal="modal-gallery" role="button" tabindex="0" aria-haspopup="dialog" aria-expanded="false" aria-controls="modal-gallery" aria-label="Open Gallery APP project modal">
-                  <img src="works/app/app_cover.jpg" alt="Gallery App Preview" class="work-img-slide active" width="3000" height="1688" loading="lazy" decoding="async">
+                  <picture>
+                    <source type="image/webp" sizes="(max-width: 1024px) 100vw, calc(50vw - 100px)" srcset="img/320/works/app/app_cover.webp 320w, img/480/works/app/app_cover.webp 480w, img/640/works/app/app_cover.webp 640w, img/960/works/app/app_cover.webp 960w, img/1280/works/app/app_cover.webp 1280w, img/1600/works/app/app_cover.webp 1600w, img/2048/works/app/app_cover.webp 2048w">
+                    <img src="works/app/app_cover.jpg" alt="Gallery App Preview" class="work-img-slide active" width="3000" height="1688" loading="lazy" decoding="async" data-lightbox-src="img/2048/works/app/app_cover.webp" data-lightbox-fallback="works/app/app_cover.jpg">
+                  </picture>
                 </div>
               </div>
               <div class="work-bottom">
@@ -295,7 +308,10 @@
               </div>
               <div class="work-mid">
                 <div class="work-img-wrap" data-modal="modal-liho" role="button" tabindex="0" aria-haspopup="dialog" aria-expanded="false" aria-controls="modal-liho" aria-label="Open Li Ho project modal">
-                  <img src="works/brand/brand_cover.jpg" alt="Li Ho Branding" class="work-img-slide active" width="1920" height="1080" loading="lazy" decoding="async">
+                  <picture>
+                    <source type="image/webp" sizes="(max-width: 1024px) 100vw, calc(50vw - 100px)" srcset="img/320/works/brand/brand_cover.webp 320w, img/480/works/brand/brand_cover.webp 480w, img/640/works/brand/brand_cover.webp 640w, img/960/works/brand/brand_cover.webp 960w, img/1280/works/brand/brand_cover.webp 1280w, img/1600/works/brand/brand_cover.webp 1600w, img/2048/works/brand/brand_cover.webp 1920w">
+                    <img src="works/brand/brand_cover.jpg" alt="Li Ho Branding" class="work-img-slide active" width="1920" height="1080" loading="lazy" decoding="async" data-lightbox-src="img/2048/works/brand/brand_cover.webp" data-lightbox-fallback="works/brand/brand_cover.jpg">
+                  </picture>
                 </div>
               </div>
               <div class="work-bottom">
@@ -557,14 +573,26 @@
           <!-- Section 1: COMPUTEX 2025 & Gamescom 2025 -->
           <div class="work-modal-section">
             <div class="work-modal-grid work-modal-grid-1">
-              <img src="works/NZXT/NZXT_1.png" alt="NZXT COMPUTEX & H9 Debut Key Visual" class="work-modal-grid-img"
-                width="1842" height="1214" loading="lazy" decoding="async">
+              <picture>
+                <source type="image/webp" sizes="(max-width: 768px) calc(100vw - 32px), 880px" srcset="img/320/works/NZXT/NZXT_1.webp 320w, img/480/works/NZXT/NZXT_1.webp 480w, img/640/works/NZXT/NZXT_1.webp 640w, img/960/works/NZXT/NZXT_1.webp 960w, img/1280/works/NZXT/NZXT_1.webp 1280w, img/1600/works/NZXT/NZXT_1.webp 1600w, img/2048/works/NZXT/NZXT_1.webp 1842w">
+                <img src="works/NZXT/NZXT_1.png" alt="NZXT COMPUTEX & H9 Debut Key Visual" class="work-modal-grid-img"
+                width="1842" height="1214" loading="lazy" decoding="async" data-lightbox-src="img/2048/works/NZXT/NZXT_1.webp" data-lightbox-fallback="works/NZXT/NZXT_1.png">
+              </picture>
             </div>
             <!-- 3 Booth Display Images -->
             <div class="work-modal-grid work-modal-grid-3">
-              <img src="works/NZXT/NZXT_2.png" alt="NZXT Booth Display 1" class="work-modal-grid-img" width="2414" height="2414" loading="lazy" decoding="async">
-              <img src="works/NZXT/NZXT_3.png" alt="NZXT Booth Display 2" class="work-modal-grid-img" width="2414" height="2414" loading="lazy" decoding="async">
-              <img src="works/NZXT/NZXT_4.png" alt="NZXT Booth Display 3" class="work-modal-grid-img" width="2414" height="2414" loading="lazy" decoding="async">
+              <picture>
+                <source type="image/webp" sizes="(max-width: 768px) calc(100vw - 32px), 283px" srcset="img/320/works/NZXT/NZXT_2.webp 320w, img/480/works/NZXT/NZXT_2.webp 480w, img/640/works/NZXT/NZXT_2.webp 640w, img/960/works/NZXT/NZXT_2.webp 960w, img/1280/works/NZXT/NZXT_2.webp 1280w, img/1600/works/NZXT/NZXT_2.webp 1600w, img/2048/works/NZXT/NZXT_2.webp 2048w">
+                <img src="works/NZXT/NZXT_2.png" alt="NZXT Booth Display 1" class="work-modal-grid-img" width="2414" height="2414" loading="lazy" decoding="async" data-lightbox-src="img/2048/works/NZXT/NZXT_2.webp" data-lightbox-fallback="works/NZXT/NZXT_2.png">
+              </picture>
+              <picture>
+                <source type="image/webp" sizes="(max-width: 768px) calc(100vw - 32px), 283px" srcset="img/320/works/NZXT/NZXT_3.webp 320w, img/480/works/NZXT/NZXT_3.webp 480w, img/640/works/NZXT/NZXT_3.webp 640w, img/960/works/NZXT/NZXT_3.webp 960w, img/1280/works/NZXT/NZXT_3.webp 1280w, img/1600/works/NZXT/NZXT_3.webp 1600w, img/2048/works/NZXT/NZXT_3.webp 2048w">
+                <img src="works/NZXT/NZXT_3.png" alt="NZXT Booth Display 2" class="work-modal-grid-img" width="2414" height="2414" loading="lazy" decoding="async" data-lightbox-src="img/2048/works/NZXT/NZXT_3.webp" data-lightbox-fallback="works/NZXT/NZXT_3.png">
+              </picture>
+              <picture>
+                <source type="image/webp" sizes="(max-width: 768px) calc(100vw - 32px), 283px" srcset="img/320/works/NZXT/NZXT_4.webp 320w, img/480/works/NZXT/NZXT_4.webp 480w, img/640/works/NZXT/NZXT_4.webp 640w, img/960/works/NZXT/NZXT_4.webp 960w, img/1280/works/NZXT/NZXT_4.webp 1280w, img/1600/works/NZXT/NZXT_4.webp 1600w, img/2048/works/NZXT/NZXT_4.webp 2048w">
+                <img src="works/NZXT/NZXT_4.png" alt="NZXT Booth Display 3" class="work-modal-grid-img" width="2414" height="2414" loading="lazy" decoding="async" data-lightbox-src="img/2048/works/NZXT/NZXT_4.webp" data-lightbox-fallback="works/NZXT/NZXT_4.png">
+              </picture>
             </div>
             <!-- Callout Text + Gamescom Image -->
             <div class="work-modal-grid-text-img">
@@ -579,7 +607,10 @@
                   <p class="work-modal-callout-desc">Support the wall sticker's graphics to strengthen branding.</p>
                 </div>
               </div>
-              <img src="works/NZXT/NZXT_5.png" alt="Gamescom 2025 Showcase" class="work-modal-grid-img" width="912" height="684" loading="lazy" decoding="async">
+              <picture>
+                <source type="image/webp" sizes="(max-width: 768px) calc(100vw - 32px), 432px" srcset="img/320/works/NZXT/NZXT_5.webp 320w, img/480/works/NZXT/NZXT_5.webp 480w, img/640/works/NZXT/NZXT_5.webp 640w, img/960/works/NZXT/NZXT_5.webp 912w">
+                <img src="works/NZXT/NZXT_5.png" alt="Gamescom 2025 Showcase" class="work-modal-grid-img" width="912" height="684" loading="lazy" decoding="async" data-lightbox-src="img/960/works/NZXT/NZXT_5.webp" data-lightbox-fallback="works/NZXT/NZXT_5.png">
+              </picture>
               <div class="nzxt-callout-item nzxt-gamescom-callout-mobile">
                 <h4 class="work-modal-callout-title"><span class="label-marker">&#x25B6;&#xFE0E;</span> Gamescom 2025</h4>
                 <p class="work-modal-callout-desc">Support the wall sticker's graphics to strengthen branding.</p>
@@ -590,14 +621,23 @@
           <!-- Section 2: Japanese Assets & Product Lineup -->
           <div class="work-modal-section">
             <div class="work-modal-grid work-modal-grid-1">
-              <img src="works/NZXT/NZXT_6.png" alt="NZXT Product Lineup Overview" class="work-modal-grid-img"
-                width="1842" height="1053" loading="lazy" decoding="async">
+              <picture>
+                <source type="image/webp" sizes="(max-width: 768px) calc(100vw - 32px), 880px" srcset="img/320/works/NZXT/NZXT_6.webp 320w, img/480/works/NZXT/NZXT_6.webp 480w, img/640/works/NZXT/NZXT_6.webp 640w, img/960/works/NZXT/NZXT_6.webp 960w, img/1280/works/NZXT/NZXT_6.webp 1280w, img/1600/works/NZXT/NZXT_6.webp 1600w, img/2048/works/NZXT/NZXT_6.webp 1842w">
+                <img src="works/NZXT/NZXT_6.png" alt="NZXT Product Lineup Overview" class="work-modal-grid-img"
+                width="1842" height="1053" loading="lazy" decoding="async" data-lightbox-src="img/2048/works/NZXT/NZXT_6.webp" data-lightbox-fallback="works/NZXT/NZXT_6.png">
+              </picture>
             </div>
             <div class="work-modal-grid work-modal-grid-2">
-              <img src="works/NZXT/NZXT_7.png" alt="NZXT Japanese Product Posters" class="work-modal-grid-img"
-                width="3648" height="3648" loading="lazy" decoding="async">
-              <img src="works/NZXT/NZXT_8.png" alt="NZXT Japanese Catalog Brochure" class="work-modal-grid-img"
-                width="3648" height="3648" loading="lazy" decoding="async">
+              <picture>
+                <source type="image/webp" sizes="(max-width: 768px) calc(100vw - 32px), 432px" srcset="img/320/works/NZXT/NZXT_7.webp 320w, img/480/works/NZXT/NZXT_7.webp 480w, img/640/works/NZXT/NZXT_7.webp 640w, img/960/works/NZXT/NZXT_7.webp 960w, img/1280/works/NZXT/NZXT_7.webp 1280w, img/1600/works/NZXT/NZXT_7.webp 1600w, img/2048/works/NZXT/NZXT_7.webp 2048w">
+                <img src="works/NZXT/NZXT_7.png" alt="NZXT Japanese Product Posters" class="work-modal-grid-img"
+                width="3648" height="3648" loading="lazy" decoding="async" data-lightbox-src="img/2048/works/NZXT/NZXT_7.webp" data-lightbox-fallback="works/NZXT/NZXT_7.png">
+              </picture>
+              <picture>
+                <source type="image/webp" sizes="(max-width: 768px) calc(100vw - 32px), 432px" srcset="img/320/works/NZXT/NZXT_8.webp 320w, img/480/works/NZXT/NZXT_8.webp 480w, img/640/works/NZXT/NZXT_8.webp 640w, img/960/works/NZXT/NZXT_8.webp 960w, img/1280/works/NZXT/NZXT_8.webp 1280w, img/1600/works/NZXT/NZXT_8.webp 1600w, img/2048/works/NZXT/NZXT_8.webp 2048w">
+                <img src="works/NZXT/NZXT_8.png" alt="NZXT Japanese Catalog Brochure" class="work-modal-grid-img"
+                width="3648" height="3648" loading="lazy" decoding="async" data-lightbox-src="img/2048/works/NZXT/NZXT_8.webp" data-lightbox-fallback="works/NZXT/NZXT_8.png">
+              </picture>
             </div>
             <div class="nzxt-section-header-center">
               <h3 class="work-modal-section-title-clean">Japanese Assets</h3>
@@ -609,18 +649,27 @@
           <div class="work-modal-section">
             <div class="work-modal-grid work-modal-grid-tall-left">
               <div class="nzxt-korea-col">
-                <img src="works/NZXT/NZXT_9.png" alt="NZXT C650 Gold Korean Web Page Layout"
-                  class="work-modal-grid-img nzxt-tall-img" width="913" height="2606" loading="lazy" decoding="async">
+                <picture>
+                  <source type="image/webp" sizes="(max-width: 768px) calc(100vw - 32px), 432px" srcset="img/320/works/NZXT/NZXT_9.webp 320w, img/480/works/NZXT/NZXT_9.webp 480w, img/640/works/NZXT/NZXT_9.webp 640w, img/960/works/NZXT/NZXT_9.webp 913w">
+                  <img src="works/NZXT/NZXT_9.png" alt="NZXT C650 Gold Korean Web Page Layout"
+                  class="work-modal-grid-img nzxt-tall-img" width="913" height="2606" loading="lazy" decoding="async" data-lightbox-src="img/960/works/NZXT/NZXT_9.webp" data-lightbox-fallback="works/NZXT/NZXT_9.png">
+                </picture>
                 <div class="nzxt-callout-item nzxt-korea-callout-mobile">
                   <h4 class="work-modal-callout-title"><span class="label-marker">&#x25C0;&#xFE0E;</span> Korea Assets</h4>
                   <p class="work-modal-callout-desc">Web content page</p>
                 </div>
               </div>
               <div class="nzxt-stacked-col">
-                <img src="works/NZXT/NZXT_10.png" alt="NZXT Folded Brochure Mockup" class="work-modal-grid-img"
-                  width="913" height="913" loading="lazy" decoding="async">
-                <img src="works/NZXT/NZXT_11.png" alt="NZXT India Assets Flyer" class="work-modal-grid-img"
-                  width="913" height="913" loading="lazy" decoding="async">
+                <picture>
+                  <source type="image/webp" sizes="(max-width: 768px) calc(100vw - 32px), 432px" srcset="img/320/works/NZXT/NZXT_10.webp 320w, img/480/works/NZXT/NZXT_10.webp 480w, img/640/works/NZXT/NZXT_10.webp 640w, img/960/works/NZXT/NZXT_10.webp 913w">
+                  <img src="works/NZXT/NZXT_10.png" alt="NZXT Folded Brochure Mockup" class="work-modal-grid-img"
+                  width="913" height="913" loading="lazy" decoding="async" data-lightbox-src="img/960/works/NZXT/NZXT_10.webp" data-lightbox-fallback="works/NZXT/NZXT_10.png">
+                </picture>
+                <picture>
+                  <source type="image/webp" sizes="(max-width: 768px) calc(100vw - 32px), 432px" srcset="img/320/works/NZXT/NZXT_11.webp 320w, img/480/works/NZXT/NZXT_11.webp 480w, img/640/works/NZXT/NZXT_11.webp 640w, img/960/works/NZXT/NZXT_11.webp 913w">
+                  <img src="works/NZXT/NZXT_11.png" alt="NZXT India Assets Flyer" class="work-modal-grid-img"
+                  width="913" height="913" loading="lazy" decoding="async" data-lightbox-src="img/960/works/NZXT/NZXT_11.webp" data-lightbox-fallback="works/NZXT/NZXT_11.png">
+                </picture>
                 <div class="nzxt-callouts-stacked">
                   <div class="nzxt-callout-item nzxt-india-callout">
                     <h4 class="work-modal-callout-title"><span class="label-marker">▲</span> India Assets</h4>
@@ -638,23 +687,41 @@
           <!-- Section 4: Retail Packaging & Shoreline Retail Box Assets -->
           <div class="work-modal-section">
             <div class="work-modal-grid work-modal-grid-2">
-              <img src="works/NZXT/NZXT_12.png" alt="NZXT F140 & F240 RGB Packaging Front" class="work-modal-grid-img"
-                width="913" height="913" loading="lazy" decoding="async">
-              <img src="works/NZXT/NZXT_13.png" alt="NZXT F120 & F360 RGB Reverse Packaging Front"
-                class="work-modal-grid-img" width="913" height="913" loading="lazy" decoding="async">
-              <img src="works/NZXT/NZXT_14.png" alt="NZXT Retail Box Stack Perspective" class="work-modal-grid-img"
-                width="913" height="913" loading="lazy" decoding="async">
-              <img src="works/NZXT/NZXT_15.png" alt="NZXT Retail Box Back View Specs" class="work-modal-grid-img"
-                width="913" height="913" loading="lazy" decoding="async">
+              <picture>
+                <source type="image/webp" sizes="(max-width: 768px) calc(100vw - 32px), 432px" srcset="img/320/works/NZXT/NZXT_12.webp 320w, img/480/works/NZXT/NZXT_12.webp 480w, img/640/works/NZXT/NZXT_12.webp 640w, img/960/works/NZXT/NZXT_12.webp 913w">
+                <img src="works/NZXT/NZXT_12.png" alt="NZXT F140 & F240 RGB Packaging Front" class="work-modal-grid-img"
+                width="913" height="913" loading="lazy" decoding="async" data-lightbox-src="img/960/works/NZXT/NZXT_12.webp" data-lightbox-fallback="works/NZXT/NZXT_12.png">
+              </picture>
+              <picture>
+                <source type="image/webp" sizes="(max-width: 768px) calc(100vw - 32px), 432px" srcset="img/320/works/NZXT/NZXT_13.webp 320w, img/480/works/NZXT/NZXT_13.webp 480w, img/640/works/NZXT/NZXT_13.webp 640w, img/960/works/NZXT/NZXT_13.webp 913w">
+                <img src="works/NZXT/NZXT_13.png" alt="NZXT F120 & F360 RGB Reverse Packaging Front"
+                class="work-modal-grid-img" width="913" height="913" loading="lazy" decoding="async" data-lightbox-src="img/960/works/NZXT/NZXT_13.webp" data-lightbox-fallback="works/NZXT/NZXT_13.png">
+              </picture>
+              <picture>
+                <source type="image/webp" sizes="(max-width: 768px) calc(100vw - 32px), 432px" srcset="img/320/works/NZXT/NZXT_14.webp 320w, img/480/works/NZXT/NZXT_14.webp 480w, img/640/works/NZXT/NZXT_14.webp 640w, img/960/works/NZXT/NZXT_14.webp 913w">
+                <img src="works/NZXT/NZXT_14.png" alt="NZXT Retail Box Stack Perspective" class="work-modal-grid-img"
+                width="913" height="913" loading="lazy" decoding="async" data-lightbox-src="img/960/works/NZXT/NZXT_14.webp" data-lightbox-fallback="works/NZXT/NZXT_14.png">
+              </picture>
+              <picture>
+                <source type="image/webp" sizes="(max-width: 768px) calc(100vw - 32px), 432px" srcset="img/320/works/NZXT/NZXT_15.webp 320w, img/480/works/NZXT/NZXT_15.webp 480w, img/640/works/NZXT/NZXT_15.webp 640w, img/960/works/NZXT/NZXT_15.webp 913w">
+                <img src="works/NZXT/NZXT_15.png" alt="NZXT Retail Box Back View Specs" class="work-modal-grid-img"
+                width="913" height="913" loading="lazy" decoding="async" data-lightbox-src="img/960/works/NZXT/NZXT_15.webp" data-lightbox-fallback="works/NZXT/NZXT_15.png">
+              </picture>
             </div>
             <div class="work-modal-grid work-modal-grid-2 nzxt-dielines-grid">
               <div class="nzxt-dieline-cell">
-                <img src="works/NZXT/NZXT_16.png" alt="F120 RGB Unfolded Die-cut Template"
-                  class="work-modal-grid-img nzxt-dieline-f120" width="602" height="862" loading="lazy" decoding="async">
+                <picture>
+                  <source type="image/webp" sizes="(max-width: 768px) calc(100vw - 32px), 432px" srcset="img/320/works/NZXT/NZXT_16.webp 320w, img/480/works/NZXT/NZXT_16.webp 480w, img/640/works/NZXT/NZXT_16.webp 602w">
+                  <img src="works/NZXT/NZXT_16.png" alt="F120 RGB Unfolded Die-cut Template"
+                  class="work-modal-grid-img nzxt-dieline-f120" width="602" height="862" loading="lazy" decoding="async" data-lightbox-src="img/640/works/NZXT/NZXT_16.webp" data-lightbox-fallback="works/NZXT/NZXT_16.png">
+                </picture>
               </div>
               <div class="nzxt-dieline-cell">
-                <img src="works/NZXT/NZXT_17.png" alt="F420 RGB Unfolded Die-cut Template"
-                  class="work-modal-grid-img nzxt-dieline-f420" width="1201" height="1790" loading="lazy" decoding="async">
+                <picture>
+                  <source type="image/webp" sizes="(max-width: 768px) calc(100vw - 32px), 432px" srcset="img/320/works/NZXT/NZXT_17.webp 320w, img/480/works/NZXT/NZXT_17.webp 480w, img/640/works/NZXT/NZXT_17.webp 640w, img/960/works/NZXT/NZXT_17.webp 960w, img/1280/works/NZXT/NZXT_17.webp 1201w">
+                  <img src="works/NZXT/NZXT_17.png" alt="F420 RGB Unfolded Die-cut Template"
+                  class="work-modal-grid-img nzxt-dieline-f420" width="1201" height="1790" loading="lazy" decoding="async" data-lightbox-src="img/1280/works/NZXT/NZXT_17.webp" data-lightbox-fallback="works/NZXT/NZXT_17.png">
+                </picture>
               </div>
             </div>
             <div class="nzxt-packaging-summary-box">
@@ -736,18 +803,39 @@
           <!-- Section 1: Online Banner -->
           <div class="work-modal-section">
             <div class="work-modal-grid work-modal-grid-1">
-              <img src="works/SKM/SKM_1.png" alt="App Online Banner Preview with Phone Mockup"
-                class="work-modal-grid-img" width="1920" height="1080" loading="lazy" decoding="async">
+              <picture>
+                <source type="image/webp" sizes="(max-width: 768px) calc(100vw - 32px), 880px" srcset="img/320/works/SKM/SKM_1.webp 320w, img/480/works/SKM/SKM_1.webp 480w, img/640/works/SKM/SKM_1.webp 640w, img/960/works/SKM/SKM_1.webp 960w, img/1280/works/SKM/SKM_1.webp 1280w, img/1600/works/SKM/SKM_1.webp 1600w, img/2048/works/SKM/SKM_1.webp 1920w">
+                <img src="works/SKM/SKM_1.png" alt="App Online Banner Preview with Phone Mockup"
+                class="work-modal-grid-img" width="1920" height="1080" loading="lazy" decoding="async" data-lightbox-src="img/2048/works/SKM/SKM_1.webp" data-lightbox-fallback="works/SKM/SKM_1.png">
+              </picture>
             </div>
             <div class="work-modal-grid work-modal-grid-2">
-              <img src="works/SKM/SKM_2.png" alt="Summer Wine & Gourmet Banner" class="work-modal-grid-img"
-                width="1825" height="1144" loading="lazy" decoding="async">
-              <img src="works/SKM/SKM_3.png" alt="Top 10 Souvenir Banner" class="work-modal-grid-img" width="1825" height="1144" loading="lazy" decoding="async">
-              <img src="works/SKM/SKM_4.png" alt="Spring Golf Apparel Banner" class="work-modal-grid-img"
-                width="1825" height="1143" loading="lazy" decoding="async">
-              <img src="works/SKM/SKM_5.png" alt="Skincare Campaign Banner" class="work-modal-grid-img" width="1825" height="1147" loading="lazy" decoding="async">
-              <img src="works/SKM/SKM_6.png" alt="Fashion Trends Banner" class="work-modal-grid-img" width="1825" height="1144" loading="lazy" decoding="async">
-              <img src="works/SKM/SKM_7.png" alt="Poster Display Mockup" class="work-modal-grid-img" width="1825" height="1144" loading="lazy" decoding="async">
+              <picture>
+                <source type="image/webp" sizes="(max-width: 768px) calc(100vw - 32px), 432px" srcset="img/320/works/SKM/SKM_2.webp 320w, img/480/works/SKM/SKM_2.webp 480w, img/640/works/SKM/SKM_2.webp 640w, img/960/works/SKM/SKM_2.webp 960w, img/1280/works/SKM/SKM_2.webp 1280w, img/1600/works/SKM/SKM_2.webp 1600w, img/2048/works/SKM/SKM_2.webp 1825w">
+                <img src="works/SKM/SKM_2.png" alt="Summer Wine & Gourmet Banner" class="work-modal-grid-img"
+                width="1825" height="1144" loading="lazy" decoding="async" data-lightbox-src="img/2048/works/SKM/SKM_2.webp" data-lightbox-fallback="works/SKM/SKM_2.png">
+              </picture>
+              <picture>
+                <source type="image/webp" sizes="(max-width: 768px) calc(100vw - 32px), 432px" srcset="img/320/works/SKM/SKM_3.webp 320w, img/480/works/SKM/SKM_3.webp 480w, img/640/works/SKM/SKM_3.webp 640w, img/960/works/SKM/SKM_3.webp 960w, img/1280/works/SKM/SKM_3.webp 1280w, img/1600/works/SKM/SKM_3.webp 1600w, img/2048/works/SKM/SKM_3.webp 1825w">
+                <img src="works/SKM/SKM_3.png" alt="Top 10 Souvenir Banner" class="work-modal-grid-img" width="1825" height="1144" loading="lazy" decoding="async" data-lightbox-src="img/2048/works/SKM/SKM_3.webp" data-lightbox-fallback="works/SKM/SKM_3.png">
+              </picture>
+              <picture>
+                <source type="image/webp" sizes="(max-width: 768px) calc(100vw - 32px), 432px" srcset="img/320/works/SKM/SKM_4.webp 320w, img/480/works/SKM/SKM_4.webp 480w, img/640/works/SKM/SKM_4.webp 640w, img/960/works/SKM/SKM_4.webp 960w, img/1280/works/SKM/SKM_4.webp 1280w, img/1600/works/SKM/SKM_4.webp 1600w, img/2048/works/SKM/SKM_4.webp 1825w">
+                <img src="works/SKM/SKM_4.png" alt="Spring Golf Apparel Banner" class="work-modal-grid-img"
+                width="1825" height="1143" loading="lazy" decoding="async" data-lightbox-src="img/2048/works/SKM/SKM_4.webp" data-lightbox-fallback="works/SKM/SKM_4.png">
+              </picture>
+              <picture>
+                <source type="image/webp" sizes="(max-width: 768px) calc(100vw - 32px), 432px" srcset="img/320/works/SKM/SKM_5.webp 320w, img/480/works/SKM/SKM_5.webp 480w, img/640/works/SKM/SKM_5.webp 640w, img/960/works/SKM/SKM_5.webp 960w, img/1280/works/SKM/SKM_5.webp 1280w, img/1600/works/SKM/SKM_5.webp 1600w, img/2048/works/SKM/SKM_5.webp 1825w">
+                <img src="works/SKM/SKM_5.png" alt="Skincare Campaign Banner" class="work-modal-grid-img" width="1825" height="1147" loading="lazy" decoding="async" data-lightbox-src="img/2048/works/SKM/SKM_5.webp" data-lightbox-fallback="works/SKM/SKM_5.png">
+              </picture>
+              <picture>
+                <source type="image/webp" sizes="(max-width: 768px) calc(100vw - 32px), 432px" srcset="img/320/works/SKM/SKM_6.webp 320w, img/480/works/SKM/SKM_6.webp 480w, img/640/works/SKM/SKM_6.webp 640w, img/960/works/SKM/SKM_6.webp 960w, img/1280/works/SKM/SKM_6.webp 1280w, img/1600/works/SKM/SKM_6.webp 1600w, img/2048/works/SKM/SKM_6.webp 1825w">
+                <img src="works/SKM/SKM_6.png" alt="Fashion Trends Banner" class="work-modal-grid-img" width="1825" height="1144" loading="lazy" decoding="async" data-lightbox-src="img/2048/works/SKM/SKM_6.webp" data-lightbox-fallback="works/SKM/SKM_6.png">
+              </picture>
+              <picture>
+                <source type="image/webp" sizes="(max-width: 768px) calc(100vw - 32px), 432px" srcset="img/320/works/SKM/SKM_7.webp 320w, img/480/works/SKM/SKM_7.webp 480w, img/640/works/SKM/SKM_7.webp 640w, img/960/works/SKM/SKM_7.webp 960w, img/1280/works/SKM/SKM_7.webp 1280w, img/1600/works/SKM/SKM_7.webp 1600w, img/2048/works/SKM/SKM_7.webp 1825w">
+                <img src="works/SKM/SKM_7.png" alt="Poster Display Mockup" class="work-modal-grid-img" width="1825" height="1144" loading="lazy" decoding="async" data-lightbox-src="img/2048/works/SKM/SKM_7.webp" data-lightbox-fallback="works/SKM/SKM_7.png">
+              </picture>
             </div>
             <div class="nzxt-section-header-center">
               <h4 class="work-modal-callout-title work-modal-callout-title-center">Online Banner</h4>
@@ -757,17 +845,32 @@
           <!-- Section 2: Poster -->
           <div class="work-modal-section">
             <div class="work-modal-grid work-modal-grid-1">
-              <img src="works/SKM/SKM_8.png" alt="Lunar New Year Event Poster" class="work-modal-grid-img"
-                width="1838" height="1034" loading="lazy" decoding="async">
+              <picture>
+                <source type="image/webp" sizes="(max-width: 768px) calc(100vw - 32px), 880px" srcset="img/320/works/SKM/SKM_8.webp 320w, img/480/works/SKM/SKM_8.webp 480w, img/640/works/SKM/SKM_8.webp 640w, img/960/works/SKM/SKM_8.webp 960w, img/1280/works/SKM/SKM_8.webp 1280w, img/1600/works/SKM/SKM_8.webp 1600w, img/2048/works/SKM/SKM_8.webp 1838w">
+                <img src="works/SKM/SKM_8.png" alt="Lunar New Year Event Poster" class="work-modal-grid-img"
+                width="1838" height="1034" loading="lazy" decoding="async" data-lightbox-src="img/2048/works/SKM/SKM_8.webp" data-lightbox-fallback="works/SKM/SKM_8.png">
+              </picture>
             </div>
             <div class="work-modal-grid work-modal-grid-2">
-              <img src="works/SKM/SKM_9.png" alt="Anniversary Sale 70% Off Visual" class="work-modal-grid-img"
-                width="1814" height="1291" loading="lazy" decoding="async">
-              <img src="works/SKM/SKM_10.png" alt="Home Decor Special Sale Poster" class="work-modal-grid-img"
-                width="1814" height="1306" loading="lazy" decoding="async">
-              <img src="works/SKM/SKM_11.png" alt="Festival Lantern Fair Poster" class="work-modal-grid-img"
-                width="1814" height="1291" loading="lazy" decoding="async">
-              <img src="works/SKM/SKM_12.png" alt="Event Banner Layout" class="work-modal-grid-img" width="1814" height="1285" loading="lazy" decoding="async">
+              <picture>
+                <source type="image/webp" sizes="(max-width: 768px) calc(100vw - 32px), 432px" srcset="img/320/works/SKM/SKM_9.webp 320w, img/480/works/SKM/SKM_9.webp 480w, img/640/works/SKM/SKM_9.webp 640w, img/960/works/SKM/SKM_9.webp 960w, img/1280/works/SKM/SKM_9.webp 1280w, img/1600/works/SKM/SKM_9.webp 1600w, img/2048/works/SKM/SKM_9.webp 1814w">
+                <img src="works/SKM/SKM_9.png" alt="Anniversary Sale 70% Off Visual" class="work-modal-grid-img"
+                width="1814" height="1291" loading="lazy" decoding="async" data-lightbox-src="img/2048/works/SKM/SKM_9.webp" data-lightbox-fallback="works/SKM/SKM_9.png">
+              </picture>
+              <picture>
+                <source type="image/webp" sizes="(max-width: 768px) calc(100vw - 32px), 432px" srcset="img/320/works/SKM/SKM_10.webp 320w, img/480/works/SKM/SKM_10.webp 480w, img/640/works/SKM/SKM_10.webp 640w, img/960/works/SKM/SKM_10.webp 960w, img/1280/works/SKM/SKM_10.webp 1280w, img/1600/works/SKM/SKM_10.webp 1600w, img/2048/works/SKM/SKM_10.webp 1814w">
+                <img src="works/SKM/SKM_10.png" alt="Home Decor Special Sale Poster" class="work-modal-grid-img"
+                width="1814" height="1306" loading="lazy" decoding="async" data-lightbox-src="img/2048/works/SKM/SKM_10.webp" data-lightbox-fallback="works/SKM/SKM_10.png">
+              </picture>
+              <picture>
+                <source type="image/webp" sizes="(max-width: 768px) calc(100vw - 32px), 432px" srcset="img/320/works/SKM/SKM_11.webp 320w, img/480/works/SKM/SKM_11.webp 480w, img/640/works/SKM/SKM_11.webp 640w, img/960/works/SKM/SKM_11.webp 960w, img/1280/works/SKM/SKM_11.webp 1280w, img/1600/works/SKM/SKM_11.webp 1600w, img/2048/works/SKM/SKM_11.webp 1814w">
+                <img src="works/SKM/SKM_11.png" alt="Festival Lantern Fair Poster" class="work-modal-grid-img"
+                width="1814" height="1291" loading="lazy" decoding="async" data-lightbox-src="img/2048/works/SKM/SKM_11.webp" data-lightbox-fallback="works/SKM/SKM_11.png">
+              </picture>
+              <picture>
+                <source type="image/webp" sizes="(max-width: 768px) calc(100vw - 32px), 432px" srcset="img/320/works/SKM/SKM_12.webp 320w, img/480/works/SKM/SKM_12.webp 480w, img/640/works/SKM/SKM_12.webp 640w, img/960/works/SKM/SKM_12.webp 960w, img/1280/works/SKM/SKM_12.webp 1280w, img/1600/works/SKM/SKM_12.webp 1600w, img/2048/works/SKM/SKM_12.webp 1814w">
+                <img src="works/SKM/SKM_12.png" alt="Event Banner Layout" class="work-modal-grid-img" width="1814" height="1285" loading="lazy" decoding="async" data-lightbox-src="img/2048/works/SKM/SKM_12.webp" data-lightbox-fallback="works/SKM/SKM_12.png">
+              </picture>
             </div>
             <div class="nzxt-section-header-center">
               <h4 class="work-modal-callout-title work-modal-callout-title-center">Poster</h4>
@@ -777,19 +880,40 @@
           <!-- Section 3: Catalog -->
           <div class="work-modal-section">
             <div class="work-modal-grid work-modal-grid-1">
-              <img src="works/SKM/SKM_13.png" alt="Catalog Open Magazine Mockup" class="work-modal-grid-img"
-                width="1840" height="1035" loading="lazy" decoding="async">
+              <picture>
+                <source type="image/webp" sizes="(max-width: 768px) calc(100vw - 32px), 880px" srcset="img/320/works/SKM/SKM_13.webp 320w, img/480/works/SKM/SKM_13.webp 480w, img/640/works/SKM/SKM_13.webp 640w, img/960/works/SKM/SKM_13.webp 960w, img/1280/works/SKM/SKM_13.webp 1280w, img/1600/works/SKM/SKM_13.webp 1600w, img/2048/works/SKM/SKM_13.webp 1840w">
+                <img src="works/SKM/SKM_13.png" alt="Catalog Open Magazine Mockup" class="work-modal-grid-img"
+                width="1840" height="1035" loading="lazy" decoding="async" data-lightbox-src="img/2048/works/SKM/SKM_13.webp" data-lightbox-fallback="works/SKM/SKM_13.png">
+              </picture>
             </div>
             <div class="work-modal-grid work-modal-grid-2">
-              <img src="works/SKM/SKM_14.png" alt="Cosmetics & Beauty Spreads" class="work-modal-grid-img"
-                width="1827" height="1256" loading="lazy" decoding="async">
-              <img src="works/SKM/SKM_15.png" alt="Skincare Products Page" class="work-modal-grid-img" width="1827" height="1256" loading="lazy" decoding="async">
-              <img src="works/SKM/SKM_16.png" alt="Spring Outfit Layout Grid" class="work-modal-grid-img"
-                width="1827" height="1256" loading="lazy" decoding="async">
-              <img src="works/SKM/SKM_17.png" alt="Seasonal Apparel Collection" class="work-modal-grid-img"
-                width="1827" height="1256" loading="lazy" decoding="async">
-              <img src="works/SKM/SKM_18.png" alt="Home Appliances Spread" class="work-modal-grid-img" width="1827" height="1306" loading="lazy" decoding="async">
-              <img src="works/SKM/SKM_19.png" alt="Beauty Specials Layout" class="work-modal-grid-img" width="1827" height="1306" loading="lazy" decoding="async">
+              <picture>
+                <source type="image/webp" sizes="(max-width: 768px) calc(100vw - 32px), 432px" srcset="img/320/works/SKM/SKM_14.webp 320w, img/480/works/SKM/SKM_14.webp 480w, img/640/works/SKM/SKM_14.webp 640w, img/960/works/SKM/SKM_14.webp 960w, img/1280/works/SKM/SKM_14.webp 1280w, img/1600/works/SKM/SKM_14.webp 1600w, img/2048/works/SKM/SKM_14.webp 1827w">
+                <img src="works/SKM/SKM_14.png" alt="Cosmetics & Beauty Spreads" class="work-modal-grid-img"
+                width="1827" height="1256" loading="lazy" decoding="async" data-lightbox-src="img/2048/works/SKM/SKM_14.webp" data-lightbox-fallback="works/SKM/SKM_14.png">
+              </picture>
+              <picture>
+                <source type="image/webp" sizes="(max-width: 768px) calc(100vw - 32px), 432px" srcset="img/320/works/SKM/SKM_15.webp 320w, img/480/works/SKM/SKM_15.webp 480w, img/640/works/SKM/SKM_15.webp 640w, img/960/works/SKM/SKM_15.webp 960w, img/1280/works/SKM/SKM_15.webp 1280w, img/1600/works/SKM/SKM_15.webp 1600w, img/2048/works/SKM/SKM_15.webp 1827w">
+                <img src="works/SKM/SKM_15.png" alt="Skincare Products Page" class="work-modal-grid-img" width="1827" height="1256" loading="lazy" decoding="async" data-lightbox-src="img/2048/works/SKM/SKM_15.webp" data-lightbox-fallback="works/SKM/SKM_15.png">
+              </picture>
+              <picture>
+                <source type="image/webp" sizes="(max-width: 768px) calc(100vw - 32px), 432px" srcset="img/320/works/SKM/SKM_16.webp 320w, img/480/works/SKM/SKM_16.webp 480w, img/640/works/SKM/SKM_16.webp 640w, img/960/works/SKM/SKM_16.webp 960w, img/1280/works/SKM/SKM_16.webp 1280w, img/1600/works/SKM/SKM_16.webp 1600w, img/2048/works/SKM/SKM_16.webp 1827w">
+                <img src="works/SKM/SKM_16.png" alt="Spring Outfit Layout Grid" class="work-modal-grid-img"
+                width="1827" height="1256" loading="lazy" decoding="async" data-lightbox-src="img/2048/works/SKM/SKM_16.webp" data-lightbox-fallback="works/SKM/SKM_16.png">
+              </picture>
+              <picture>
+                <source type="image/webp" sizes="(max-width: 768px) calc(100vw - 32px), 432px" srcset="img/320/works/SKM/SKM_17.webp 320w, img/480/works/SKM/SKM_17.webp 480w, img/640/works/SKM/SKM_17.webp 640w, img/960/works/SKM/SKM_17.webp 960w, img/1280/works/SKM/SKM_17.webp 1280w, img/1600/works/SKM/SKM_17.webp 1600w, img/2048/works/SKM/SKM_17.webp 1827w">
+                <img src="works/SKM/SKM_17.png" alt="Seasonal Apparel Collection" class="work-modal-grid-img"
+                width="1827" height="1256" loading="lazy" decoding="async" data-lightbox-src="img/2048/works/SKM/SKM_17.webp" data-lightbox-fallback="works/SKM/SKM_17.png">
+              </picture>
+              <picture>
+                <source type="image/webp" sizes="(max-width: 768px) calc(100vw - 32px), 432px" srcset="img/320/works/SKM/SKM_18.webp 320w, img/480/works/SKM/SKM_18.webp 480w, img/640/works/SKM/SKM_18.webp 640w, img/960/works/SKM/SKM_18.webp 960w, img/1280/works/SKM/SKM_18.webp 1280w, img/1600/works/SKM/SKM_18.webp 1600w, img/2048/works/SKM/SKM_18.webp 1827w">
+                <img src="works/SKM/SKM_18.png" alt="Home Appliances Spread" class="work-modal-grid-img" width="1827" height="1306" loading="lazy" decoding="async" data-lightbox-src="img/2048/works/SKM/SKM_18.webp" data-lightbox-fallback="works/SKM/SKM_18.png">
+              </picture>
+              <picture>
+                <source type="image/webp" sizes="(max-width: 768px) calc(100vw - 32px), 432px" srcset="img/320/works/SKM/SKM_19.webp 320w, img/480/works/SKM/SKM_19.webp 480w, img/640/works/SKM/SKM_19.webp 640w, img/960/works/SKM/SKM_19.webp 960w, img/1280/works/SKM/SKM_19.webp 1280w, img/1600/works/SKM/SKM_19.webp 1600w, img/2048/works/SKM/SKM_19.webp 1827w">
+                <img src="works/SKM/SKM_19.png" alt="Beauty Specials Layout" class="work-modal-grid-img" width="1827" height="1306" loading="lazy" decoding="async" data-lightbox-src="img/2048/works/SKM/SKM_19.webp" data-lightbox-fallback="works/SKM/SKM_19.png">
+              </picture>
             </div>
             <div class="nzxt-section-header-center">
               <h4 class="work-modal-callout-title work-modal-callout-title-center">Catalog</h4>
@@ -860,8 +984,11 @@
           <!-- Section 1: Understanding the user & User research summary -->
           <div class="work-modal-section">
             <div class="work-modal-grid-text-img">
-              <img src="works/app/APP_1.png" alt="Understanding the user 3D Phone Mockup" class="work-modal-grid-img"
-                width="1824" height="1824" loading="lazy" decoding="async">
+              <picture>
+                <source type="image/webp" sizes="(max-width: 768px) calc(100vw - 32px), 432px" srcset="img/320/works/app/APP_1.webp 320w, img/480/works/app/APP_1.webp 480w, img/640/works/app/APP_1.webp 640w, img/960/works/app/APP_1.webp 960w, img/1280/works/app/APP_1.webp 1280w, img/1600/works/app/APP_1.webp 1600w, img/2048/works/app/APP_1.webp 1824w">
+                <img src="works/app/APP_1.png" alt="Understanding the user 3D Phone Mockup" class="work-modal-grid-img"
+                width="1824" height="1824" loading="lazy" decoding="async" data-lightbox-src="img/2048/works/app/APP_1.webp" data-lightbox-fallback="works/app/APP_1.png">
+              </picture>
               <div class="work-modal-text-block">
                 <div class="nzxt-callout-item">
                   <h4 class="work-modal-callout-title" style="padding-left:0;">Understanding the user</h4>
@@ -883,14 +1010,26 @@
           <!-- Section 2: Personas & User research pain points -->
           <div class="work-modal-section">
             <div class="work-modal-grid work-modal-grid-2">
-              <img src="works/app/APP_2.png" alt="Persona HAO Problem Statement" class="work-modal-grid-img"
-                width="1829" height="1029" loading="lazy" decoding="async">
-              <img src="works/app/APP_3.png" alt="Persona HAO Actions & Tasks" class="work-modal-grid-img"
-                width="1829" height="1029" loading="lazy" decoding="async">
-              <img src="works/app/APP_4.png" alt="Persona WEI Problem Statement" class="work-modal-grid-img"
-                width="1829" height="1029" loading="lazy" decoding="async">
-              <img src="works/app/APP_5.png" alt="Persona WEI Actions & Tasks" class="work-modal-grid-img"
-                width="1829" height="1029" loading="lazy" decoding="async">
+              <picture>
+                <source type="image/webp" sizes="(max-width: 768px) calc(100vw - 32px), 432px" srcset="img/320/works/app/APP_2.webp 320w, img/480/works/app/APP_2.webp 480w, img/640/works/app/APP_2.webp 640w, img/960/works/app/APP_2.webp 960w, img/1280/works/app/APP_2.webp 1280w, img/1600/works/app/APP_2.webp 1600w, img/2048/works/app/APP_2.webp 1829w">
+                <img src="works/app/APP_2.png" alt="Persona HAO Problem Statement" class="work-modal-grid-img"
+                width="1829" height="1029" loading="lazy" decoding="async" data-lightbox-src="img/2048/works/app/APP_2.webp" data-lightbox-fallback="works/app/APP_2.png">
+              </picture>
+              <picture>
+                <source type="image/webp" sizes="(max-width: 768px) calc(100vw - 32px), 432px" srcset="img/320/works/app/APP_3.webp 320w, img/480/works/app/APP_3.webp 480w, img/640/works/app/APP_3.webp 640w, img/960/works/app/APP_3.webp 960w, img/1280/works/app/APP_3.webp 1280w, img/1600/works/app/APP_3.webp 1600w, img/2048/works/app/APP_3.webp 1829w">
+                <img src="works/app/APP_3.png" alt="Persona HAO Actions & Tasks" class="work-modal-grid-img"
+                width="1829" height="1029" loading="lazy" decoding="async" data-lightbox-src="img/2048/works/app/APP_3.webp" data-lightbox-fallback="works/app/APP_3.png">
+              </picture>
+              <picture>
+                <source type="image/webp" sizes="(max-width: 768px) calc(100vw - 32px), 432px" srcset="img/320/works/app/APP_4.webp 320w, img/480/works/app/APP_4.webp 480w, img/640/works/app/APP_4.webp 640w, img/960/works/app/APP_4.webp 960w, img/1280/works/app/APP_4.webp 1280w, img/1600/works/app/APP_4.webp 1600w, img/2048/works/app/APP_4.webp 1829w">
+                <img src="works/app/APP_4.png" alt="Persona WEI Problem Statement" class="work-modal-grid-img"
+                width="1829" height="1029" loading="lazy" decoding="async" data-lightbox-src="img/2048/works/app/APP_4.webp" data-lightbox-fallback="works/app/APP_4.png">
+              </picture>
+              <picture>
+                <source type="image/webp" sizes="(max-width: 768px) calc(100vw - 32px), 432px" srcset="img/320/works/app/APP_5.webp 320w, img/480/works/app/APP_5.webp 480w, img/640/works/app/APP_5.webp 640w, img/960/works/app/APP_5.webp 960w, img/1280/works/app/APP_5.webp 1280w, img/1600/works/app/APP_5.webp 1600w, img/2048/works/app/APP_5.webp 1829w">
+                <img src="works/app/APP_5.png" alt="Persona WEI Actions & Tasks" class="work-modal-grid-img"
+                width="1829" height="1029" loading="lazy" decoding="async" data-lightbox-src="img/2048/works/app/APP_5.webp" data-lightbox-fallback="works/app/APP_5.png">
+              </picture>
             </div>
             <div class="work-modal-text-block">
               <h4 class="work-modal-callout-title" style="padding-left:0;">User research: pain points</h4>
@@ -907,8 +1046,11 @@
           <!-- Section 3: Digital wireframes & Low-fidelity prototype -->
           <div class="work-modal-section">
             <div class="work-modal-grid-text-img">
-              <img src="works/app/APP_8.png" alt="Digital wireframes and Low-fidelity prototype flow"
-                class="work-modal-grid-img" width="1818" height="1816" loading="lazy" decoding="async">
+              <picture>
+                <source type="image/webp" sizes="(max-width: 768px) calc(100vw - 32px), 432px" srcset="img/320/works/app/APP_8.webp 320w, img/480/works/app/APP_8.webp 480w, img/640/works/app/APP_8.webp 640w, img/960/works/app/APP_8.webp 960w, img/1280/works/app/APP_8.webp 1280w, img/1600/works/app/APP_8.webp 1600w, img/2048/works/app/APP_8.webp 1818w">
+                <img src="works/app/APP_8.png" alt="Digital wireframes and Low-fidelity prototype flow"
+                class="work-modal-grid-img" width="1818" height="1816" loading="lazy" decoding="async" data-lightbox-src="img/2048/works/app/APP_8.webp" data-lightbox-fallback="works/app/APP_8.png">
+              </picture>
               <div class="work-modal-text-block">
                 <div class="nzxt-callout-item">
                   <h4 class="work-modal-callout-title" style="padding-left:0;">Digital wireframes</h4>
@@ -935,10 +1077,16 @@
           <!-- Section 4: Refining the design & Mockups -->
           <div class="work-modal-section">
             <div class="work-modal-grid work-modal-grid-2">
-              <img src="works/app/APP_9.png" alt="Design System & UI Components" class="work-modal-grid-img"
-                width="1818" height="1816" loading="lazy" decoding="async">
-              <img src="works/app/APP_10.png" alt="Refining Design Mockups Progression" class="work-modal-grid-img"
-                width="1816" height="1808" loading="lazy" decoding="async">
+              <picture>
+                <source type="image/webp" sizes="(max-width: 768px) calc(100vw - 32px), 432px" srcset="img/320/works/app/APP_9.webp 320w, img/480/works/app/APP_9.webp 480w, img/640/works/app/APP_9.webp 640w, img/960/works/app/APP_9.webp 960w, img/1280/works/app/APP_9.webp 1280w, img/1600/works/app/APP_9.webp 1600w, img/2048/works/app/APP_9.webp 1818w">
+                <img src="works/app/APP_9.png" alt="Design System & UI Components" class="work-modal-grid-img"
+                width="1818" height="1816" loading="lazy" decoding="async" data-lightbox-src="img/2048/works/app/APP_9.webp" data-lightbox-fallback="works/app/APP_9.png">
+              </picture>
+              <picture>
+                <source type="image/webp" sizes="(max-width: 768px) calc(100vw - 32px), 432px" srcset="img/320/works/app/APP_10.webp 320w, img/480/works/app/APP_10.webp 480w, img/640/works/app/APP_10.webp 640w, img/960/works/app/APP_10.webp 960w, img/1280/works/app/APP_10.webp 1280w, img/1600/works/app/APP_10.webp 1600w, img/2048/works/app/APP_10.webp 1816w">
+                <img src="works/app/APP_10.png" alt="Refining Design Mockups Progression" class="work-modal-grid-img"
+                width="1816" height="1808" loading="lazy" decoding="async" data-lightbox-src="img/2048/works/app/APP_10.webp" data-lightbox-fallback="works/app/APP_10.png">
+              </picture>
             </div>
             <div class="work-modal-text-block">
               <h4 class="work-modal-callout-title" style="padding-left:0;">Design System &amp; Mockups</h4>
@@ -953,8 +1101,11 @@
           <!-- Section 5: High-fidelity prototype & Demo Video -->
           <div class="work-modal-section">
             <div class="work-modal-grid work-modal-grid-2">
-              <img src="works/app/APP_11.png" alt="High-fidelity Prototype Figma Map" class="work-modal-grid-img"
-                width="1829" height="1829" loading="lazy" decoding="async">
+              <picture>
+                <source type="image/webp" sizes="(max-width: 768px) calc(100vw - 32px), 432px" srcset="img/320/works/app/APP_11.webp 320w, img/480/works/app/APP_11.webp 480w, img/640/works/app/APP_11.webp 640w, img/960/works/app/APP_11.webp 960w, img/1280/works/app/APP_11.webp 1280w, img/1600/works/app/APP_11.webp 1600w, img/2048/works/app/APP_11.webp 1829w">
+                <img src="works/app/APP_11.png" alt="High-fidelity Prototype Figma Map" class="work-modal-grid-img"
+                width="1829" height="1829" loading="lazy" decoding="async" data-lightbox-src="img/2048/works/app/APP_11.webp" data-lightbox-fallback="works/app/APP_11.png">
+              </picture>
               <div class="app-video-wrapper" id="app-video-wrapper">
                 <div class="app-video-inner" id="app-video-inner">
                   <video src="works/app/demo.mov" playsinline loop class="work-modal-video" id="app-demo-video" width="444" height="960" preload="metadata"></video>
@@ -1062,8 +1213,11 @@
           <!-- Section 1: Brand Key Visual -->
           <div class="work-modal-section">
             <div class="work-modal-grid work-modal-grid-1">
-              <img src="works/brand/brand_1.png" alt="LiHo Brand Key Visual with Cultural Illustration"
-                class="work-modal-grid-img" width="3684" height="1842" loading="lazy" decoding="async">
+              <picture>
+                <source type="image/webp" sizes="(max-width: 768px) calc(100vw - 32px), 880px" srcset="img/320/works/brand/brand_1.webp 320w, img/480/works/brand/brand_1.webp 480w, img/640/works/brand/brand_1.webp 640w, img/960/works/brand/brand_1.webp 960w, img/1280/works/brand/brand_1.webp 1280w, img/1600/works/brand/brand_1.webp 1600w, img/2048/works/brand/brand_1.webp 2048w">
+                <img src="works/brand/brand_1.png" alt="LiHo Brand Key Visual with Cultural Illustration"
+                class="work-modal-grid-img" width="3684" height="1842" loading="lazy" decoding="async" data-lightbox-src="img/2048/works/brand/brand_1.webp" data-lightbox-fallback="works/brand/brand_1.png">
+              </picture>
             </div>
             <p class="work-modal-desc">In this project, my role is to create a complete brand identity for LiHo (禮候), a
               Taiwanese souvenir brand inspired by traditional blessings. The project encompassed logo design, custom
@@ -1075,8 +1229,11 @@
           <div class="work-modal-section">
             <div class="work-modal-grid work-modal-grid-2">
               <div class="liho-col-logo">
-                <img src="works/brand/brand_2.png" alt="Brand Logo Construction Grid" class="work-modal-grid-img"
-                  width="1826" height="1824" loading="lazy" decoding="async">
+                <picture>
+                  <source type="image/webp" sizes="(max-width: 768px) calc(100vw - 32px), 432px" srcset="img/320/works/brand/brand_2.webp 320w, img/480/works/brand/brand_2.webp 480w, img/640/works/brand/brand_2.webp 640w, img/960/works/brand/brand_2.webp 960w, img/1280/works/brand/brand_2.webp 1280w, img/1600/works/brand/brand_2.webp 1600w, img/2048/works/brand/brand_2.webp 1826w">
+                  <img src="works/brand/brand_2.png" alt="Brand Logo Construction Grid" class="work-modal-grid-img"
+                  width="1826" height="1824" loading="lazy" decoding="async" data-lightbox-src="img/2048/works/brand/brand_2.webp" data-lightbox-fallback="works/brand/brand_2.png">
+                </picture>
                 <div class="work-modal-text-block nzxt-callout-block">
                   <div class="nzxt-callout-item">
                     <h4 class="work-modal-callout-title"><span class="label-marker">&#x25B6;&#xFE0E;</span> LOGO concept:</h4>
@@ -1096,10 +1253,16 @@
                 </div>
               </div>
               <div class="liho-col-font">
-                <img src="works/brand/brand_3.png" alt="Brand Logo Variations" class="work-modal-grid-img"
-                  width="1826" height="1824" loading="lazy" decoding="async">
-                <img src="works/brand/brand_4.png" alt="Typography &amp; Chinese Character Font Design"
-                  class="work-modal-grid-img" width="1826" height="1824" loading="lazy" decoding="async">
+                <picture>
+                  <source type="image/webp" sizes="(max-width: 768px) calc(100vw - 32px), 432px" srcset="img/320/works/brand/brand_3.webp 320w, img/480/works/brand/brand_3.webp 480w, img/640/works/brand/brand_3.webp 640w, img/960/works/brand/brand_3.webp 960w, img/1280/works/brand/brand_3.webp 1280w, img/1600/works/brand/brand_3.webp 1600w, img/2048/works/brand/brand_3.webp 1826w">
+                  <img src="works/brand/brand_3.png" alt="Brand Logo Variations" class="work-modal-grid-img"
+                  width="1826" height="1824" loading="lazy" decoding="async" data-lightbox-src="img/2048/works/brand/brand_3.webp" data-lightbox-fallback="works/brand/brand_3.png">
+                </picture>
+                <picture>
+                  <source type="image/webp" sizes="(max-width: 768px) calc(100vw - 32px), 432px" srcset="img/320/works/brand/brand_4.webp 320w, img/480/works/brand/brand_4.webp 480w, img/640/works/brand/brand_4.webp 640w, img/960/works/brand/brand_4.webp 960w, img/1280/works/brand/brand_4.webp 1280w, img/1600/works/brand/brand_4.webp 1600w, img/2048/works/brand/brand_4.webp 1826w">
+                  <img src="works/brand/brand_4.png" alt="Typography &amp; Chinese Character Font Design"
+                  class="work-modal-grid-img" width="1826" height="1824" loading="lazy" decoding="async" data-lightbox-src="img/2048/works/brand/brand_4.webp" data-lightbox-fallback="works/brand/brand_4.png">
+                </picture>
                 <div class="nzxt-callout-item liho-font-callout-mobile">
                   <h4 class="work-modal-callout-title"><span class="label-marker">&#x25B6;&#xFE0E;</span> Font concept:</h4>
                   <p class="work-modal-callout-desc">Li Ho means greeting people from all over the world with gifts. For
@@ -1114,24 +1277,33 @@
           <div class="work-modal-section">
             <div class="work-modal-grid work-modal-grid-3">
               <div class="liho-character-card">
-                <img src="works/brand/brand_5.png" alt="Fu Character Illustration" class="work-modal-grid-img"
-                  width="1824" height="1824" loading="lazy" decoding="async">
+                <picture>
+                  <source type="image/webp" sizes="(max-width: 768px) calc(100vw - 32px), 283px" srcset="img/320/works/brand/brand_5.webp 320w, img/480/works/brand/brand_5.webp 480w, img/640/works/brand/brand_5.webp 640w, img/960/works/brand/brand_5.webp 960w, img/1280/works/brand/brand_5.webp 1280w, img/1600/works/brand/brand_5.webp 1600w, img/2048/works/brand/brand_5.webp 1824w">
+                  <img src="works/brand/brand_5.png" alt="Fu Character Illustration" class="work-modal-grid-img"
+                  width="1824" height="1824" loading="lazy" decoding="async" data-lightbox-src="img/2048/works/brand/brand_5.webp" data-lightbox-fallback="works/brand/brand_5.png">
+                </picture>
                 <div class="work-modal-text-block">
                   <p class="work-modal-desc">Fu (福) represents fortune and
                     good luck. The character is styled in vibrant magenta, holding the traditional blessing tablet.</p>
                 </div>
               </div>
               <div class="liho-character-card">
-                <img src="works/brand/brand_6.png" alt="Lu Character Illustration" class="work-modal-grid-img"
-                  width="1824" height="1824" loading="lazy" decoding="async">
+                <picture>
+                  <source type="image/webp" sizes="(max-width: 768px) calc(100vw - 32px), 283px" srcset="img/320/works/brand/brand_6.webp 320w, img/480/works/brand/brand_6.webp 480w, img/640/works/brand/brand_6.webp 640w, img/960/works/brand/brand_6.webp 960w, img/1280/works/brand/brand_6.webp 1280w, img/1600/works/brand/brand_6.webp 1600w, img/2048/works/brand/brand_6.webp 1824w">
+                  <img src="works/brand/brand_6.png" alt="Lu Character Illustration" class="work-modal-grid-img"
+                  width="1824" height="1824" loading="lazy" decoding="async" data-lightbox-src="img/2048/works/brand/brand_6.webp" data-lightbox-fallback="works/brand/brand_6.png">
+                </picture>
                 <div class="work-modal-text-block">
                   <p class="work-modal-desc">Lu (祿) represents prosperity and
                     status. The character is styled in fresh teal with rounded geometry.</p>
                 </div>
               </div>
               <div class="liho-character-card">
-                <img src="works/brand/brand_7.png" alt="Shou Character Illustration" class="work-modal-grid-img"
-                  width="1824" height="1824" loading="lazy" decoding="async">
+                <picture>
+                  <source type="image/webp" sizes="(max-width: 768px) calc(100vw - 32px), 283px" srcset="img/320/works/brand/brand_7.webp 320w, img/480/works/brand/brand_7.webp 480w, img/640/works/brand/brand_7.webp 640w, img/960/works/brand/brand_7.webp 960w, img/1280/works/brand/brand_7.webp 1280w, img/1600/works/brand/brand_7.webp 1600w, img/2048/works/brand/brand_7.webp 1824w">
+                  <img src="works/brand/brand_7.png" alt="Shou Character Illustration" class="work-modal-grid-img"
+                  width="1824" height="1824" loading="lazy" decoding="async" data-lightbox-src="img/2048/works/brand/brand_7.webp" data-lightbox-fallback="works/brand/brand_7.png">
+                </picture>
                 <div class="work-modal-text-block">
                   <p class="work-modal-desc">Shou (壽) represents longevity
                     and health. The character is styled in deep jade green with traditional flowing beard elements.</p>
@@ -1143,10 +1315,16 @@
           <!-- Section 4: The Cards -->
           <div class="work-modal-section">
             <div class="work-modal-grid work-modal-grid-2">
-              <img src="works/brand/brand_8.png" alt="Product Icons &amp; Food Elements Steamer Category"
-                class="work-modal-grid-img" width="1826" height="2512" loading="lazy" decoding="async">
-              <img src="works/brand/brand_9.png" alt="Product Icons &amp; Food Elements Pies Category"
-                class="work-modal-grid-img" width="1826" height="2512" loading="lazy" decoding="async">
+              <picture>
+                <source type="image/webp" sizes="(max-width: 768px) calc(100vw - 32px), 432px" srcset="img/320/works/brand/brand_8.webp 320w, img/480/works/brand/brand_8.webp 480w, img/640/works/brand/brand_8.webp 640w, img/960/works/brand/brand_8.webp 960w, img/1280/works/brand/brand_8.webp 1280w, img/1600/works/brand/brand_8.webp 1600w, img/2048/works/brand/brand_8.webp 1826w">
+                <img src="works/brand/brand_8.png" alt="Product Icons &amp; Food Elements Steamer Category"
+                class="work-modal-grid-img" width="1826" height="2512" loading="lazy" decoding="async" data-lightbox-src="img/2048/works/brand/brand_8.webp" data-lightbox-fallback="works/brand/brand_8.png">
+              </picture>
+              <picture>
+                <source type="image/webp" sizes="(max-width: 768px) calc(100vw - 32px), 432px" srcset="img/320/works/brand/brand_9.webp 320w, img/480/works/brand/brand_9.webp 480w, img/640/works/brand/brand_9.webp 640w, img/960/works/brand/brand_9.webp 960w, img/1280/works/brand/brand_9.webp 1280w, img/1600/works/brand/brand_9.webp 1600w, img/2048/works/brand/brand_9.webp 1826w">
+                <img src="works/brand/brand_9.png" alt="Product Icons &amp; Food Elements Pies Category"
+                class="work-modal-grid-img" width="1826" height="2512" loading="lazy" decoding="async" data-lightbox-src="img/2048/works/brand/brand_9.webp" data-lightbox-fallback="works/brand/brand_9.png">
+              </picture>
             </div>
             <div class="nzxt-section-header-center">
               <h4 class="work-modal-callout-title work-modal-callout-title-center">The Cards</h4>
@@ -1156,12 +1334,21 @@
           <!-- Section 5: The Products -->
           <div class="work-modal-section">
             <div class="work-modal-grid work-modal-grid-1">
-              <img src="works/brand/brand_10.png" alt="Gift Cards &amp; Packaging Tape Design"
-                class="work-modal-grid-img" width="3684" height="2606" loading="lazy" decoding="async">
-              <img src="works/brand/brand_11.png" alt="Traditional Brick Oven Steam Box Renders"
-                class="work-modal-grid-img" width="3684" height="2606" loading="lazy" decoding="async">
-              <img src="works/brand/brand_12.png" alt="Popsicle &amp; Blood Cake Packaging Renders"
-                class="work-modal-grid-img" width="3684" height="2606" loading="lazy" decoding="async">
+              <picture>
+                <source type="image/webp" sizes="(max-width: 768px) calc(100vw - 32px), 880px" srcset="img/320/works/brand/brand_10.webp 320w, img/480/works/brand/brand_10.webp 480w, img/640/works/brand/brand_10.webp 640w, img/960/works/brand/brand_10.webp 960w, img/1280/works/brand/brand_10.webp 1280w, img/1600/works/brand/brand_10.webp 1600w, img/2048/works/brand/brand_10.webp 2048w">
+                <img src="works/brand/brand_10.png" alt="Gift Cards &amp; Packaging Tape Design"
+                class="work-modal-grid-img" width="3684" height="2606" loading="lazy" decoding="async" data-lightbox-src="img/2048/works/brand/brand_10.webp" data-lightbox-fallback="works/brand/brand_10.png">
+              </picture>
+              <picture>
+                <source type="image/webp" sizes="(max-width: 768px) calc(100vw - 32px), 880px" srcset="img/320/works/brand/brand_11.webp 320w, img/480/works/brand/brand_11.webp 480w, img/640/works/brand/brand_11.webp 640w, img/960/works/brand/brand_11.webp 960w, img/1280/works/brand/brand_11.webp 1280w, img/1600/works/brand/brand_11.webp 1600w, img/2048/works/brand/brand_11.webp 2048w">
+                <img src="works/brand/brand_11.png" alt="Traditional Brick Oven Steam Box Renders"
+                class="work-modal-grid-img" width="3684" height="2606" loading="lazy" decoding="async" data-lightbox-src="img/2048/works/brand/brand_11.webp" data-lightbox-fallback="works/brand/brand_11.png">
+              </picture>
+              <picture>
+                <source type="image/webp" sizes="(max-width: 768px) calc(100vw - 32px), 880px" srcset="img/320/works/brand/brand_12.webp 320w, img/480/works/brand/brand_12.webp 480w, img/640/works/brand/brand_12.webp 640w, img/960/works/brand/brand_12.webp 960w, img/1280/works/brand/brand_12.webp 1280w, img/1600/works/brand/brand_12.webp 1600w, img/2048/works/brand/brand_12.webp 2048w">
+                <img src="works/brand/brand_12.png" alt="Popsicle &amp; Blood Cake Packaging Renders"
+                class="work-modal-grid-img" width="3684" height="2606" loading="lazy" decoding="async" data-lightbox-src="img/2048/works/brand/brand_12.webp" data-lightbox-fallback="works/brand/brand_12.png">
+              </picture>
             </div>
             <div class="nzxt-section-header-center">
               <h4 class="work-modal-callout-title work-modal-callout-title-center">The Products</h4>

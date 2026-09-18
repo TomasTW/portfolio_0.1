@@ -183,7 +183,12 @@ body::before {
   left: 0;
   width: 100%;
   height: 100%;
-  background-image: url('hero_bg.webp');
+  /* Decorative cloud backdrop. Phones get a small variant and image-set() picks
+     a denser one on high-DPR screens; see the min-width: 769px rule below.
+     Variants come from `npm run images`. */
+  background-image: url('img/640/hero_bg.webp');
+  background-image: -webkit-image-set(url('img/640/hero_bg.webp') 1x, url('img/960/hero_bg.webp') 2x);
+  background-image: image-set(url('img/640/hero_bg.webp') 1x, url('img/960/hero_bg.webp') 2x);
   background-size: cover;
   background-position: center;
   background-repeat: no-repeat;
@@ -192,6 +197,28 @@ body::before {
   transform: translateZ(0);
   will-change: transform;
   backface-visibility: hidden;
+}
+
+@media (min-width: 769px) {
+  body::before {
+    background-image: url('img/1280/hero_bg.webp');
+    background-image: -webkit-image-set(url('img/1280/hero_bg.webp') 1x, url('hero_bg.webp') 2x);
+    background-image: image-set(url('img/1280/hero_bg.webp') 1x, url('hero_bg.webp') 2x);
+  }
+}
+
+/* Responsive images are wrapped in <picture> (see scripts/apply-picture-tags.mjs).
+   `display: contents` removes the wrapper's box so the <img> stays the direct
+   grid/flex item of its container and every existing layout rule keeps working. */
+picture {
+  display: contents;
+}
+
+/* `display: contents` promotes the <picture>'s children to grid/flex items, and
+   <source> is not hidden by the UA stylesheet, so without this it would claim a
+   grid cell of its own and shift every image one slot. */
+picture>source {
+  display: none;
 }
 
 section {

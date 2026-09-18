@@ -1,0 +1,2930 @@
+{
+  "generatedWith": {
+    "widths": [
+      320,
+      480,
+      640,
+      960,
+      1280,
+      1600,
+      2048
+    ],
+    "maxWidth": 2048,
+    "formats": [
+      "webp"
+    ],
+    "quality": {
+      "webp": 80,
+      "avif": 55
+    }
+  },
+  "images": {
+    "hero_bg.png": {
+      "hash": "611c96fc43dd3cbc",
+      "width": 2592,
+      "height": 2592,
+      "variants": [
+        {
+          "path": "img/320/hero_bg.webp",
+          "width": 320,
+          "height": 320,
+          "bytes": 5316
+        },
+        {
+          "path": "img/480/hero_bg.webp",
+          "width": 480,
+          "height": 480,
+          "bytes": 8916
+        },
+        {
+          "path": "img/640/hero_bg.webp",
+          "width": 640,
+          "height": 640,
+          "bytes": 12866
+        },
+        {
+          "path": "img/960/hero_bg.webp",
+          "width": 960,
+          "height": 960,
+          "bytes": 22268
+        },
+        {
+          "path": "img/1280/hero_bg.webp",
+          "width": 1280,
+          "height": 1280,
+          "bytes": 32714
+        },
+        {
+          "path": "img/1600/hero_bg.webp",
+          "width": 1600,
+          "height": 1600,
+          "bytes": 42148
+        },
+        {
+          "path": "img/2048/hero_bg.webp",
+          "width": 2048,
+          "height": 2048,
+          "bytes": 58244
+        }
+      ]
+    },
+    "works/NZXT/NZXT_1.png": {
+      "hash": "b56923c301efd666",
+      "width": 1842,
+      "height": 1214,
+      "variants": [
+        {
+          "path": "img/320/works/NZXT/NZXT_1.webp",
+          "width": 320,
+          "height": 211,
+          "bytes": 10214
+        },
+        {
+          "path": "img/480/works/NZXT/NZXT_1.webp",
+          "width": 480,
+          "height": 316,
+          "bytes": 19434
+        },
+        {
+          "path": "img/640/works/NZXT/NZXT_1.webp",
+          "width": 640,
+          "height": 422,
+          "bytes": 29812
+        },
+        {
+          "path": "img/960/works/NZXT/NZXT_1.webp",
+          "width": 960,
+          "height": 633,
+          "bytes": 52480
+        },
+        {
+          "path": "img/1280/works/NZXT/NZXT_1.webp",
+          "width": 1280,
+          "height": 844,
+          "bytes": 76876
+        },
+        {
+          "path": "img/1600/works/NZXT/NZXT_1.webp",
+          "width": 1600,
+          "height": 1055,
+          "bytes": 98610
+        },
+        {
+          "path": "img/2048/works/NZXT/NZXT_1.webp",
+          "width": 1842,
+          "height": 1214,
+          "bytes": 116692
+        }
+      ]
+    },
+    "works/NZXT/NZXT_10.png": {
+      "hash": "9294d4513c578cd1",
+      "width": 913,
+      "height": 913,
+      "variants": [
+        {
+          "path": "img/320/works/NZXT/NZXT_10.webp",
+          "width": 320,
+          "height": 320,
+          "bytes": 5480
+        },
+        {
+          "path": "img/480/works/NZXT/NZXT_10.webp",
+          "width": 480,
+          "height": 480,
+          "bytes": 10158
+        },
+        {
+          "path": "img/640/works/NZXT/NZXT_10.webp",
+          "width": 640,
+          "height": 640,
+          "bytes": 15260
+        },
+        {
+          "path": "img/960/works/NZXT/NZXT_10.webp",
+          "width": 913,
+          "height": 913,
+          "bytes": 25948
+        }
+      ]
+    },
+    "works/NZXT/NZXT_11.png": {
+      "hash": "7bf6bf61a6bc1ebb",
+      "width": 913,
+      "height": 913,
+      "variants": [
+        {
+          "path": "img/320/works/NZXT/NZXT_11.webp",
+          "width": 320,
+          "height": 320,
+          "bytes": 5366
+        },
+        {
+          "path": "img/480/works/NZXT/NZXT_11.webp",
+          "width": 480,
+          "height": 480,
+          "bytes": 9562
+        },
+        {
+          "path": "img/640/works/NZXT/NZXT_11.webp",
+          "width": 640,
+          "height": 640,
+          "bytes": 14402
+        },
+        {
+          "path": "img/960/works/NZXT/NZXT_11.webp",
+          "width": 913,
+          "height": 913,
+          "bytes": 24906
+        }
+      ]
+    },
+    "works/NZXT/NZXT_12.png": {
+      "hash": "8900711efec00f1d",
+      "width": 913,
+      "height": 913,
+      "variants": [
+        {
+          "path": "img/320/works/NZXT/NZXT_12.webp",
+          "width": 320,
+          "height": 320,
+          "bytes": 3226
+        },
+        {
+          "path": "img/480/works/NZXT/NZXT_12.webp",
+          "width": 480,
+          "height": 480,
+          "bytes": 5986
+        },
+        {
+          "path": "img/640/works/NZXT/NZXT_12.webp",
+          "width": 640,
+          "height": 640,
+          "bytes": 8858
+        },
+        {
+          "path": "img/960/works/NZXT/NZXT_12.webp",
+          "width": 913,
+          "height": 913,
+          "bytes": 14072
+        }
+      ]
+    },
+    "works/NZXT/NZXT_13.png": {
+      "hash": "d02ed61a8dd32b99",
+      "width": 913,
+      "height": 913,
+      "variants": [
+        {
+          "path": "img/320/works/NZXT/NZXT_13.webp",
+          "width": 320,
+          "height": 320,
+          "bytes": 4214
+        },
+        {
+          "path": "img/480/works/NZXT/NZXT_13.webp",
+          "width": 480,
+          "height": 480,
+          "bytes": 7726
+        },
+        {
+          "path": "img/640/works/NZXT/NZXT_13.webp",
+          "width": 640,
+          "height": 640,
+          "bytes": 11232
+        },
+        {
+          "path": "img/960/works/NZXT/NZXT_13.webp",
+          "width": 913,
+          "height": 913,
+          "bytes": 17152
+        }
+      ]
+    },
+    "works/NZXT/NZXT_14.png": {
+      "hash": "a15a5310c9bb23bb",
+      "width": 913,
+      "height": 913,
+      "variants": [
+        {
+          "path": "img/320/works/NZXT/NZXT_14.webp",
+          "width": 320,
+          "height": 320,
+          "bytes": 3486
+        },
+        {
+          "path": "img/480/works/NZXT/NZXT_14.webp",
+          "width": 480,
+          "height": 480,
+          "bytes": 6624
+        },
+        {
+          "path": "img/640/works/NZXT/NZXT_14.webp",
+          "width": 640,
+          "height": 640,
+          "bytes": 10628
+        },
+        {
+          "path": "img/960/works/NZXT/NZXT_14.webp",
+          "width": 913,
+          "height": 913,
+          "bytes": 19528
+        }
+      ]
+    },
+    "works/NZXT/NZXT_15.png": {
+      "hash": "5b161d8708f6e229",
+      "width": 913,
+      "height": 913,
+      "variants": [
+        {
+          "path": "img/320/works/NZXT/NZXT_15.webp",
+          "width": 320,
+          "height": 320,
+          "bytes": 7782
+        },
+        {
+          "path": "img/480/works/NZXT/NZXT_15.webp",
+          "width": 480,
+          "height": 480,
+          "bytes": 16014
+        },
+        {
+          "path": "img/640/works/NZXT/NZXT_15.webp",
+          "width": 640,
+          "height": 640,
+          "bytes": 27272
+        },
+        {
+          "path": "img/960/works/NZXT/NZXT_15.webp",
+          "width": 913,
+          "height": 913,
+          "bytes": 54282
+        }
+      ]
+    },
+    "works/NZXT/NZXT_16.png": {
+      "hash": "c6e5241d34193cca",
+      "width": 602,
+      "height": 862,
+      "variants": [
+        {
+          "path": "img/320/works/NZXT/NZXT_16.webp",
+          "width": 320,
+          "height": 458,
+          "bytes": 18056
+        },
+        {
+          "path": "img/480/works/NZXT/NZXT_16.webp",
+          "width": 480,
+          "height": 687,
+          "bytes": 30670
+        },
+        {
+          "path": "img/640/works/NZXT/NZXT_16.webp",
+          "width": 602,
+          "height": 862,
+          "bytes": 39046
+        }
+      ]
+    },
+    "works/NZXT/NZXT_17.png": {
+      "hash": "000d10c4bbbd4f9b",
+      "width": 1201,
+      "height": 1790,
+      "variants": [
+        {
+          "path": "img/320/works/NZXT/NZXT_17.webp",
+          "width": 320,
+          "height": 477,
+          "bytes": 19088
+        },
+        {
+          "path": "img/480/works/NZXT/NZXT_17.webp",
+          "width": 480,
+          "height": 715,
+          "bytes": 33738
+        },
+        {
+          "path": "img/640/works/NZXT/NZXT_17.webp",
+          "width": 640,
+          "height": 954,
+          "bytes": 49998
+        },
+        {
+          "path": "img/960/works/NZXT/NZXT_17.webp",
+          "width": 960,
+          "height": 1431,
+          "bytes": 88724
+        },
+        {
+          "path": "img/1280/works/NZXT/NZXT_17.webp",
+          "width": 1201,
+          "height": 1790,
+          "bytes": 115932
+        }
+      ]
+    },
+    "works/NZXT/NZXT_2.png": {
+      "hash": "59efaf5575862e19",
+      "width": 2414,
+      "height": 2414,
+      "variants": [
+        {
+          "path": "img/320/works/NZXT/NZXT_2.webp",
+          "width": 320,
+          "height": 320,
+          "bytes": 7122
+        },
+        {
+          "path": "img/480/works/NZXT/NZXT_2.webp",
+          "width": 480,
+          "height": 480,
+          "bytes": 12118
+        },
+        {
+          "path": "img/640/works/NZXT/NZXT_2.webp",
+          "width": 640,
+          "height": 640,
+          "bytes": 17662
+        },
+        {
+          "path": "img/960/works/NZXT/NZXT_2.webp",
+          "width": 960,
+          "height": 960,
+          "bytes": 32278
+        },
+        {
+          "path": "img/1280/works/NZXT/NZXT_2.webp",
+          "width": 1280,
+          "height": 1280,
+          "bytes": 54026
+        },
+        {
+          "path": "img/1600/works/NZXT/NZXT_2.webp",
+          "width": 1600,
+          "height": 1600,
+          "bytes": 78954
+        },
+        {
+          "path": "img/2048/works/NZXT/NZXT_2.webp",
+          "width": 2048,
+          "height": 2048,
+          "bytes": 119824
+        }
+      ]
+    },
+    "works/NZXT/NZXT_3.png": {
+      "hash": "624f232695b7b90a",
+      "width": 2414,
+      "height": 2414,
+      "variants": [
+        {
+          "path": "img/320/works/NZXT/NZXT_3.webp",
+          "width": 320,
+          "height": 320,
+          "bytes": 14380
+        },
+        {
+          "path": "img/480/works/NZXT/NZXT_3.webp",
+          "width": 480,
+          "height": 480,
+          "bytes": 26324
+        },
+        {
+          "path": "img/640/works/NZXT/NZXT_3.webp",
+          "width": 640,
+          "height": 640,
+          "bytes": 41070
+        },
+        {
+          "path": "img/960/works/NZXT/NZXT_3.webp",
+          "width": 960,
+          "height": 960,
+          "bytes": 76466
+        },
+        {
+          "path": "img/1280/works/NZXT/NZXT_3.webp",
+          "width": 1280,
+          "height": 1280,
+          "bytes": 120030
+        },
+        {
+          "path": "img/1600/works/NZXT/NZXT_3.webp",
+          "width": 1600,
+          "height": 1600,
+          "bytes": 168892
+        },
+        {
+          "path": "img/2048/works/NZXT/NZXT_3.webp",
+          "width": 2048,
+          "height": 2048,
+          "bytes": 241190
+        }
+      ]
+    },
+    "works/NZXT/NZXT_4.png": {
+      "hash": "91f69955db03f020",
+      "width": 2414,
+      "height": 2414,
+      "variants": [
+        {
+          "path": "img/320/works/NZXT/NZXT_4.webp",
+          "width": 320,
+          "height": 320,
+          "bytes": 6158
+        },
+        {
+          "path": "img/480/works/NZXT/NZXT_4.webp",
+          "width": 480,
+          "height": 480,
+          "bytes": 10474
+        },
+        {
+          "path": "img/640/works/NZXT/NZXT_4.webp",
+          "width": 640,
+          "height": 640,
+          "bytes": 22294
+        },
+        {
+          "path": "img/960/works/NZXT/NZXT_4.webp",
+          "width": 960,
+          "height": 960,
+          "bytes": 57758
+        },
+        {
+          "path": "img/1280/works/NZXT/NZXT_4.webp",
+          "width": 1280,
+          "height": 1280,
+          "bytes": 95766
+        },
+        {
+          "path": "img/1600/works/NZXT/NZXT_4.webp",
+          "width": 1600,
+          "height": 1600,
+          "bytes": 132766
+        },
+        {
+          "path": "img/2048/works/NZXT/NZXT_4.webp",
+          "width": 2048,
+          "height": 2048,
+          "bytes": 189580
+        }
+      ]
+    },
+    "works/NZXT/NZXT_5.png": {
+      "hash": "74a785f82214943a",
+      "width": 912,
+      "height": 684,
+      "variants": [
+        {
+          "path": "img/320/works/NZXT/NZXT_5.webp",
+          "width": 320,
+          "height": 240,
+          "bytes": 16112
+        },
+        {
+          "path": "img/480/works/NZXT/NZXT_5.webp",
+          "width": 480,
+          "height": 360,
+          "bytes": 32560
+        },
+        {
+          "path": "img/640/works/NZXT/NZXT_5.webp",
+          "width": 640,
+          "height": 480,
+          "bytes": 53732
+        },
+        {
+          "path": "img/960/works/NZXT/NZXT_5.webp",
+          "width": 912,
+          "height": 684,
+          "bytes": 100534
+        }
+      ]
+    },
+    "works/NZXT/NZXT_6.png": {
+      "hash": "dd6f69b4eb13801f",
+      "width": 1842,
+      "height": 1053,
+      "variants": [
+        {
+          "path": "img/320/works/NZXT/NZXT_6.webp",
+          "width": 320,
+          "height": 183,
+          "bytes": 3688
+        },
+        {
+          "path": "img/480/works/NZXT/NZXT_6.webp",
+          "width": 480,
+          "height": 274,
+          "bytes": 6524
+        },
+        {
+          "path": "img/640/works/NZXT/NZXT_6.webp",
+          "width": 640,
+          "height": 366,
+          "bytes": 9840
+        },
+        {
+          "path": "img/960/works/NZXT/NZXT_6.webp",
+          "width": 960,
+          "height": 549,
+          "bytes": 17880
+        },
+        {
+          "path": "img/1280/works/NZXT/NZXT_6.webp",
+          "width": 1280,
+          "height": 732,
+          "bytes": 27204
+        },
+        {
+          "path": "img/1600/works/NZXT/NZXT_6.webp",
+          "width": 1600,
+          "height": 915,
+          "bytes": 38302
+        },
+        {
+          "path": "img/2048/works/NZXT/NZXT_6.webp",
+          "width": 1842,
+          "height": 1053,
+          "bytes": 48034
+        }
+      ]
+    },
+    "works/NZXT/NZXT_7.png": {
+      "hash": "41642fb00409e0e3",
+      "width": 3648,
+      "height": 3648,
+      "variants": [
+        {
+          "path": "img/320/works/NZXT/NZXT_7.webp",
+          "width": 320,
+          "height": 320,
+          "bytes": 6794
+        },
+        {
+          "path": "img/480/works/NZXT/NZXT_7.webp",
+          "width": 480,
+          "height": 480,
+          "bytes": 12050
+        },
+        {
+          "path": "img/640/works/NZXT/NZXT_7.webp",
+          "width": 640,
+          "height": 640,
+          "bytes": 17468
+        },
+        {
+          "path": "img/960/works/NZXT/NZXT_7.webp",
+          "width": 960,
+          "height": 960,
+          "bytes": 29604
+        },
+        {
+          "path": "img/1280/works/NZXT/NZXT_7.webp",
+          "width": 1280,
+          "height": 1280,
+          "bytes": 38440
+        },
+        {
+          "path": "img/1600/works/NZXT/NZXT_7.webp",
+          "width": 1600,
+          "height": 1600,
+          "bytes": 56598
+        },
+        {
+          "path": "img/2048/works/NZXT/NZXT_7.webp",
+          "width": 2048,
+          "height": 2048,
+          "bytes": 79946
+        }
+      ]
+    },
+    "works/NZXT/NZXT_8.png": {
+      "hash": "37593c7ae444fdbb",
+      "width": 3648,
+      "height": 3648,
+      "variants": [
+        {
+          "path": "img/320/works/NZXT/NZXT_8.webp",
+          "width": 320,
+          "height": 320,
+          "bytes": 7144
+        },
+        {
+          "path": "img/480/works/NZXT/NZXT_8.webp",
+          "width": 480,
+          "height": 480,
+          "bytes": 14126
+        },
+        {
+          "path": "img/640/works/NZXT/NZXT_8.webp",
+          "width": 640,
+          "height": 640,
+          "bytes": 22190
+        },
+        {
+          "path": "img/960/works/NZXT/NZXT_8.webp",
+          "width": 960,
+          "height": 960,
+          "bytes": 40398
+        },
+        {
+          "path": "img/1280/works/NZXT/NZXT_8.webp",
+          "width": 1280,
+          "height": 1280,
+          "bytes": 52380
+        },
+        {
+          "path": "img/1600/works/NZXT/NZXT_8.webp",
+          "width": 1600,
+          "height": 1600,
+          "bytes": 79672
+        },
+        {
+          "path": "img/2048/works/NZXT/NZXT_8.webp",
+          "width": 2048,
+          "height": 2048,
+          "bytes": 112968
+        }
+      ]
+    },
+    "works/NZXT/NZXT_9.png": {
+      "hash": "59f17b5977164f6a",
+      "width": 913,
+      "height": 2606,
+      "variants": [
+        {
+          "path": "img/320/works/NZXT/NZXT_9.webp",
+          "width": 320,
+          "height": 913,
+          "bytes": 21778
+        },
+        {
+          "path": "img/480/works/NZXT/NZXT_9.webp",
+          "width": 480,
+          "height": 1370,
+          "bytes": 39116
+        },
+        {
+          "path": "img/640/works/NZXT/NZXT_9.webp",
+          "width": 640,
+          "height": 1827,
+          "bytes": 57850
+        },
+        {
+          "path": "img/960/works/NZXT/NZXT_9.webp",
+          "width": 913,
+          "height": 2606,
+          "bytes": 89254
+        }
+      ]
+    },
+    "works/NZXT/nzxt_cover.png": {
+      "hash": "a88b210bdfa632c4",
+      "width": 1920,
+      "height": 1080,
+      "variants": [
+        {
+          "path": "img/320/works/NZXT/nzxt_cover.webp",
+          "width": 320,
+          "height": 180,
+          "bytes": 1232
+        },
+        {
+          "path": "img/480/works/NZXT/nzxt_cover.webp",
+          "width": 480,
+          "height": 270,
+          "bytes": 1954
+        },
+        {
+          "path": "img/640/works/NZXT/nzxt_cover.webp",
+          "width": 640,
+          "height": 360,
+          "bytes": 2624
+        },
+        {
+          "path": "img/960/works/NZXT/nzxt_cover.webp",
+          "width": 960,
+          "height": 540,
+          "bytes": 4292
+        },
+        {
+          "path": "img/1280/works/NZXT/nzxt_cover.webp",
+          "width": 1280,
+          "height": 720,
+          "bytes": 6154
+        },
+        {
+          "path": "img/1600/works/NZXT/nzxt_cover.webp",
+          "width": 1600,
+          "height": 900,
+          "bytes": 7712
+        },
+        {
+          "path": "img/2048/works/NZXT/nzxt_cover.webp",
+          "width": 1920,
+          "height": 1080,
+          "bytes": 9698
+        }
+      ]
+    },
+    "works/SKM/SKM_1.png": {
+      "hash": "fc406e4485416b87",
+      "width": 1920,
+      "height": 1080,
+      "variants": [
+        {
+          "path": "img/320/works/SKM/SKM_1.webp",
+          "width": 320,
+          "height": 180,
+          "bytes": 6850
+        },
+        {
+          "path": "img/480/works/SKM/SKM_1.webp",
+          "width": 480,
+          "height": 270,
+          "bytes": 11454
+        },
+        {
+          "path": "img/640/works/SKM/SKM_1.webp",
+          "width": 640,
+          "height": 360,
+          "bytes": 17212
+        },
+        {
+          "path": "img/960/works/SKM/SKM_1.webp",
+          "width": 960,
+          "height": 540,
+          "bytes": 30392
+        },
+        {
+          "path": "img/1280/works/SKM/SKM_1.webp",
+          "width": 1280,
+          "height": 720,
+          "bytes": 46048
+        },
+        {
+          "path": "img/1600/works/SKM/SKM_1.webp",
+          "width": 1600,
+          "height": 900,
+          "bytes": 65004
+        },
+        {
+          "path": "img/2048/works/SKM/SKM_1.webp",
+          "width": 1920,
+          "height": 1080,
+          "bytes": 80058
+        }
+      ]
+    },
+    "works/SKM/SKM_10.png": {
+      "hash": "f5ec55522a2c4d20",
+      "width": 1814,
+      "height": 1306,
+      "variants": [
+        {
+          "path": "img/320/works/SKM/SKM_10.webp",
+          "width": 320,
+          "height": 230,
+          "bytes": 14518
+        },
+        {
+          "path": "img/480/works/SKM/SKM_10.webp",
+          "width": 480,
+          "height": 346,
+          "bytes": 27240
+        },
+        {
+          "path": "img/640/works/SKM/SKM_10.webp",
+          "width": 640,
+          "height": 461,
+          "bytes": 42246
+        },
+        {
+          "path": "img/960/works/SKM/SKM_10.webp",
+          "width": 960,
+          "height": 691,
+          "bytes": 72646
+        },
+        {
+          "path": "img/1280/works/SKM/SKM_10.webp",
+          "width": 1280,
+          "height": 922,
+          "bytes": 103102
+        },
+        {
+          "path": "img/1600/works/SKM/SKM_10.webp",
+          "width": 1600,
+          "height": 1152,
+          "bytes": 132564
+        },
+        {
+          "path": "img/2048/works/SKM/SKM_10.webp",
+          "width": 1814,
+          "height": 1306,
+          "bytes": 156498
+        }
+      ]
+    },
+    "works/SKM/SKM_11.png": {
+      "hash": "89851a085d9926b6",
+      "width": 1814,
+      "height": 1291,
+      "variants": [
+        {
+          "path": "img/320/works/SKM/SKM_11.webp",
+          "width": 320,
+          "height": 228,
+          "bytes": 13096
+        },
+        {
+          "path": "img/480/works/SKM/SKM_11.webp",
+          "width": 480,
+          "height": 342,
+          "bytes": 24606
+        },
+        {
+          "path": "img/640/works/SKM/SKM_11.webp",
+          "width": 640,
+          "height": 455,
+          "bytes": 36368
+        },
+        {
+          "path": "img/960/works/SKM/SKM_11.webp",
+          "width": 960,
+          "height": 683,
+          "bytes": 57628
+        },
+        {
+          "path": "img/1280/works/SKM/SKM_11.webp",
+          "width": 1280,
+          "height": 911,
+          "bytes": 79058
+        },
+        {
+          "path": "img/1600/works/SKM/SKM_11.webp",
+          "width": 1600,
+          "height": 1139,
+          "bytes": 100108
+        },
+        {
+          "path": "img/2048/works/SKM/SKM_11.webp",
+          "width": 1814,
+          "height": 1291,
+          "bytes": 117156
+        }
+      ]
+    },
+    "works/SKM/SKM_12.png": {
+      "hash": "acf0781f629a8b21",
+      "width": 1814,
+      "height": 1285,
+      "variants": [
+        {
+          "path": "img/320/works/SKM/SKM_12.webp",
+          "width": 320,
+          "height": 227,
+          "bytes": 17226
+        },
+        {
+          "path": "img/480/works/SKM/SKM_12.webp",
+          "width": 480,
+          "height": 340,
+          "bytes": 30496
+        },
+        {
+          "path": "img/640/works/SKM/SKM_12.webp",
+          "width": 640,
+          "height": 453,
+          "bytes": 43902
+        },
+        {
+          "path": "img/960/works/SKM/SKM_12.webp",
+          "width": 960,
+          "height": 680,
+          "bytes": 70310
+        },
+        {
+          "path": "img/1280/works/SKM/SKM_12.webp",
+          "width": 1280,
+          "height": 907,
+          "bytes": 96866
+        },
+        {
+          "path": "img/1600/works/SKM/SKM_12.webp",
+          "width": 1600,
+          "height": 1133,
+          "bytes": 126082
+        },
+        {
+          "path": "img/2048/works/SKM/SKM_12.webp",
+          "width": 1814,
+          "height": 1285,
+          "bytes": 147006
+        }
+      ]
+    },
+    "works/SKM/SKM_13.png": {
+      "hash": "fc0e65625e468c7d",
+      "width": 1840,
+      "height": 1035,
+      "variants": [
+        {
+          "path": "img/320/works/SKM/SKM_13.webp",
+          "width": 320,
+          "height": 180,
+          "bytes": 8274
+        },
+        {
+          "path": "img/480/works/SKM/SKM_13.webp",
+          "width": 480,
+          "height": 270,
+          "bytes": 16252
+        },
+        {
+          "path": "img/640/works/SKM/SKM_13.webp",
+          "width": 640,
+          "height": 360,
+          "bytes": 25870
+        },
+        {
+          "path": "img/960/works/SKM/SKM_13.webp",
+          "width": 960,
+          "height": 540,
+          "bytes": 50294
+        },
+        {
+          "path": "img/1280/works/SKM/SKM_13.webp",
+          "width": 1280,
+          "height": 720,
+          "bytes": 80244
+        },
+        {
+          "path": "img/1600/works/SKM/SKM_13.webp",
+          "width": 1600,
+          "height": 900,
+          "bytes": 114674
+        },
+        {
+          "path": "img/2048/works/SKM/SKM_13.webp",
+          "width": 1840,
+          "height": 1035,
+          "bytes": 144842
+        }
+      ]
+    },
+    "works/SKM/SKM_14.png": {
+      "hash": "990e4aa6c88b4be2",
+      "width": 1827,
+      "height": 1256,
+      "variants": [
+        {
+          "path": "img/320/works/SKM/SKM_14.webp",
+          "width": 320,
+          "height": 220,
+          "bytes": 20108
+        },
+        {
+          "path": "img/480/works/SKM/SKM_14.webp",
+          "width": 480,
+          "height": 330,
+          "bytes": 37712
+        },
+        {
+          "path": "img/640/works/SKM/SKM_14.webp",
+          "width": 640,
+          "height": 440,
+          "bytes": 59272
+        },
+        {
+          "path": "img/960/works/SKM/SKM_14.webp",
+          "width": 960,
+          "height": 660,
+          "bytes": 108768
+        },
+        {
+          "path": "img/1280/works/SKM/SKM_14.webp",
+          "width": 1280,
+          "height": 880,
+          "bytes": 157706
+        },
+        {
+          "path": "img/1600/works/SKM/SKM_14.webp",
+          "width": 1600,
+          "height": 1100,
+          "bytes": 207204
+        },
+        {
+          "path": "img/2048/works/SKM/SKM_14.webp",
+          "width": 1827,
+          "height": 1256,
+          "bytes": 242226
+        }
+      ]
+    },
+    "works/SKM/SKM_15.png": {
+      "hash": "7d635d34be66822c",
+      "width": 1827,
+      "height": 1256,
+      "variants": [
+        {
+          "path": "img/320/works/SKM/SKM_15.webp",
+          "width": 320,
+          "height": 220,
+          "bytes": 20276
+        },
+        {
+          "path": "img/480/works/SKM/SKM_15.webp",
+          "width": 480,
+          "height": 330,
+          "bytes": 38752
+        },
+        {
+          "path": "img/640/works/SKM/SKM_15.webp",
+          "width": 640,
+          "height": 440,
+          "bytes": 62498
+        },
+        {
+          "path": "img/960/works/SKM/SKM_15.webp",
+          "width": 960,
+          "height": 660,
+          "bytes": 115610
+        },
+        {
+          "path": "img/1280/works/SKM/SKM_15.webp",
+          "width": 1280,
+          "height": 880,
+          "bytes": 169902
+        },
+        {
+          "path": "img/1600/works/SKM/SKM_15.webp",
+          "width": 1600,
+          "height": 1100,
+          "bytes": 221452
+        },
+        {
+          "path": "img/2048/works/SKM/SKM_15.webp",
+          "width": 1827,
+          "height": 1256,
+          "bytes": 256632
+        }
+      ]
+    },
+    "works/SKM/SKM_16.png": {
+      "hash": "9dc0f31757ef4dd3",
+      "width": 1827,
+      "height": 1256,
+      "variants": [
+        {
+          "path": "img/320/works/SKM/SKM_16.webp",
+          "width": 320,
+          "height": 220,
+          "bytes": 18872
+        },
+        {
+          "path": "img/480/works/SKM/SKM_16.webp",
+          "width": 480,
+          "height": 330,
+          "bytes": 37260
+        },
+        {
+          "path": "img/640/works/SKM/SKM_16.webp",
+          "width": 640,
+          "height": 440,
+          "bytes": 61370
+        },
+        {
+          "path": "img/960/works/SKM/SKM_16.webp",
+          "width": 960,
+          "height": 660,
+          "bytes": 118268
+        },
+        {
+          "path": "img/1280/works/SKM/SKM_16.webp",
+          "width": 1280,
+          "height": 880,
+          "bytes": 178404
+        },
+        {
+          "path": "img/1600/works/SKM/SKM_16.webp",
+          "width": 1600,
+          "height": 1100,
+          "bytes": 236058
+        },
+        {
+          "path": "img/2048/works/SKM/SKM_16.webp",
+          "width": 1827,
+          "height": 1256,
+          "bytes": 277458
+        }
+      ]
+    },
+    "works/SKM/SKM_17.png": {
+      "hash": "24b093d9d542e2d9",
+      "width": 1827,
+      "height": 1256,
+      "variants": [
+        {
+          "path": "img/320/works/SKM/SKM_17.webp",
+          "width": 320,
+          "height": 220,
+          "bytes": 18474
+        },
+        {
+          "path": "img/480/works/SKM/SKM_17.webp",
+          "width": 480,
+          "height": 330,
+          "bytes": 34420
+        },
+        {
+          "path": "img/640/works/SKM/SKM_17.webp",
+          "width": 640,
+          "height": 440,
+          "bytes": 54302
+        },
+        {
+          "path": "img/960/works/SKM/SKM_17.webp",
+          "width": 960,
+          "height": 660,
+          "bytes": 100590
+        },
+        {
+          "path": "img/1280/works/SKM/SKM_17.webp",
+          "width": 1280,
+          "height": 880,
+          "bytes": 148344
+        },
+        {
+          "path": "img/1600/works/SKM/SKM_17.webp",
+          "width": 1600,
+          "height": 1100,
+          "bytes": 192416
+        },
+        {
+          "path": "img/2048/works/SKM/SKM_17.webp",
+          "width": 1827,
+          "height": 1256,
+          "bytes": 221632
+        }
+      ]
+    },
+    "works/SKM/SKM_18.png": {
+      "hash": "4b3af6b6d37bcf8a",
+      "width": 1827,
+      "height": 1306,
+      "variants": [
+        {
+          "path": "img/320/works/SKM/SKM_18.webp",
+          "width": 320,
+          "height": 229,
+          "bytes": 21898
+        },
+        {
+          "path": "img/480/works/SKM/SKM_18.webp",
+          "width": 480,
+          "height": 343,
+          "bytes": 42428
+        },
+        {
+          "path": "img/640/works/SKM/SKM_18.webp",
+          "width": 640,
+          "height": 457,
+          "bytes": 66996
+        },
+        {
+          "path": "img/960/works/SKM/SKM_18.webp",
+          "width": 960,
+          "height": 686,
+          "bytes": 124838
+        },
+        {
+          "path": "img/1280/works/SKM/SKM_18.webp",
+          "width": 1280,
+          "height": 915,
+          "bytes": 186562
+        },
+        {
+          "path": "img/1600/works/SKM/SKM_18.webp",
+          "width": 1600,
+          "height": 1144,
+          "bytes": 244100
+        },
+        {
+          "path": "img/2048/works/SKM/SKM_18.webp",
+          "width": 1827,
+          "height": 1306,
+          "bytes": 285522
+        }
+      ]
+    },
+    "works/SKM/SKM_19.png": {
+      "hash": "269c39549d0fe10f",
+      "width": 1827,
+      "height": 1306,
+      "variants": [
+        {
+          "path": "img/320/works/SKM/SKM_19.webp",
+          "width": 320,
+          "height": 229,
+          "bytes": 21626
+        },
+        {
+          "path": "img/480/works/SKM/SKM_19.webp",
+          "width": 480,
+          "height": 343,
+          "bytes": 43190
+        },
+        {
+          "path": "img/640/works/SKM/SKM_19.webp",
+          "width": 640,
+          "height": 457,
+          "bytes": 66504
+        },
+        {
+          "path": "img/960/works/SKM/SKM_19.webp",
+          "width": 960,
+          "height": 686,
+          "bytes": 123512
+        },
+        {
+          "path": "img/1280/works/SKM/SKM_19.webp",
+          "width": 1280,
+          "height": 915,
+          "bytes": 181454
+        },
+        {
+          "path": "img/1600/works/SKM/SKM_19.webp",
+          "width": 1600,
+          "height": 1144,
+          "bytes": 233084
+        },
+        {
+          "path": "img/2048/works/SKM/SKM_19.webp",
+          "width": 1827,
+          "height": 1306,
+          "bytes": 274164
+        }
+      ]
+    },
+    "works/SKM/SKM_2.png": {
+      "hash": "d5529a6b05c1bcc3",
+      "width": 1825,
+      "height": 1144,
+      "variants": [
+        {
+          "path": "img/320/works/SKM/SKM_2.webp",
+          "width": 320,
+          "height": 201,
+          "bytes": 12314
+        },
+        {
+          "path": "img/480/works/SKM/SKM_2.webp",
+          "width": 480,
+          "height": 301,
+          "bytes": 21626
+        },
+        {
+          "path": "img/640/works/SKM/SKM_2.webp",
+          "width": 640,
+          "height": 401,
+          "bytes": 32340
+        },
+        {
+          "path": "img/960/works/SKM/SKM_2.webp",
+          "width": 960,
+          "height": 602,
+          "bytes": 55434
+        },
+        {
+          "path": "img/1280/works/SKM/SKM_2.webp",
+          "width": 1280,
+          "height": 802,
+          "bytes": 80498
+        },
+        {
+          "path": "img/1600/works/SKM/SKM_2.webp",
+          "width": 1600,
+          "height": 1003,
+          "bytes": 103698
+        },
+        {
+          "path": "img/2048/works/SKM/SKM_2.webp",
+          "width": 1825,
+          "height": 1144,
+          "bytes": 122836
+        }
+      ]
+    },
+    "works/SKM/SKM_3.png": {
+      "hash": "58bd59cccce4cdc4",
+      "width": 1825,
+      "height": 1144,
+      "variants": [
+        {
+          "path": "img/320/works/SKM/SKM_3.webp",
+          "width": 320,
+          "height": 201,
+          "bytes": 15218
+        },
+        {
+          "path": "img/480/works/SKM/SKM_3.webp",
+          "width": 480,
+          "height": 301,
+          "bytes": 29692
+        },
+        {
+          "path": "img/640/works/SKM/SKM_3.webp",
+          "width": 640,
+          "height": 401,
+          "bytes": 47202
+        },
+        {
+          "path": "img/960/works/SKM/SKM_3.webp",
+          "width": 960,
+          "height": 602,
+          "bytes": 89706
+        },
+        {
+          "path": "img/1280/works/SKM/SKM_3.webp",
+          "width": 1280,
+          "height": 802,
+          "bytes": 133306
+        },
+        {
+          "path": "img/1600/works/SKM/SKM_3.webp",
+          "width": 1600,
+          "height": 1003,
+          "bytes": 172124
+        },
+        {
+          "path": "img/2048/works/SKM/SKM_3.webp",
+          "width": 1825,
+          "height": 1144,
+          "bytes": 201770
+        }
+      ]
+    },
+    "works/SKM/SKM_4.png": {
+      "hash": "4d0d318c15b4274c",
+      "width": 1825,
+      "height": 1143,
+      "variants": [
+        {
+          "path": "img/320/works/SKM/SKM_4.webp",
+          "width": 320,
+          "height": 200,
+          "bytes": 13972
+        },
+        {
+          "path": "img/480/works/SKM/SKM_4.webp",
+          "width": 480,
+          "height": 301,
+          "bytes": 24480
+        },
+        {
+          "path": "img/640/works/SKM/SKM_4.webp",
+          "width": 640,
+          "height": 401,
+          "bytes": 36034
+        },
+        {
+          "path": "img/960/works/SKM/SKM_4.webp",
+          "width": 960,
+          "height": 601,
+          "bytes": 57872
+        },
+        {
+          "path": "img/1280/works/SKM/SKM_4.webp",
+          "width": 1280,
+          "height": 802,
+          "bytes": 78712
+        },
+        {
+          "path": "img/1600/works/SKM/SKM_4.webp",
+          "width": 1600,
+          "height": 1002,
+          "bytes": 100630
+        },
+        {
+          "path": "img/2048/works/SKM/SKM_4.webp",
+          "width": 1825,
+          "height": 1143,
+          "bytes": 117290
+        }
+      ]
+    },
+    "works/SKM/SKM_5.png": {
+      "hash": "43e31239f89fd5b0",
+      "width": 1825,
+      "height": 1147,
+      "variants": [
+        {
+          "path": "img/320/works/SKM/SKM_5.webp",
+          "width": 320,
+          "height": 201,
+          "bytes": 10284
+        },
+        {
+          "path": "img/480/works/SKM/SKM_5.webp",
+          "width": 480,
+          "height": 302,
+          "bytes": 18240
+        },
+        {
+          "path": "img/640/works/SKM/SKM_5.webp",
+          "width": 640,
+          "height": 402,
+          "bytes": 26866
+        },
+        {
+          "path": "img/960/works/SKM/SKM_5.webp",
+          "width": 960,
+          "height": 603,
+          "bytes": 45544
+        },
+        {
+          "path": "img/1280/works/SKM/SKM_5.webp",
+          "width": 1280,
+          "height": 804,
+          "bytes": 63950
+        },
+        {
+          "path": "img/1600/works/SKM/SKM_5.webp",
+          "width": 1600,
+          "height": 1006,
+          "bytes": 81718
+        },
+        {
+          "path": "img/2048/works/SKM/SKM_5.webp",
+          "width": 1825,
+          "height": 1147,
+          "bytes": 96180
+        }
+      ]
+    },
+    "works/SKM/SKM_6.png": {
+      "hash": "84e3821c1158c933",
+      "width": 1825,
+      "height": 1144,
+      "variants": [
+        {
+          "path": "img/320/works/SKM/SKM_6.webp",
+          "width": 320,
+          "height": 201,
+          "bytes": 11156
+        },
+        {
+          "path": "img/480/works/SKM/SKM_6.webp",
+          "width": 480,
+          "height": 301,
+          "bytes": 20162
+        },
+        {
+          "path": "img/640/works/SKM/SKM_6.webp",
+          "width": 640,
+          "height": 401,
+          "bytes": 30210
+        },
+        {
+          "path": "img/960/works/SKM/SKM_6.webp",
+          "width": 960,
+          "height": 602,
+          "bytes": 53656
+        },
+        {
+          "path": "img/1280/works/SKM/SKM_6.webp",
+          "width": 1280,
+          "height": 802,
+          "bytes": 78328
+        },
+        {
+          "path": "img/1600/works/SKM/SKM_6.webp",
+          "width": 1600,
+          "height": 1003,
+          "bytes": 100718
+        },
+        {
+          "path": "img/2048/works/SKM/SKM_6.webp",
+          "width": 1825,
+          "height": 1144,
+          "bytes": 117708
+        }
+      ]
+    },
+    "works/SKM/SKM_7.png": {
+      "hash": "a0b99072a7bc1bc3",
+      "width": 1825,
+      "height": 1144,
+      "variants": [
+        {
+          "path": "img/320/works/SKM/SKM_7.webp",
+          "width": 320,
+          "height": 201,
+          "bytes": 13958
+        },
+        {
+          "path": "img/480/works/SKM/SKM_7.webp",
+          "width": 480,
+          "height": 301,
+          "bytes": 25962
+        },
+        {
+          "path": "img/640/works/SKM/SKM_7.webp",
+          "width": 640,
+          "height": 401,
+          "bytes": 39500
+        },
+        {
+          "path": "img/960/works/SKM/SKM_7.webp",
+          "width": 960,
+          "height": 602,
+          "bytes": 70090
+        },
+        {
+          "path": "img/1280/works/SKM/SKM_7.webp",
+          "width": 1280,
+          "height": 802,
+          "bytes": 101988
+        },
+        {
+          "path": "img/1600/works/SKM/SKM_7.webp",
+          "width": 1600,
+          "height": 1003,
+          "bytes": 132726
+        },
+        {
+          "path": "img/2048/works/SKM/SKM_7.webp",
+          "width": 1825,
+          "height": 1144,
+          "bytes": 157812
+        }
+      ]
+    },
+    "works/SKM/SKM_8.png": {
+      "hash": "dcf0e125e8d2cf50",
+      "width": 1838,
+      "height": 1034,
+      "variants": [
+        {
+          "path": "img/320/works/SKM/SKM_8.webp",
+          "width": 320,
+          "height": 180,
+          "bytes": 7634
+        },
+        {
+          "path": "img/480/works/SKM/SKM_8.webp",
+          "width": 480,
+          "height": 270,
+          "bytes": 14846
+        },
+        {
+          "path": "img/640/works/SKM/SKM_8.webp",
+          "width": 640,
+          "height": 360,
+          "bytes": 23382
+        },
+        {
+          "path": "img/960/works/SKM/SKM_8.webp",
+          "width": 960,
+          "height": 540,
+          "bytes": 44320
+        },
+        {
+          "path": "img/1280/works/SKM/SKM_8.webp",
+          "width": 1280,
+          "height": 720,
+          "bytes": 68374
+        },
+        {
+          "path": "img/1600/works/SKM/SKM_8.webp",
+          "width": 1600,
+          "height": 900,
+          "bytes": 94482
+        },
+        {
+          "path": "img/2048/works/SKM/SKM_8.webp",
+          "width": 1838,
+          "height": 1034,
+          "bytes": 118924
+        }
+      ]
+    },
+    "works/SKM/SKM_9.png": {
+      "hash": "338d452c447fe9ad",
+      "width": 1814,
+      "height": 1291,
+      "variants": [
+        {
+          "path": "img/320/works/SKM/SKM_9.webp",
+          "width": 320,
+          "height": 228,
+          "bytes": 25300
+        },
+        {
+          "path": "img/480/works/SKM/SKM_9.webp",
+          "width": 480,
+          "height": 342,
+          "bytes": 48836
+        },
+        {
+          "path": "img/640/works/SKM/SKM_9.webp",
+          "width": 640,
+          "height": 455,
+          "bytes": 74314
+        },
+        {
+          "path": "img/960/works/SKM/SKM_9.webp",
+          "width": 960,
+          "height": 683,
+          "bytes": 124132
+        },
+        {
+          "path": "img/1280/works/SKM/SKM_9.webp",
+          "width": 1280,
+          "height": 911,
+          "bytes": 174180
+        },
+        {
+          "path": "img/1600/works/SKM/SKM_9.webp",
+          "width": 1600,
+          "height": 1139,
+          "bytes": 226010
+        },
+        {
+          "path": "img/2048/works/SKM/SKM_9.webp",
+          "width": 1814,
+          "height": 1291,
+          "bytes": 257534
+        }
+      ]
+    },
+    "works/SKM/skm_cover.png": {
+      "hash": "5398ace57fac6a00",
+      "width": 1920,
+      "height": 1080,
+      "variants": [
+        {
+          "path": "img/320/works/SKM/skm_cover.webp",
+          "width": 320,
+          "height": 180,
+          "bytes": 1410
+        },
+        {
+          "path": "img/480/works/SKM/skm_cover.webp",
+          "width": 480,
+          "height": 270,
+          "bytes": 2688
+        },
+        {
+          "path": "img/640/works/SKM/skm_cover.webp",
+          "width": 640,
+          "height": 360,
+          "bytes": 5710
+        },
+        {
+          "path": "img/960/works/SKM/skm_cover.webp",
+          "width": 960,
+          "height": 540,
+          "bytes": 9206
+        },
+        {
+          "path": "img/1280/works/SKM/skm_cover.webp",
+          "width": 1280,
+          "height": 720,
+          "bytes": 16274
+        },
+        {
+          "path": "img/1600/works/SKM/skm_cover.webp",
+          "width": 1600,
+          "height": 900,
+          "bytes": 27670
+        },
+        {
+          "path": "img/2048/works/SKM/skm_cover.webp",
+          "width": 1920,
+          "height": 1080,
+          "bytes": 40412
+        }
+      ]
+    },
+    "works/app/APP_1.png": {
+      "hash": "0071cd2a4fad9532",
+      "width": 1824,
+      "height": 1824,
+      "variants": [
+        {
+          "path": "img/320/works/app/APP_1.webp",
+          "width": 320,
+          "height": 320,
+          "bytes": 13554
+        },
+        {
+          "path": "img/480/works/app/APP_1.webp",
+          "width": 480,
+          "height": 480,
+          "bytes": 26556
+        },
+        {
+          "path": "img/640/works/app/APP_1.webp",
+          "width": 640,
+          "height": 640,
+          "bytes": 41984
+        },
+        {
+          "path": "img/960/works/app/APP_1.webp",
+          "width": 960,
+          "height": 960,
+          "bytes": 74556
+        },
+        {
+          "path": "img/1280/works/app/APP_1.webp",
+          "width": 1280,
+          "height": 1280,
+          "bytes": 105332
+        },
+        {
+          "path": "img/1600/works/app/APP_1.webp",
+          "width": 1600,
+          "height": 1600,
+          "bytes": 134902
+        },
+        {
+          "path": "img/2048/works/app/APP_1.webp",
+          "width": 1824,
+          "height": 1824,
+          "bytes": 154314
+        }
+      ]
+    },
+    "works/app/APP_10.png": {
+      "hash": "8ca6518b14f4a8e6",
+      "width": 1816,
+      "height": 1808,
+      "variants": [
+        {
+          "path": "img/320/works/app/APP_10.webp",
+          "width": 320,
+          "height": 319,
+          "bytes": 13512
+        },
+        {
+          "path": "img/480/works/app/APP_10.webp",
+          "width": 480,
+          "height": 478,
+          "bytes": 25396
+        },
+        {
+          "path": "img/640/works/app/APP_10.webp",
+          "width": 640,
+          "height": 637,
+          "bytes": 39528
+        },
+        {
+          "path": "img/960/works/app/APP_10.webp",
+          "width": 960,
+          "height": 956,
+          "bytes": 70930
+        },
+        {
+          "path": "img/1280/works/app/APP_10.webp",
+          "width": 1280,
+          "height": 1274,
+          "bytes": 99716
+        },
+        {
+          "path": "img/1600/works/app/APP_10.webp",
+          "width": 1600,
+          "height": 1593,
+          "bytes": 129020
+        },
+        {
+          "path": "img/2048/works/app/APP_10.webp",
+          "width": 1816,
+          "height": 1808,
+          "bytes": 144978
+        }
+      ]
+    },
+    "works/app/APP_11.png": {
+      "hash": "ef7ce753b20fdcdd",
+      "width": 1829,
+      "height": 1829,
+      "variants": [
+        {
+          "path": "img/320/works/app/APP_11.webp",
+          "width": 320,
+          "height": 320,
+          "bytes": 15080
+        },
+        {
+          "path": "img/480/works/app/APP_11.webp",
+          "width": 480,
+          "height": 480,
+          "bytes": 28274
+        },
+        {
+          "path": "img/640/works/app/APP_11.webp",
+          "width": 640,
+          "height": 640,
+          "bytes": 43778
+        },
+        {
+          "path": "img/960/works/app/APP_11.webp",
+          "width": 960,
+          "height": 960,
+          "bytes": 77728
+        },
+        {
+          "path": "img/1280/works/app/APP_11.webp",
+          "width": 1280,
+          "height": 1280,
+          "bytes": 110790
+        },
+        {
+          "path": "img/1600/works/app/APP_11.webp",
+          "width": 1600,
+          "height": 1600,
+          "bytes": 140848
+        },
+        {
+          "path": "img/2048/works/app/APP_11.webp",
+          "width": 1829,
+          "height": 1829,
+          "bytes": 163034
+        }
+      ]
+    },
+    "works/app/APP_2.png": {
+      "hash": "0f1325f0e6724423",
+      "width": 1829,
+      "height": 1029,
+      "variants": [
+        {
+          "path": "img/320/works/app/APP_2.webp",
+          "width": 320,
+          "height": 180,
+          "bytes": 5788
+        },
+        {
+          "path": "img/480/works/app/APP_2.webp",
+          "width": 480,
+          "height": 270,
+          "bytes": 10950
+        },
+        {
+          "path": "img/640/works/app/APP_2.webp",
+          "width": 640,
+          "height": 360,
+          "bytes": 17036
+        },
+        {
+          "path": "img/960/works/app/APP_2.webp",
+          "width": 960,
+          "height": 540,
+          "bytes": 29324
+        },
+        {
+          "path": "img/1280/works/app/APP_2.webp",
+          "width": 1280,
+          "height": 720,
+          "bytes": 42020
+        },
+        {
+          "path": "img/1600/works/app/APP_2.webp",
+          "width": 1600,
+          "height": 900,
+          "bytes": 53264
+        },
+        {
+          "path": "img/2048/works/app/APP_2.webp",
+          "width": 1829,
+          "height": 1029,
+          "bytes": 62370
+        }
+      ]
+    },
+    "works/app/APP_3.png": {
+      "hash": "30727be2895a276c",
+      "width": 1829,
+      "height": 1029,
+      "variants": [
+        {
+          "path": "img/320/works/app/APP_3.webp",
+          "width": 320,
+          "height": 180,
+          "bytes": 6402
+        },
+        {
+          "path": "img/480/works/app/APP_3.webp",
+          "width": 480,
+          "height": 270,
+          "bytes": 13138
+        },
+        {
+          "path": "img/640/works/app/APP_3.webp",
+          "width": 640,
+          "height": 360,
+          "bytes": 20032
+        },
+        {
+          "path": "img/960/works/app/APP_3.webp",
+          "width": 960,
+          "height": 540,
+          "bytes": 36132
+        },
+        {
+          "path": "img/1280/works/app/APP_3.webp",
+          "width": 1280,
+          "height": 720,
+          "bytes": 52572
+        },
+        {
+          "path": "img/1600/works/app/APP_3.webp",
+          "width": 1600,
+          "height": 900,
+          "bytes": 67274
+        },
+        {
+          "path": "img/2048/works/app/APP_3.webp",
+          "width": 1829,
+          "height": 1029,
+          "bytes": 76968
+        }
+      ]
+    },
+    "works/app/APP_4.png": {
+      "hash": "395ef28c6e85c57c",
+      "width": 1829,
+      "height": 1029,
+      "variants": [
+        {
+          "path": "img/320/works/app/APP_4.webp",
+          "width": 320,
+          "height": 180,
+          "bytes": 5362
+        },
+        {
+          "path": "img/480/works/app/APP_4.webp",
+          "width": 480,
+          "height": 270,
+          "bytes": 10088
+        },
+        {
+          "path": "img/640/works/app/APP_4.webp",
+          "width": 640,
+          "height": 360,
+          "bytes": 15980
+        },
+        {
+          "path": "img/960/works/app/APP_4.webp",
+          "width": 960,
+          "height": 540,
+          "bytes": 29294
+        },
+        {
+          "path": "img/1280/works/app/APP_4.webp",
+          "width": 1280,
+          "height": 720,
+          "bytes": 42532
+        },
+        {
+          "path": "img/1600/works/app/APP_4.webp",
+          "width": 1600,
+          "height": 900,
+          "bytes": 54228
+        },
+        {
+          "path": "img/2048/works/app/APP_4.webp",
+          "width": 1829,
+          "height": 1029,
+          "bytes": 63820
+        }
+      ]
+    },
+    "works/app/APP_5.png": {
+      "hash": "888ce99c7af78f55",
+      "width": 1829,
+      "height": 1029,
+      "variants": [
+        {
+          "path": "img/320/works/app/APP_5.webp",
+          "width": 320,
+          "height": 180,
+          "bytes": 6394
+        },
+        {
+          "path": "img/480/works/app/APP_5.webp",
+          "width": 480,
+          "height": 270,
+          "bytes": 13116
+        },
+        {
+          "path": "img/640/works/app/APP_5.webp",
+          "width": 640,
+          "height": 360,
+          "bytes": 20004
+        },
+        {
+          "path": "img/960/works/app/APP_5.webp",
+          "width": 960,
+          "height": 540,
+          "bytes": 36054
+        },
+        {
+          "path": "img/1280/works/app/APP_5.webp",
+          "width": 1280,
+          "height": 720,
+          "bytes": 52262
+        },
+        {
+          "path": "img/1600/works/app/APP_5.webp",
+          "width": 1600,
+          "height": 900,
+          "bytes": 67032
+        },
+        {
+          "path": "img/2048/works/app/APP_5.webp",
+          "width": 1829,
+          "height": 1029,
+          "bytes": 76026
+        }
+      ]
+    },
+    "works/app/APP_8.png": {
+      "hash": "e37eab3f47377673",
+      "width": 1818,
+      "height": 1816,
+      "variants": [
+        {
+          "path": "img/320/works/app/APP_8.webp",
+          "width": 320,
+          "height": 320,
+          "bytes": 8642
+        },
+        {
+          "path": "img/480/works/app/APP_8.webp",
+          "width": 480,
+          "height": 479,
+          "bytes": 16140
+        },
+        {
+          "path": "img/640/works/app/APP_8.webp",
+          "width": 640,
+          "height": 639,
+          "bytes": 23224
+        },
+        {
+          "path": "img/960/works/app/APP_8.webp",
+          "width": 960,
+          "height": 959,
+          "bytes": 35882
+        },
+        {
+          "path": "img/1280/works/app/APP_8.webp",
+          "width": 1280,
+          "height": 1279,
+          "bytes": 48336
+        },
+        {
+          "path": "img/1600/works/app/APP_8.webp",
+          "width": 1600,
+          "height": 1598,
+          "bytes": 59580
+        },
+        {
+          "path": "img/2048/works/app/APP_8.webp",
+          "width": 1818,
+          "height": 1816,
+          "bytes": 67630
+        }
+      ]
+    },
+    "works/app/APP_9.png": {
+      "hash": "3e32e1c4175f29d4",
+      "width": 1818,
+      "height": 1816,
+      "variants": [
+        {
+          "path": "img/320/works/app/APP_9.webp",
+          "width": 320,
+          "height": 320,
+          "bytes": 10672
+        },
+        {
+          "path": "img/480/works/app/APP_9.webp",
+          "width": 480,
+          "height": 479,
+          "bytes": 19868
+        },
+        {
+          "path": "img/640/works/app/APP_9.webp",
+          "width": 640,
+          "height": 639,
+          "bytes": 29814
+        },
+        {
+          "path": "img/960/works/app/APP_9.webp",
+          "width": 960,
+          "height": 959,
+          "bytes": 52444
+        },
+        {
+          "path": "img/1280/works/app/APP_9.webp",
+          "width": 1280,
+          "height": 1279,
+          "bytes": 73502
+        },
+        {
+          "path": "img/1600/works/app/APP_9.webp",
+          "width": 1600,
+          "height": 1598,
+          "bytes": 90898
+        },
+        {
+          "path": "img/2048/works/app/APP_9.webp",
+          "width": 1818,
+          "height": 1816,
+          "bytes": 104388
+        }
+      ]
+    },
+    "works/app/app_cover.jpg": {
+      "hash": "aa8ddfdf40273f4c",
+      "width": 3000,
+      "height": 1688,
+      "variants": [
+        {
+          "path": "img/320/works/app/app_cover.webp",
+          "width": 320,
+          "height": 180,
+          "bytes": 2592
+        },
+        {
+          "path": "img/480/works/app/app_cover.webp",
+          "width": 480,
+          "height": 270,
+          "bytes": 4658
+        },
+        {
+          "path": "img/640/works/app/app_cover.webp",
+          "width": 640,
+          "height": 360,
+          "bytes": 6972
+        },
+        {
+          "path": "img/960/works/app/app_cover.webp",
+          "width": 960,
+          "height": 540,
+          "bytes": 13724
+        },
+        {
+          "path": "img/1280/works/app/app_cover.webp",
+          "width": 1280,
+          "height": 720,
+          "bytes": 24514
+        },
+        {
+          "path": "img/1600/works/app/app_cover.webp",
+          "width": 1600,
+          "height": 900,
+          "bytes": 43606
+        },
+        {
+          "path": "img/2048/works/app/app_cover.webp",
+          "width": 2048,
+          "height": 1152,
+          "bytes": 97754
+        }
+      ]
+    },
+    "works/brand/brand_1.png": {
+      "hash": "300a3d09e2ddc9e9",
+      "width": 3684,
+      "height": 1842,
+      "variants": [
+        {
+          "path": "img/320/works/brand/brand_1.webp",
+          "width": 320,
+          "height": 160,
+          "bytes": 2624
+        },
+        {
+          "path": "img/480/works/brand/brand_1.webp",
+          "width": 480,
+          "height": 240,
+          "bytes": 4378
+        },
+        {
+          "path": "img/640/works/brand/brand_1.webp",
+          "width": 640,
+          "height": 320,
+          "bytes": 5906
+        },
+        {
+          "path": "img/960/works/brand/brand_1.webp",
+          "width": 960,
+          "height": 480,
+          "bytes": 10014
+        },
+        {
+          "path": "img/1280/works/brand/brand_1.webp",
+          "width": 1280,
+          "height": 640,
+          "bytes": 13762
+        },
+        {
+          "path": "img/1600/works/brand/brand_1.webp",
+          "width": 1600,
+          "height": 800,
+          "bytes": 18274
+        },
+        {
+          "path": "img/2048/works/brand/brand_1.webp",
+          "width": 2048,
+          "height": 1024,
+          "bytes": 25008
+        }
+      ]
+    },
+    "works/brand/brand_10.png": {
+      "hash": "743674062666ce23",
+      "width": 3684,
+      "height": 2606,
+      "variants": [
+        {
+          "path": "img/320/works/brand/brand_10.webp",
+          "width": 320,
+          "height": 226,
+          "bytes": 8862
+        },
+        {
+          "path": "img/480/works/brand/brand_10.webp",
+          "width": 480,
+          "height": 340,
+          "bytes": 15596
+        },
+        {
+          "path": "img/640/works/brand/brand_10.webp",
+          "width": 640,
+          "height": 453,
+          "bytes": 23014
+        },
+        {
+          "path": "img/960/works/brand/brand_10.webp",
+          "width": 960,
+          "height": 679,
+          "bytes": 39552
+        },
+        {
+          "path": "img/1280/works/brand/brand_10.webp",
+          "width": 1280,
+          "height": 905,
+          "bytes": 56094
+        },
+        {
+          "path": "img/1600/works/brand/brand_10.webp",
+          "width": 1600,
+          "height": 1132,
+          "bytes": 75458
+        },
+        {
+          "path": "img/2048/works/brand/brand_10.webp",
+          "width": 2048,
+          "height": 1449,
+          "bytes": 102476
+        }
+      ]
+    },
+    "works/brand/brand_11.png": {
+      "hash": "de65a5c9b620ac0d",
+      "width": 3684,
+      "height": 2606,
+      "variants": [
+        {
+          "path": "img/320/works/brand/brand_11.webp",
+          "width": 320,
+          "height": 226,
+          "bytes": 7610
+        },
+        {
+          "path": "img/480/works/brand/brand_11.webp",
+          "width": 480,
+          "height": 340,
+          "bytes": 13876
+        },
+        {
+          "path": "img/640/works/brand/brand_11.webp",
+          "width": 640,
+          "height": 453,
+          "bytes": 21524
+        },
+        {
+          "path": "img/960/works/brand/brand_11.webp",
+          "width": 960,
+          "height": 679,
+          "bytes": 39614
+        },
+        {
+          "path": "img/1280/works/brand/brand_11.webp",
+          "width": 1280,
+          "height": 905,
+          "bytes": 60178
+        },
+        {
+          "path": "img/1600/works/brand/brand_11.webp",
+          "width": 1600,
+          "height": 1132,
+          "bytes": 80988
+        },
+        {
+          "path": "img/2048/works/brand/brand_11.webp",
+          "width": 2048,
+          "height": 1449,
+          "bytes": 110914
+        }
+      ]
+    },
+    "works/brand/brand_12.png": {
+      "hash": "625dbd13a4b3e084",
+      "width": 3684,
+      "height": 2606,
+      "variants": [
+        {
+          "path": "img/320/works/brand/brand_12.webp",
+          "width": 320,
+          "height": 226,
+          "bytes": 6494
+        },
+        {
+          "path": "img/480/works/brand/brand_12.webp",
+          "width": 480,
+          "height": 340,
+          "bytes": 11228
+        },
+        {
+          "path": "img/640/works/brand/brand_12.webp",
+          "width": 640,
+          "height": 453,
+          "bytes": 17164
+        },
+        {
+          "path": "img/960/works/brand/brand_12.webp",
+          "width": 960,
+          "height": 679,
+          "bytes": 30120
+        },
+        {
+          "path": "img/1280/works/brand/brand_12.webp",
+          "width": 1280,
+          "height": 905,
+          "bytes": 44954
+        },
+        {
+          "path": "img/1600/works/brand/brand_12.webp",
+          "width": 1600,
+          "height": 1132,
+          "bytes": 60742
+        },
+        {
+          "path": "img/2048/works/brand/brand_12.webp",
+          "width": 2048,
+          "height": 1449,
+          "bytes": 83924
+        }
+      ]
+    },
+    "works/brand/brand_2.png": {
+      "hash": "1da5efdd3114fcf9",
+      "width": 1826,
+      "height": 1824,
+      "variants": [
+        {
+          "path": "img/320/works/brand/brand_2.webp",
+          "width": 320,
+          "height": 320,
+          "bytes": 6372
+        },
+        {
+          "path": "img/480/works/brand/brand_2.webp",
+          "width": 480,
+          "height": 479,
+          "bytes": 11104
+        },
+        {
+          "path": "img/640/works/brand/brand_2.webp",
+          "width": 640,
+          "height": 639,
+          "bytes": 16236
+        },
+        {
+          "path": "img/960/works/brand/brand_2.webp",
+          "width": 960,
+          "height": 959,
+          "bytes": 25058
+        },
+        {
+          "path": "img/1280/works/brand/brand_2.webp",
+          "width": 1280,
+          "height": 1279,
+          "bytes": 31646
+        },
+        {
+          "path": "img/1600/works/brand/brand_2.webp",
+          "width": 1600,
+          "height": 1598,
+          "bytes": 39918
+        },
+        {
+          "path": "img/2048/works/brand/brand_2.webp",
+          "width": 1826,
+          "height": 1824,
+          "bytes": 48182
+        }
+      ]
+    },
+    "works/brand/brand_3.png": {
+      "hash": "cb94fb5869287ce1",
+      "width": 1826,
+      "height": 1824,
+      "variants": [
+        {
+          "path": "img/320/works/brand/brand_3.webp",
+          "width": 320,
+          "height": 320,
+          "bytes": 1962
+        },
+        {
+          "path": "img/480/works/brand/brand_3.webp",
+          "width": 480,
+          "height": 479,
+          "bytes": 2946
+        },
+        {
+          "path": "img/640/works/brand/brand_3.webp",
+          "width": 640,
+          "height": 639,
+          "bytes": 3980
+        },
+        {
+          "path": "img/960/works/brand/brand_3.webp",
+          "width": 960,
+          "height": 959,
+          "bytes": 6244
+        },
+        {
+          "path": "img/1280/works/brand/brand_3.webp",
+          "width": 1280,
+          "height": 1279,
+          "bytes": 8760
+        },
+        {
+          "path": "img/1600/works/brand/brand_3.webp",
+          "width": 1600,
+          "height": 1598,
+          "bytes": 11750
+        },
+        {
+          "path": "img/2048/works/brand/brand_3.webp",
+          "width": 1826,
+          "height": 1824,
+          "bytes": 14254
+        }
+      ]
+    },
+    "works/brand/brand_4.png": {
+      "hash": "002a73f28529a3a5",
+      "width": 1826,
+      "height": 1824,
+      "variants": [
+        {
+          "path": "img/320/works/brand/brand_4.webp",
+          "width": 320,
+          "height": 320,
+          "bytes": 6730
+        },
+        {
+          "path": "img/480/works/brand/brand_4.webp",
+          "width": 480,
+          "height": 479,
+          "bytes": 11482
+        },
+        {
+          "path": "img/640/works/brand/brand_4.webp",
+          "width": 640,
+          "height": 639,
+          "bytes": 16158
+        },
+        {
+          "path": "img/960/works/brand/brand_4.webp",
+          "width": 960,
+          "height": 959,
+          "bytes": 24730
+        },
+        {
+          "path": "img/1280/works/brand/brand_4.webp",
+          "width": 1280,
+          "height": 1279,
+          "bytes": 34096
+        },
+        {
+          "path": "img/1600/works/brand/brand_4.webp",
+          "width": 1600,
+          "height": 1598,
+          "bytes": 42988
+        },
+        {
+          "path": "img/2048/works/brand/brand_4.webp",
+          "width": 1826,
+          "height": 1824,
+          "bytes": 52540
+        }
+      ]
+    },
+    "works/brand/brand_5.png": {
+      "hash": "ec474a8ea9fc053a",
+      "width": 1824,
+      "height": 1824,
+      "variants": [
+        {
+          "path": "img/320/works/brand/brand_5.webp",
+          "width": 320,
+          "height": 320,
+          "bytes": 6012
+        },
+        {
+          "path": "img/480/works/brand/brand_5.webp",
+          "width": 480,
+          "height": 480,
+          "bytes": 10220
+        },
+        {
+          "path": "img/640/works/brand/brand_5.webp",
+          "width": 640,
+          "height": 640,
+          "bytes": 13762
+        },
+        {
+          "path": "img/960/works/brand/brand_5.webp",
+          "width": 960,
+          "height": 960,
+          "bytes": 22960
+        },
+        {
+          "path": "img/1280/works/brand/brand_5.webp",
+          "width": 1280,
+          "height": 1280,
+          "bytes": 33576
+        },
+        {
+          "path": "img/1600/works/brand/brand_5.webp",
+          "width": 1600,
+          "height": 1600,
+          "bytes": 45978
+        },
+        {
+          "path": "img/2048/works/brand/brand_5.webp",
+          "width": 1824,
+          "height": 1824,
+          "bytes": 54658
+        }
+      ]
+    },
+    "works/brand/brand_6.png": {
+      "hash": "51a87d1b46004ee6",
+      "width": 1824,
+      "height": 1824,
+      "variants": [
+        {
+          "path": "img/320/works/brand/brand_6.webp",
+          "width": 320,
+          "height": 320,
+          "bytes": 5450
+        },
+        {
+          "path": "img/480/works/brand/brand_6.webp",
+          "width": 480,
+          "height": 480,
+          "bytes": 9500
+        },
+        {
+          "path": "img/640/works/brand/brand_6.webp",
+          "width": 640,
+          "height": 640,
+          "bytes": 13562
+        },
+        {
+          "path": "img/960/works/brand/brand_6.webp",
+          "width": 960,
+          "height": 960,
+          "bytes": 22798
+        },
+        {
+          "path": "img/1280/works/brand/brand_6.webp",
+          "width": 1280,
+          "height": 1280,
+          "bytes": 33442
+        },
+        {
+          "path": "img/1600/works/brand/brand_6.webp",
+          "width": 1600,
+          "height": 1600,
+          "bytes": 45418
+        },
+        {
+          "path": "img/2048/works/brand/brand_6.webp",
+          "width": 1824,
+          "height": 1824,
+          "bytes": 53732
+        }
+      ]
+    },
+    "works/brand/brand_7.png": {
+      "hash": "e1808d13eb1bbe7a",
+      "width": 1824,
+      "height": 1824,
+      "variants": [
+        {
+          "path": "img/320/works/brand/brand_7.webp",
+          "width": 320,
+          "height": 320,
+          "bytes": 5806
+        },
+        {
+          "path": "img/480/works/brand/brand_7.webp",
+          "width": 480,
+          "height": 480,
+          "bytes": 10894
+        },
+        {
+          "path": "img/640/works/brand/brand_7.webp",
+          "width": 640,
+          "height": 640,
+          "bytes": 15924
+        },
+        {
+          "path": "img/960/works/brand/brand_7.webp",
+          "width": 960,
+          "height": 960,
+          "bytes": 26902
+        },
+        {
+          "path": "img/1280/works/brand/brand_7.webp",
+          "width": 1280,
+          "height": 1280,
+          "bytes": 42126
+        },
+        {
+          "path": "img/1600/works/brand/brand_7.webp",
+          "width": 1600,
+          "height": 1600,
+          "bytes": 56122
+        },
+        {
+          "path": "img/2048/works/brand/brand_7.webp",
+          "width": 1824,
+          "height": 1824,
+          "bytes": 65898
+        }
+      ]
+    },
+    "works/brand/brand_8.png": {
+      "hash": "cb52ae217fc2329f",
+      "width": 1826,
+      "height": 2512,
+      "variants": [
+        {
+          "path": "img/320/works/brand/brand_8.webp",
+          "width": 320,
+          "height": 440,
+          "bytes": 11782
+        },
+        {
+          "path": "img/480/works/brand/brand_8.webp",
+          "width": 480,
+          "height": 660,
+          "bytes": 22210
+        },
+        {
+          "path": "img/640/works/brand/brand_8.webp",
+          "width": 640,
+          "height": 880,
+          "bytes": 33700
+        },
+        {
+          "path": "img/960/works/brand/brand_8.webp",
+          "width": 960,
+          "height": 1321,
+          "bytes": 56810
+        },
+        {
+          "path": "img/1280/works/brand/brand_8.webp",
+          "width": 1280,
+          "height": 1761,
+          "bytes": 78734
+        },
+        {
+          "path": "img/1600/works/brand/brand_8.webp",
+          "width": 1600,
+          "height": 2201,
+          "bytes": 101648
+        },
+        {
+          "path": "img/2048/works/brand/brand_8.webp",
+          "width": 1826,
+          "height": 2512,
+          "bytes": 116844
+        }
+      ]
+    },
+    "works/brand/brand_9.png": {
+      "hash": "26bbe19c428bd4ff",
+      "width": 1826,
+      "height": 2512,
+      "variants": [
+        {
+          "path": "img/320/works/brand/brand_9.webp",
+          "width": 320,
+          "height": 440,
+          "bytes": 11452
+        },
+        {
+          "path": "img/480/works/brand/brand_9.webp",
+          "width": 480,
+          "height": 660,
+          "bytes": 20868
+        },
+        {
+          "path": "img/640/works/brand/brand_9.webp",
+          "width": 640,
+          "height": 880,
+          "bytes": 31694
+        },
+        {
+          "path": "img/960/works/brand/brand_9.webp",
+          "width": 960,
+          "height": 1321,
+          "bytes": 52306
+        },
+        {
+          "path": "img/1280/works/brand/brand_9.webp",
+          "width": 1280,
+          "height": 1761,
+          "bytes": 73846
+        },
+        {
+          "path": "img/1600/works/brand/brand_9.webp",
+          "width": 1600,
+          "height": 2201,
+          "bytes": 95414
+        },
+        {
+          "path": "img/2048/works/brand/brand_9.webp",
+          "width": 1826,
+          "height": 2512,
+          "bytes": 109528
+        }
+      ]
+    },
+    "works/brand/brand_cover.jpg": {
+      "hash": "3df77a7021af9002",
+      "width": 1920,
+      "height": 1080,
+      "variants": [
+        {
+          "path": "img/320/works/brand/brand_cover.webp",
+          "width": 320,
+          "height": 180,
+          "bytes": 2358
+        },
+        {
+          "path": "img/480/works/brand/brand_cover.webp",
+          "width": 480,
+          "height": 270,
+          "bytes": 3858
+        },
+        {
+          "path": "img/640/works/brand/brand_cover.webp",
+          "width": 640,
+          "height": 360,
+          "bytes": 5502
+        },
+        {
+          "path": "img/960/works/brand/brand_cover.webp",
+          "width": 960,
+          "height": 540,
+          "bytes": 9082
+        },
+        {
+          "path": "img/1280/works/brand/brand_cover.webp",
+          "width": 1280,
+          "height": 720,
+          "bytes": 13152
+        },
+        {
+          "path": "img/1600/works/brand/brand_cover.webp",
+          "width": 1600,
+          "height": 900,
+          "bytes": 17756
+        },
+        {
+          "path": "img/2048/works/brand/brand_cover.webp",
+          "width": 1920,
+          "height": 1080,
+          "bytes": 23914
+        }
+      ]
+    },
+    "works/paint/paint_cover.jpg": {
+      "hash": "9a7b0214f5828232",
+      "width": 5001,
+      "height": 3376,
+      "variants": [
+        {
+          "path": "img/320/works/paint/paint_cover.webp",
+          "width": 320,
+          "height": 216,
+          "bytes": 5438
+        },
+        {
+          "path": "img/480/works/paint/paint_cover.webp",
+          "width": 480,
+          "height": 324,
+          "bytes": 10728
+        },
+        {
+          "path": "img/640/works/paint/paint_cover.webp",
+          "width": 640,
+          "height": 432,
+          "bytes": 18960
+        },
+        {
+          "path": "img/960/works/paint/paint_cover.webp",
+          "width": 960,
+          "height": 648,
+          "bytes": 38872
+        },
+        {
+          "path": "img/1280/works/paint/paint_cover.webp",
+          "width": 1280,
+          "height": 864,
+          "bytes": 68020
+        },
+        {
+          "path": "img/1600/works/paint/paint_cover.webp",
+          "width": 1600,
+          "height": 1080,
+          "bytes": 100760
+        },
+        {
+          "path": "img/2048/works/paint/paint_cover.webp",
+          "width": 2048,
+          "height": 1383,
+          "bytes": 161598
+        }
+      ]
+    }
+  }
+}
