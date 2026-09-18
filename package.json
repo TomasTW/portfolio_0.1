@@ -8,13 +8,9 @@
     "images": "node scripts/generate-responsive-images.mjs",
     "images:check": "node scripts/generate-responsive-images.mjs --check",
     "pictures": "node scripts/apply-picture-tags.mjs",
-    "build:css": "clean-css-cli -o style.css style.dev.css",
-    "build:js": "terser app.dev.js -c -m -o app.js && terser canvas-ui.dev.js -c -m -o canvas-ui.js && terser hero-bubble.dev.js -c -m -o hero-bubble.js",
-    "build": "npm run images && npm run pictures && npm run build:css && npm run build:js"
+    "build": "npm run images && npm run pictures"
   },
   "devDependencies": {
-    "clean-css-cli": "^5.6.3",
-    "sharp": "^0.34.4",
-    "terser": "^5.44.0"
+    "sharp": "^0.34.4"
   }
 }
