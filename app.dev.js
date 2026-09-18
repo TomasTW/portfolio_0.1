@@ -10,7 +10,6 @@
 if ('scrollRestoration' in history) {
   history.scrollRestoration = 'manual';
 }
-window.scrollTo(0, 0);
 
 // Configure ScrollTrigger to prevent stale scroll state caching and avoid jumpiness caused by mobile address bar resizing
 if (typeof ScrollTrigger === 'undefined') {
@@ -20,7 +19,6 @@ if (typeof ScrollTrigger === 'undefined') {
       if ('scrollRestoration' in history) {
         history.scrollRestoration = mode || 'manual';
       }
-      window.scrollTo(0, 0);
     },
     config(cfg) {
       this._config = Object.assign(this._config || {}, cfg);
@@ -49,7 +47,6 @@ ScrollTrigger.config({
 
 // Ensure all ScrollTrigger animations recalculate trigger coordinates only after the DOM, images, and fonts are fully loaded
 window.addEventListener('load', () => {
-  window.scrollTo(0, 0);
   if (document.fonts) {
     document.fonts.ready.then(() => {
       ScrollTrigger.refresh();
@@ -2813,5 +2810,8 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // (Banner removed — portfolio works well enough in webviews without prompting)
   })();
+
+  // Scroll animations are wired up — sections can show through to the hero again.
+  document.documentElement.classList.remove('is-booting');
 
 });
