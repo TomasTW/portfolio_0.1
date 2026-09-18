@@ -2057,6 +2057,17 @@ document.addEventListener('DOMContentLoaded', () => {
 
     let currentGallery = [];
     let currentIndex = 0;
+    // If the WebP preview cannot be decoded, drop back to the original file.
+    if (imgEl) {
+      imgEl.addEventListener('error', () => {
+        const fallback = imgEl.dataset.fallbackSrc;
+        if (fallback && imgEl.getAttribute('src') !== fallback) {
+          imgEl.dataset.fallbackSrc = '';
+          imgEl.src = fallback;
+        }
+      });
+    }
+
     let isZoomed = false;
     let panX = 0;
     let panY = 0;
@@ -2071,7 +2082,18 @@ document.addEventListener('DOMContentLoaded', () => {
       elements.forEach(el => {
         if (el.tagName === 'IMG') {
           if (el.src && !el.closest('.work-modal-close') && !el.closest('.app-video-wrapper')) {
-            mediaList.push({ type: 'image', element: el, src: el.currentSrc || el.src, alt: el.alt || 'Preview' });
+            // data-lightbox-src is the capped full-size WebP emitted by
+            // scripts/apply-picture-tags.mjs. currentSrc would be the small
+            // responsive variant the thumbnail happened to pick, which looks
+            // soft once the viewer zooms in; the original file is kept as a
+            // fallback for browsers without WebP support.
+            mediaList.push({
+              type: 'image',
+              element: el,
+              src: el.dataset.lightboxSrc || el.currentSrc || el.src,
+              fallbackSrc: el.dataset.lightboxFallback || el.src,
+              alt: el.alt || 'Preview'
+            });
           }
         } else if (el.classList.contains('app-video-wrapper')) {
           const vid = el.querySelector('video');
@@ -2148,6 +2170,7 @@ document.addEventListener('DOMContentLoaded', () => {
           videoEl.pause();
           videoEl.src = '';
         }
+        imgEl.dataset.fallbackSrc = item.fallbackSrc && item.fallbackSrc !== item.src ? item.fallbackSrc : '';
         imgEl.src = item.src;
         imgEl.alt = item.alt;
       }
