@@ -32,9 +32,7 @@ support still render the page.
 npm install          # one-time, for the tooling
 npm run images       # encode variants for any new/changed source image
 npm run pictures     # rewrite index.html's <img> tags as <picture> elements
-npm run build:css    # style.dev.css -> style.css
-npm run build:js     # *.dev.js -> minified
-npm run build        # all of the above
+npm run build        # both of the above
 ```
 
 Both asset steps are incremental and idempotent: `npm run images` skips sources
