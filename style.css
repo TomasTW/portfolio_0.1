@@ -4436,15 +4436,17 @@ p.body-small {
 
   .hero-canvas-sticky {
     position: fixed;
+    /* Sized purely by its inset edges, never by *vh units: a fixed element's
+       edges follow the live viewport, so the frame keeps an even 16px border
+       whether or not the address bar is on screen. Setting a height here would
+       over-constrain it and pin the bottom edge to one address bar state. */
     top: 16px;
     left: 16px;
     right: 16px;
     bottom: 16px;
-    width: calc(100% - 32px);
-    height: calc(100vh - 32px);
-    height: calc(100svh - 32px);
-    min-height: calc(100vh - 32px);
-    min-height: calc(100svh - 32px);
+    width: auto;
+    height: auto;
+    min-height: 0;
     overflow: hidden;
     display: flex;
     align-items: center;
