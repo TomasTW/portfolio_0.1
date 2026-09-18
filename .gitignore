@@ -19,3 +19,7 @@ credentials.*
 .agents/
 .claude/
 .gemini/
+
+# Node tooling (asset pipeline only; the site itself ships as static files)
+node_modules/
+npm-debug.log*
