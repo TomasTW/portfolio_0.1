@@ -1378,10 +1378,10 @@ document.addEventListener('DOMContentLoaded', () => {
       const p = clamp01(scrolled / scrollHeight);
 
       nextItemStates = slideItems.map((item, i) => {
-        const enterStart = 0.06 + i * 0.04;
-        const enterEnd = enterStart + 0.20;
-        const exitStart = 0.60 + i * 0.04;
-        const exitEnd = exitStart + 0.20;
+        const enterStart = 0.04 + i * 0.03;
+        const enterEnd = enterStart + 0.12;
+        const exitStart = 0.68 + i * 0.03;
+        const exitEnd = exitStart + 0.12;
 
         let xVw = 0;
         let opacity = 1;
@@ -1410,14 +1410,14 @@ document.addEventListener('DOMContentLoaded', () => {
 
       if (handEl) {
         let handOpacity = 1;
-        if (p < 0.08) {
+        if (p < 0.04) {
           handOpacity = 0;
-        } else if (p < 0.32) {
-          handOpacity = easeInOut(mapRange(p, 0.08, 0.32, 0, 1));
-        } else if (p < 0.62) {
+        } else if (p < 0.20) {
+          handOpacity = easeInOut(mapRange(p, 0.04, 0.20, 0, 1));
+        } else if (p < 0.70) {
           handOpacity = 1;
-        } else if (p < 0.92) {
-          handOpacity = 1 - easeInOut(mapRange(p, 0.62, 0.92, 0, 1));
+        } else if (p < 0.88) {
+          handOpacity = 1 - easeInOut(mapRange(p, 0.70, 0.88, 0, 1));
         } else {
           handOpacity = 0;
         }
@@ -1541,32 +1541,32 @@ document.addEventListener('DOMContentLoaded', () => {
       const scrolled = Math.max(0, scrollY - aboutSectionTop);
       const p = scrollHeight > 0 ? clamp01(scrolled / scrollHeight) : 0;
 
-      // Hand SVG: Enters, Holds, Exits — mobile ranges widened for less sensitivity
+      // Hand SVG: Enters, Holds, Exits — fast & smooth mobile transitions
       const handOpacity = isMobileOrTablet
-        ? (p < 0.08 ? 0 : (p < 0.32 ? easeInOut(mapRange(p, 0.08, 0.32, 0, 1)) : (p > 0.66 ? 1 - easeInOut(mapRange(p, 0.66, 0.92, 0, 1)) : 1)))
+        ? (p < 0.04 ? 0 : (p < 0.20 ? easeInOut(mapRange(p, 0.04, 0.20, 0, 1)) : (p > 0.72 ? 1 - easeInOut(mapRange(p, 0.72, 0.90, 0, 1)) : 1)))
         : (p < 0.10 ? easeInOut(mapRange(p, 0, 0.10, 0, 1)) : (p > 0.88 ? 1 - easeInOut(mapRange(p, 0.88, 0.98, 0, 1)) : 1));
 
-      // Tool Icons: Enters, Holds, Exits — mobile ranges widened
+      // Tool Icons: Enters, Holds, Exits
       const iconsOpacity = isMobileOrTablet
-        ? (p < 0.10 ? 0 : (p < 0.32 ? easeInOut(mapRange(p, 0.10, 0.32, 0, 1)) : (p > 0.66 ? 1 - easeInOut(mapRange(p, 0.66, 0.92, 0, 1)) : 1)))
+        ? (p < 0.04 ? 0 : (p < 0.20 ? easeInOut(mapRange(p, 0.04, 0.20, 0, 1)) : (p > 0.72 ? 1 - easeInOut(mapRange(p, 0.72, 0.90, 0, 1)) : 1)))
         : (p < 0.02 ? 0 : (p < 0.15 ? easeInOut(mapRange(p, 0.02, 0.15, 0, 1)) : (p > 0.85 ? 1 - easeInOut(mapRange(p, 0.85, 0.98, 0, 1)) : 1)));
 
-      // Header: slides in/out — mobile ranges widened
+      // Header: slides in/out
       const headerXvw = isMobileOrTablet
-        ? (p < 0.06 ? -100 : (p < 0.30 ? -100 + easeInOut(mapRange(p, 0.06, 0.30, 0, 1)) * 100 : (p < 0.66 ? 0 : -(easeInOut(mapRange(p, 0.66, 0.94, 0, 1)) * 100))))
+        ? (p < 0.04 ? -100 : (p < 0.18 ? -100 + easeInOut(mapRange(p, 0.04, 0.18, 0, 1)) * 100 : (p < 0.72 ? 0 : -(easeInOut(mapRange(p, 0.72, 0.90, 0, 1)) * 100))))
         : (p < 0.02 ? -110 : (p < 0.15 ? -110 + easeInOut(mapRange(p, 0.02, 0.15, 0, 1)) * 110 : (p < 0.85 ? 0 : -(easeInOut(mapRange(p, 0.85, 1.0, 0, 1)) * 110))));
 
       const headerOpacity = isMobileOrTablet
-        ? (p < 0.06 ? 0 : (p < 0.30 ? easeInOut(mapRange(p, 0.06, 0.30, 0, 1)) : (p < 0.66 ? 1 : 1 - easeInOut(mapRange(p, 0.66, 0.94, 0, 1)))))
+        ? (p < 0.04 ? 0 : (p < 0.18 ? easeInOut(mapRange(p, 0.04, 0.18, 0, 1)) : (p < 0.72 ? 1 : 1 - easeInOut(mapRange(p, 0.72, 0.90, 0, 1)))))
         : (p < 0.02 ? 0 : (p < 0.15 ? easeInOut(mapRange(p, 0.02, 0.15, 0, 1)) : (p < 0.85 ? 1 : 1 - easeInOut(mapRange(p, 0.85, 1.0, 0, 1)))));
 
-      // Footer: slides in/out — mobile ranges widened
+      // Footer: slides in/out
       const footerXvw = isMobileOrTablet
-        ? (p < 0.06 ? 100 : (p < 0.30 ? 100 - easeInOut(mapRange(p, 0.06, 0.30, 0, 1)) * 100 : (p < 0.66 ? 0 : +(easeInOut(mapRange(p, 0.66, 0.94, 0, 1)) * 100))))
+        ? (p < 0.04 ? 100 : (p < 0.18 ? 100 - easeInOut(mapRange(p, 0.04, 0.18, 0, 1)) * 100 : (p < 0.72 ? 0 : +(easeInOut(mapRange(p, 0.72, 0.90, 0, 1)) * 100))))
         : (p < 0.02 ? 110 : (p < 0.15 ? 110 - easeInOut(mapRange(p, 0.02, 0.15, 0, 1)) * 110 : (p < 0.85 ? 0 : +(easeInOut(mapRange(p, 0.85, 1.0, 0, 1)) * 110))));
 
       const footerOpacity = isMobileOrTablet
-        ? (p < 0.06 ? 0 : (p < 0.30 ? easeInOut(mapRange(p, 0.06, 0.30, 0, 1)) : (p < 0.66 ? 1 : 1 - easeInOut(mapRange(p, 0.66, 0.94, 0, 1)))))
+        ? (p < 0.04 ? 0 : (p < 0.18 ? easeInOut(mapRange(p, 0.04, 0.18, 0, 1)) : (p < 0.72 ? 1 : 1 - easeInOut(mapRange(p, 0.72, 0.90, 0, 1)))))
         : (p < 0.02 ? 0 : (p < 0.15 ? easeInOut(mapRange(p, 0.02, 0.15, 0, 1)) : (p < 0.85 ? 1 : 1 - easeInOut(mapRange(p, 0.85, 1.0, 0, 1)))));
 
       const startAngle = cachedStartAngle;
@@ -1662,36 +1662,36 @@ document.addEventListener('DOMContentLoaded', () => {
       const scrolled = Math.max(0, scrollY - contactSectionTop);
       const p = scrollHeight > 0 ? clamp01(scrolled / scrollHeight) : 0;
 
-      // 1. Head SVG: Fades in & rotates — mobile ranges widened for less sensitivity
+      // 1. Head SVG: Fades in & rotates — fast & smooth mobile transitions
       const headOpacity = isMobileOrTablet
-        ? (p < 0.06 ? 0 : (p < 0.32 ? easeInOut(mapRange(p, 0.06, 0.32, 0, 1)) : 1))
+        ? (p < 0.04 ? 0 : (p < 0.20 ? easeInOut(mapRange(p, 0.04, 0.20, 0, 1)) : 1))
         : (p < 0.10 ? easeInOut(mapRange(p, 0.00, 0.10, 0, 1)) : 1);
 
       const headRotateDeg = isMobileOrTablet
-        ? (p < 0.06 ? -30 : (p < 0.32 ? -30 + easeInOut(mapRange(p, 0.06, 0.32, 0, 1)) * 30 : 0))
+        ? (p < 0.04 ? -30 : (p < 0.20 ? -30 + easeInOut(mapRange(p, 0.04, 0.20, 0, 1)) * 30 : 0))
         : (p < 0.02 ? -30 : (p < 0.16 ? -30 + easeInOut(mapRange(p, 0.02, 0.16, 0, 1)) * 30 : 0));
 
-      // 2. Location text: Fades in — mobile range widened
+      // 2. Location text: Fades in
       const locationOpacity = isMobileOrTablet
-        ? (p < 0.08 ? 0 : (p < 0.32 ? easeInOut(mapRange(p, 0.08, 0.32, 0, 1)) : 1))
+        ? (p < 0.04 ? 0 : (p < 0.20 ? easeInOut(mapRange(p, 0.04, 0.20, 0, 1)) : 1))
         : (p < 0.04 ? 0 : (p < 0.15 ? easeInOut(mapRange(p, 0.04, 0.15, 0, 1)) : 1));
 
-      // 3. "Get in touch": Slides in from left — mobile range widened
+      // 3. "Get in touch": Slides in from left
       const headlineXvw = isMobileOrTablet
-        ? (p < 0.06 ? -100 : (p < 0.32 ? -100 + easeInOut(mapRange(p, 0.06, 0.32, 0, 1)) * 100 : 0))
+        ? (p < 0.04 ? -100 : (p < 0.20 ? -100 + easeInOut(mapRange(p, 0.04, 0.20, 0, 1)) * 100 : 0))
         : (p < 0.02 ? -110 : (p < 0.15 ? -110 + easeInOut(mapRange(p, 0.02, 0.15, 0, 1)) * 110 : 0));
 
       const headlineOpacity = isMobileOrTablet
-        ? (p < 0.06 ? 0 : (p < 0.32 ? easeInOut(mapRange(p, 0.06, 0.32, 0, 1)) : 1))
+        ? (p < 0.04 ? 0 : (p < 0.20 ? easeInOut(mapRange(p, 0.04, 0.20, 0, 1)) : 1))
         : (p < 0.02 ? 0 : (p < 0.15 ? easeInOut(mapRange(p, 0.02, 0.15, 0, 1)) : 1));
 
-      // 4. Icons list: Slides in from right — mobile range widened
+      // 4. Icons list: Slides in from right
       const iconsXvw = isMobileOrTablet
-        ? (p < 0.08 ? 100 : (p < 0.35 ? 100 - easeInOut(mapRange(p, 0.08, 0.35, 0, 1)) * 100 : 0))
+        ? (p < 0.06 ? 100 : (p < 0.22 ? 100 - easeInOut(mapRange(p, 0.06, 0.22, 0, 1)) * 100 : 0))
         : (p < 0.04 ? 110 : (p < 0.18 ? 110 - easeInOut(mapRange(p, 0.04, 0.18, 0, 1)) * 110 : 0));
 
       const iconsOpacity = isMobileOrTablet
-        ? (p < 0.08 ? 0 : (p < 0.35 ? easeInOut(mapRange(p, 0.08, 0.35, 0, 1)) : 1))
+        ? (p < 0.06 ? 0 : (p < 0.22 ? easeInOut(mapRange(p, 0.06, 0.22, 0, 1)) : 1))
         : (p < 0.04 ? 0 : (p < 0.18 ? easeInOut(mapRange(p, 0.04, 0.18, 0, 1)) : 1));
 
       nextHeadOpacity = headOpacity;
@@ -1841,14 +1841,14 @@ document.addEventListener('DOMContentLoaded', () => {
           prevTargetY = 0;
         }
 
-        smoothScrollTo(prevTargetY, 750);
+        smoothScrollTo(prevTargetY, 450);
         closeMobileMenu();
       });
     }
 
     // High-performance, smooth animated scroll replacing sluggish native smooth scrolling
     let smoothScrollRafId = null;
-    function smoothScrollTo(targetY, duration = 750) {
+    function smoothScrollTo(targetY, duration = 450) {
       if (smoothScrollRafId) {
         cancelAnimationFrame(smoothScrollRafId);
         smoothScrollRafId = null;
@@ -1911,12 +1911,12 @@ document.addEventListener('DOMContentLoaded', () => {
         const targetId = link.getAttribute('href');
         if (targetId === '#about' || targetId === '#works' || targetId === '#contact' || targetId === '#hero') {
           const targetY = getSectionTargetY(targetId);
-          smoothScrollTo(targetY, 750);
+          smoothScrollTo(targetY, 450);
         } else {
           const targetElement = document.querySelector(targetId);
           if (targetElement) {
             const elTop = targetElement.getBoundingClientRect().top + window.scrollY;
-            smoothScrollTo(elTop, 750);
+            smoothScrollTo(elTop, 450);
           }
         }
         // Close mobile menu if it's a mobile link

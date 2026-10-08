@@ -4499,8 +4499,8 @@ p.body-small {
 
   .about,
   .works {
-    height: 220svh;
-    min-height: 220svh;
+    height: 150svh;
+    min-height: 150svh;
     max-height: none;
     position: relative;
     padding: 0;
@@ -4511,8 +4511,8 @@ p.body-small {
   }
 
   .contact {
-    height: 180svh;
-    min-height: 180svh;
+    height: 130svh;
+    min-height: 130svh;
     max-height: none;
     position: relative;
     width: 100%;
@@ -4530,9 +4530,9 @@ p.body-small {
     position: sticky;
     top: 16px;
     height: calc(100vh - 32px);
-    height: calc(100svh - 32px);
+    height: calc(100dvh - 32px);
     min-height: calc(100vh - 32px);
-    min-height: calc(100svh - 32px);
+    min-height: calc(100dvh - 32px);
     width: 100%;
     display: flex;
     align-items: center;
@@ -4560,17 +4560,17 @@ p.body-small {
     justify-content: space-between;
     padding: 32px 32px var(--mobile-section-bottom-clearance, 108px) 32px;
     overflow: hidden;
-    margin: 16px auto;
+    margin: 0 auto;
     position: relative;
   }
 
   .works-mobile-list {
     width: calc(100% - 32px);
     height: calc(100vh - 32px);
-    height: calc(100svh - 32px);
+    height: calc(100dvh - 32px);
     min-height: calc(100vh - 32px);
-    min-height: calc(100svh - 32px);
-    margin: 16px auto;
+    min-height: calc(100dvh - 32px);
+    margin: 0 auto;
     padding: 32px 32px var(--mobile-section-bottom-clearance, 108px) 32px;
     box-sizing: border-box;
     overflow: hidden;
@@ -4624,7 +4624,7 @@ p.body-small {
 
   .works-list-hand {
     position: absolute;
-    bottom: calc(var(--mobile-section-bottom-clearance, 108px) + 6px);
+    bottom: var(--mobile-section-bottom-clearance, 108px);
     left: 50%;
     transform: translateX(-50%);
     display: flex;
@@ -4661,7 +4661,7 @@ p.body-small {
     justify-content: space-between;
     padding: 32px 32px var(--mobile-section-bottom-clearance, 108px) 32px;
     overflow: hidden;
-    margin: 16px auto;
+    margin: 0 auto;
     position: relative;
     opacity: 1;
     transform: none;
@@ -4719,7 +4719,7 @@ p.body-small {
   /* Hand Graphic Area: optically centered in available vertical space */
   .about-content-area {
     position: absolute;
-    top: calc(50% - 48px);
+    top: calc(50% - 24px);
     left: 50%;
     transform: translate(-50%, -50%);
     width: 200px;
