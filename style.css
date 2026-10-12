@@ -49,6 +49,9 @@
   --font-clamp-nav-link: var(--font-clamp-nav-link);
 
   /* Navigation & Section Clearance Tokens (Exact 32px gap to floating navbar) */
+  --mobile-safe-top: max(16px, env(safe-area-inset-top, 16px));
+  --mobile-card-inset-top: var(--mobile-safe-top);
+  --mobile-card-top: var(--mobile-safe-top);
   --mobile-nav-height: 44px;
   --mobile-nav-bottom: 48px;
   --mobile-card-inset: 16px;
@@ -381,6 +384,12 @@ section {
 /* ==========================================================================
    13. IN-APP BROWSER / WEBVIEW DEGRADATION
    ========================================================================== */
+.is-webview {
+  /* In-app browsers (LINE, LinkedIn) have top navigation chrome that overlays the viewport on scroll up */
+  --mobile-card-inset-top: max(56px, calc(env(safe-area-inset-top, 24px) + 28px));
+  --mobile-card-top: var(--mobile-card-inset-top);
+}
+
 body.is-webview .canvas-ui-bg {
   display: none !important;
 }
@@ -4440,7 +4449,7 @@ p.body-small {
        edges follow the live viewport, so the frame keeps an even 16px border
        whether or not the address bar is on screen. Setting a height here would
        over-constrain it and pin the bottom edge to one address bar state. */
-    top: 16px;
+    top: var(--mobile-card-inset-top, 16px);
     left: 16px;
     right: 16px;
     bottom: 16px;
@@ -4499,8 +4508,8 @@ p.body-small {
 
   .about,
   .works {
-    height: 150svh;
-    min-height: 150svh;
+    height: 140svh;
+    min-height: 140svh;
     max-height: none;
     position: relative;
     padding: 0;
@@ -4511,8 +4520,8 @@ p.body-small {
   }
 
   .contact {
-    height: 130svh;
-    min-height: 130svh;
+    height: 120svh;
+    min-height: 120svh;
     max-height: none;
     position: relative;
     width: 100%;
@@ -4528,11 +4537,10 @@ p.body-small {
   .about-sticky,
   .contact-sticky {
     position: sticky;
-    top: 16px;
-    height: calc(100vh - 32px);
-    height: calc(100dvh - 32px);
-    min-height: calc(100vh - 32px);
-    min-height: calc(100dvh - 32px);
+    top: var(--mobile-card-top, 16px);
+    height: calc(var(--stable-vh, 100dvh) - var(--mobile-card-top, 16px) - 16px);
+    min-height: calc(var(--stable-vh, 100dvh) - var(--mobile-card-top, 16px) - 16px);
+    max-height: calc(var(--stable-vh, 100dvh) - var(--mobile-card-top, 16px) - 16px);
     width: 100%;
     display: flex;
     align-items: center;
@@ -4566,10 +4574,9 @@ p.body-small {
 
   .works-mobile-list {
     width: calc(100% - 32px);
-    height: calc(100vh - 32px);
-    height: calc(100dvh - 32px);
-    min-height: calc(100vh - 32px);
-    min-height: calc(100dvh - 32px);
+    height: calc(var(--stable-vh, 100dvh) - var(--mobile-card-top, 16px) - 16px);
+    min-height: calc(var(--stable-vh, 100dvh) - var(--mobile-card-top, 16px) - 16px);
+    max-height: calc(var(--stable-vh, 100dvh) - var(--mobile-card-top, 16px) - 16px);
     margin: 0 auto;
     padding: 32px 32px var(--mobile-section-bottom-clearance, 108px) 32px;
     box-sizing: border-box;
@@ -4581,7 +4588,7 @@ p.body-small {
     background: transparent;
     background-color: transparent;
     position: sticky;
-    top: 16px;
+    top: var(--mobile-card-top, 16px);
     z-index: 5;
   }
 
