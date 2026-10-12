@@ -384,12 +384,6 @@ section {
 /* ==========================================================================
    13. IN-APP BROWSER / WEBVIEW DEGRADATION
    ========================================================================== */
-.is-webview {
-  /* In-app browsers (LINE, LinkedIn) have top navigation chrome that overlays the viewport on scroll up */
-  --mobile-card-inset-top: max(56px, calc(env(safe-area-inset-top, 24px) + 28px));
-  --mobile-card-top: var(--mobile-card-inset-top);
-}
-
 body.is-webview .canvas-ui-bg {
   display: none !important;
 }
@@ -4276,13 +4270,12 @@ p.body-small {
   }
 
   .contact-graphic-container {
-    position: absolute;
-    top: calc(50% - 24px);
-    left: 50%;
-    transform: translate(-50%, -50%) rotate(var(--contact-head-rotate, -30deg));
+    order: 2;
+    position: relative;
+    transform: rotate(var(--contact-head-rotate, -30deg));
     width: 200px;
     height: 200px;
-    margin: 0;
+    margin: auto auto 0 auto;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -4538,9 +4531,9 @@ p.body-small {
   .contact-sticky {
     position: sticky;
     top: var(--mobile-card-top, 16px);
-    height: calc(var(--stable-vh, 100dvh) - var(--mobile-card-top, 16px) - 16px);
-    min-height: calc(var(--stable-vh, 100dvh) - var(--mobile-card-top, 16px) - 16px);
-    max-height: calc(var(--stable-vh, 100dvh) - var(--mobile-card-top, 16px) - 16px);
+    height: calc(100dvh - var(--mobile-card-top, 16px) - 16px);
+    min-height: calc(100dvh - var(--mobile-card-top, 16px) - 16px);
+    max-height: calc(100dvh - var(--mobile-card-top, 16px) - 16px);
     width: 100%;
     display: flex;
     align-items: center;
@@ -4574,9 +4567,9 @@ p.body-small {
 
   .works-mobile-list {
     width: calc(100% - 32px);
-    height: calc(var(--stable-vh, 100dvh) - var(--mobile-card-top, 16px) - 16px);
-    min-height: calc(var(--stable-vh, 100dvh) - var(--mobile-card-top, 16px) - 16px);
-    max-height: calc(var(--stable-vh, 100dvh) - var(--mobile-card-top, 16px) - 16px);
+    height: calc(100dvh - var(--mobile-card-top, 16px) - 16px);
+    min-height: calc(100dvh - var(--mobile-card-top, 16px) - 16px);
+    max-height: calc(100dvh - var(--mobile-card-top, 16px) - 16px);
     margin: 0 auto;
     padding: 32px 32px var(--mobile-section-bottom-clearance, 108px) 32px;
     box-sizing: border-box;
@@ -4637,8 +4630,8 @@ p.body-small {
     display: flex;
     justify-content: center;
     align-items: center;
-    width: 180px;
-    height: 180px;
+    width: 200px;
+    height: 200px;
     margin: 0;
     opacity: var(--item-opacity, var(--works-hand-opacity, 0));
     will-change: opacity;
@@ -4723,18 +4716,17 @@ p.body-small {
     object-fit: contain;
   }
 
-  /* Hand Graphic Area: optically centered in available vertical space */
+  /* Hand Graphic Area: in-flow; its margin-top:auto pairs with the footer's
+     margin-top:auto so it sits centered between the icon row and the footer */
   .about-content-area {
-    position: absolute;
-    top: calc(50% - 24px);
-    left: 50%;
-    transform: translate(-50%, -50%);
+    order: 3;
+    position: relative;
     width: 200px;
     height: 200px;
     display: flex;
     align-items: center;
     justify-content: center;
-    margin: 0;
+    margin: auto auto 0 auto;
     padding: 0;
     pointer-events: none;
     z-index: 2;
