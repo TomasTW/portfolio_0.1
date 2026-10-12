@@ -2339,7 +2339,7 @@
       ]
     },
     "works/brand/brand_11.png": {
-      "hash": "de65a5c9b620ac0d",
+      "hash": "2ffc14c85ecf76e2",
       "width": 3684,
       "height": 2606,
       "variants": [
@@ -2347,43 +2347,43 @@
           "path": "img/320/works/brand/brand_11.webp",
           "width": 320,
           "height": 226,
-          "bytes": 7610
+          "bytes": 7602
         },
         {
           "path": "img/480/works/brand/brand_11.webp",
           "width": 480,
           "height": 340,
-          "bytes": 13876
+          "bytes": 13844
         },
         {
           "path": "img/640/works/brand/brand_11.webp",
           "width": 640,
           "height": 453,
-          "bytes": 21524
+          "bytes": 21530
         },
         {
           "path": "img/960/works/brand/brand_11.webp",
           "width": 960,
           "height": 679,
-          "bytes": 39614
+          "bytes": 39494
         },
         {
           "path": "img/1280/works/brand/brand_11.webp",
           "width": 1280,
           "height": 905,
-          "bytes": 60178
+          "bytes": 60044
         },
         {
           "path": "img/1600/works/brand/brand_11.webp",
           "width": 1600,
           "height": 1132,
-          "bytes": 80988
+          "bytes": 80754
         },
         {
           "path": "img/2048/works/brand/brand_11.webp",
           "width": 2048,
           "height": 1449,
-          "bytes": 110914
+          "bytes": 110784
         }
       ]
     },
