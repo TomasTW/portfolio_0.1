@@ -313,11 +313,10 @@ window.refreshLayoutEngine = refreshLayoutEngine;
         const topLoopOffset = indicatorHeight * 0.10;
         const gap = 16; // 16px compact gap between bottom of letters and top of yellow loop
 
-        const topPx = quantise((textRect.bottom - containerRect.top) + gap - topLoopOffset);
-        const cur = parseFloat(indicator.style.top);
-        if (isNaN(cur) || Math.abs(cur - topPx) > 1.5) {
-          indicator.style.top = `${topPx}px`;
-        }
+        const containerCenterY = containerRect.top + containerRect.height / 2;
+        const svgScale = (svgEl.getBoundingClientRect().width / containerRect.width) || 1;
+        const offsetPx = quantise(((textRect.bottom - containerCenterY) / svgScale) + gap - topLoopOffset);
+        indicator.style.top = `calc(50% + ${offsetPx}px)`;
         if (!indicator.style.transform) indicator.style.transform = 'translate3d(-50%, 0, 0)';
       }
     }
